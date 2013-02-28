@@ -3,14 +3,14 @@ package test;
 public class TestClass {
 public static void main(String[] args) {
 // la til comment
-	
-	System.out.println("WASAPPPPP");
-	System.out.println("aasdasd");
+
+	System.out.println("WSAPPPPP");
+	System.out.println("asdasd");
 	System.out.println("hei");
-	System.out.println("asd");
+	System.out.println("sd");
 	
 	
-	System.out.println("hei på deg");
+	System.out.println("i på deg");
 
 }
 }
