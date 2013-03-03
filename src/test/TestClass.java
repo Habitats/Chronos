@@ -7,7 +7,7 @@ public static void main(String[] args) {
 	System.out.println("WSAPPPPP");
 	System.out.println("asdasd");
 	System.out.println("hei");
-	System.out.println("Derp");
+	System.out.println("Test av github gui");
 	System.out.println("sd");
 	
 	
