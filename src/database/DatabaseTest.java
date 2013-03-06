@@ -1,14 +1,7 @@
 package database;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-
-import org.omg.PortableInterceptor.SUCCESSFUL;
 
 import chronos.Person;
 import chronos.Singleton;
