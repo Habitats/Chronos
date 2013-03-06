@@ -1,14 +1,15 @@
 package gui;
 
+import gui.view.CalendarWindow;
+import gui.view.ChronosWindow;
+import gui.view.LoginWindow;
+
 import javax.swing.JFrame;
 
 import model.CalendarModel;
 import model.ChronosModel;
 import model.LoginModel;
 
-import view.CalendarWindow;
-import view.ChronosWindow;
-import view.LoginWindow;
 
 import chronos.ClientController;
 
