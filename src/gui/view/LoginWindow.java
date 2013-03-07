@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import model.ChronosModel;
 import model.LoginModel;
 
-public class LoginWindow implements ChronosWindow, ActionListener {
+public class LoginWindow extends ChronosWindow implements ActionListener {
 	LoginModel model;
 
 	public LoginWindow(ChronosModel model) {

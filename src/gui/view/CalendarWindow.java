@@ -3,7 +3,7 @@ package gui.view;
 import model.CalendarModel;
 import model.ChronosModel;
 
-public class CalendarWindow implements ChronosWindow {
+public class CalendarWindow extends ChronosWindow {
 
 	private CalendarModel model;
 

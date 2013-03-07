@@ -1,8 +1,8 @@
 package gui;
 
 import gui.view.CalendarWindow;
-import gui.view.ChronosWindow;
 import gui.view.LoginWindow;
+import gui.view.ChronosWindow;
 
 import javax.swing.JFrame;
 

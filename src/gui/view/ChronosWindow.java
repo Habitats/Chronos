@@ -1,8 +1,10 @@
 package gui.view;
 
+import javax.swing.JPanel;
+
 import model.ChronosModel;
 
-public interface ChronosWindow {
+abstract public class ChronosWindow extends JPanel {
 
 	abstract public void setModel(ChronosModel model);
 
