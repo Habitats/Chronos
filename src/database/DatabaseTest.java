@@ -18,14 +18,14 @@ public class DatabaseTest {
 	private void run() {
 		Singleton.getInstance().enableLog();
 		DatabaseController db = new DatabaseController();
-		DatabaseQueries quries = new DatabaseQueries(db);
+		DatabaseQueries queries = new DatabaseQueries(db);
 
 		db.initialize();
 
 		String user = "bob";
-		quries.addUser(user, null, null);
-		quries.updateUser(user, "passord", "nyttpw");
-		quries.removeUser(user);
+		queries.addUser(user, null, null);
+		queries.updateUser(user, "passord", "nyttpw");
+		queries.removeUser(user);
 
 		ArrayList<String[]> users = new ArrayList<String[]>();
 
@@ -43,7 +43,7 @@ public class DatabaseTest {
 		//
 		// quries.addMultipleUsers(users);
 
-		ArrayList<Person> userInDb = quries.getUsers();
+		ArrayList<Person> userInDb = queries.getUsers();
 		Singleton.log("Users in db:");
 		for (Person person : userInDb) {
 			Singleton.log(person.toString());
