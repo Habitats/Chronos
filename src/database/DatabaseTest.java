@@ -11,6 +11,8 @@ public class DatabaseTest {
 	Properties prop = new Properties();
 
 	public static void main(String[] args) {
+		
+		System.out.println("test");
 
 		new DatabaseTest().run();
 	}
