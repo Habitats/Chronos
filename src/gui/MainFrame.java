@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.GridBagLayout;
+
 import gui.view.CalendarWindow;
 import gui.view.LoginWindow;
 import gui.view.ChronosWindow;
@@ -24,6 +26,9 @@ public class MainFrame extends JFrame {
 
 		ChronosModel calendarModel = new CalendarModel(controller);
 		ChronosWindow calendarWindow = new CalendarWindow(calendarModel);
+		
+		setLayout(new GridBagLayout());
+		add(calendarWindow, new GBC(0,0));
 	}
 
 	// initialize the GUI here
