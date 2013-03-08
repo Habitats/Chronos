@@ -12,7 +12,6 @@ public class GBC extends GridBagConstraints {
 	public GBC(int gridx, int gridy, Align align) {
 		this.gridx = gridx;
 		this.gridy = gridy;
-
 		// for even borders
 		int b = 5;
 		if (align != null) {

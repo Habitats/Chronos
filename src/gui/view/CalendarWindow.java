@@ -27,15 +27,15 @@ public class CalendarWindow extends ChronosWindow {
 	JButton nextButton;
 	JScrollPane eventsPane;
 	JPanel eventsPanel;
-	JScrollPane kalenderPane;
-	JPanel kalender;
-	JPanel mandagPanel;
-	JPanel tirsdagPanel;
-	JPanel onsdagPanel;
-	JPanel torsdagPanel;
-	JPanel fredagPanel;
-	JPanel lordagPanel;
-	JPanel sondagPanel;
+	JScrollPane calendarPane;
+	JPanel calendarPanel;
+	JPanel mondayPanel;
+	JPanel tuesdayPanel;
+	JPanel wednesdayPanel;
+	JPanel thursdayPanel;
+	JPanel fridayPanel;
+	JPanel saturdayPanel;
+	JPanel sundayPanel;
 	JPanel othersCalPanel;
 
 	public CalendarWindow(ChronosModel model) {
@@ -50,25 +50,25 @@ public class CalendarWindow extends ChronosWindow {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		newEventButton = new JButton("Ny avtale");
+		newEventButton = new JButton("New event");
 		newEventButton.addActionListener(new NewEventListener());
 		add(newEventButton, new GBC(0,0).setFill(GridBagConstraints.BOTH).setInsets(0, 0, 5, 5));
 		
 		prevButton = new JButton("<");
-		GridBagConstraints gbc_button = new GridBagConstraints();
-		gbc_button.anchor = GridBagConstraints.EAST;
-		gbc_button.insets = new Insets(0, 0, 5, 5);
-		gbc_button.gridx = 2;
-		gbc_button.gridy = 0;
-		add(prevButton, gbc_button);
+		GridBagConstraints gbc_prevButton = new GridBagConstraints();
+		gbc_prevButton.anchor = GridBagConstraints.EAST;
+		gbc_prevButton.insets = new Insets(0, 0, 5, 5);
+		gbc_prevButton.gridx = 2;
+		gbc_prevButton.gridy = 0;
+		add(prevButton, gbc_prevButton);
 		
 		nextButton = new JButton(">");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.anchor = GridBagConstraints.WEST;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 0;
-		add(nextButton, gbc_btnNewButton);
+		GridBagConstraints gbc_nextButton = new GridBagConstraints();
+		gbc_nextButton.anchor = GridBagConstraints.WEST;
+		gbc_nextButton.insets = new Insets(0, 0, 5, 0);
+		gbc_nextButton.gridx = 3;
+		gbc_nextButton.gridy = 0;
+		add(nextButton, gbc_nextButton);
 		
 		eventsPane = new JScrollPane();
 		GridBagConstraints gbc_events = new GridBagConstraints();
@@ -87,86 +87,86 @@ public class CalendarWindow extends ChronosWindow {
 		lblEvents.setHorizontalAlignment(SwingConstants.CENTER);
 		eventsPane.setColumnHeaderView(lblEvents);
 		
-		kalenderPane = new JScrollPane();
-		GridBagConstraints gbc_kalenderPane = new GridBagConstraints();
-		gbc_kalenderPane.fill = GridBagConstraints.BOTH;
-		gbc_kalenderPane.gridheight = 2;
-		gbc_kalenderPane.gridwidth = 2;
-		gbc_kalenderPane.gridx = 2;
-		gbc_kalenderPane.gridy = 1;
-		add(kalenderPane, gbc_kalenderPane);
+		calendarPane = new JScrollPane();
+		GridBagConstraints gbc_calendarPane = new GridBagConstraints();
+		gbc_calendarPane.fill = GridBagConstraints.BOTH;
+		gbc_calendarPane.gridheight = 2;
+		gbc_calendarPane.gridwidth = 2;
+		gbc_calendarPane.gridx = 2;
+		gbc_calendarPane.gridy = 1;
+		add(calendarPane, gbc_calendarPane);
 		
-		kalender = new JPanel();
-		kalenderPane.setViewportView(kalender);
-		kalender.setBackground(Color.LIGHT_GRAY);
-		kalender.setLayout(new GridLayout(0, 7, 0, 0));
+		calendarPanel = new JPanel();
+		calendarPane.setViewportView(calendarPanel);
+		calendarPanel.setBackground(Color.LIGHT_GRAY);
+		calendarPanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
-		mandagPanel = new JPanel();
-		mandagPanel.setBackground(Color.WHITE);
-		kalender.add(mandagPanel);
-		mandagPanel.setLayout(new BoxLayout(mandagPanel, BoxLayout.Y_AXIS));
+		mondayPanel = new JPanel();
+		mondayPanel.setBackground(Color.WHITE);
+		calendarPanel.add(mondayPanel);
+		mondayPanel.setLayout(new BoxLayout(mondayPanel, BoxLayout.Y_AXIS));
 		
-		tirsdagPanel = new JPanel();
-		tirsdagPanel.setBackground(Color.WHITE);
-		kalender.add(tirsdagPanel);
-		tirsdagPanel.setLayout(new BoxLayout(tirsdagPanel, BoxLayout.Y_AXIS));
+		tuesdayPanel = new JPanel();
+		tuesdayPanel.setBackground(Color.WHITE);
+		calendarPanel.add(tuesdayPanel);
+		tuesdayPanel.setLayout(new BoxLayout(tuesdayPanel, BoxLayout.Y_AXIS));
 		
-		onsdagPanel = new JPanel();
-		onsdagPanel.setBackground(Color.WHITE);
-		kalender.add(onsdagPanel);
-		onsdagPanel.setLayout(new BoxLayout(onsdagPanel, BoxLayout.Y_AXIS));
+		wednesdayPanel = new JPanel();
+		wednesdayPanel.setBackground(Color.WHITE);
+		calendarPanel.add(wednesdayPanel);
+		wednesdayPanel.setLayout(new BoxLayout(wednesdayPanel, BoxLayout.Y_AXIS));
 		
-		torsdagPanel = new JPanel();
-		torsdagPanel.setBackground(Color.WHITE);
-		kalender.add(torsdagPanel);
-		torsdagPanel.setLayout(new BoxLayout(torsdagPanel, BoxLayout.Y_AXIS));
+		thursdayPanel = new JPanel();
+		thursdayPanel.setBackground(Color.WHITE);
+		calendarPanel.add(thursdayPanel);
+		thursdayPanel.setLayout(new BoxLayout(thursdayPanel, BoxLayout.Y_AXIS));
 		
-		fredagPanel = new JPanel();
-		fredagPanel.setBackground(Color.WHITE);
-		kalender.add(fredagPanel);
-		fredagPanel.setLayout(new BoxLayout(fredagPanel, BoxLayout.Y_AXIS));
+		fridayPanel = new JPanel();
+		fridayPanel.setBackground(Color.WHITE);
+		calendarPanel.add(fridayPanel);
+		fridayPanel.setLayout(new BoxLayout(fridayPanel, BoxLayout.Y_AXIS));
 		
-		lordagPanel = new JPanel();
-		lordagPanel.setBackground(Color.WHITE);
-		kalender.add(lordagPanel);
-		lordagPanel.setLayout(new BoxLayout(lordagPanel, BoxLayout.Y_AXIS));
+		saturdayPanel = new JPanel();
+		saturdayPanel.setBackground(Color.WHITE);
+		calendarPanel.add(saturdayPanel);
+		saturdayPanel.setLayout(new BoxLayout(saturdayPanel, BoxLayout.Y_AXIS));
 		
-		sondagPanel = new JPanel();
-		sondagPanel.setBackground(Color.WHITE);
-		kalender.add(sondagPanel);
-		sondagPanel.setLayout(new BoxLayout(sondagPanel, BoxLayout.Y_AXIS));
+		sundayPanel = new JPanel();
+		sundayPanel.setBackground(Color.WHITE);
+		calendarPanel.add(sundayPanel);
+		sundayPanel.setLayout(new BoxLayout(sundayPanel, BoxLayout.Y_AXIS));
 		
 		JPanel tid = new JPanel();
-		kalenderPane.setRowHeaderView(tid);
+		calendarPane.setRowHeaderView(tid);
 		tid.setLayout(new BoxLayout(tid, BoxLayout.Y_AXIS));
 		
 		JLabel lblNewLabel = new JLabel("00.00");
 		tid.add(lblNewLabel);
 		
-		JPanel ukedager = new JPanel();
-		kalenderPane.setColumnHeaderView(ukedager);
-		ukedager.setLayout(new GridLayout(0, 7, 0, 0));
+		JPanel weekdays = new JPanel();
+		calendarPane.setColumnHeaderView(weekdays);
+		weekdays.setLayout(new GridLayout(0, 7, 0, 0));
 		
-		JLabel lblMandag = new JLabel("Mandag");
-		ukedager.add(lblMandag);
+		JLabel lblMonday = new JLabel("Monday");
+		weekdays.add(lblMonday);
 		
-		JLabel lblTirsdag = new JLabel("Tirsdag");
-		ukedager.add(lblTirsdag);
+		JLabel lblTuesday = new JLabel("Tuesday");
+		weekdays.add(lblTuesday);
 		
-		JLabel lblOnsdag = new JLabel("Onsdag");
-		ukedager.add(lblOnsdag);
+		JLabel lblWednesday = new JLabel("Wednesday");
+		weekdays.add(lblWednesday);
 		
-		JLabel lblTorsdag = new JLabel("Torsdag");
-		ukedager.add(lblTorsdag);
+		JLabel lblThursday = new JLabel("Thursday");
+		weekdays.add(lblThursday);
 		
-		JLabel lblFredag = new JLabel("Fredag");
-		ukedager.add(lblFredag);
+		JLabel lblFriday = new JLabel("Friday");
+		weekdays.add(lblFriday);
 		
-		JLabel lblLordag = new JLabel("Lordag");
-		ukedager.add(lblLordag);
+		JLabel lblSaturday = new JLabel("Saturday");
+		weekdays.add(lblSaturday);
 		
-		JLabel lblSondag = new JLabel("Sondag");
-		ukedager.add(lblSondag);
+		JLabel lblSunday = new JLabel("Sunday");
+		weekdays.add(lblSunday);
 		
 		JScrollPane calendars = new JScrollPane();
 		GridBagConstraints gbc_calendars = new GridBagConstraints();
