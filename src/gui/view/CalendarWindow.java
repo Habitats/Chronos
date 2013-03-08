@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -49,6 +51,7 @@ public class CalendarWindow extends ChronosWindow {
 		setLayout(gridBagLayout);
 		
 		newEventButton = new JButton("Ny avtale");
+		newEventButton.addActionListener(new NewEventListener());
 		add(newEventButton, new GBC(0,0).setFill(GridBagConstraints.BOTH).setInsets(0, 0, 5, 5));
 		
 		prevButton = new JButton("<");
@@ -188,5 +191,15 @@ public class CalendarWindow extends ChronosWindow {
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (CalendarModel) model;
+	}
+	public class NewEventListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			
+			
+		}
+		
 	}
 }
