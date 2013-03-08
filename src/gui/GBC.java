@@ -47,6 +47,10 @@ public class GBC extends GridBagConstraints {
 		return this;
 	}
 
+	public void setAnchor(int value) {
+		this.anchor = value;
+	}
+
 	/*
 	 * Fill area if the component doesn't match the available space given
 	 * HORIZONTAL = fill horizontally VERTICAL = fill vertically BOTH = guess
