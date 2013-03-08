@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JFrame;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
@@ -21,10 +23,11 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	protected String username, password;
 	protected JToggleButton LoginButton, CancelButton;
 
-	public LoginWindow(ChronosModel model) {
+	//public LoginWindow(ChronosModel model) {
+	public LoginWindow() {
 		setLayout(new GridBagLayout());
 		Username = new JTextField();
-		Password = new JTextField();
+		Password = new JPasswordField();
 		LoginButton = new JToggleButton("Login");
 		CancelButton = new JToggleButton("Cancel");
 		
@@ -44,7 +47,6 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 		add(CancelButton, new GBC(1,2));
 	
 		setModel(model);
-		
 	}
 	
 	public class UsernameListener implements KeyListener {
@@ -97,5 +99,13 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		model.login("bob", "password");
+	}
+	
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Login");
+		frame.add(new LoginWindow());
+		frame.pack();
+		frame.setVisible(true);
+		
 	}
 }
