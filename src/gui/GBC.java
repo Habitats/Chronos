@@ -47,8 +47,9 @@ public class GBC extends GridBagConstraints {
 		return this;
 	}
 
-	public void setAnchor(int value) {
+	public GBC setAnchor(int value) {
 		this.anchor = value;
+		return this;
 	}
 
 	/*
