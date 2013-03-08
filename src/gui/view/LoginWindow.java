@@ -23,8 +23,8 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	protected String username, password;
 	protected JToggleButton LoginButton, CancelButton;
 
-	//public LoginWindow(ChronosModel model) {
-	public LoginWindow() {
+	public LoginWindow(ChronosModel model) {
+	//public LoginWindow() {
 		setLayout(new GridBagLayout());
 		Username = new JTextField();
 		Password = new JPasswordField();
@@ -100,12 +100,12 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		model.login("bob", "password");
 	}
-	
+	/*
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Login");
 		frame.add(new LoginWindow());
 		frame.pack();
 		frame.setVisible(true);
-		
 	}
+	*/
 }
