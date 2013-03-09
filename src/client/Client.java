@@ -35,27 +35,29 @@ public class Client implements Runnable {
 		try {
 			clientSocket = new Socket(hostname, port);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Singleton.log("Unable to connect. Exiting...");
+			kill();
 		}
 		return clientSocket;
 	}
 
 	private void initConnection(Socket socket) {
-		Singleton.log("Initiating streams...");
 		try {
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
 
 			// sends auth event to server on connect
 			clientController.sendAuthEvent();
-			
+
 			NetworkEvent event;
+			Singleton.log("Initiating streams...");
 			while ((event = (NetworkEvent) in.readObject()) != null) {
 				// Singleton.log("Client received: " + event.toString());
 				getClientController().evaluateNetworkEvent(event);
 			}
 		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+			Singleton.log("Lost connection. Exiting...");
+			kill();
 		}
 	}
 

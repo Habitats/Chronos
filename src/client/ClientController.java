@@ -42,6 +42,7 @@ public class ClientController implements Runnable {
 		Singleton.log("Client evaluating: " + event);
 		switch (event.getType()) {
 		case TEST:
+			sendTestEvent();
 			break;
 		case LOGIN:
 			person = ((AuthEvent) event).getSender();
@@ -77,10 +78,8 @@ public class ClientController implements Runnable {
 	private void sendTestEvent() {
 		Scanner sc = new Scanner(System.in);
 		Singleton.log("Entering test event loop. Write messages to test the server connection:");
-		while (true) {
-			String msg = sc.nextLine();
-			client.sendNetworkEvent(new TestEvent(msg, person));
-		}
+		String msg = sc.nextLine();
+		client.sendNetworkEvent(new TestEvent(msg, person));
 	}
 
 	private void sendCalEvent() {
