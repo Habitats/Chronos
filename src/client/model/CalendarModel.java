@@ -1,6 +1,6 @@
-package model;
+package client.model;
 
-import chronos.ClientController;
+import client.ClientController;
 import events.NetworkEvent;
 
 public class CalendarModel extends ChronosModel {

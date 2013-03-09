@@ -1,4 +1,4 @@
-package gui;
+package client.gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -12,6 +12,7 @@ public class GBC extends GridBagConstraints {
 	public GBC(int gridx, int gridy, Align align) {
 		this.gridx = gridx;
 		this.gridy = gridy;
+
 		// for even borders
 		int b = 5;
 		if (align != null) {
@@ -67,12 +68,13 @@ public class GBC extends GridBagConstraints {
 		return this;
 	}
 
-	// internal padding
+	// external padding
 	public GBC setInsets(int top, int left, int bottom, int right) { // NO_UCD
 		this.insets = new Insets(top, left, bottom, right);
 		return this;
 	}
 
+	// internal padding
 	public GBC setIpad(int ipadx, int ipady) { // NO_UCD
 		this.ipadx = ipadx;
 		this.ipady = ipady;

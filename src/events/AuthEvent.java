@@ -12,4 +12,8 @@ public class AuthEvent extends NetworkEvent {
 		this.username = username;
 		this.password = password;
 	}
+
+	public String toString() {
+		return "[AuthEvent] Username: " + username + " - Password: " + password;
+	}
 }

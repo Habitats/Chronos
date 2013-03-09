@@ -1,6 +1,6 @@
-package model;
+package client.model;
 
-import chronos.ClientController;
+import client.ClientController;
 
 public class EventConfigModel extends ChronosModel{
 

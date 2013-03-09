@@ -1,11 +1,13 @@
-package database;
+package server.database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import chronos.Person;
 import chronos.Singleton;
+
 
 public class DatabaseQueries {
 

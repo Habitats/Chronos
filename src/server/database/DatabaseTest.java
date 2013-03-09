@@ -1,10 +1,12 @@
-package database;
+package server.database;
 
 import java.util.ArrayList;
 import java.util.Properties;
 
 import chronos.Person;
 import chronos.Singleton;
+
+
 
 public class DatabaseTest {
 

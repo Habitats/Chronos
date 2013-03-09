@@ -1,6 +1,10 @@
 package chronos;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable{
+	private static final long serialVersionUID = -1682580791493320360L;
+	
 	String name;
 	String username;
 

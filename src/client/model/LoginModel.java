@@ -1,6 +1,6 @@
-package model;
+package client.model;
 
-import chronos.ClientController;
+import client.ClientController;
 import events.AuthEvent;
 
 public class LoginModel extends ChronosModel {
