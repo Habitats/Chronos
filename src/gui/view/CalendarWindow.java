@@ -197,7 +197,7 @@ public class CalendarWindow extends ChronosWindow {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			
+			model.newEvent();
 			
 		}
 		

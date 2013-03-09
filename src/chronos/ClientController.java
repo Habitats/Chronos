@@ -5,9 +5,11 @@ import events.NetworkEvent;
 import gui.MainFrame;
 
 public class ClientController {
+	
+	private MainFrame mainFrame;
 
 	public ClientController() {
-		MainFrame mainFrame = new MainFrame(this);
+		mainFrame = new MainFrame(this);
 		mainFrame.buildGui();
 
 	}
@@ -29,5 +31,9 @@ public class ClientController {
 	public void sendNetworkEvent(NetworkEvent event) {
 		Singleton.log("sending networkEvent to server");
 
+	}
+
+	public void newEventConfigWindow() {
+		System.out.println("New event");
 	}
 }
