@@ -3,6 +3,11 @@ package client.gui;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+/**
+ * Helper class for gridBagLayout 
+ * @author anon
+ *
+ */
 public class GBC extends GridBagConstraints {
 
 	public enum Align {

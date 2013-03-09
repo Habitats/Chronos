@@ -13,6 +13,11 @@ import server.ServerController;
 
 
 
+/**
+ * Handles all incoming client connections and delegates them on a new thread
+ * @author anon
+ *
+ */
 public class Server implements Runnable {
 	private ServerController sController;
 	private int port;

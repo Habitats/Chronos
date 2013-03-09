@@ -10,7 +10,6 @@ import server.networking.Server;
 
 /**
  * Handles communication between the server and DB
- * 
  * @author anon
  * 
  */
@@ -23,6 +22,19 @@ public class ServerController implements Runnable {
 	}
 
 	public void evaluateNetworkEvent(NetworkEvent event) {
+		switch (event.getType()) {
+		case LOGIN:
+			break;
+		case CALENDAR:
+			break;
+		case ROOM_BOOK:
+			break;
+		case TEST:
+			break;
+		case USER_SEARCH:
+			break;
+		}
+		
 		Singleton.log("Server evaluating: " + event.toString());
 		broadcastNetworkEvent(event);
 	}

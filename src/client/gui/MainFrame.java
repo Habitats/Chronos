@@ -16,6 +16,11 @@ import client.model.LoginModel;
 
 
 
+/**
+ * The main GUI frame. Holds a layeredPane, each filled with it's individual view
+ * @author anon
+ *
+ */
 public class MainFrame extends JFrame {
 
 	private final ClientController controller;

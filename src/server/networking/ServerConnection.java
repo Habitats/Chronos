@@ -10,6 +10,11 @@ import chronos.Singleton;
 
 import events.NetworkEvent;
 
+/** 
+ * Handles the connection with a single client. Event client gets it's own connection on it's own thread.
+ * @author anon
+ *
+ */
 public class ServerConnection implements Runnable {
 
 	private final Socket clientSocket;

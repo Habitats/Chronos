@@ -9,6 +9,12 @@ import chronos.Person;
 import chronos.Singleton;
 
 
+/** 
+ * Handles all specific queries
+ * THIS IS THE ONLY CLASS WITH SQL IN IT!
+ * @author anon
+ *
+ */
 public class DatabaseQueries {
 
 	private final DatabaseController db;

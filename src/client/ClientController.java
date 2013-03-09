@@ -8,6 +8,11 @@ import events.AuthEvent;
 import events.NetworkEvent;
 import events.TestEvent;
 
+/**
+ * Handles the communication between GUI, models and server
+ * @author anon
+ * 
+ */
 public class ClientController implements Runnable {
 
 	private Client client;
@@ -22,7 +27,6 @@ public class ClientController implements Runnable {
 
 	/**
 	 * takes networkEvent FROM server, and evalutes it
-	 * 
 	 * @param event
 	 */
 	public void evaluateNetworkEvent(NetworkEvent event) {
@@ -31,7 +35,6 @@ public class ClientController implements Runnable {
 
 	/**
 	 * sends network event TO server
-	 * 
 	 * @param event
 	 */
 	public void sendNetworkEvent(NetworkEvent event) {
@@ -44,11 +47,12 @@ public class ClientController implements Runnable {
 		Thread clientThread = new Thread(client);
 		clientThread.start();
 
-		sendNetworkEvent();
+		sendTestEvent();
 	}
 
-	private void sendNetworkEvent() {
+	private void sendTestEvent() {
 		Scanner sc = new Scanner(System.in);
+		Singleton.log("Entering test event loop. Write messages to test the server connection:");
 		while (true) {
 			String msg = sc.nextLine();
 			client.sendNetworkEvent(new TestEvent(msg));

@@ -3,6 +3,11 @@ package chronos;
 import client.ClientController;
 import server.ServerController;
 
+/**
+ * Main class. Starts either a server or a client, depending on args input.
+ * @author anon
+ *
+ */
 public class Chronos {
 	public static void main(String[] args) {
 		new Chronos().run(args);
