@@ -16,9 +16,10 @@ import events.TestEvent;
 public class ClientController implements Runnable {
 
 	private Client client;
-
+	private MainFrame mainFrame;
+	
 	public ClientController() {
-		MainFrame mainFrame = new MainFrame(this);
+		mainFrame = new MainFrame(this);
 		mainFrame.buildGui();
 
 		client = new Client(Singleton.getInstance().getPort(), Singleton.getInstance().getHostname(), this);
@@ -57,5 +58,10 @@ public class ClientController implements Runnable {
 			String msg = sc.nextLine();
 			client.sendNetworkEvent(new TestEvent(msg));
 		}
+	}
+
+	public void addNewEventConfigWindow() {
+		//mainFrame.add????
+		
 	}
 }

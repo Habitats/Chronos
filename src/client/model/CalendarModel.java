@@ -13,7 +13,8 @@ public class CalendarModel extends ChronosModel {
 	public void fireNetworkEvent(NetworkEvent event) {
 	}
 
-	public void newEvent() {
+	public void newEventAction() {
+		super.controller.addNewEventConfigWindow();
 		
 	}
 }
