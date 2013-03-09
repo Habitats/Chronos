@@ -1,20 +1,26 @@
-package gui;
+package client.gui;
 
 import java.awt.GridBagLayout;
 
-import gui.view.CalendarWindow;
-import gui.view.LoginWindow;
-import gui.view.ChronosWindow;
 
 import javax.swing.JFrame;
 
-import model.CalendarModel;
-import model.ChronosModel;
-import model.LoginModel;
+import client.ClientController;
+import client.gui.view.CalendarWindow;
+import client.gui.view.ChronosWindow;
+import client.gui.view.LoginWindow;
+import client.model.CalendarModel;
+import client.model.ChronosModel;
+import client.model.LoginModel;
 
 
-import chronos.ClientController;
 
+
+/**
+ * The main GUI frame. Holds a layeredPane, each filled with it's individual view
+ * @author anon
+ *
+ */
 public class MainFrame extends JFrame {
 
 	private final ClientController controller;

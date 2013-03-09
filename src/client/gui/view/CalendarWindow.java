@@ -1,4 +1,4 @@
-package gui.view;
+package client.gui.view;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -15,9 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-import gui.GBC;
-import model.CalendarModel;
-import model.ChronosModel;
+import client.gui.GBC;
+import client.model.CalendarModel;
+import client.model.ChronosModel;
+
 
 public class CalendarWindow extends ChronosWindow {
 

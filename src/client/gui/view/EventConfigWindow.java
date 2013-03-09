@@ -1,6 +1,5 @@
-package gui.view;
+package client.gui.view;
 
-import gui.GBC;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -14,7 +13,9 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-import model.ChronosModel;
+import client.gui.GBC;
+import client.model.ChronosModel;
+
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 

@@ -1,6 +1,5 @@
-package gui.view;
+package client.gui.view;
 
-import gui.GBC;
 
 import java.awt.GridBagLayout;
 import java.awt.Label;
@@ -14,8 +13,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-import model.ChronosModel;
-import model.LoginModel;
+import client.gui.GBC;
+import client.model.ChronosModel;
+import client.model.LoginModel;
+
 
 public class LoginWindow extends ChronosWindow implements ActionListener {
 	protected LoginModel model;

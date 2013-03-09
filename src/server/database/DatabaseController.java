@@ -1,4 +1,4 @@
-package database;
+package server.database;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +11,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+/** 
+ * Handles the connection with the database server, and executes queries
+ * @author anon
+ *
+ */
 public class DatabaseController {
 	private String jdbcDriver;
 	private Connection conn;

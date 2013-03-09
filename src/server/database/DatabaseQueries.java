@@ -1,12 +1,20 @@
-package database;
+package server.database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import chronos.Person;
 import chronos.Singleton;
 
+
+/** 
+ * Handles all specific queries
+ * THIS IS THE ONLY CLASS WITH SQL IN IT!
+ * @author anon
+ *
+ */
 public class DatabaseQueries {
 
 	private final DatabaseController db;
