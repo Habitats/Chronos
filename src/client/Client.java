@@ -10,10 +10,11 @@ import chronos.Singleton;
 
 import events.NetworkEvent;
 
-/** 
+/**
  * Handles the clients connection with the server
+ * 
  * @author anon
- *
+ * 
  */
 public class Client implements Runnable {
 	private final String hostname;
@@ -45,9 +46,12 @@ public class Client implements Runnable {
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
 
+			// sends auth event to server on connect
+			clientController.sendAuthEvent();
+			
 			NetworkEvent event;
 			while ((event = (NetworkEvent) in.readObject()) != null) {
-//				Singleton.log("Client received: " + event.toString());
+				// Singleton.log("Client received: " + event.toString());
 				getClientController().evaluateNetworkEvent(event);
 			}
 		} catch (IOException | ClassNotFoundException e) {

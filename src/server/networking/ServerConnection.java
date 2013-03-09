@@ -39,7 +39,7 @@ public class ServerConnection implements Runnable {
 				synchronized (clientConnections) {
 					for (ClientConnection clientConnection : clientConnections) {
 						if (clientConnection.getClientSocket() == clientSocket) {
-							clientConnection.setPerson(event.getPerson());
+							clientConnection.setPerson(event.getSender());
 							break;
 						}
 					}

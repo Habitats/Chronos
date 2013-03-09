@@ -11,10 +11,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-/** 
+import chronos.Person;
+import chronos.Singleton;
+
+import events.AuthEvent;
+import events.NetworkEvent;
+
+/**
  * Handles the connection with the database server, and executes queries
+ * 
  * @author anon
- *
+ * 
  */
 public class DatabaseController {
 	private String jdbcDriver;
@@ -74,5 +81,12 @@ public class DatabaseController {
 
 	public void closeConnection() throws SQLException {
 		conn.close();
+	}
+
+	public NetworkEvent authenticateUser(AuthEvent event) {
+		Singleton.log("Authenticating " + event.getUsername());
+		event.setPerson(new Person(event.getUsername(), "bob"));
+		event.setAccessGranted(true);
+		return event;
 	}
 }

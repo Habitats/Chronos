@@ -23,13 +23,13 @@ abstract public class NetworkEvent implements Serializable {
 
 	ArrayList<?> results;
 	private EventType type;
-	private Person person;
+	protected Person person;
 
 	public NetworkEvent(EventType type) {
 		this.type = type;
 	}
 
-	public Person getPerson() {
+	public Person getSender() {
 		return person;
 	}
 

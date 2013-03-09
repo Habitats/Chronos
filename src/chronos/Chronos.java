@@ -4,7 +4,7 @@ import client.ClientController;
 import server.ServerController;
 
 /**
- * Main class. Starts either a server or a client, depending on args input.
+ * Main class. Starts either a server or a client, depending on args input. ALL HAIL THE CHRONOS.
  * @author anon
  *
  */
