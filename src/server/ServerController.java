@@ -1,7 +1,11 @@
 package server;
 
 import java.io.IOException;
+import java.util.HashMap;
 
+import com.mysql.jdbc.UpdatableResultSet;
+
+import chronos.Person;
 import chronos.Singleton;
 import events.AuthEvent;
 import events.CalEvent;
@@ -26,6 +30,9 @@ public class ServerController implements Runnable {
 		server = new Server(Singleton.getInstance().getPort(), this);
 	}
 
+	/**
+	 * Evaluates incoming event from client
+	 */
 	public void evaluateNetworkEvent(NetworkEvent event) {
 		Singleton.log("Server evaluating: " + event.toString());
 
@@ -35,8 +42,7 @@ public class ServerController implements Runnable {
 			echoNetworkEventToSender(event);
 			break;
 		case CALENDAR:
-			addCalEventToDb((CalEvent) event);
-			broadcastNetworkEvent(event);
+			evaluateCalEvent((CalEvent) event);
 			break;
 		case ROOM_BOOK:
 			event = dbController.getAvailableRooms((QueryEvent) event);
@@ -46,28 +52,81 @@ public class ServerController implements Runnable {
 			echoNetworkEventToSender(event);
 			break;
 		case USER_SEARCH:
+			event = dbController.getUsers((QueryEvent) event);
 			echoNetworkEventToSender(event);
 			break;
 		}
 	}
 
-	private void addCalEventToDb(CalEvent event) {
+	/**
+	 * Further evaluation of calendar events
+	 */
+	private void evaluateCalEvent(CalEvent event) {
+		switch (event.getState()) {
+		case DELETE:
+			if (event.getSender().getUsername().toLowerCase().equals(event.getCreator().getUsername().toLowerCase()))
+				deleteCalEventForAllParticipants(event);
+			else {
+				deleteCalEventForSingleParticipan(event, event.getSender());
+			}
+
+			break;
+		case NEW:
+			addCalEventForParticipants(event);
+			break;
+		case UPDATE:
+			dbController.updateCalEvent(event, event.getSender());
+			break;
+		}
+		sendUpdateToAllParticipants(event.getParticipants());
+	}
+
+	/**
+	 * Updates the calendar for all participants on change. IE, specific
+	 * participants status (declined/accepted), new/deleted events etc
+	 * 
+	 * @param participants
+	 *            all paritcipants for a specific calendar event
+	 */
+	private void sendUpdateToAllParticipants(HashMap<String, Person> participants) {
+		for (String username : participants.keySet()) {
+			Person person = participants.get(username);
+			QueryEvent event = dbController.getCalEvents(person);
+			sendSingleNetworkEvent(event, person);
+		}
+	}
+
+	private void deleteCalEventForSingleParticipan(CalEvent event, Person sender) {
+		dbController.removeCalEvent(event, sender);
+	}
+
+	private void deleteCalEventForAllParticipants(CalEvent event) {
+		for (String username : event.getParticipants().keySet()) {
+			dbController.removeCalEvent(event, event.getParticipants().get(username));
+		}
+	}
+
+	private void addCalEventForParticipants(CalEvent event) {
 		for (String username : event.getParticipants().keySet()) {
 			dbController.addCalEvent(event, event.getParticipants().get(username));
 		}
 	}
 
-	private void echoNetworkEventToSender(NetworkEvent event) {
+	private void sendSingleNetworkEvent(NetworkEvent event, Person person) {
 		try {
 			for (ClientConnection clientConnection : server.getClientConnections()) {
-				if (clientConnection.getPerson().getUsername().toLowerCase().equals(event.getSender().getUsername().toLowerCase())) {
-					Singleton.log("Echoing event: " + event + " - Recepient: " + event.getSender().getUsername());
+				if (clientConnection.getPerson().getUsername().toLowerCase().equals(person.getUsername().toLowerCase())) {
+					Singleton.log("Echoing event: " + event + " - Recepient: " + person.getUsername());
 					clientConnection.getOut().writeObject(event);
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void echoNetworkEventToSender(NetworkEvent event) {
+		sendSingleNetworkEvent(event, event.getSender());
 	}
 
 	/**
