@@ -17,9 +17,9 @@ import chronos.Singleton;
  */
 public class DatabaseQueries {
 
-	private final DatabaseController db;
+	private final DatabaseConnection db;
 
-	public DatabaseQueries(DatabaseController db) {
+	public DatabaseQueries(DatabaseConnection db) {
 		this.db = db;
 	}
 

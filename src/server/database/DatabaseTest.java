@@ -22,7 +22,7 @@ public class DatabaseTest {
 
 	private void run() {
 		Singleton.getInstance().enableLog();
-		DatabaseController db = new DatabaseController();
+		DatabaseConnection db = new DatabaseConnection();
 		DatabaseQueries queries = new DatabaseQueries(db);
 
 		db.initialize();

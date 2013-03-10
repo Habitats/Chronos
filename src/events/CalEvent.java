@@ -22,9 +22,12 @@ public class CalEvent extends NetworkEvent {
 	private Date start;
 	private int duration;
 	private CalEventType type;
+	private final Person creator;
 
-	public CalEvent(Date start, int duration) {
+	public CalEvent(Date start, int duration, Person creator) {
 		super(EventType.CALENDAR);
+		setState(CalEventType.NEW);
+		this.creator = creator;
 		this.start = start;
 		this.duration = duration;
 		participants = new HashMap<String, Person>();
@@ -65,6 +68,10 @@ public class CalEvent extends NetworkEvent {
 
 	public int getDuration() {
 		return duration;
+	}
+
+	public Person getCreator() {
+		return creator;
 	}
 
 }

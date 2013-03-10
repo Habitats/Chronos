@@ -45,7 +45,7 @@ public class ClientController implements Runnable {
 			sendTestEvent();
 			break;
 		case LOGIN:
-			person = ((AuthEvent) event).getSender();
+			setPerson(((AuthEvent) event).getSender());
 			loggedIn = true;
 			sendTestEvent();
 			break;
@@ -79,7 +79,7 @@ public class ClientController implements Runnable {
 		Scanner sc = new Scanner(System.in);
 		Singleton.log("Entering test event loop. Write messages to test the server connection:");
 		String msg = sc.nextLine();
-		client.sendNetworkEvent(new TestEvent(msg, person));
+		client.sendNetworkEvent(new TestEvent(msg, getSelf()));
 	}
 
 	private void sendCalEvent() {
@@ -87,6 +87,14 @@ public class ClientController implements Runnable {
 		Person bob = new Person("bob");
 		Person carl = new Person("carl");
 		Person lisa = new Person("lisa");
-		CalEvent calEvent = new CalEvent(date, 5).addParticipant(bob, carl, lisa);
+		CalEvent calEvent = new CalEvent(date, 5, getSelf()).addParticipant(bob, carl, lisa);
+	}
+
+	public Person getSelf() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }
