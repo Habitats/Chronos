@@ -6,6 +6,7 @@ import chronos.Singleton;
 import events.AuthEvent;
 import events.CalEvent;
 import events.NetworkEvent;
+import events.QueryEvent;
 import server.database.DatabaseController;
 import server.networking.ClientConnection;
 import server.networking.Server;
@@ -34,9 +35,11 @@ public class ServerController implements Runnable {
 			echoNetworkEventToSender(event);
 			break;
 		case CALENDAR:
+			addCalEventToDb((CalEvent) event);
 			broadcastNetworkEvent(event);
 			break;
 		case ROOM_BOOK:
+			event = dbController.getAvailableRooms((QueryEvent) event);
 			echoNetworkEventToSender(event);
 			break;
 		case TEST:
@@ -45,6 +48,12 @@ public class ServerController implements Runnable {
 		case USER_SEARCH:
 			echoNetworkEventToSender(event);
 			break;
+		}
+	}
+
+	private void addCalEventToDb(CalEvent event) {
+		for (String username : event.getParticipants().keySet()) {
+			dbController.addCalEvent(event, event.getParticipants().get(username));
 		}
 	}
 

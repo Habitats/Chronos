@@ -1,6 +1,6 @@
 package events;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import chronos.Person;
@@ -12,19 +12,31 @@ import chronos.Person;
  * @author anon
  * 
  */
-public class CalEvent extends NetworkEvent{
+public class CalEvent extends NetworkEvent {
+	public enum CalEventType {
+		UPDATE, NEW, DELETE;
+	}
+
 	HashMap<String, Person> participants;
 
-	public CalEvent() {
+	private Date start;
+	private int duration;
+	private CalEventType type;
+
+	public CalEvent(Date start, int duration) {
 		super(EventType.CALENDAR);
+		this.start = start;
+		this.duration = duration;
 		participants = new HashMap<String, Person>();
 	}
 
-	public CalEvent addParticipant(Person person) {
-		participants.put(person.getUsername(), person);
+	public CalEvent addParticipant(Person... person) {
+		for (int i = 0; i < person.length; i++)
+			participants.put(person[i].getUsername(), person[i]);
 		return this;
 	}
 
+	@Override
 	public String toString() {
 		String people = null;
 		for (String person : participants.keySet()) {
@@ -34,8 +46,25 @@ public class CalEvent extends NetworkEvent{
 			people = people.subSequence(0, people.length() - 3).toString();
 		return "[CalEvent] Participants: " + people;
 	}
-	
+
 	public HashMap<String, Person> getParticipants() {
 		return participants;
-}
+	}
+
+	public void setState(CalEventType type) {
+		this.type = type;
+	}
+
+	public CalEventType getState() {
+		return type;
+	}
+
+	public Date getStart() {
+		return start;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
 }

@@ -18,6 +18,7 @@ public class TestEvent extends NetworkEvent {
 		this.msg = msg;
 	}
 
+	@Override
 	public String toString() {
 		return "[TestEvent] Message: " + msg;
 	}

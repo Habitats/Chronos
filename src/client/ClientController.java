@@ -1,5 +1,6 @@
 package client;
 
+import java.util.Date;
 import java.util.Scanner;
 
 import chronos.Person;
@@ -8,7 +9,6 @@ import client.gui.MainFrame;
 import events.AuthEvent;
 import events.CalEvent;
 import events.NetworkEvent;
-import events.NetworkEvent.EventType;
 import events.TestEvent;
 
 /**
@@ -83,6 +83,10 @@ public class ClientController implements Runnable {
 	}
 
 	private void sendCalEvent() {
-		NetworkEvent calEvent = new CalEvent();
+		Date date = new Date();
+		Person bob = new Person("bob");
+		Person carl = new Person("carl");
+		Person lisa = new Person("lisa");
+		CalEvent calEvent = new CalEvent(date, 5).addParticipant(bob, carl, lisa);
 	}
 }

@@ -9,13 +9,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Properties;
 
 import chronos.Person;
 import chronos.Singleton;
 
 import events.AuthEvent;
-import events.NetworkEvent;
+import events.CalEvent;
+import events.QueryEvent;
 
 /**
  * Handles the connection with the database server, and executes queries
@@ -23,7 +25,7 @@ import events.NetworkEvent;
  * @author anon
  * 
  */
-public class DatabaseController {
+public class DatabaseController implements DatabaseControllerInterface {
 	private String jdbcDriver;
 	private Connection conn;
 	private String url;
@@ -83,10 +85,52 @@ public class DatabaseController {
 		conn.close();
 	}
 
-	public NetworkEvent authenticateUser(AuthEvent event) {
+	@Override
+	public AuthEvent authenticateUser(AuthEvent event) {
 		Singleton.log("Authenticating " + event.getUsername());
 		event.setPerson(new Person(event.getUsername(), "bob"));
 		event.setAccessGranted(true);
 		return event;
+	}
+
+	@Override
+	public QueryEvent getAvailableRooms(QueryEvent event) {
+		return null;
+	}
+
+	@Override
+	public QueryEvent getUsers(QueryEvent event) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void getCalEvents(Person person) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void getNewCalEvents(Person person) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addCalEvent(CalEvent event, Person person) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateCalEvent(CalEvent event, Person person) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Date lastLoggedIn(Person person) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

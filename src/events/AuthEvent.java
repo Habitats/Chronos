@@ -20,6 +20,7 @@ public class AuthEvent extends NetworkEvent {
 		this.password = password;
 	}
 
+	@Override
 	public String toString() {
 		return "[AuthEvent] Username: " + username + " - Password: " + password + (accessGranted ? " - Acessgranted!" : "");
 	}

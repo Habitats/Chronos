@@ -37,6 +37,7 @@ abstract public class NetworkEvent implements Serializable {
 		this.person = person;
 	}
 
+	@Override
 	public String toString() {
 		return String.format("Network Event with type: %s, from person: %s", type.name(), person.toString());
 	}
