@@ -15,7 +15,6 @@ public class DatabaseTest {
 	public static void main(String[] args) {
 
 		System.out.println("test");
-		System.out.println("test av ssh");
 
 		new DatabaseTest().run();
 	}
@@ -27,10 +26,10 @@ public class DatabaseTest {
 
 		db.initialize();
 
-		String user = "bob";
+		String user = "gunnar";
 		queries.addUser(user, null, null);
 		queries.updateUser(user, "passord", "nyttpw");
-		queries.removeUser(user);
+		//queries.removeUser(user);
 
 		ArrayList<String[]> users = new ArrayList<String[]>();
 
