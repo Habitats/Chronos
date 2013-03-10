@@ -7,12 +7,9 @@ import chronos.Person;
 
 /**
  * Wrapper class for all events sent to server.
- * 
- * @author anon
- * 
  */
 abstract public class NetworkEvent implements Serializable {
-	private static final long serialVersionUID = 4077361285383168257L;
+	protected static final long serialVersionUID = 4077361285383168257L;
 
 	public enum EventType {
 		LOGIN, //

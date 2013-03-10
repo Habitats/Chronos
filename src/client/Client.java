@@ -10,9 +10,7 @@ import events.NetworkEvent;
 
 /**
  * Handles the clients connection with the server
- * 
- * @author anon
- * 
+
  */
 public class Client implements Runnable {
 	private final String hostname;

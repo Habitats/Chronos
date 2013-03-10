@@ -9,7 +9,6 @@ import chronos.Person;
 
 /** 
  * Used to identify the different socket streams. Acts as a link between Person and Client.
- * @author anon
  *
  */
 public class ClientConnection {

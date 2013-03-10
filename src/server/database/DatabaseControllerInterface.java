@@ -20,7 +20,6 @@ public interface DatabaseControllerInterface {
 
 	/**
 	 * Get all calendar events in the DB for a given person
-	 * @return 
 	 */
 	public QueryEvent getCalEvents(Person person);
 

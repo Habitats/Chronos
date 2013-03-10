@@ -14,8 +14,6 @@ import java.util.Properties;
 /**
  * Handles the connection with the database server, and executes queries
  * 
- * @author anon
- * 
  */
 public class DatabaseConnection {
 

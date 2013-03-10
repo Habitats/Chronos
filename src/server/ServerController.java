@@ -3,8 +3,6 @@ package server;
 import java.io.IOException;
 import java.util.HashMap;
 
-import com.mysql.jdbc.UpdatableResultSet;
-
 import chronos.Person;
 import chronos.Singleton;
 import events.AuthEvent;
@@ -17,9 +15,6 @@ import server.networking.Server;
 
 /**
  * Handles communication between the server and DB
- * 
- * @author anon
- * 
  */
 public class ServerController implements Runnable {
 	private Server server;
@@ -131,8 +126,6 @@ public class ServerController implements Runnable {
 
 	/**
 	 * Broadcasts the networkEvent to selected participants
-	 * 
-	 * @param event
 	 */
 	private void broadcastNetworkEvent(NetworkEvent event) {
 		for (ClientConnection clientConnection : server.getClientConnections()) {

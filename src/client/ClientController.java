@@ -13,9 +13,7 @@ import events.TestEvent;
 
 /**
  * Handles the communication between GUI, models and server
- * 
- * @author anon
- * 
+
  */
 public class ClientController implements Runnable {
 

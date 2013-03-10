@@ -8,9 +8,6 @@ import chronos.Person;
 /**
  * Calendar event used for all calendar related thing (update, delete, add etc).
  * Holds a list over all participants (if any)
- * 
- * @author anon
- * 
  */
 public class CalEvent extends NetworkEvent {
 	public enum CalEventType {
