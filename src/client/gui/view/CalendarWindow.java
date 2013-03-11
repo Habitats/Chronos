@@ -11,12 +11,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import client.gui.GBC;
+import client.gui.GBC.Align;
+import client.gui.view.CalendarWindowHelper.BoxPanel;
+import client.gui.view.CalendarWindowHelper.CalLabel;
+import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
+import client.gui.view.CalendarWindowHelper.DayPanel;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
 
@@ -25,20 +30,19 @@ public class CalendarWindow extends ChronosWindow {
 
 	private CalendarModel model;
 	JButton newEventButton;
-	JButton prevButton;
-	JButton nextButton;
+	ChangeWeekButton prevButton;
+	ChangeWeekButton nextButton;
 	JScrollPane eventsPane;
-	JPanel eventsPanel;
+	BoxPanel eventsPanel;
 	JScrollPane calendarPane;
-	JPanel calendarPanel;
-	JPanel mondayPanel;
-	JPanel tuesdayPanel;
-	JPanel wednesdayPanel;
-	JPanel thursdayPanel;
-	JPanel fridayPanel;
-	JPanel saturdayPanel;
-	JPanel sundayPanel;
-	JPanel othersCalPanel;
+	DayPanel mondayPanel;
+	DayPanel tuesdayPanel;
+	DayPanel wednesdayPanel;
+	DayPanel thursdayPanel;
+	DayPanel fridayPanel;
+	DayPanel saturdayPanel;
+	DayPanel sundayPanel;
+	BoxPanel othersCalPanel;
 	JScrollPane othersCalPane;
 
 	public CalendarWindow(ChronosModel model) {
@@ -48,61 +52,111 @@ public class CalendarWindow extends ChronosWindow {
 		GridBagLayout gbl = new GridBagLayout();
 		this.setLayout(gbl);
 		
+		int i = 0;
+		
 		newEventButton = new JButton("New event");
 		newEventButton.setPreferredSize(new Dimension(140,30));
-		add(newEventButton, new GBC(0,0));
+		add(newEventButton, new GBC(i,0));
 		
-		eventsPane = new JScrollPane();
+		eventsPanel = new BoxPanel();
+		
+		CalLabel eventsLbl = new CalLabel("Events");
+		
+		eventsPane = new JScrollPane(eventsPanel);
+		eventsPane.setColumnHeaderView(eventsLbl);
 		eventsPane.setPreferredSize(new Dimension(140, 250));
 		eventsPane.setMinimumSize(new Dimension(140, 250));
-		add(eventsPane, new GBC(0,3));
+		add(eventsPane, new GBC(i,3));
 		
-		othersCalPane = new JScrollPane();
+		othersCalPanel = new BoxPanel();
+		
+		CalLabel othersLbl = new CalLabel("Others");
+		
+		othersCalPane = new JScrollPane(othersCalPanel);
+		othersCalPane.setColumnHeaderView(othersLbl);
 		othersCalPane.setPreferredSize(new Dimension(140, 250));
 		othersCalPane.setMinimumSize(new Dimension(140, 250));
-		add(othersCalPane, new GBC(0,4));
+		add(othersCalPane, new GBC(i,4));
 		
-		mondayPanel = new JPanel();
-		mondayPanel.setPreferredSize(new Dimension(140,500));
-		mondayPanel.setMinimumSize(new Dimension(140, 250));
-		mondayPanel.setBackground(Color.white);
-		add(mondayPanel, new GBC(3,3).setSpan(1, 2));
+
+		i++;
+		i++;
+		i++;
 		
-		tuesdayPanel = new JPanel();
-		tuesdayPanel.setPreferredSize(new Dimension(140,500));
-		tuesdayPanel.setMinimumSize(new Dimension(140, 250));
-		tuesdayPanel.setBackground(Color.white);
-		add(tuesdayPanel, new GBC(4,3).setSpan(1, 2));
 		
-		wednesdayPanel = new JPanel();
-		wednesdayPanel.setPreferredSize(new Dimension(140,500));
-		wednesdayPanel.setMinimumSize(new Dimension(140, 250));
-		wednesdayPanel.setBackground(Color.white);
-		add(wednesdayPanel, new GBC(5,3).setSpan(1, 2));
+		mondayPanel = new DayPanel();
+		add(mondayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
 		
-		thursdayPanel = new JPanel();
-		thursdayPanel.setPreferredSize(new Dimension(140,500));
-		thursdayPanel.setMinimumSize(new Dimension(140, 250));
-		thursdayPanel.setBackground(Color.white);
-		add(thursdayPanel, new GBC(6,3).setSpan(1, 2));
+		JLabel mondayLbl = new CalLabel("Monday");
+		add(mondayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
 		
-		fridayPanel = new JPanel();
-		fridayPanel.setPreferredSize(new Dimension(140,500));
-		fridayPanel.setMinimumSize(new Dimension(140, 250));
-		fridayPanel.setBackground(Color.white);
-		add(fridayPanel, new GBC(7,3).setSpan(1, 2));
+		i++;
 		
-		saturdayPanel = new JPanel();
-		saturdayPanel.setPreferredSize(new Dimension(140,500));
-		saturdayPanel.setMinimumSize(new Dimension(140, 250));
-		saturdayPanel.setBackground(Color.white);
-		add(saturdayPanel, new GBC(8,3).setSpan(1, 2));
+		tuesdayPanel = new DayPanel();
+		add(tuesdayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
 		
-		sundayPanel = new JPanel();
-		sundayPanel.setPreferredSize(new Dimension(140,500));
-		sundayPanel.setMinimumSize(new Dimension(140, 250));
-		sundayPanel.setBackground(Color.white);
-		add(sundayPanel, new GBC(9,3).setSpan(1, 2));
+		JLabel tuesdayLbl = new CalLabel("Tuesday");
+		add(tuesdayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
+		
+		i++;
+		
+		wednesdayPanel = new DayPanel();
+		add(wednesdayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
+		
+		JLabel wednesdayLbl = new CalLabel("Wednesday");
+		add(wednesdayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
+		
+		prevButton = new ChangeWeekButton("<");
+		add(prevButton, new GBC(i,0).setAnchor(GridBagConstraints.EAST).setFill(GridBagConstraints.NONE));
+		
+		i++;
+		
+		thursdayPanel = new DayPanel();
+		add(thursdayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
+		
+		JLabel thursdayLbl = new CalLabel("Thursday");
+		add(thursdayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
+		
+		JLabel weekNumberLbl = new CalLabel("Week ##");
+		add(weekNumberLbl, new GBC(i, 0).setAnchor(GridBagConstraints.CENTER));
+		
+		i++;
+		
+		fridayPanel = new DayPanel();
+		add(fridayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
+		
+		JLabel fridayLbl = new CalLabel("Friday");
+		add(fridayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
+		
+		nextButton = new ChangeWeekButton(">");
+		add(nextButton, new GBC(i,0).setAnchor(GridBagConstraints.WEST).setFill(GridBagConstraints.NONE));
+		
+		i++;
+		
+		saturdayPanel = new DayPanel();
+		add(saturdayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
+		
+		JLabel saturdayLbl = new CalLabel("Saturday");
+		add(saturdayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
+		
+		CalLabel dateLbl = new CalLabel("feb. 25 - mar 3. 2013");
+		add(dateLbl, new GBC(i,0).setSpan(2, 1));
+		
+		i++;
+		
+		sundayPanel = new DayPanel();
+		add(sundayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
+		
+		JLabel sundayLbl = new CalLabel("Sunday");
+		add(sundayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
+		
+		JCheckBox box1 = new JCheckBox("Patrick");
+		othersCalPanel.add(box1);
+		JCheckBox box2 = new JCheckBox("Patrick");
+		othersCalPanel.add(box2);
+		JCheckBox box3 = new JCheckBox("Patrick");
+		othersCalPanel.add(box3);
+		
 
 	}
 
