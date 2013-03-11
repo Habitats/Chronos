@@ -4,6 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import chronos.Person;
 import chronos.Singleton;
@@ -104,29 +107,58 @@ public class DatabaseQueries {
 		}
 		return users;
 	}
+	
 	public void addEvent(CalEvent evt){
-		String insertQuery = "insert into avtale (tittel,starttid,varighet,beskrivelse,eier) values (?,?,?,?,?)";
+		String insertQuery = "insert into avtale (avtaleID,tittel,starttid,varighet,beskrivelse,eier) values (?,?,?,?,?,?);";
 		PreparedStatement ps;
+		boolean addedAvtale = false;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
 			try {
-				ps.setString(1,evt.getTitle());
-				ps.setString(2,""+evt.getStart().getTime());
-				ps.setString(3,""+evt.getDuration());
-				ps.setString(4,evt.getDescription());
-				ps.setString(5,evt.getCreator().getUsername());
+				ps.setString(1,""+evt.getTimestamp());
+				ps.setString(2,evt.getTitle());
+				ps.setString(3,""+evt.getStart().getTime());
+				ps.setString(4,""+evt.getDuration());
+				ps.setString(5,evt.getDescription());
+				ps.setString(6,evt.getCreator().getUsername());
 				ps.addBatch();
+				Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+						" and " + evt.getDuration() + " and " + evt.getDescription());
 			} catch (SQLException e) {
 				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
 						" and " + evt.getDuration() + " and " + evt.getDescription());
 			}
 			ps.executeBatch();
 			ps.close();
-			Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
-					" and " + evt.getDuration() + " and " + evt.getDescription());
+			addedAvtale = true;
 		}catch (SQLException e) {
-			Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+			Singleton.log("error executing: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
 						" and " + evt.getDuration() + " and " + evt.getDescription());
+			addedAvtale = false;
+		}
+		if (addedAvtale) {
+			insertQuery = "insert into innkallelse (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
+			try {
+				ps = db.makeBatchUpdate(insertQuery);
+				for (Person p :  evt.getParticipants().values()) {
+					try {
+						p.setStatus(Person.Status.WAITING);
+						ps.setString(1, p.getUsername());
+						ps.setString(2, ""+evt.getTimestamp());
+						ps.setString(3, null);
+						ps.setString(4,""+p.getStatus().ordinal());
+						ps.addBatch();
+						Singleton.log("successfully added participant: " + p.getUsername());
+					} catch (SQLException e) {
+						Singleton.log("error participant: " + p.getUsername());
+						e.printStackTrace();
+					}
+				}
+				ps.executeBatch();
+				ps.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 
