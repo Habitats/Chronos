@@ -136,6 +136,10 @@ public class DatabaseQueries {
 						" and " + evt.getDuration() + " and " + evt.getDescription());
 			addedAvtale = false;
 		}
+		
+		/**
+		 * If the apointment is added sucessfully to the database, the participants are added and connected.
+		 * */
 		if (addedAvtale) {
 			insertQuery = "insert into innkallelse (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
 			try {
