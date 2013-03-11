@@ -5,12 +5,17 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import chronos.Person;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
@@ -18,6 +23,7 @@ import client.gui.view.CalendarWindowHelper.BoxPanel;
 import client.gui.view.CalendarWindowHelper.CalLabel;
 import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
 import client.gui.view.CalendarWindowHelper.DayPanel;
+import client.gui.view.CalendarWindowHelper.PersonCheckBox;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
 
@@ -135,26 +141,37 @@ public class CalendarWindow extends ChronosWindow {
 		JLabel sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
-		JCheckBox box1 = new JCheckBox("Patrick");
-		othersCalPanel.add(box1);
-		JCheckBox box2 = new JCheckBox("Patrick");
-		othersCalPanel.add(box2);
-		JCheckBox box3 = new JCheckBox("Patrick");
-		othersCalPanel.add(box3);
-
 	}
 
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (CalendarModel) model;
 	}
+	
+	public void addOtherPersons(ArrayList<Person> persons) {
+		for (Person person : persons) {
+			PersonCheckBox box = new PersonCheckBox(person);
+			box.addItemListener(new CheckBoxListener());
+			othersCalPanel.add(box);
+		}
+	}
 
 	public class NewEventListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			getFrame().getEventConfigWindow().clearModel();
+			//getFrame().getEventConfigWindow().clearModel();
 			getFrame().getEventConfigWindow().setVisible(true);
 		}
+	}
+	public class CheckBoxListener implements ItemListener {
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
 	}
 }

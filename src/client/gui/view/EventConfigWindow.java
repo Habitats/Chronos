@@ -11,7 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
+import javax.swing.JButton;
 
 import client.gui.GBC;
 import client.gui.MainFrame;
@@ -22,7 +22,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	JTextField eventName, eventDescription;
 	JList participantList;
 	JCheckBox alert;
-	JToggleButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
+	JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
 	Dimension button = new Dimension(50, 20);
 
 	public EventConfigWindow(ChronosModel model,MainFrame frame) {
@@ -35,13 +35,13 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		participantList = new JList<>();
 		eventDescription = new JTextField("Description");
 		alert = new JCheckBox();
-		addParticipantButton = new JToggleButton("Add participant");
-		deleteParticipantButton = new JToggleButton("Delete participant");
-		bookRoomButton = new JToggleButton("Book room");
-		editButton = new JToggleButton("Edit");
-		deleteButton = new JToggleButton("Delete");
-		applyButton = new JToggleButton("Apply");
-		cancelButton = new JToggleButton("Cancel");
+		addParticipantButton = new JButton("Add participant");
+		deleteParticipantButton = new JButton("Delete participant");
+		bookRoomButton = new JButton("Book room");
+		editButton = new JButton("Edit");
+		deleteButton = new JButton("Delete");
+		applyButton = new JButton("Apply");
+		cancelButton = new JButton("Cancel");
 
 		eventName.setColumns(20);
 		eventName.setMaximumSize(new Dimension(80, 20));
