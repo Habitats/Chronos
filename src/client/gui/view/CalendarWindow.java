@@ -30,20 +30,10 @@ public class CalendarWindow extends ChronosWindow {
 
 	private CalendarModel model;
 	private JButton newEventButton;
-	private ChangeWeekButton prevButton;
-	private ChangeWeekButton nextButton;
-	private JScrollPane eventsPane;
-	private BoxPanel eventsPanel;
-	private JScrollPane calendarPane;
-	private DayPanel mondayPanel;
-	private DayPanel tuesdayPanel;
-	private DayPanel wednesdayPanel;
-	private DayPanel thursdayPanel;
-	private DayPanel fridayPanel;
-	private DayPanel saturdayPanel;
-	private DayPanel sundayPanel;
-	private BoxPanel othersCalPanel;
-	private JScrollPane othersCalPane;
+	private ChangeWeekButton prevButton, nextButton;
+	private JScrollPane eventsPane, othersCalPane;
+	private BoxPanel eventsPanel, othersCalPanel;
+	private DayPanel mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel, sundayPanel;
 
 	public CalendarWindow(ChronosModel model) {
 		setModel(model);
