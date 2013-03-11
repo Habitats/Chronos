@@ -1,20 +1,15 @@
 package client.gui.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 
 import client.gui.GBC;
 import client.gui.GBC.Align;
@@ -29,21 +24,11 @@ import client.model.ChronosModel;
 public class CalendarWindow extends ChronosWindow {
 
 	private CalendarModel model;
-	JButton newEventButton;
-	ChangeWeekButton prevButton;
-	ChangeWeekButton nextButton;
-	JScrollPane eventsPane;
-	BoxPanel eventsPanel;
-	JScrollPane calendarPane;
-	DayPanel mondayPanel;
-	DayPanel tuesdayPanel;
-	DayPanel wednesdayPanel;
-	DayPanel thursdayPanel;
-	DayPanel fridayPanel;
-	DayPanel saturdayPanel;
-	DayPanel sundayPanel;
-	BoxPanel othersCalPanel;
-	JScrollPane othersCalPane;
+	private JButton newEventButton;
+	private ChangeWeekButton prevButton, nextButton;
+	private JScrollPane eventsPane, othersCalPane;
+	private BoxPanel eventsPanel, othersCalPanel;
+	private DayPanel mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel, sundayPanel;
 
 	public CalendarWindow(ChronosModel model) {
 		setModel(model);
@@ -56,6 +41,7 @@ public class CalendarWindow extends ChronosWindow {
 		
 		newEventButton = new JButton("New event");
 		newEventButton.setPreferredSize(new Dimension(140,30));
+		newEventButton.setMinimumSize(new Dimension(140,30));
 		add(newEventButton, new GBC(i,0));
 		
 		eventsPanel = new BoxPanel();

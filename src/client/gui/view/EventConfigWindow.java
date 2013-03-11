@@ -20,43 +20,56 @@ import client.model.ChronosModel;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
-	protected JTextField EventName, EventDescription;
-	protected JList ParticipantList;
-	protected JCheckBox Alert;
-	protected JToggleButton AddParticipantButton, DeleteParticipantButton, BookRoomButton, EditButton, DeleteButton, ApplyButton, CancelButton;
+	JTextField eventName, eventDescription;
+	JList participantList;
+	JCheckBox alert;
+	JToggleButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
+	Dimension button = new Dimension(50,20);
 	
 	//public EventConfigWindow(ChronosModel model) {
 	public EventConfigWindow() {
 		setLayout(new GridBagLayout());
-		EventName = new JTextField("Eventname");
-		EventDescription = new JTextField("Description");
-		ParticipantList = new JList<>();
-		Alert = new JCheckBox();
-		AddParticipantButton = new JToggleButton("Add participant");
-		DeleteParticipantButton = new JToggleButton("Delete participant");
-		BookRoomButton = new JToggleButton("Book room");
-		EditButton = new JToggleButton("Edit");
-		DeleteButton = new JToggleButton("Delete");
-		ApplyButton = new JToggleButton("Apply");
-		CancelButton = new JToggleButton("Cancel");
+		eventName = new JTextField("Eventname");
+		participantList = new JList<>();
+		eventDescription = new JTextField("Description");
+		alert = new JCheckBox();
+		addParticipantButton = new JToggleButton("Add participant");
+		deleteParticipantButton = new JToggleButton("Delete participant");
+		bookRoomButton = new JToggleButton("Book room");
+		editButton = new JToggleButton("Edit");
+		deleteButton = new JToggleButton("Delete");
+		applyButton = new JToggleButton("Apply");
+		cancelButton = new JToggleButton("Cancel");
 		
-		EventName.setColumns(20);
-		EventName.setMaximumSize(new Dimension(80,20));
-		EventDescription.setPreferredSize(new Dimension(100,100));
-		ParticipantList.setPreferredSize(new Dimension(100,100));
+		eventName.setColumns(20);
+		eventName.setMaximumSize(new Dimension(80,20));
+		eventDescription.setPreferredSize(new Dimension(100,100));
+		participantList.setPreferredSize(new Dimension(100,100));
+		editButton.setPreferredSize(button);
+		editButton.setMinimumSize(new Dimension(50,20));
+		deleteButton.setPreferredSize(button);
 		
 		
-		add(EventName, new GBC(0,0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
-		add(ParticipantList, new GBC(1,0).setSpan(1,4));
-		add(AddParticipantButton, new GBC(2,0));
-		add(EventDescription, new GBC(0,1));
-		add(DeleteParticipantButton, new GBC(1,1));
-		add(new Label("Alert:"), new GBC(1,2));
-		add(Alert, new GBC(2,2));
-		add(EditButton, new GBC(0,2));
-		add(DeleteButton, new GBC(1,2));
-		add(ApplyButton, new GBC(2,2));
-		add(CancelButton, new GBC(3,2));
+		
+		add(eventName, new GBC(0,0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2,1));
+		add(eventDescription, new GBC(0,1).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2,6));
+		add(editButton, new GBC(0,7));
+		add(deleteButton, new GBC(1,7));
+		
+		add(new Label("Dag og tid blablabla."), new GBC(2,0).setSpan(2,1));
+		add(participantList, new GBC(2,1).setSpan(1,6));
+		add(applyButton, new GBC(2,7));
+		
+		add(new Label("Enable alert 15 min before event."), new GBC(3,1));
+		add(new Label("Alert:"), new GBC(3,2));
+		add(alert, new GBC(3,2));
+		add(new Label("Room no."), new GBC(3,3));
+		add(bookRoomButton, new GBC(3,4));
+		add(addParticipantButton, new GBC(3,5));
+		add(deleteParticipantButton, new GBC(3,6));
+		add(cancelButton, new GBC(3,7));
+		
+		
 
 		//setModel(model);
 		
