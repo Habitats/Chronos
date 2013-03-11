@@ -29,21 +29,21 @@ import client.model.ChronosModel;
 public class CalendarWindow extends ChronosWindow {
 
 	private CalendarModel model;
-	JButton newEventButton;
-	ChangeWeekButton prevButton;
-	ChangeWeekButton nextButton;
-	JScrollPane eventsPane;
-	BoxPanel eventsPanel;
-	JScrollPane calendarPane;
-	DayPanel mondayPanel;
-	DayPanel tuesdayPanel;
-	DayPanel wednesdayPanel;
-	DayPanel thursdayPanel;
-	DayPanel fridayPanel;
-	DayPanel saturdayPanel;
-	DayPanel sundayPanel;
-	BoxPanel othersCalPanel;
-	JScrollPane othersCalPane;
+	private JButton newEventButton;
+	private ChangeWeekButton prevButton;
+	private ChangeWeekButton nextButton;
+	private JScrollPane eventsPane;
+	private BoxPanel eventsPanel;
+	private JScrollPane calendarPane;
+	private DayPanel mondayPanel;
+	private DayPanel tuesdayPanel;
+	private DayPanel wednesdayPanel;
+	private DayPanel thursdayPanel;
+	private DayPanel fridayPanel;
+	private DayPanel saturdayPanel;
+	private DayPanel sundayPanel;
+	private BoxPanel othersCalPanel;
+	private JScrollPane othersCalPane;
 
 	public CalendarWindow(ChronosModel model) {
 		setModel(model);
