@@ -1,6 +1,7 @@
 package client.gui.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -10,12 +11,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import client.gui.GBC;
+import client.gui.GBC.Align;
+import client.gui.view.CalendarWindowHelper.BoxPanel;
+import client.gui.view.CalendarWindowHelper.CalLabel;
+import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
+import client.gui.view.CalendarWindowHelper.DayPanel;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
 
@@ -24,169 +30,134 @@ public class CalendarWindow extends ChronosWindow {
 
 	private CalendarModel model;
 	JButton newEventButton;
-	JButton prevButton;
-	JButton nextButton;
+	ChangeWeekButton prevButton;
+	ChangeWeekButton nextButton;
 	JScrollPane eventsPane;
-	JPanel eventsPanel;
+	BoxPanel eventsPanel;
 	JScrollPane calendarPane;
-	JPanel calendarPanel;
-	JPanel mondayPanel;
-	JPanel tuesdayPanel;
-	JPanel wednesdayPanel;
-	JPanel thursdayPanel;
-	JPanel fridayPanel;
-	JPanel saturdayPanel;
-	JPanel sundayPanel;
-	JPanel othersCalPanel;
+	DayPanel mondayPanel;
+	DayPanel tuesdayPanel;
+	DayPanel wednesdayPanel;
+	DayPanel thursdayPanel;
+	DayPanel fridayPanel;
+	DayPanel saturdayPanel;
+	DayPanel sundayPanel;
+	BoxPanel othersCalPanel;
+	JScrollPane othersCalPane;
 
 	public CalendarWindow(ChronosModel model) {
 		setModel(model);
 		
 		
-		setForeground(Color.LIGHT_GRAY);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{124, 0, 282, 385, 0};
-		gridBagLayout.rowHeights = new int[]{38, 207, 207, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
+		GridBagLayout gbl = new GridBagLayout();
+		this.setLayout(gbl);
+		
+		int i = 0;
 		
 		newEventButton = new JButton("New event");
-		newEventButton.addActionListener(new NewEventListener());
-		add(newEventButton, new GBC(0,0).setFill(GridBagConstraints.BOTH).setInsets(0, 0, 5, 5));
+		newEventButton.setPreferredSize(new Dimension(140,30));
+		add(newEventButton, new GBC(i,0));
 		
-		prevButton = new JButton("<");
-		GridBagConstraints gbc_prevButton = new GridBagConstraints();
-		gbc_prevButton.anchor = GridBagConstraints.EAST;
-		gbc_prevButton.insets = new Insets(0, 0, 5, 5);
-		gbc_prevButton.gridx = 2;
-		gbc_prevButton.gridy = 0;
-		add(prevButton, gbc_prevButton);
+		eventsPanel = new BoxPanel();
 		
-		nextButton = new JButton(">");
-		GridBagConstraints gbc_nextButton = new GridBagConstraints();
-		gbc_nextButton.anchor = GridBagConstraints.WEST;
-		gbc_nextButton.insets = new Insets(0, 0, 5, 0);
-		gbc_nextButton.gridx = 3;
-		gbc_nextButton.gridy = 0;
-		add(nextButton, gbc_nextButton);
+		CalLabel eventsLbl = new CalLabel("Events");
 		
-		eventsPane = new JScrollPane();
-		GridBagConstraints gbc_events = new GridBagConstraints();
-		gbc_events.fill = GridBagConstraints.BOTH;
-		gbc_events.insets = new Insets(0, 0, 5, 5);
-		gbc_events.gridx = 0;
-		gbc_events.gridy = 1;
-		add(eventsPane, gbc_events);
+		eventsPane = new JScrollPane(eventsPanel);
+		eventsPane.setColumnHeaderView(eventsLbl);
+		eventsPane.setPreferredSize(new Dimension(140, 250));
+		eventsPane.setMinimumSize(new Dimension(140, 250));
+		add(eventsPane, new GBC(i,3));
 		
-		eventsPanel = new JPanel();
-		eventsPanel.setBackground(Color.WHITE);
-		eventsPane.setViewportView(eventsPanel);
-		eventsPanel.setLayout(new BoxLayout(eventsPanel, BoxLayout.Y_AXIS));
+		othersCalPanel = new BoxPanel();
 		
-		JLabel lblEvents = new JLabel("Events");
-		lblEvents.setHorizontalAlignment(SwingConstants.CENTER);
-		eventsPane.setColumnHeaderView(lblEvents);
+		CalLabel othersLbl = new CalLabel("Others");
 		
-		calendarPane = new JScrollPane();
-		GridBagConstraints gbc_calendarPane = new GridBagConstraints();
-		gbc_calendarPane.fill = GridBagConstraints.BOTH;
-		gbc_calendarPane.gridheight = 2;
-		gbc_calendarPane.gridwidth = 2;
-		gbc_calendarPane.gridx = 2;
-		gbc_calendarPane.gridy = 1;
-		add(calendarPane, gbc_calendarPane);
+		othersCalPane = new JScrollPane(othersCalPanel);
+		othersCalPane.setColumnHeaderView(othersLbl);
+		othersCalPane.setPreferredSize(new Dimension(140, 250));
+		othersCalPane.setMinimumSize(new Dimension(140, 250));
+		add(othersCalPane, new GBC(i,4));
 		
-		calendarPanel = new JPanel();
-		calendarPane.setViewportView(calendarPanel);
-		calendarPanel.setBackground(Color.LIGHT_GRAY);
-		calendarPanel.setLayout(new GridLayout(0, 7, 0, 0));
+
+		i++;
+		i++;
+		i++;
 		
-		mondayPanel = new JPanel();
-		mondayPanel.setBackground(Color.WHITE);
-		calendarPanel.add(mondayPanel);
-		mondayPanel.setLayout(new BoxLayout(mondayPanel, BoxLayout.Y_AXIS));
 		
-		tuesdayPanel = new JPanel();
-		tuesdayPanel.setBackground(Color.WHITE);
-		calendarPanel.add(tuesdayPanel);
-		tuesdayPanel.setLayout(new BoxLayout(tuesdayPanel, BoxLayout.Y_AXIS));
+		mondayPanel = new DayPanel();
+		add(mondayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
 		
-		wednesdayPanel = new JPanel();
-		wednesdayPanel.setBackground(Color.WHITE);
-		calendarPanel.add(wednesdayPanel);
-		wednesdayPanel.setLayout(new BoxLayout(wednesdayPanel, BoxLayout.Y_AXIS));
+		JLabel mondayLbl = new CalLabel("Monday");
+		add(mondayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
 		
-		thursdayPanel = new JPanel();
-		thursdayPanel.setBackground(Color.WHITE);
-		calendarPanel.add(thursdayPanel);
-		thursdayPanel.setLayout(new BoxLayout(thursdayPanel, BoxLayout.Y_AXIS));
+		i++;
 		
-		fridayPanel = new JPanel();
-		fridayPanel.setBackground(Color.WHITE);
-		calendarPanel.add(fridayPanel);
-		fridayPanel.setLayout(new BoxLayout(fridayPanel, BoxLayout.Y_AXIS));
+		tuesdayPanel = new DayPanel();
+		add(tuesdayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
 		
-		saturdayPanel = new JPanel();
-		saturdayPanel.setBackground(Color.WHITE);
-		calendarPanel.add(saturdayPanel);
-		saturdayPanel.setLayout(new BoxLayout(saturdayPanel, BoxLayout.Y_AXIS));
+		JLabel tuesdayLbl = new CalLabel("Tuesday");
+		add(tuesdayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
 		
-		sundayPanel = new JPanel();
-		sundayPanel.setBackground(Color.WHITE);
-		calendarPanel.add(sundayPanel);
-		sundayPanel.setLayout(new BoxLayout(sundayPanel, BoxLayout.Y_AXIS));
+		i++;
 		
-		JPanel tid = new JPanel();
-		calendarPane.setRowHeaderView(tid);
-		tid.setLayout(new BoxLayout(tid, BoxLayout.Y_AXIS));
+		wednesdayPanel = new DayPanel();
+		add(wednesdayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
 		
-		JLabel lblNewLabel = new JLabel("00.00");
-		tid.add(lblNewLabel);
+		JLabel wednesdayLbl = new CalLabel("Wednesday");
+		add(wednesdayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
 		
-		JPanel weekdays = new JPanel();
-		calendarPane.setColumnHeaderView(weekdays);
-		weekdays.setLayout(new GridLayout(0, 7, 0, 0));
+		prevButton = new ChangeWeekButton("<");
+		add(prevButton, new GBC(i,0).setAnchor(GridBagConstraints.EAST).setFill(GridBagConstraints.NONE));
 		
-		JLabel lblMonday = new JLabel("Monday");
-		weekdays.add(lblMonday);
+		i++;
 		
-		JLabel lblTuesday = new JLabel("Tuesday");
-		weekdays.add(lblTuesday);
+		thursdayPanel = new DayPanel();
+		add(thursdayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
 		
-		JLabel lblWednesday = new JLabel("Wednesday");
-		weekdays.add(lblWednesday);
+		JLabel thursdayLbl = new CalLabel("Thursday");
+		add(thursdayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
 		
-		JLabel lblThursday = new JLabel("Thursday");
-		weekdays.add(lblThursday);
+		JLabel weekNumberLbl = new CalLabel("Week ##");
+		add(weekNumberLbl, new GBC(i, 0).setAnchor(GridBagConstraints.CENTER));
 		
-		JLabel lblFriday = new JLabel("Friday");
-		weekdays.add(lblFriday);
+		i++;
 		
-		JLabel lblSaturday = new JLabel("Saturday");
-		weekdays.add(lblSaturday);
+		fridayPanel = new DayPanel();
+		add(fridayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
 		
-		JLabel lblSunday = new JLabel("Sunday");
-		weekdays.add(lblSunday);
+		JLabel fridayLbl = new CalLabel("Friday");
+		add(fridayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
 		
-		JScrollPane calendars = new JScrollPane();
-		GridBagConstraints gbc_calendars = new GridBagConstraints();
-		gbc_calendars.fill = GridBagConstraints.BOTH;
-		gbc_calendars.insets = new Insets(0, 0, 0, 5);
-		gbc_calendars.gridx = 0;
-		gbc_calendars.gridy = 2;
-		add(calendars, gbc_calendars);
+		nextButton = new ChangeWeekButton(">");
+		add(nextButton, new GBC(i,0).setAnchor(GridBagConstraints.WEST).setFill(GridBagConstraints.NONE));
 		
-		othersCalPanel = new JPanel();
-		othersCalPanel.setBackground(Color.WHITE);
-		calendars.setViewportView(othersCalPanel);
-		othersCalPanel.setLayout(new BoxLayout(othersCalPanel, BoxLayout.Y_AXIS));
+		i++;
 		
-		JLabel lblOthers = new JLabel("Others");
-		lblOthers.setLabelFor(calendars);
-		lblOthers.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOthers.setBounds(65, 291, 99, 16);
-		calendars.setColumnHeaderView(lblOthers);
+		saturdayPanel = new DayPanel();
+		add(saturdayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
+		
+		JLabel saturdayLbl = new CalLabel("Saturday");
+		add(saturdayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
+		
+		CalLabel dateLbl = new CalLabel("feb. 25 - mar 3. 2013");
+		add(dateLbl, new GBC(i,0).setSpan(2, 1));
+		
+		i++;
+		
+		sundayPanel = new DayPanel();
+		add(sundayPanel, new GBC(i,3,Align.NONE).setSpan(1, 2));
+		
+		JLabel sundayLbl = new CalLabel("Sunday");
+		add(sundayLbl, new GBC(i,2).setAnchor(GridBagConstraints.CENTER));
+		
+		JCheckBox box1 = new JCheckBox("Patrick");
+		othersCalPanel.add(box1);
+		JCheckBox box2 = new JCheckBox("Patrick");
+		othersCalPanel.add(box2);
+		JCheckBox box3 = new JCheckBox("Patrick");
+		othersCalPanel.add(box3);
+		
+
 	}
 
 	@Override
@@ -197,9 +168,6 @@ public class CalendarWindow extends ChronosWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			model.newEventAction();
-			
 		}
 		
 	}
