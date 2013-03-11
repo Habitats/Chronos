@@ -20,7 +20,6 @@ import model.LoginModel;
 public class LoginWindow extends ChronosWindow implements ActionListener {
 	protected LoginModel model;
 	protected JTextField Username, Password;
-	protected String username, password;
 	protected JToggleButton LoginButton, CancelButton;
 
 	public LoginWindow(ChronosModel model) {
