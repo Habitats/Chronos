@@ -117,17 +117,17 @@ public class DatabaseQueries {
 				ps.setString(3,""+evt.getDuration());
 				ps.setString(4,evt.getDescription());
 				ps.addBatch();
-				
-				//Singleton.log();
 			} catch (SQLException e) {
-				//Singleton.log("error adding:);
-				e.printStackTrace();
+				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+						" and " + evt.getDuration() + " and " + evt.getDescription());
 			}
 			ps.executeBatch();
 			ps.close();
+			Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+					" and " + evt.getDuration() + " and " + evt.getDescription());
 		}catch (SQLException e) {
-			//Singleton.log("error adding:);
-			e.printStackTrace();
+			Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+						" and " + evt.getDuration() + " and " + evt.getDescription());
 		}
 	}
 
