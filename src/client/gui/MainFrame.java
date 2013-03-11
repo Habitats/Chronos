@@ -4,6 +4,7 @@ import java.awt.GridBagLayout;
 
 
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 
 import client.ClientController;
 import client.gui.view.CalendarWindow;
@@ -24,7 +25,10 @@ import client.model.LoginModel;
 public class MainFrame extends JFrame {
 
 	private final ClientController controller;
-
+	private JLayeredPane layers;
+	private ChronosModel loginModel;
+	private ChronosWindow loginWindow;
+	
 	public MainFrame(ClientController controller) {
 		this.controller = controller;
 		ChronosModel loginModel = new LoginModel(controller);
@@ -39,5 +43,6 @@ public class MainFrame extends JFrame {
 
 	// initialize the GUI here
 	public void buildGui() {
+		
 	}
 }

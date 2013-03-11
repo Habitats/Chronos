@@ -29,7 +29,4 @@ public class InvitationWindow extends ChronosWindow implements ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-
 }

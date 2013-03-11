@@ -12,9 +12,4 @@ public class CalendarModel extends ChronosModel {
 	@Override
 	public void fireNetworkEvent(NetworkEvent event) {
 	}
-
-	public void newEventAction() {
-		super.controller.addNewEventConfigWindow();
-		
-	}
 }
