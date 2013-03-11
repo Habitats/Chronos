@@ -1,6 +1,5 @@
 package server.database;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -30,7 +29,8 @@ public class DatabaseTest {
 
 		db.initialize();
 
-		CalEvent evt = new CalEvent(new Date(1991, 12, 15, 5, 30, 00), 3600, new Person("FooBar", "some user"));
+		CalEvent evt = new CalEvent("Foo",new Date(1991, 12, 15, 5, 30, 00), 3600, new Person("FooBar", "some user"));
+
 		System.out.println(""+evt.getStart().getTime());
 		evt.setDescription("No title");
 		evt.setTitle("Some event");

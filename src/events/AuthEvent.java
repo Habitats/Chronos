@@ -4,7 +4,6 @@ import chronos.Person;
 
 /**
  * Event used to authenitcate the user/client with the server/db
-
  */
 public class AuthEvent extends NetworkEvent {
 	private final String username;

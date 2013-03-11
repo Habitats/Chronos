@@ -9,11 +9,9 @@ import chronos.Person;
 import chronos.Singleton;
 import events.CalEvent;
 
-
-/** 
- * Handles all specific queries
- * THIS IS THE ONLY CLASS WITH SQL IN IT!
- *
+/**
+ * Handles all specific queries THIS IS THE ONLY CLASS WITH SQL IN IT!
+ * 
  */
 public class DatabaseQueries {
 

@@ -3,9 +3,6 @@ package chronos;
 /**
  * Global variables are stored here
  * http://en.wikipedia.org/wiki/Singleton_pattern
- * 
- * @author anon
- * 
  */
 public class Singleton {
 	private static Singleton instance;

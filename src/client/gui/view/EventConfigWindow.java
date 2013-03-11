@@ -2,6 +2,7 @@ package client.gui.view;
 
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -13,14 +14,15 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
+
+import chronos.Person;
 import client.gui.GBC;
 import client.model.ChronosModel;
-
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 	protected JTextField EventName, EventDescription;
-	protected JList ParticipantList;
+	JList ParticipantList;
 	protected JCheckBox Alert;
 	protected JToggleButton AddParticipantButton, DeleteParticipantButton, BookRoomButton, EditButton, DeleteButton, ApplyButton, CancelButton;
 	
@@ -29,7 +31,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		setLayout(new GridBagLayout());
 		EventName = new JTextField("Eventname");
 		EventDescription = new JTextField("Description");
-		ParticipantList = new JList<>();
+		ParticipantList = new JList<Person>();
 		Alert = new JCheckBox();
 		AddParticipantButton = new JToggleButton("Add participant");
 		DeleteParticipantButton = new JToggleButton("Delete participant");
@@ -41,8 +43,11 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		
 		EventName.setColumns(20);
 		EventDescription.setPreferredSize(new Dimension(20, 100));
+		ParticipantList.setPreferredSize(new Dimension(10,100));
 		
-		add(EventName, new GBC(0,0));
+		
+		
+		add(EventName, new GBC(0,0).setAnchor(GridBagConstraints.FIRST_LINE_START));
 		add(ParticipantList, new GBC(1,0));
 		add(AddParticipantButton, new GBC(2,0));
 		add(EventDescription, new GBC(0,1));
