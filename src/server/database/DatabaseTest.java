@@ -1,6 +1,5 @@
 package server.database;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 

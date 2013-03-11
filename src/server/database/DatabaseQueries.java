@@ -9,11 +9,9 @@ import chronos.Person;
 import chronos.Singleton;
 import events.CalEvent;
 
-
-/** 
- * Handles all specific queries
- * THIS IS THE ONLY CLASS WITH SQL IN IT!
- *
+/**
+ * Handles all specific queries THIS IS THE ONLY CLASS WITH SQL IN IT!
+ * 
  */
 public class DatabaseQueries {
 
@@ -106,27 +104,28 @@ public class DatabaseQueries {
 		}
 		return users;
 	}
-	public void addEvent(CalEvent evt){
+
+	public void addEvent(CalEvent evt) {
 		String insertQuery = "insert into avtale (tittel,starttid,varighet,beskrivelse) values (?,TO_DATE(?,'YYYY-MM-DD HH24:MI:SS'),?,?)";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
 			try {
-				ps.setString(1,"foobar");
-				ps.setString(2,""+evt.getStart());
-				ps.setString(3,""+evt.getDuration());
-				ps.setString(4,evt.getDescription());
+				ps.setString(1, "foobar");
+				ps.setString(2, "" + evt.getStart());
+				ps.setString(3, "" + evt.getDuration());
+				ps.setString(4, evt.getDescription());
 				ps.addBatch();
-				
-				//Singleton.log();
+
+				// Singleton.log();
 			} catch (SQLException e) {
-				//Singleton.log("error adding:);
+				// Singleton.log("error adding:);
 				e.printStackTrace();
 			}
 			ps.executeBatch();
 			ps.close();
-		}catch (SQLException e) {
-			//Singleton.log("error adding:);
+		} catch (SQLException e) {
+			// Singleton.log("error adding:);
 			e.printStackTrace();
 		}
 	}

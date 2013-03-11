@@ -13,7 +13,6 @@ import events.TestEvent;
 
 /**
  * Handles the communication between GUI, models and server
-
  */
 public class ClientController implements Runnable {
 
@@ -85,7 +84,7 @@ public class ClientController implements Runnable {
 		Person bob = new Person("bob");
 		Person carl = new Person("carl");
 		Person lisa = new Person("lisa");
-		CalEvent calEvent = new CalEvent(date, 5, getSelf()).addParticipant(bob, carl, lisa);
+		CalEvent calEvent = new CalEvent("test", date, 5, getSelf()).addParticipant(bob, carl, lisa);
 	}
 
 	public Person getSelf() {
