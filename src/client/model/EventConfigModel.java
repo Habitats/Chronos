@@ -9,4 +9,9 @@ public class EventConfigModel extends ChronosModel{
 		// TODO Auto-generated constructor stub
 	}
 
+	public void clearModel() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

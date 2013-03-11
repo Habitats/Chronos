@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
+import client.model.EventConfigModel;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
@@ -24,6 +25,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	JCheckBox alert;
 	JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
 	Dimension button = new Dimension(50, 20);
+	EventConfigModel model;
 
 	public EventConfigWindow(ChronosModel model,MainFrame frame) {
 		super(model,frame);
@@ -75,13 +77,16 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 	@Override
 	public void setModel(ChronosModel model) {
-
+		this.model = (EventConfigModel) model;
+	}
+	
+	public EventConfigModel getModel() {
+		return model;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public static void main(String[] args) {

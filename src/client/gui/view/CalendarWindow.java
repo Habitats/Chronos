@@ -26,6 +26,7 @@ import client.gui.view.CalendarWindowHelper.DayPanel;
 import client.gui.view.CalendarWindowHelper.PersonCheckBox;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
+import client.model.EventConfigModel;
 
 public class CalendarWindow extends ChronosWindow {
 
@@ -160,7 +161,7 @@ public class CalendarWindow extends ChronosWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//getFrame().getEventConfigWindow().clearModel();
+			((EventConfigWindow)getFrame().getEventConfigWindow()).getModel().clearModel();
 			getFrame().getEventConfigWindow().setVisible(true);
 		}
 	}
@@ -168,7 +169,9 @@ public class CalendarWindow extends ChronosWindow {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			// TODO Auto-generated method stub
+			if(e.getStateChange() == e.SELECTED){
+				
+			}
 			
 		}
 
