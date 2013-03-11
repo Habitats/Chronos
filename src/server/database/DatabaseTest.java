@@ -29,7 +29,9 @@ public class DatabaseTest {
 
 		db.initialize();
 
-		CalEvent evt = new CalEvent(new Date(1991, 12, 15, 5, 30, 00), 3600, new Person("Foo"));
+		CalEvent evt = new CalEvent("title",new Date(1991, 12, 15, 5, 30, 00), 3600, new Person("FooBar"));
+		System.out.println(""+evt.getStart().getTime());
+		evt.setDescription("No title");
 		queries.addEvent(evt);
 //		String user = "gunnar";
 //		queries.addUser(user, null, null);

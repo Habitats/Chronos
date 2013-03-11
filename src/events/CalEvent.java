@@ -16,6 +16,7 @@ public class CalEvent extends NetworkEvent {
 
 	HashMap<String, Person> participants;
 
+	private String Title;
 	private Date start;
 	private int duration;
 	private CalEventType type;

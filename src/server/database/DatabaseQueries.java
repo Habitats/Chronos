@@ -104,29 +104,28 @@ public class DatabaseQueries {
 		}
 		return users;
 	}
-
-	public void addEvent(CalEvent evt) {
-		String insertQuery = "insert into avtale (tittel,starttid,varighet,beskrivelse) values (?,TO_DATE(?,'YYYY-MM-DD HH24:MI:SS'),?,?)";
+	public void addEvent(CalEvent evt){
+		String insertQuery = "insert into avtale (tittel,starttid,varighet,beskrivelse) values (?,?,?,?)";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
 			try {
-				ps.setString(1, "foobar");
-				ps.setString(2, "" + evt.getStart());
-				ps.setString(3, "" + evt.getDuration());
-				ps.setString(4, evt.getDescription());
+				ps.setString(1,evt.getTitle());
+				ps.setString(2,""+evt.getStart().getTime());
+				ps.setString(3,""+evt.getDuration());
+				ps.setString(4,evt.getDescription());
 				ps.addBatch();
-
-				// Singleton.log();
 			} catch (SQLException e) {
-				// Singleton.log("error adding:);
-				e.printStackTrace();
+				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+						" and " + evt.getDuration() + " and " + evt.getDescription());
 			}
 			ps.executeBatch();
 			ps.close();
-		} catch (SQLException e) {
-			// Singleton.log("error adding:);
-			e.printStackTrace();
+			Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+					" and " + evt.getDuration() + " and " + evt.getDescription());
+		}catch (SQLException e) {
+			Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+						" and " + evt.getDuration() + " and " + evt.getDescription());
 		}
 	}
 
