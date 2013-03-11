@@ -105,7 +105,7 @@ public class DatabaseQueries {
 		return users;
 	}
 	public void addEvent(CalEvent evt){
-		String insertQuery = "insert into avtale (tittel,starttid,varighet,beskrivelse) values (?,?,?,?)";
+		String insertQuery = "insert into avtale (tittel,starttid,varighet,beskrivelse,eier) values (?,?,?,?,?)";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
@@ -114,6 +114,7 @@ public class DatabaseQueries {
 				ps.setString(2,""+evt.getStart().getTime());
 				ps.setString(3,""+evt.getDuration());
 				ps.setString(4,evt.getDescription());
+				ps.setString(5,evt.getCreator().getUsername());
 				ps.addBatch();
 			} catch (SQLException e) {
 				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
