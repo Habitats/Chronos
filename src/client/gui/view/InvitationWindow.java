@@ -12,10 +12,15 @@ import client.model.InvitationModel;
 
 
 public class InvitationWindow extends ChronosWindow implements ActionListener {
-	InvitationModel model;
-	JTextField EventName, EventDescription;
-	JToggleButton AcceptButton, DeclineButton;
-	Date EventDate;
+	
+	public InvitationWindow(ChronosModel model) {
+		setModel(model);
+	}
+
+	private InvitationModel model;
+	private JTextField EventName, EventDescription;
+	private JToggleButton AcceptButton, DeclineButton;
+	private Date EventDate;
 	
 
 	@Override
@@ -26,7 +31,6 @@ public class InvitationWindow extends ChronosWindow implements ActionListener {
 
 	@Override
 	public void setModel(ChronosModel model) {
-		// TODO Auto-generated method stub
-		
+		this.model = (InvitationModel) model;
 	}
 }
