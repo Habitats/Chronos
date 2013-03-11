@@ -21,11 +21,13 @@ public class CalEvent extends NetworkEvent {
 	private int duration;
 	private CalEventType type;
 	private final Person creator;
+	private final String title;
 	private String description;
 
-	public CalEvent(Date start, int duration, Person creator) {
+	public CalEvent(String title, Date start, int duration, Person creator) {
 		super(EventType.CALENDAR);
 		setState(CalEventType.NEW);
+		this.title = title;
 		this.creator = creator;
 		this.start = start;
 		this.duration = duration;
@@ -82,12 +84,6 @@ public class CalEvent extends NetworkEvent {
 	}
 
 	public String getTitle() {
-		return Title;
+		return title;
 	}
-
-	public void setTitle(String title) {
-		Title = title;
-	}
-
-	
 }
