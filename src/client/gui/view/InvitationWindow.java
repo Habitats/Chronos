@@ -7,13 +7,15 @@ import java.util.Date;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
+import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.InvitationModel;
 
 
 public class InvitationWindow extends ChronosWindow implements ActionListener {
 	
-	public InvitationWindow(ChronosModel model) {
+	public InvitationWindow(ChronosModel model,MainFrame frame) {
+		super(model,frame);
 		setModel(model);
 	}
 

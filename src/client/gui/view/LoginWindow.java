@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 import client.gui.GBC;
+import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.LoginModel;
 
@@ -23,8 +24,9 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	protected String username, password;
 	protected JToggleButton LoginButton, CancelButton;
 
-	public LoginWindow(ChronosModel model) {
+	public LoginWindow(ChronosModel model,MainFrame frame) {
 	//public LoginWindow() {
+		super(model, frame);
 		setLayout(new GridBagLayout());
 		Username = new JTextField();
 		Password = new JPasswordField();

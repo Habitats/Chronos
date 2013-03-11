@@ -15,5 +15,4 @@ public class QueryEvent extends NetworkEvent {
 	public void setResults(ArrayList<?> results) {
 		this.results = results;
 	}
-
 }

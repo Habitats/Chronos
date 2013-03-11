@@ -68,7 +68,7 @@ public class ClientController implements Runnable {
 	@Override
 	public void run() {
 		Thread clientThread = new Thread(client);
-		clientThread.start();
+//		clientThread.start();
 
 	}
 
