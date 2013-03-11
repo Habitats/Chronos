@@ -16,6 +16,7 @@ public class CalEvent extends NetworkEvent {
 
 	HashMap<String, Person> participants;
 
+	private String Title;
 	private Date start;
 	private int duration;
 	private CalEventType type;
@@ -78,6 +79,14 @@ public class CalEvent extends NetworkEvent {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getTitle() {
+		return Title;
+	}
+
+	public void setTitle(String title) {
+		Title = title;
 	}
 
 	
