@@ -8,8 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 import client.model.ChronosModel;
+import client.model.InvitationModel;
 
-import model.InvitationModel;
 
 public class InvitationWindow extends ChronosWindow implements ActionListener {
 	InvitationModel model;

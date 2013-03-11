@@ -2,6 +2,7 @@ package client.gui.view;
 
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -46,7 +47,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		
 		
 		
-		add(EventName, new GBC(0,0));
+		add(EventName, new GBC(0,0).setAnchor(GridBagConstraints.FIRST_LINE_START));
 		add(ParticipantList, new GBC(1,0));
 		add(AddParticipantButton, new GBC(2,0));
 		add(EventDescription, new GBC(0,1));
