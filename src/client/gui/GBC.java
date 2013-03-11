@@ -11,7 +11,7 @@ import java.awt.Insets;
 public class GBC extends GridBagConstraints {
 
 	public enum Align {
-		LEFT, RIGHT, MID, TIGHT, BOTTOM, LEFT_BOTTOM, MID_BOTTOM, RIGHT_BOTTOM, ALONE, FULL_WIDTH, FULL_WIDTH_BOTTOM;
+		LEFT, RIGHT, MID, TIGHT, BOTTOM, LEFT_BOTTOM, MID_BOTTOM, RIGHT_BOTTOM, ALONE, FULL_WIDTH, FULL_WIDTH_BOTTOM,NONE;
 	}
 
 	public GBC(int gridx, int gridy, Align align) {
@@ -33,6 +33,8 @@ public class GBC extends GridBagConstraints {
 				setInsets(b, b, b, b);
 			else if (align == Align.FULL_WIDTH_BOTTOM)
 				setInsets(b, b, b, b);
+			else if (align == Align.NONE)
+				setInsets(0,0,0,0);
 		}
 		setFill(BOTH);
 	}
