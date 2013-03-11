@@ -1,6 +1,6 @@
-package model;
+package client.model;
 
-import chronos.ClientController;
+import client.ClientController;
 import events.NetworkEvent;
 
 public class CalendarModel extends ChronosModel {
@@ -11,5 +11,10 @@ public class CalendarModel extends ChronosModel {
 
 	@Override
 	public void fireNetworkEvent(NetworkEvent event) {
+	}
+
+	public void newEventAction() {
+		super.controller.addNewEventConfigWindow();
+		
 	}
 }

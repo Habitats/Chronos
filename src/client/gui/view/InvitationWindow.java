@@ -1,4 +1,4 @@
-package gui.view;
+package client.gui.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +7,8 @@ import java.util.Date;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-import model.ChronosModel;
+import client.model.ChronosModel;
+
 import model.InvitationModel;
 
 public class InvitationWindow extends ChronosWindow implements ActionListener {

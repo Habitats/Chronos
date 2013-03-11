@@ -1,17 +1,25 @@
-package database;
+package server.database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import chronos.Person;
 import chronos.Singleton;
+import events.CalEvent;
 
+
+/** 
+ * Handles all specific queries
+ * THIS IS THE ONLY CLASS WITH SQL IN IT!
+ *
+ */
 public class DatabaseQueries {
 
-	private final DatabaseController db;
+	private final DatabaseConnection db;
 
-	public DatabaseQueries(DatabaseController db) {
+	public DatabaseQueries(DatabaseConnection db) {
 		this.db = db;
 	}
 
@@ -97,6 +105,30 @@ public class DatabaseQueries {
 			e.printStackTrace();
 		}
 		return users;
+	}
+	public void addEvent(CalEvent evt){
+		String insertQuery = "insert into avtale (tittel,starttid,varighet,beskrivelse) values (?,?,?,?)";
+		PreparedStatement ps;
+		try {
+			ps = db.makeBatchUpdate(insertQuery);
+			try {
+				ps.setString(1,evt.getTitle());
+				ps.setString(2,""+evt.getStart().getTime());
+				ps.setString(3,""+evt.getDuration());
+				ps.setString(4,evt.getDescription());
+				ps.addBatch();
+			} catch (SQLException e) {
+				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+						" and " + evt.getDuration() + " and " + evt.getDescription());
+			}
+			ps.executeBatch();
+			ps.close();
+			Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+					" and " + evt.getDuration() + " and " + evt.getDescription());
+		}catch (SQLException e) {
+			Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
+						" and " + evt.getDuration() + " and " + evt.getDescription());
+		}
 	}
 
 	private String processString(String str) {

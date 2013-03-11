@@ -1,6 +1,7 @@
-package model;
+package client.model;
 
-import chronos.ClientController;
+import chronos.Person;
+import client.ClientController;
 import events.AuthEvent;
 
 public class LoginModel extends ChronosModel {
@@ -10,6 +11,6 @@ public class LoginModel extends ChronosModel {
 	}
 
 	public void login(String username, String password) {
-		fireNetworkEvent(new AuthEvent(username, password));
+		fireNetworkEvent(new AuthEvent(new Person(username, null), password));
 	}
 }

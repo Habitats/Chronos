@@ -1,8 +1,18 @@
 package chronos;
 
+/**
+ * Global variables are stored here
+ * http://en.wikipedia.org/wiki/Singleton_pattern
+ * 
+ * @author anon
+ * 
+ */
 public class Singleton {
 	private static Singleton instance;
 	private boolean logEnabled;
+	private int port = 25000;
+	private String hostname = "localhost";
+	private String username;
 
 	private Singleton() {
 	}
@@ -28,5 +38,21 @@ public class Singleton {
 
 	public boolean logEnabled() {
 		return logEnabled;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public String getHostname() {
+		return hostname;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsersname(String username) {
+		this.username = username;
 	}
 }

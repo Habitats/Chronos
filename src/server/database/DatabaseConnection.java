@@ -1,4 +1,4 @@
-package database;
+package server.database;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,7 +11,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-public class DatabaseController {
+/**
+ * Handles the connection with the database server, and executes queries
+ * 
+ */
+public class DatabaseConnection {
+
 	private String jdbcDriver;
 	private Connection conn;
 	private String url;
@@ -19,7 +24,7 @@ public class DatabaseController {
 	private String password;
 	private Properties prop;
 
-	public DatabaseController() {
+	public DatabaseConnection() {
 		prop = loadConfig();
 	}
 
