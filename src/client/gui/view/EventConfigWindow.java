@@ -42,13 +42,13 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		CancelButton = new JToggleButton("Cancel");
 		
 		EventName.setColumns(20);
-		EventDescription.setPreferredSize(new Dimension(20, 100));
-		ParticipantList.setPreferredSize(new Dimension(10,100));
+		EventName.setMaximumSize(new Dimension(80,20));
+		EventDescription.setPreferredSize(new Dimension(100,100));
+		ParticipantList.setPreferredSize(new Dimension(100,100));
 		
 		
-		
-		add(EventName, new GBC(0,0).setAnchor(GridBagConstraints.FIRST_LINE_START));
-		add(ParticipantList, new GBC(1,0));
+		add(EventName, new GBC(0,0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
+		add(ParticipantList, new GBC(1,0).setSpan(1,4));
 		add(AddParticipantButton, new GBC(2,0));
 		add(EventDescription, new GBC(0,1));
 		add(DeleteParticipantButton, new GBC(1,1));
