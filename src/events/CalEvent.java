@@ -86,4 +86,9 @@ public class CalEvent extends NetworkEvent {
 	public String getTitle() {
 		return title;
 	}
+
+	public void setTitle(String title) {
+		Title = title;
+	}
+	
 }
