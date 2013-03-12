@@ -1,4 +1,4 @@
- package chronos;
+package chronos;
 
 import java.io.Serializable;
 
@@ -25,6 +25,10 @@ public class Person implements Serializable {
 		this.username = username;
 		this.name = name;
 		this.lastLoggedIn = lastLoggedIn;
+	}
+
+	public Person(String username, String name) {
+		this(username, name, 0);
 	}
 
 	public Person(String string) {

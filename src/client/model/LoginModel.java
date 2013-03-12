@@ -7,7 +7,7 @@ import events.AuthEvent;
 public class LoginModel extends ChronosModel {
 	String username;
 	char[] password;
-	
+
 	public LoginModel(ClientController controller) {
 		super(controller);
 	}

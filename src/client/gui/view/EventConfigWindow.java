@@ -17,6 +17,7 @@ import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
+import events.CalEvent;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
@@ -31,8 +32,8 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		super(model,frame);
 		setModel(model);
 		setVisible(false);
+
 		setLayout(new GridBagLayout());
-		
 		eventName = new JTextField("Eventname");
 		participantList = new JList<>();
 		eventDescription = new JTextField("Description");
@@ -71,8 +72,10 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		add(deleteParticipantButton, new GBC(3, 6));
 		add(cancelButton, new GBC(3, 7));
 
+		// setModel(model);
 
 	}
+
 
 	@Override
 	public void setModel(ChronosModel model) {

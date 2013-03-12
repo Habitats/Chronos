@@ -47,7 +47,6 @@ public class ClientController implements Runnable, ClientControllerInterface {
 			loggedIn = true;
 			sendTestEvent();
 			break;
-
 		}
 	}
 
