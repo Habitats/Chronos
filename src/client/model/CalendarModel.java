@@ -1,8 +1,12 @@
 package client.model;
 
+import java.util.ArrayList;
+
 import chronos.Person;
 import client.ClientController;
+import events.CalEvent;
 import events.NetworkEvent;
+import events.QueryEvent;
 
 public class CalendarModel extends ChronosModel {
 
@@ -26,13 +30,12 @@ public class CalendarModel extends ChronosModel {
 	public void fireNetworkEvent(NetworkEvent event) {
 	}
 
-	public void newEventBtnPushed() {
-		// super.controller
-
-	}
-
 	public void getPersonEvents(Person person) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void addEvents(QueryEvent queryEvent) {
+		ArrayList<CalEvent> calEvents = queryEvent.getResults();
 	}
 }

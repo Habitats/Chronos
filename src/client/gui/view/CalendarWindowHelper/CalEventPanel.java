@@ -21,7 +21,7 @@ public class CalEventPanel extends JPanel {
 	public CalEventPanel(CalEvent event) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(new JLabel(event.getTitle()));
-		this.add(new JLabel(DateManagement.getFormatted(event.getStart())));
+		this.add(new JLabel(DateManagement.getFormattedFull(event.getStart())));
 		this.setBackground(Color.pink);
 		this.setPreferredSize(new Dimension(130,50));
 		this.addMouseListener(new CalPanelMouseAdapter());

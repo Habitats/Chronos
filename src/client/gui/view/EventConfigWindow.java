@@ -75,13 +75,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		// setModel(model);
 
 	}
-	
-	public void setCalEvent(CalEvent event){
-	}
-	
-	public void clearModel(){
-		
-	}
+
 
 	@Override
 	public void setModel(ChronosModel model) {

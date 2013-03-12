@@ -20,6 +20,7 @@ import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
 import client.gui.view.CalendarWindowHelper.BoxPanel;
+import client.gui.view.CalendarWindowHelper.CalEventListPanel;
 import client.gui.view.CalendarWindowHelper.CalEventPanel;
 import client.gui.view.CalendarWindowHelper.CalLabel;
 import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
@@ -183,7 +184,7 @@ public class CalendarWindow extends ChronosWindow {
 			sundayPanel.add(panel);
 			break;
 		default:
-			othersCalPanel.add()
+			othersCalPanel.add(new CalEventListPanel(event));
 			break;
 		}
 	}
