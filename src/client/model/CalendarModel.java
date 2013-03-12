@@ -16,14 +16,9 @@ import events.QueryEvent.QueryType;
 
 public class CalendarModel extends ChronosModel {
 	
-	CalendarWindow calendarWindow;
-	ArrayList<Person> selectedPersonList;
-	ArrayList<CalEvent> calEventsList;
-	HashMap<Person, ArrayList<CalEvent>> personEvents;
-
 	public enum Weekday {
 		MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY, NONE;
-
+		
 		public static Weekday getWeekday(int ordinal) {
 			for (Weekday weekday : Weekday.values()) {
 				if (weekday.ordinal() == ordinal)
@@ -32,9 +27,15 @@ public class CalendarModel extends ChronosModel {
 			return null;
 		}
 	}
+	
+	private CalendarWindow calendarWindow;
+	private HashMap<Person, ArrayList<CalEvent>> selectedPersonsEvents;
+
 
 	public CalendarModel(ClientController controller) {
 		super(controller);
+		selectedPersonsEvents = new HashMap<Person,ArrayList<CalEvent>>();
+		
 		
 	}
 
@@ -42,10 +43,15 @@ public class CalendarModel extends ChronosModel {
 	public void fireNetworkEvent(NetworkEvent event) {
 		
 	}
+	
+	/**
+	 * method that adds events for a specified person, the person lies in the QueryEvent
+	 * @param queryEvent
+	 */
 
 	public void addEvents(QueryEvent queryEvent) {
 		ArrayList<CalEvent> calEvents  = (ArrayList<CalEvent>) queryEvent.getResults();
-		personEvents.put(queryEvent.getPerson(), calEvents);
+		selectedPersonsEvents.put(queryEvent.getPerson(), calEvents);
 		addEventsArrayList(calEvents);
 	}
 	
@@ -82,21 +88,12 @@ public class CalendarModel extends ChronosModel {
 		
 	}
 	public void removeSelectedPerson(Person person) {
-		personEvents.remove(person);
-		
-//		selectedPersonList.remove(person);
-//		for (CalEvent calEvent : calEventsList) {
-//			for (Person selectedPerson : selectedPersonList) {
-//				if(!(selectedPerson.equals(calEvent.getParticipants().get(selectedPerson.getUsername())))){
-//					calEventsList.remove(calEvent);
-//				}
-//			}
-//		}
+		selectedPersonsEvents.remove(person);
 	}
 	public void update() {
 		calendarWindow.removeEvents();
-		for (Person personKeys : personEvents.keySet()) {
-			addEventsArrayList(personEvents.get(personKeys));
+		for (Person personKeys : selectedPersonsEvents.keySet()) {
+			addEventsArrayList(selectedPersonsEvents.get(personKeys));
 		}
 	}
 }
