@@ -20,7 +20,6 @@ public class QueryEvent extends NetworkEvent {
 	public QueryEvent(EventType type, QueryType queryType) {
 		super(type);
 		setQueryType(queryType);
-		this.person = person;
 	}
 	public QueryEvent(EventType type, Person person) {
 		super(type);

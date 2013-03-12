@@ -187,6 +187,16 @@ public class CalendarWindow extends ChronosWindow {
 			break;
 		}
 	}
+	public void removeEvents() {
+		mondayPanel.removeAll();
+		tuesdayPanel.removeAll();
+		wednesdayPanel.removeAll();
+		thursdayPanel.removeAll();
+		fridayPanel.removeAll();
+		saturdayPanel.removeAll();
+		sundayPanel.removeAll();
+		eventsPanel.removeAll();
+	}
 
 	public class NewEventListener implements ActionListener {
 
@@ -210,15 +220,14 @@ public class CalendarWindow extends ChronosWindow {
 			
 		}
 	}
-	public void removeEvents() {
-		mondayPanel.removeAll();
-		tuesdayPanel.removeAll();
-		wednesdayPanel.removeAll();
-		thursdayPanel.removeAll();
-		fridayPanel.removeAll();
-		saturdayPanel.removeAll();
-		sundayPanel.removeAll();
-		eventsPanel.removeAll();
+	public class PrevButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 }
