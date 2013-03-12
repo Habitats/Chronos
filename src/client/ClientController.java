@@ -69,7 +69,6 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	public void run() {
 		Thread clientThread = new Thread(client);
 //		clientThread.start();
-
 	}
 
 	private void sendTestEvent() {
@@ -84,7 +83,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		Person bob = new Person("bob");
 		Person carl = new Person("carl");
 		Person lisa = new Person("lisa");
-		CalEvent calEvent = new CalEvent("test", date, 5, getSelf()).addParticipant(bob, carl, lisa);
+		CalEvent calEvent = new CalEvent("test", date, 5, getSelf(), null).addParticipant(bob, carl, lisa);
 	}
 
 	public Person getSelf() {
