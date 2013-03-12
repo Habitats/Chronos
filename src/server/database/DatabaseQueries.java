@@ -186,7 +186,7 @@ public class DatabaseQueries {
 	 * @param afterLastLogin
 	 * @return ArrayList<CalEvent>
 	 */
-	public ArrayList<CalEvent> getEventByParticipant(Person per, boolean afterLastLogin) {
+	public ArrayList<CalEvent> getEventsByParticipant(Person per, boolean afterLastLogin) {
 		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
 		ResultSet rs;
 		String param;
@@ -222,10 +222,10 @@ public class DatabaseQueries {
 
 	}
 
-	private HashMap<String, Person> getParticipantsByEventId(long id) {
+	public HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
-		String query = "SELECT username,name,lastLoggedIn " +
+		String query = "SELECT person.username, name, lastLoggedIn " +
 				"FROM person, participants " +
 				"WHERE participants.event_ID = "+ id + " AND participants.username = person.username";
 		try {
