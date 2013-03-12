@@ -30,14 +30,26 @@ public class DatabaseTest {
 		DatabaseQueries queries = new DatabaseQueries(db);
 
 		db.initialize();
+
+		/**
+		 * AddUser
+		 */
 //		queries.addUser("sexyboy","derp", "kyrre", 1829000);
 //		queries.addUser("childlover","derp", "hallvard", 1829000);
-		Person p = queries.getUsers().get(0);
-		System.out.println(p);
-		CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999, p, "Dette er en test event");
-		evt.addParticipant(queries.getUsers().get(1));
-		queries.addEvent(evt);
 
+		
+		/**
+		 * AddEvent
+		 */
+//		Person p = queries.getUsers().get(0);
+//		System.out.println(p);
+//		CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999, p, "Dette er en test event");
+//		evt.addParticipant(queries.getUsers().get(1));
+//		queries.addEvent(evt);
+
+		/**
+		 * GetUsers
+		 */
 //		ArrayList<Person> userInDb = queries.getUsers();
 //		Singleton.log("Users in db:");
 //		for (Person person : userInDb) {
@@ -46,13 +58,11 @@ public class DatabaseTest {
 		
 		/**
 		 * Add multiple Users
-		 * */
-		
+		 */
 		ArrayList<Person> peeps = new ArrayList<Person>();
-		peeps.add(new Person("yolo", "derp", "Yolo Swaggins", 133333337));
-		peeps.add(new Person("Kyra", "derp", "Kyyra, kom no sa!", new Date().getTime()));
-		
-		queries.addEvent(evt);
+		peeps.add(new Person("yolo", "Yolo Swaggins", 133333337));
+		peeps.add(new Person("Kyra", "Kyyra, kom no sa!", new Date().getTime()));
+		queries.addMultipleUsers(peeps);
 		
 		
 	}

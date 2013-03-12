@@ -19,7 +19,6 @@ public class Person implements Serializable {
 	private String username;
 	private Status status;
 	private long lastLoggedIn;
-	private String password;
 
 	public Person(String username, String name, long lastLoggedIn) {
 		this.username = username;
@@ -62,13 +61,5 @@ public class Person implements Serializable {
 
 	public void setLastLoggedIn(long lastLoggedIn) {
 		this.lastLoggedIn = lastLoggedIn;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 }

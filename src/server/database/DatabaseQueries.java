@@ -74,13 +74,13 @@ public class DatabaseQueries {
 			for (Person user : users) {
 				try {
 					ps.setString(1, user.getUsername());
-					ps.setString(2, user.getPassword());
+					ps.setString(2, "derp");
 					ps.setString(3, user.getName());
 					ps.setString(4, ""+user.getLastLoggedIn());
 					ps.addBatch();
-					Singleton.log("successfully added: " + user.getUsername() + " with fields " + user.getPassword() + " and " + user.getName());
+					Singleton.log("successfully added: " + user.getUsername() + " with name" + user.getName());
 				} catch (SQLException e) {
-					Singleton.log("error adding: " + user.getUsername() + " with fields " + user.getPassword() + " and " + user.getName());
+					Singleton.log("error adding: " + user.getUsername() + " with name" + user.getName());
 				}
 			}
 			ps.executeBatch();
