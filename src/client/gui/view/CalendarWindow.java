@@ -144,7 +144,6 @@ public class CalendarWindow extends ChronosWindow {
 
 		JLabel sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
-
 	}
 
 	@Override
@@ -160,12 +159,31 @@ public class CalendarWindow extends ChronosWindow {
 		}
 	}
 	public void addEvent(CalEvent event, Weekday weekday) {
+		CalEventPanel panel = new CalEventPanel(event);
 		switch (weekday) {
 		case MONDAY:
-			mondayPanel.add(new CalEventPanel(event));
+			mondayPanel.add(panel);
 			break;
-
+		case TUESDAY:
+			tuesdayPanel.add(panel);
+			break;
+		case WEDNESDAY:
+			wednesdayPanel.add(panel);
+			break;
+		case THURSDAY:
+			thursdayPanel.add(panel);
+			break;
+		case FRIDAY:
+			fridayPanel.add(panel);
+			break;
+		case SATURDAY:
+			saturdayPanel.add(panel);
+			break;
+		case SUNDAY:
+			sundayPanel.add(panel);
+			break;
 		default:
+			othersCalPanel.add()
 			break;
 		}
 	}
