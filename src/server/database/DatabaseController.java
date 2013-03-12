@@ -48,7 +48,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getNewCalEvents(Person person) {
-		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventByParticipant(person, true));
+		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
 	}
 
 	@Override
@@ -83,6 +83,6 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getOldEvents(Person person) {
-		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventByParticipant(person, true));
+		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
 	}
 }

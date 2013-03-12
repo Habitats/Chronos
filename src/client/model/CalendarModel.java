@@ -30,11 +30,13 @@ public class CalendarModel extends ChronosModel {
 	
 	private CalendarWindow calendarWindow;
 	private HashMap<Person, ArrayList<CalEvent>> selectedPersonsEvents;
+	private int currentDisplayedWeek;
 
 
 	public CalendarModel(ClientController controller) {
 		super(controller);
 		selectedPersonsEvents = new HashMap<Person,ArrayList<CalEvent>>();
+		currentDisplayedWeek = DateManagement.getCurrentWeek();
 		
 		
 	}
@@ -56,11 +58,10 @@ public class CalendarModel extends ChronosModel {
 	}
 	
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents) {
-		int currentWeek = DateManagement.getCurrentWeek();
 		for (CalEvent calEvent : calEvents) {
 			Date startDate = calEvent.getStart();
 			int eventWeek = DateManagement.getWeek(startDate);
-			if(currentWeek == eventWeek){
+			if(currentDisplayedWeek == eventWeek){
 				calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate));
 			} else {
 				calendarWindow.addEvent(calEvent, Weekday.NONE);
@@ -83,7 +84,7 @@ public class CalendarModel extends ChronosModel {
 		controller.sendQueryEvent(event);
 	}
 
-	public void setSelectedPerson(Person person) {
+	public void addSelectedPerson(Person person) {
 		getPersonEvents(person);
 		
 	}
@@ -95,5 +96,12 @@ public class CalendarModel extends ChronosModel {
 		for (Person personKeys : selectedPersonsEvents.keySet()) {
 			addEventsArrayList(selectedPersonsEvents.get(personKeys));
 		}
+	}
+
+	public void nextWeek() {
+		currentDisplayedWeek++;
+	}
+	public void prevWeek() {
+		currentDisplayedWeek--;
 	}
 }

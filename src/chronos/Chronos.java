@@ -22,6 +22,7 @@ public class Chronos {
 				startClient();
 		
 		
+		
 		Singleton.getInstance().enableLog();
 		startClient();
 //		startServer();
