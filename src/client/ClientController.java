@@ -9,12 +9,13 @@ import client.gui.MainFrame;
 import events.AuthEvent;
 import events.CalEvent;
 import events.NetworkEvent;
+import events.QueryEvent;
 import events.TestEvent;
 
 /**
  * Handles the communication between GUI, models and server
  */
-public class ClientController implements Runnable {
+public class ClientController implements Runnable, ClientControllerInterface {
 
 	private Client client;
 	private Person person;
@@ -93,5 +94,8 @@ public class ClientController implements Runnable {
 
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+	public void sendQueryEvent(QueryEvent event) {
 	}
 }
