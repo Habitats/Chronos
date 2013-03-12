@@ -37,27 +37,19 @@ public class DateManagement {
 	}
 
 	public static int getCurrentWeek() {
+		return getWeek(new Date());
+	}
+
+	/**
+	 * method that returns which week the date-parameter is in.
+	 */
+	public static int getWeek(Date start) {
 		Calendar cal = Calendar.getInstance();
 		cal.setFirstDayOfWeek(Calendar.MONDAY);
 
 		SimpleDateFormat format = new SimpleDateFormat("ww");
 		format.setCalendar(cal);
-		format.format(System.currentTimeMillis());
-
-		int week = Integer.parseInt(format.format(System.currentTimeMillis()));
-		return week;
-	}
-
-	/**
-	 * method that returns which week the date-parameter is in.
-	 * 
-	 * @param start
-	 * @return
-	 */
-	public static int getWeek(Date start) {
-		// litt hjelp her patrick
-		int week = 0;
-		return week;
+		return Integer.parseInt(format.format(System.currentTimeMillis()));
 	}
 
 	public static int getCurrentYear() {
@@ -70,6 +62,7 @@ public class DateManagement {
 		System.out.println(DateManagement.getFormattedSimple(new Date()));
 		System.out.println("Current years: " + getCurrentYear());
 		System.out.println("Current week: " + getCurrentWeek());
+		System.out.println("Current week (from date): " + getWeek(new Date()));
 		System.out.println(getFormattedSimple(getDateFromString("20.12.2013")));
 	}
 }
