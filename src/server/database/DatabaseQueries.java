@@ -175,11 +175,10 @@ public class DatabaseQueries {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public ArrayList<CalEvent> getEventByParticipant(Person per){
 		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
 		ResultSet rs;
-		String query = "SELECT avtaleID,tittel,starttid,varighet,beskrivelse,brukernavn,navn" +
+		String query = "SELECT avtaleID,tittel,starttid,varighet,beskrivelse,brukernavn,navn,lastLoggedIn" +
 				"FROM avtale, inkallelse, person" +
 				"WHERE avtale.avtaleID = innkallelse.avtaleID AND innkallelse.brukernavn ="+ per.getUsername()+
 				"AND person.brukernavn = avlate.eier";
@@ -194,13 +193,13 @@ public class DatabaseQueries {
 				String description = rs.getString(5);
 				String username = rs.getString(6);
 				String name = rs.getString(7);
-				al.add(new CalEvent(title, new Date(start), Integer.parseInt(duration),
+				al.add(new CalEvent(title, new Date(Long.parseLong(start)), Integer.parseInt(duration),
 						new Person(username, name), description, Integer.parseInt(avtaleID)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return al;
 		
 	}
 

@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import client.model.CalendarModel.Weekday;
+
 /**
  * Handles date management
  */
@@ -15,6 +17,13 @@ public class DateManagement {
 
 	public static String getFormattedSimple(Date start) {
 		return new SimpleDateFormat("dd.MM").format(start);
+	}
+	
+	public static Weekday getWeekday(Date start){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(start);
+		int ordinal = cal.get(Calendar.DAY_OF_WEEK);
+		return Weekday.getWeekday(ordinal);
 	}
 
 	public static int getCurrentWeek() {
