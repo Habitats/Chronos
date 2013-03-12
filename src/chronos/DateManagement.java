@@ -2,6 +2,7 @@ package chronos;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import client.model.CalendarModel.Weekday;
@@ -18,8 +19,17 @@ public class DateManagement {
 	public static String getFormattedSimple(Date start) {
 		return new SimpleDateFormat("dd.MM").format(start);
 	}
-	
-	public static Weekday getWeekday(Date start){
+
+	public static Date getDateFromString(String str) {
+		try {
+			return new SimpleDateFormat("dd.MM.yyyy").parse(str);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static Weekday getWeekday(Date start) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(start);
 		int ordinal = cal.get(Calendar.DAY_OF_WEEK);
@@ -37,9 +47,10 @@ public class DateManagement {
 		int week = Integer.parseInt(format.format(System.currentTimeMillis()));
 		return week;
 	}
-	
+
 	/**
 	 * method that returns which week the date-parameter is in.
+	 * 
 	 * @param start
 	 * @return
 	 */
@@ -59,5 +70,6 @@ public class DateManagement {
 		System.out.println(DateManagement.getFormattedSimple(new Date()));
 		System.out.println("Current years: " + getCurrentYear());
 		System.out.println("Current week: " + getCurrentWeek());
+		System.out.println(getFormattedSimple(getDateFromString("20.12.2013")));
 	}
 }
