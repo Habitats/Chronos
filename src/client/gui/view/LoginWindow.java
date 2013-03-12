@@ -1,6 +1,7 @@
 package client.gui.view;
 
 
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 import client.gui.GBC;
+import client.gui.GBC.Align;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.LoginModel;
@@ -36,20 +38,20 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 		loginButton = new JButton("Login");
 		cancelButton = new JButton("Cancel");
 		
-		usernameField.setColumns(20);
-		passwordField.setColumns(20);
+		usernameField.setColumns(15);
+		passwordField.setColumns(15);
 		
 		usernameField.addKeyListener(new UsernameListener());
 		passwordField.addKeyListener(new PasswordListener());
 		loginButton.addActionListener(new LoginAction());
 		cancelButton.addActionListener(new CancelAction());
 		
-		add(new Label("Username:"), new GBC(0,0));
-		add(usernameField, new GBC(1,0));
-		add(new Label("Password:"), new GBC(0,1));
-		add(passwordField, new GBC(1,1));
-		add(loginButton, new GBC(0,2));
-		add(cancelButton, new GBC(1,2));
+		add(new Label("Username:"), new GBC(0,0,Align.FULL_WIDTH).setAnchor(GridBagConstraints.SOUTH));
+		add(usernameField, new GBC(0,1,Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
+		add(new Label("Password:"), new GBC(0,2, Align.FULL_WIDTH).setAnchor(GridBagConstraints.SOUTH));
+		add(passwordField, new GBC(0,3, Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
+		add(loginButton, new GBC(0,4).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_END));
+		add(cancelButton, new GBC(1,4).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_END));
 	
 		//setModel(model);
 	}

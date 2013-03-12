@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -21,7 +22,8 @@ import events.CalEvent;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
-	JTextField eventName, eventDescription;
+	JTextField eventName;
+	JTextArea eventDescription;
 	JList participantList;
 	JCheckBox alert;
 	JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
@@ -36,7 +38,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		setLayout(new GridBagLayout());
 		eventName = new JTextField("Eventname");
 		participantList = new JList<>();
-		eventDescription = new JTextField("Description");
+		eventDescription = new JTextArea("Description");
 		alert = new JCheckBox();
 		addParticipantButton = new JButton("Add participant");
 		deleteParticipantButton = new JButton("Delete participant");
