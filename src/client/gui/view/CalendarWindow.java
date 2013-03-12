@@ -150,17 +150,17 @@ public class CalendarWindow extends ChronosWindow {
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (CalendarModel) model;
+		((CalendarModel)model).setView(this);
 	}
 	
-	public void addOtherPersons(ArrayList<Person> persons) {
-		for (Person person : persons) {
-			PersonCheckBox box = new PersonCheckBox(person);
-			box.addItemListener(new CheckBoxListener());
-			othersCalPanel.add(box);
-		}
+	public void addOtherPerson(Person person) {
+		PersonCheckBox box = new PersonCheckBox(person);
+		box.addItemListener(new CheckBoxListener());
+		othersCalPanel.add(box);
 	}
 	public void addEvent(CalEvent event, Weekday weekday) {
 		CalEventPanel panel = new CalEventPanel(event);
+		eventsPanel.add(new CalEventListPanel(event));
 		switch (weekday) {
 		case MONDAY:
 			mondayPanel.add(panel);
@@ -184,7 +184,6 @@ public class CalendarWindow extends ChronosWindow {
 			sundayPanel.add(panel);
 			break;
 		default:
-			othersCalPanel.add(new CalEventListPanel(event));
 			break;
 		}
 	}
@@ -201,10 +200,25 @@ public class CalendarWindow extends ChronosWindow {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
+			Person person = ((PersonCheckBox)e.getItemSelectable()).getPerson();
 			if(e.getStateChange() == e.SELECTED){
-				model.getPersonEvents(((PersonCheckBox)e.getItemSelectable()).getPerson());
+				model.setSelectedPerson(person);
+			} else if (e.getStateChange() == e.DESELECTED) {
+				model.removeSelectedPerson(person);
+				model.update();
 			}
 			
 		}
 	}
+	public void removeEvents() {
+		mondayPanel.removeAll();
+		tuesdayPanel.removeAll();
+		wednesdayPanel.removeAll();
+		thursdayPanel.removeAll();
+		fridayPanel.removeAll();
+		saturdayPanel.removeAll();
+		sundayPanel.removeAll();
+		eventsPanel.removeAll();
+	}
+
 }

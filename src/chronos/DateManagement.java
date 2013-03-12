@@ -37,6 +37,11 @@ public class DateManagement {
 		int week = Integer.parseInt(format.format(System.currentTimeMillis()));
 		return week;
 	}
+	public static int getWeek(Date start) {
+		// litt hjelp her patrick
+		int week = 0;
+		return week;
+	}
 
 	public static int getCurrentYear() {
 		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(System.currentTimeMillis()));
