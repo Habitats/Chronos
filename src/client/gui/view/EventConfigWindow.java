@@ -17,6 +17,7 @@ import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
+import events.CalEvent;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
@@ -73,6 +74,13 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 		// setModel(model);
 
+	}
+	
+	public void setCalEvent(CalEvent event){
+	}
+	
+	public void clearModel(){
+		
 	}
 
 	@Override
