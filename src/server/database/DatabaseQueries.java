@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -172,6 +173,35 @@ public class DatabaseQueries {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public ArrayList<CalEvent> getEventByParticipant(Person per){
+		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
+		ResultSet rs;
+		String query = "SELECT avtaleID,tittel,starttid,varighet,beskrivelse,brukernavn,navn" +
+				"FROM avtale, inkallelse, person" +
+				"WHERE avtale.avtaleID = innkallelse.avtaleID AND innkallelse.brukernavn ="+ per.getUsername()+
+				"AND person.brukernavn = avlate.eier";
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			while (rs.next()) {
+				String avtaleID = rs.getString(1);
+				String title = rs.getString(2);
+				String start = rs.getString(3);
+				String duration = rs.getString(4);
+				String description = rs.getString(5);
+				String username = rs.getString(6);
+				String name = rs.getString(7);
+				al.add(new CalEvent(title, new Date(start), Integer.parseInt(duration),
+						new Person(username, name), description, Integer.parseInt(avtaleID)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 
 	private String processString(String str) {

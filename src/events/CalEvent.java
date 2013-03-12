@@ -23,9 +23,9 @@ public class CalEvent extends NetworkEvent {
 	private final Person creator;
 	private final String title;
 	private String description;
-	private long timestamp;
+	private final long timestamp;
 
-	public CalEvent(String title, Date start, int duration, Person creator) {
+	public CalEvent(String title, Date start, int duration, Person creator, String description,long timestamp){
 		super(EventType.CALENDAR);
 		setState(CalEventType.NEW);
 		this.title = title;
@@ -33,6 +33,21 @@ public class CalEvent extends NetworkEvent {
 		this.start = start;
 		this.duration = duration;
 		participants = new HashMap<String, Person>();
+		this.description = description;
+		
+		this.timestamp = timestamp;
+		addParticipant(creator);
+	}
+	public CalEvent(String title, Date start, int duration, Person creator, String description) {
+		super(EventType.CALENDAR);
+		setState(CalEventType.NEW);
+		this.title = title;
+		this.creator = creator;
+		this.start = start;
+		this.duration = duration;
+		participants = new HashMap<String, Person>();
+		this.description = description;
+		
 		timestamp = System.currentTimeMillis();
 		addParticipant(creator);
 		
