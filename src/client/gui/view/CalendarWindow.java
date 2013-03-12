@@ -103,6 +103,7 @@ public class CalendarWindow extends ChronosWindow {
 		add(wednesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
 		prevButton = new ChangeWeekButton("<");
+		prevButton.addActionListener(new PrevButtonListener());
 		add(prevButton, new GBC(i, 0).setAnchor(GridBagConstraints.EAST).setFill(GridBagConstraints.NONE));
 
 		i++;
@@ -125,6 +126,7 @@ public class CalendarWindow extends ChronosWindow {
 		add(fridayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
 		nextButton = new ChangeWeekButton(">");
+		nextButton.addActionListener(new NextButtonListener());
 		add(nextButton, new GBC(i, 0).setAnchor(GridBagConstraints.WEST).setFill(GridBagConstraints.NONE));
 
 		i++;
@@ -212,7 +214,7 @@ public class CalendarWindow extends ChronosWindow {
 		public void itemStateChanged(ItemEvent e) {
 			Person person = ((PersonCheckBox)e.getItemSelectable()).getPerson();
 			if(e.getStateChange() == e.SELECTED){
-				model.setSelectedPerson(person);
+				model.addSelectedPerson(person);
 			} else if (e.getStateChange() == e.DESELECTED) {
 				model.removeSelectedPerson(person);
 				model.update();
@@ -224,10 +226,19 @@ public class CalendarWindow extends ChronosWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			model.prevWeek();
+			model.update();
+			System.out.println("prev");
 		}
 		
 	}
-
+	public class NextButtonListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			model.nextWeek();
+			model.update();
+			System.out.println("next");
+		}
+	}
 }
