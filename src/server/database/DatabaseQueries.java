@@ -41,7 +41,7 @@ public class DatabaseQueries {
 	public boolean removeUser(String username) {
 		username = processString(username);
 		try {
-			db.execute(String.format("delete from person where brukernavn = %s", username));
+			db.execute(String.format("delete from person where username = %s", username));
 			Singleton.log("successfully deleted: " + username);
 			return true;
 		} catch (SQLException e) {
@@ -55,7 +55,7 @@ public class DatabaseQueries {
 		username = processString(username);
 		newValue = processString(newValue);
 		try {
-			db.execute(String.format("update person set %s=%s where brukernavn = %s", fieldToUpdate, newValue, username));
+			db.execute(String.format("update person set %s=%s where username = %s", fieldToUpdate, newValue, username));
 			Singleton.log(String.format("successfully updated %s to %s in %s", fieldToUpdate, newValue, username));
 			return true;
 		} catch (SQLException e) {
@@ -67,7 +67,7 @@ public class DatabaseQueries {
 	}
 
 	public void addMultipleUsers(ArrayList<String[]> users) {
-		String insertQuery = "insert into person (brukernavn,passord,navn) values (?,?,?)";
+		String insertQuery = "insert into person (username,password,name) values (?,?,?)";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
@@ -93,7 +93,7 @@ public class DatabaseQueries {
 	public ArrayList<Person> getUsers() {
 		ArrayList<Person> users = new ArrayList<Person>();
 		ResultSet rs;
-		String query = "select brukernavn,navn,lastLoggedIn from person";
+		String query = "select username,name,lastLoggedIn from person";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -110,7 +110,7 @@ public class DatabaseQueries {
 	}
 	
 	public void addEvent(CalEvent evt){
-		String insertQuery = "insert into avtale (avtaleID,tittel,starttid,varighet,beskrivelse,eier) values (?,?,?,?,?,?);";
+		String insertQuery = "insert into avtale (event_ID,title,startTime,duration,description,owner) values (?,?,?,?,?,?);";
 		PreparedStatement ps;
 		boolean addedAvtale = false;
 		try {
@@ -150,7 +150,7 @@ public class DatabaseQueries {
 	 * @param evt
 	 */
 	public void addParticipants(CalEvent evt){
-		String insertQuery = "insert into participants (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
+		String insertQuery = "insert into participants (username,event_ID,alarm,status) values (?,?,?,?);";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
@@ -189,10 +189,10 @@ public class DatabaseQueries {
 		}else{
 			param = ">";
 		}
-		String query = "SELECT event_ID,tittel,starttid,varighet,beskrivelse,brukernavn,navn,lastLoggedIn" +
-				"FROM avtale, inkallelse, person" +
-				"WHERE avtale.avtaleID = participants.avtaleID AND participants.brukernavn ="+ per.getUsername()+
-				"AND person.brukernavn = avlate.eier AND" + per.getLastLoggedIn() + param +"event_ID";
+		String query = "SELECT event_ID,title,startTime,duration,description,username,name,lastLoggedIn" +
+				"FROM events, Participants, Person" +
+				"WHERE Events.event_ID = participants.event_ID AND participants.username ="+ per.getUsername()+
+				"AND person.username = events.owner AND" + per.getLastLoggedIn() + param +"event_ID";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -222,7 +222,7 @@ public class DatabaseQueries {
 		ResultSet rs;
 		String query = "SELECT username,name,lastLoggedIn" +
 				"FROM person, participants" +
-				"WHERE participants.eventID ="+ id + "AND participants.username = person.username";
+				"WHERE participants.event_ID ="+ id + "AND participants.username = person.username";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
