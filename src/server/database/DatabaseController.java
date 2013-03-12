@@ -6,6 +6,8 @@ import chronos.Singleton;
 
 import events.AuthEvent;
 import events.CalEvent;
+import events.NetworkEvent.EventType;
+import events.QueryEvent.QueryType;
 import events.QueryEvent;
 
 /**
@@ -45,9 +47,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public void getNewCalEvents(Person person) {
-		// TODO Auto-generated method stub
-
+	public QueryEvent getNewCalEvents(Person person) {
+		QueryEvent qe = new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventByParticipant(person));
+1
 	}
 
 	@Override
