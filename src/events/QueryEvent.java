@@ -27,4 +27,8 @@ public class QueryEvent extends NetworkEvent {
 	public void setQueryType(QueryType queryType) {
 		this.queryType = queryType;
 	}
+
+	public ArrayList<?> getResults() {
+		return results;
+	}
 }
