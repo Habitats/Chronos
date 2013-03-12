@@ -25,10 +25,10 @@ public class DatabaseQueries {
 		this.db = db;
 	}
 
-	public boolean addUser(String username, String name, String surname) {
+	public boolean addUser(String username, String password, String name, long LastLoggedIn) {
 		username = processString(username);
 		try {
-			db.execute(String.format("insert into person values (%s,%s,%s)", username, name, surname));
+			db.execute(String.format("insert into person values (%s,%s,%s,%s)", username, ("MD5("+processString(password)+")"),processString(name), LastLoggedIn));
 			Singleton.log("successfully added: " + username);
 			return true;
 		} catch (SQLException e) {

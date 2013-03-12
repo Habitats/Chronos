@@ -31,16 +31,16 @@ public class DatabaseTest {
 
 		db.initialize();
 		
-		queries.addUser("sexyboy", "kyrre", "");
-		queries.addUser("childlover", "hallvard", "");
+		queries.addUser("sexyboy","derp", "kyrre", 1829000);
+		queries.addUser("childlover","derp", "hallvard", 1829000);
 		CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999, queries.getUsers().get(0), "Dette er en test event");
 		evt.addParticipant(queries.getUsers().get(1));
 		queries.addEvent(evt);
 		
-		ArrayList<Person> userInDb = queries.getUsers();
-		Singleton.log("Users in db:");
-		for (Person person : userInDb) {
-			Singleton.log(person.toString());
-		}
+//		ArrayList<Person> userInDb = queries.getUsers();
+//		Singleton.log("Users in db:");
+//		for (Person person : userInDb) {
+//			Singleton.log(person.toString());
+//		}
 	}
 }
