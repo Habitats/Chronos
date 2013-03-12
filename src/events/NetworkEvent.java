@@ -17,7 +17,8 @@ abstract public class NetworkEvent implements Serializable {
 		ROOM_BOOK, //
 		USER_SEARCH, //
 		TEST, //
-		BATCH_CALENDAR, //
+		BATCH_CALENDAR0, //
+		QUERY, //
 	}
 
 	ArrayList<?> results;

@@ -113,5 +113,8 @@ public class CalEvent extends NetworkEvent {
 	public long getTimestamp() {
 		return timestamp;
 	}
+	public void setParticipants(HashMap<String, Person> participants) {
+		this.participants = participants;
+	}
 	
 }

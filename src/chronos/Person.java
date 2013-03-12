@@ -18,14 +18,16 @@ public class Person implements Serializable {
 	private String name;
 	private String username;
 	private Status status;
+	private long lastLoggedIn;
 
-	public Person(String username, String name) {
+	public Person(String username, String name, long lastLoggedIn) {
 		this.username = username;
 		this.name = name;
+		this.lastLoggedIn = lastLoggedIn;
 	}
 
 	public Person(String string) {
-		this(string, null);
+		this(string, null, -1);
 	}
 
 	public String getName() {
@@ -47,5 +49,13 @@ public class Person implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("Username: %s - Name: %s", username, name);
+	}
+
+	public long getLastLoggedIn() {
+		return lastLoggedIn;
+	}
+
+	public void setLastLoggedIn(long lastLoggedIn) {
+		this.lastLoggedIn = lastLoggedIn;
 	}
 }
