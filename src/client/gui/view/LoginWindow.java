@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -19,36 +21,37 @@ import client.model.LoginModel;
 
 
 public class LoginWindow extends ChronosWindow implements ActionListener {
-	protected LoginModel model;
-	protected JTextField Username, Password;
-	protected String username, password;
-	protected JToggleButton LoginButton, CancelButton;
+	LoginModel model;
+	JTextField usernameField;
+	JPasswordField passwordField;
+	String username, password;
+	JButton loginButton, cancelButton;
 
 	public LoginWindow(ChronosModel model,MainFrame frame) {
 	//public LoginWindow() {
 		super(model, frame);
 		setLayout(new GridBagLayout());
-		Username = new JTextField();
-		Password = new JPasswordField();
-		LoginButton = new JToggleButton("Login");
-		CancelButton = new JToggleButton("Cancel");
+		usernameField = new JTextField();
+		passwordField = new JPasswordField();
+		loginButton = new JButton("Login");
+		cancelButton = new JButton("Cancel");
 		
-		Username.setColumns(20);
-		Password.setColumns(20);
+		usernameField.setColumns(20);
+		passwordField.setColumns(20);
 		
-		Username.addKeyListener(new UsernameListener());
-		Password.addKeyListener(new PasswordListener());
-		LoginButton.addActionListener(new LoginAction());
-		CancelButton.addActionListener(new CancelAction());
+		usernameField.addKeyListener(new UsernameListener());
+		passwordField.addKeyListener(new PasswordListener());
+		loginButton.addActionListener(new LoginAction());
+		cancelButton.addActionListener(new CancelAction());
 		
 		add(new Label("Username:"), new GBC(0,0));
-		add(Username, new GBC(1,0));
+		add(usernameField, new GBC(1,0));
 		add(new Label("Password:"), new GBC(0,1));
-		add(Password, new GBC(1,1));
-		add(LoginButton, new GBC(0,2));
-		add(CancelButton, new GBC(1,2));
+		add(passwordField, new GBC(1,1));
+		add(loginButton, new GBC(0,2));
+		add(cancelButton, new GBC(1,2));
 	
-		setModel(model);
+		//setModel(model);
 	}
 	
 	public class UsernameListener implements KeyListener {
