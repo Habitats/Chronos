@@ -27,11 +27,16 @@ public interface DatabaseControllerInterface {
 	 * Get all calendar events from a spcified time slot
 	 */
 	public QueryEvent getCalEventsFromTimeSlot(Person person, int year, int week);
+	
+	/**
+	 * Get events the user already accepted and viewed
+	 */
+	public QueryEvent getOldEvents(Person person);
 
 	/**
 	 * Get calendar events added since last login. Acts as a cache.
 	 */
-	public void getNewCalEvents(Person person);
+	public QueryEvent getNewCalEvents(Person person);
 
 	/**
 	 * adds a new calendar event for the person with a "neutral" (IE. waiting,
