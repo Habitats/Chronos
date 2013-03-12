@@ -20,13 +20,16 @@ import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
 import client.gui.view.CalendarWindowHelper.BoxPanel;
+import client.gui.view.CalendarWindowHelper.CalEventPanel;
 import client.gui.view.CalendarWindowHelper.CalLabel;
 import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
 import client.gui.view.CalendarWindowHelper.DayPanel;
 import client.gui.view.CalendarWindowHelper.PersonCheckBox;
 import client.model.CalendarModel;
+import client.model.CalendarModel.Weekday;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
+import events.CalEvent;
 
 public class CalendarWindow extends ChronosWindow {
 
@@ -156,6 +159,16 @@ public class CalendarWindow extends ChronosWindow {
 			othersCalPanel.add(box);
 		}
 	}
+	public void addEvent(CalEvent event, Weekday weekday) {
+		switch (weekday) {
+		case MONDAY:
+			mondayPanel.add(new CalEventPanel(event));
+			break;
+
+		default:
+			break;
+		}
+	}
 
 	public class NewEventListener implements ActionListener {
 
@@ -170,11 +183,9 @@ public class CalendarWindow extends ChronosWindow {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			if(e.getStateChange() == e.SELECTED){
-				
+				model.getPersonEvents(((PersonCheckBox)e.getItemSelectable()).getPerson());
 			}
 			
 		}
-
-		
 	}
 }

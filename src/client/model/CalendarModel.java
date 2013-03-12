@@ -1,9 +1,14 @@
 package client.model;
 
+import chronos.Person;
 import client.ClientController;
 import events.NetworkEvent;
 
 public class CalendarModel extends ChronosModel {
+	
+	public enum Weekday {
+		MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+	}
 
 	public CalendarModel(ClientController controller) {
 		super(controller);
@@ -15,6 +20,11 @@ public class CalendarModel extends ChronosModel {
 
 	public void newEventBtnPushed() {
 		//super.controller
+		
+	}
+
+	public void getPersonEvents(Person person) {
+		// TODO Auto-generated method stub
 		
 	}
 }
