@@ -68,8 +68,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	@Override
 	public void run() {
 		Thread clientThread = new Thread(client);
-		clientThread.start();
-
+//		clientThread.start();
 	}
 
 	private void sendTestEvent() {
