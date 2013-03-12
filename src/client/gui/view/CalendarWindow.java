@@ -20,6 +20,7 @@ import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
 import client.gui.view.CalendarWindowHelper.BoxPanel;
+import client.gui.view.CalendarWindowHelper.CalEventPanel;
 import client.gui.view.CalendarWindowHelper.CalLabel;
 import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
 import client.gui.view.CalendarWindowHelper.DayPanel;
