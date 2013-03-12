@@ -41,7 +41,6 @@ public class CalEvent extends NetworkEvent {
 
 		this.timestamp = (timestamp == 0) ? System.currentTimeMillis() : timestamp;
 		addParticipant(creator);
-
 	}
 
 	public CalEvent addParticipant(Person... person) {
