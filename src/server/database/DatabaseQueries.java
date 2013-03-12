@@ -26,9 +26,8 @@ public class DatabaseQueries {
 	}
 
 	public boolean addUser(String username, String password, String name, long LastLoggedIn) {
-		username = processString(username);
 		try {
-			db.execute(String.format("insert into person values (%s,%s,%s,%s)", username, ("MD5("+processString(password)+")"),processString(name), LastLoggedIn));
+			db.execute(String.format("insert into person values (%s,%s,%s,%s)", processString(username), ("MD5("+processString(password)+")"),processString(name), LastLoggedIn));
 			Singleton.log("successfully added: " + username);
 			return true;
 		} catch (SQLException e) {
@@ -66,21 +65,22 @@ public class DatabaseQueries {
 		}
 	}
 
-	public void addMultipleUsers(ArrayList<String[]> users) {
-		String insertQuery = "insert into person (username,password,name) values (?,?,?)";
+	public void addMultipleUsers(ArrayList<Person> users) {
+		String insertQuery = "insert into person (username,password,name, lastLoggedIn) values (?,?,?,?)";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
 
-			for (String[] user : users) {
+			for (Person user : users) {
 				try {
-					ps.setString(1, user[0]);
-					ps.setString(2, user[1]);
-					ps.setString(3, user[2]);
+					ps.setString(1, user.getUsername());
+					ps.setString(2, user.getPassword());
+					ps.setString(3, user.getName());
+					ps.setString(4, ""+user.getLastLoggedIn());
 					ps.addBatch();
-					Singleton.log("successfully added: " + user[0] + " with fields " + user[1] + " and " + user[2]);
+					Singleton.log("successfully added: " + user.getUsername() + " with fields " + user.getPassword() + " and " + user.getName());
 				} catch (SQLException e) {
-					Singleton.log("error adding: " + user[0] + " with fields " + user[1] + " and " + user[2]);
+					Singleton.log("error adding: " + user.getUsername() + " with fields " + user.getPassword() + " and " + user.getName());
 				}
 			}
 			ps.executeBatch();
@@ -98,8 +98,8 @@ public class DatabaseQueries {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
 			while (rs.next()) {
-				String name = rs.getString(1);
-				String username = rs.getString(2);
+				String username = rs.getString(1);
+				String name = rs.getString(2);
 				String lastLoggedIn = rs.getString(3);
 				users.add(new Person(username, name, Long.parseLong(lastLoggedIn)));
 			}
@@ -110,7 +110,7 @@ public class DatabaseQueries {
 	}
 	
 	public void addEvent(CalEvent evt){
-		String insertQuery = "insert into avtale (event_ID,title,startTime,duration,description,owner) values (?,?,?,?,?,?);";
+		String insertQuery = "insert into Events (event_ID,title,startTime,duration,description,owner) values (?,?,?,?,?,?);";
 		PreparedStatement ps;
 		boolean addedAvtale = false;
 		try {
@@ -128,6 +128,7 @@ public class DatabaseQueries {
 			} catch (SQLException e) {
 				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
 						" and " + evt.getDuration() + " and " + evt.getDescription());
+				e.printStackTrace();
 			}
 			ps.executeBatch();
 			ps.close();
@@ -136,6 +137,7 @@ public class DatabaseQueries {
 			Singleton.log("error executing: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
 						" and " + evt.getDuration() + " and " + evt.getDescription());
 			addedAvtale = false;
+			e.printStackTrace();
 		}
 		
 		/**
