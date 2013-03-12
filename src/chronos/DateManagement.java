@@ -37,6 +37,12 @@ public class DateManagement {
 		int week = Integer.parseInt(format.format(System.currentTimeMillis()));
 		return week;
 	}
+	
+	/**
+	 * method that returns which week the date-parameter is in.
+	 * @param start
+	 * @return
+	 */
 	public static int getWeek(Date start) {
 		// litt hjelp her patrick
 		int week = 0;

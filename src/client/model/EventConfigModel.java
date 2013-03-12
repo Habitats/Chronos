@@ -2,26 +2,36 @@ package client.model;
 
 import chronos.Person;
 import client.ClientController;
+import events.CalEvent;
+import events.NetworkEvent;
+import events.CalEvent.CalEventType;
 
-public class EventConfigModel extends ChronosModel{
+public class EventConfigModel extends ChronosModel {
+
+	public enum ConfigState {
+		EDIT, NEW, VIEW;
+	}
+
 	String eventName, eventDescription;
 	Person participant;
 	Boolean alert;
 	String roomNumber;
+	private ConfigState state;
 
 	public EventConfigModel(ClientController controller) {
 		super(controller);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void clearModel() {
-		// TODO Auto-generated method stub
-		
 	}
-	
+
+	public void setCalEvent(CalEvent event) {
+	}
+
 	public String getEventName() {
 		return eventName;
 	}
+
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
@@ -58,4 +68,21 @@ public class EventConfigModel extends ChronosModel{
 		this.roomNumber = roomNumber;
 	}
 
+	// State of window
+	public void setState(ConfigState state) {
+		this.state = state;
+	}
+
+	public ConfigState getState() {
+		return state;
+	}
+
+	public void editEvent(){
+		setState(ConfigState.EDIT);
+	}
+
+	public void newCalEvent() {
+		CalEvent event = new CalEvent(title, start, duration, creator, description).setState(CalEventType.UPDATE);
+		fireNetworkEvent(event);
+	}
 }
