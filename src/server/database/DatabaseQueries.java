@@ -100,8 +100,8 @@ public class DatabaseQueries {
 			while (rs.next()) {
 				String username = rs.getString(1);
 				String name = rs.getString(2);
-				String lastLoggedIn = rs.getString(3);
-				users.add(new Person(username, name, Long.parseLong(lastLoggedIn)));
+				long lastLoggedIn = rs.getLong(3);
+				users.add(new Person(username, name, lastLoggedIn));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -191,10 +191,10 @@ public class DatabaseQueries {
 		}else{
 			param = ">";
 		}
-		String query = "SELECT event_ID,title,startTime,duration,description,username,name,lastLoggedIn" +
-				"FROM events, Participants, Person" +
-				"WHERE Events.event_ID = participants.event_ID AND participants.username ="+ per.getUsername()+
-				"AND person.username = events.owner AND" + per.getLastLoggedIn() + param +"event_ID";
+		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " +
+				"FROM Events, Participants, Person " +
+				"WHERE Events.event_ID = participants.event_ID AND participants.username = "+ processString(per.getUsername())+
+				" AND person.username = events.owner AND " + per.getLastLoggedIn() +" "+ param +" participants.event_ID;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -222,9 +222,9 @@ public class DatabaseQueries {
 	private HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
-		String query = "SELECT username,name,lastLoggedIn" +
-				"FROM person, participants" +
-				"WHERE participants.event_ID ="+ id + "AND participants.username = person.username";
+		String query = "SELECT username,name,lastLoggedIn " +
+				"FROM person, participants " +
+				"WHERE participants.event_ID = "+ id + " AND participants.username = person.username";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();

@@ -59,11 +59,22 @@ public class DatabaseTest {
 		/**
 		 * Add multiple Users
 		 */
-		ArrayList<Person> peeps = new ArrayList<Person>();
-		peeps.add(new Person("yolo", "Yolo Swaggins", 133333337));
-		peeps.add(new Person("Kyra", "Kyyra, kom no sa!", new Date().getTime()));
-		queries.addMultipleUsers(peeps);
+//		ArrayList<Person> peeps = new ArrayList<Person>();
+//		peeps.add(new Person("yolo", "Yolo Swaggins", 133333337));
+//		peeps.add(new Person("Kyra", "Kyyra, kom no sa!", new Date().getTime()));
+//		queries.addMultipleUsers(peeps);
 		
+		/**
+		 * Update users
+		 */
+//		queries.updateUser("yolo", "name", "Patrick Swaggins");
+		
+		/**
+		 * Get Events 
+		 */
+		
+		//new
+		System.out.println(queries.getEventByParticipant(queries.getUsers().get(0), true).get(0).toString());
 		
 	}
 }
