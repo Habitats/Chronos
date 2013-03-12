@@ -177,14 +177,14 @@ public class DatabaseQueries {
 	/**
 	 * Returns an arraylist of all events the person is a participant of, either before or after last login
 	 * @param per
-	 * @param afterLogin
+	 * @param afterLastLogin
 	 * @return ArrayList<CalEvent>
 	 */
-	public ArrayList<CalEvent> getEventByParticipant(Person per, boolean afterLogin){
+	public ArrayList<CalEvent> getEventByParticipant(Person per, boolean afterLastLogin){
 		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
 		ResultSet rs;
 		String param;
-		if (afterLogin) {
+		if (afterLastLogin) {
 			param = "<";
 		}else{
 			param = ">";

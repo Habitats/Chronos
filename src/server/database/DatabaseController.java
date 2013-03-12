@@ -48,7 +48,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getNewCalEvents(Person person) {
-		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventByParticipant(person));
+		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventByParticipant(person, true));
 	}
 
 	@Override
@@ -83,7 +83,6 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getOldEvents(Person person) {
-		// TODO Auto-generated method stub
-		return null;
+		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventByParticipant(person, true));
 	}
 }
