@@ -49,7 +49,7 @@ public class DateManagement {
 
 		SimpleDateFormat format = new SimpleDateFormat("ww");
 		format.setCalendar(cal);
-		return Integer.parseInt(format.format(System.currentTimeMillis()));
+		return Integer.parseInt(format.format(start));
 	}
 
 	public static int getCurrentYear() {
