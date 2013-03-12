@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
@@ -21,7 +22,8 @@ import events.CalEvent;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
-	JTextField eventName, eventDescription;
+	JTextField eventName, time;
+	JTextArea eventDescription;
 	JList participantList;
 	JCheckBox alert;
 	JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
@@ -35,8 +37,9 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 		setLayout(new GridBagLayout());
 		eventName = new JTextField("Eventname");
+		time = new JTextField("dd.mm.yyyy");
+		eventDescription = new JTextArea("Description");
 		participantList = new JList<>();
-		eventDescription = new JTextField("Description");
 		alert = new JCheckBox();
 		addParticipantButton = new JButton("Add participant");
 		deleteParticipantButton = new JButton("Delete participant");
@@ -47,6 +50,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		cancelButton = new JButton("Cancel");
 
 		eventName.setColumns(20);
+		time.setColumns(20);
 		eventName.setMaximumSize(new Dimension(80, 20));
 		eventDescription.setPreferredSize(new Dimension(100, 100));
 		participantList.setPreferredSize(new Dimension(100, 100));
@@ -59,7 +63,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		add(editButton, new GBC(0, 7));
 		add(deleteButton, new GBC(1, 7));
 
-		add(new Label("Dag og tid blablabla."), new GBC(2, 0).setSpan(2, 1));
+		add(time, new GBC(2, 0).setSpan(2, 1));
 		add(participantList, new GBC(2, 1).setSpan(1, 6));
 		add(applyButton, new GBC(2, 7));
 
@@ -71,8 +75,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		add(addParticipantButton, new GBC(3, 5));
 		add(deleteParticipantButton, new GBC(3, 6));
 		add(cancelButton, new GBC(3, 7));
-
-		// setModel(model);
 
 	}
 

@@ -13,7 +13,7 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	String eventName, eventDescription;
-	Person participant;
+	Person participant, creator;
 	Boolean alert;
 	String roomNumber;
 	private ConfigState state;
@@ -52,6 +52,7 @@ public class EventConfigModel extends ChronosModel {
 		this.participant = participant;
 	}
 
+	
 	public Boolean getAlert() {
 		return alert;
 	}
@@ -82,7 +83,7 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void newCalEvent() {
-		CalEvent event = new CalEvent(title, start, duration, creator, description).setState(CalEventType.UPDATE);
-		fireNetworkEvent(event);
+		//CalEvent event = new CalEvent(getEventName(), start, duration, creator, getEventDescription()).setState(CalEventType.UPDATE);
+		//fireNetworkEvent(event);
 	}
 }
