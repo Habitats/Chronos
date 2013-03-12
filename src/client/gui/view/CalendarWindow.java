@@ -20,13 +20,17 @@ import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
 import client.gui.view.CalendarWindowHelper.BoxPanel;
+import client.gui.view.CalendarWindowHelper.CalEventListPanel;
+import client.gui.view.CalendarWindowHelper.CalEventPanel;
 import client.gui.view.CalendarWindowHelper.CalLabel;
 import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
 import client.gui.view.CalendarWindowHelper.DayPanel;
 import client.gui.view.CalendarWindowHelper.PersonCheckBox;
 import client.model.CalendarModel;
+import client.model.CalendarModel.Weekday;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
+import events.CalEvent;
 
 public class CalendarWindow extends ChronosWindow {
 
@@ -141,7 +145,6 @@ public class CalendarWindow extends ChronosWindow {
 
 		JLabel sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
-
 	}
 
 	@Override
@@ -154,6 +157,35 @@ public class CalendarWindow extends ChronosWindow {
 			PersonCheckBox box = new PersonCheckBox(person);
 			box.addItemListener(new CheckBoxListener());
 			othersCalPanel.add(box);
+		}
+	}
+	public void addEvent(CalEvent event, Weekday weekday) {
+		CalEventPanel panel = new CalEventPanel(event);
+		switch (weekday) {
+		case MONDAY:
+			mondayPanel.add(panel);
+			break;
+		case TUESDAY:
+			tuesdayPanel.add(panel);
+			break;
+		case WEDNESDAY:
+			wednesdayPanel.add(panel);
+			break;
+		case THURSDAY:
+			thursdayPanel.add(panel);
+			break;
+		case FRIDAY:
+			fridayPanel.add(panel);
+			break;
+		case SATURDAY:
+			saturdayPanel.add(panel);
+			break;
+		case SUNDAY:
+			sundayPanel.add(panel);
+			break;
+		default:
+			othersCalPanel.add(new CalEventListPanel(event));
+			break;
 		}
 	}
 
@@ -170,11 +202,9 @@ public class CalendarWindow extends ChronosWindow {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			if(e.getStateChange() == e.SELECTED){
-				
+				model.getPersonEvents(((PersonCheckBox)e.getItemSelectable()).getPerson());
 			}
 			
 		}
-
-		
 	}
 }

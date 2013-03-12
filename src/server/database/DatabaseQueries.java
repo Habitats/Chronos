@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -141,29 +142,65 @@ public class DatabaseQueries {
 		 * If the apointment is added sucessfully to the database, the participants are added and connected.
 		 * */
 		if (addedAvtale) {
-			insertQuery = "insert into innkallelse (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
-			try {
-				ps = db.makeBatchUpdate(insertQuery);
-				for (Person p :  evt.getParticipants().values()) {
-					try {
-						p.setStatus(Person.Status.WAITING);
-						ps.setString(1, p.getUsername());
-						ps.setString(2, ""+evt.getTimestamp());
-						ps.setString(3, null);
-						ps.setString(4,""+p.getStatus().ordinal());
-						ps.addBatch();
-						Singleton.log("successfully added participant: " + p.getUsername());
-					} catch (SQLException e) {
-						Singleton.log("error participant: " + p.getUsername());
-						e.printStackTrace();
-					}
-				}
-				ps.executeBatch();
-				ps.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			addParticipants(evt);
 		}
+	}
+	/**
+	 * Adds participants from a CalEvent to the DB.
+	 * @param evt
+	 */
+	public void addParticipants(CalEvent evt){
+		String insertQuery = "insert into innkallelse (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
+		PreparedStatement ps;
+		try {
+			ps = db.makeBatchUpdate(insertQuery);
+			for (Person p :  evt.getParticipants().values()) {
+				try {
+					p.setStatus(Person.Status.WAITING);
+					ps.setString(1, p.getUsername());
+					ps.setString(2, ""+evt.getTimestamp());
+					ps.setString(3, null);
+					ps.setString(4,""+p.getStatus().ordinal());
+					ps.addBatch();
+					Singleton.log("successfully added participant: " + p.getUsername());
+				} catch (SQLException e) {
+					Singleton.log("error participant: " + p.getUsername());
+					e.printStackTrace();
+				}
+			}
+			ps.executeBatch();
+			ps.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public ArrayList<CalEvent> getEventByParticipant(Person per){
+		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
+		ResultSet rs;
+		String query = "SELECT avtaleID,tittel,starttid,varighet,beskrivelse,brukernavn,navn,lastLoggedIn" +
+				"FROM avtale, inkallelse, person" +
+				"WHERE avtale.avtaleID = innkallelse.avtaleID AND innkallelse.brukernavn ="+ per.getUsername()+
+				"AND person.brukernavn = avlate.eier";
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			while (rs.next()) {
+				String avtaleID = rs.getString(1);
+				String title = rs.getString(2);
+				String start = rs.getString(3);
+				String duration = rs.getString(4);
+				String description = rs.getString(5);
+				String username = rs.getString(6);
+				String name = rs.getString(7);
+				al.add(new CalEvent(title, new Date(Long.parseLong(start)), Integer.parseInt(duration),
+						new Person(username, name), description, Integer.parseInt(avtaleID)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return al;
+		
 	}
 
 	private String processString(String str) {
