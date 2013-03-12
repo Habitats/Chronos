@@ -141,28 +141,36 @@ public class DatabaseQueries {
 		 * If the apointment is added sucessfully to the database, the participants are added and connected.
 		 * */
 		if (addedAvtale) {
-			insertQuery = "insert into innkallelse (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
-			try {
-				ps = db.makeBatchUpdate(insertQuery);
-				for (Person p :  evt.getParticipants().values()) {
-					try {
-						p.setStatus(Person.Status.WAITING);
-						ps.setString(1, p.getUsername());
-						ps.setString(2, ""+evt.getTimestamp());
-						ps.setString(3, null);
-						ps.setString(4,""+p.getStatus().ordinal());
-						ps.addBatch();
-						Singleton.log("successfully added participant: " + p.getUsername());
-					} catch (SQLException e) {
-						Singleton.log("error participant: " + p.getUsername());
-						e.printStackTrace();
-					}
+			addParticipants(evt);
+		}
+	}
+	/**
+	 * Adds participants from a CalEvent to the DB.
+	 * @param evt
+	 */
+	public void addParticipants(CalEvent evt){
+		String insertQuery = "insert into innkallelse (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
+		PreparedStatement ps;
+		try {
+			ps = db.makeBatchUpdate(insertQuery);
+			for (Person p :  evt.getParticipants().values()) {
+				try {
+					p.setStatus(Person.Status.WAITING);
+					ps.setString(1, p.getUsername());
+					ps.setString(2, ""+evt.getTimestamp());
+					ps.setString(3, null);
+					ps.setString(4,""+p.getStatus().ordinal());
+					ps.addBatch();
+					Singleton.log("successfully added participant: " + p.getUsername());
+				} catch (SQLException e) {
+					Singleton.log("error participant: " + p.getUsername());
+					e.printStackTrace();
 				}
-				ps.executeBatch();
-				ps.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
 			}
+			ps.executeBatch();
+			ps.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 	}
 
