@@ -14,7 +14,7 @@ public class CalEvent extends NetworkEvent {
 		UPDATE, NEW, DELETE;
 	}
 
-	HashMap<String, Person> participants;
+	private HashMap<String, Person> participants;
 
 	private String Title;
 	private Date start;
@@ -25,20 +25,11 @@ public class CalEvent extends NetworkEvent {
 	private String description;
 	private final long timestamp;
 
-	public CalEvent(String title, Date start, int duration, Person creator, String description,long timestamp){
-		super(EventType.CALENDAR);
-		setState(CalEventType.NEW);
-		this.title = title;
-		this.creator = creator;
-		this.start = start;
-		this.duration = duration;
-		participants = new HashMap<String, Person>();
-		this.description = description;
-		
-		this.timestamp = timestamp;
-		addParticipant(creator);
-	}
 	public CalEvent(String title, Date start, int duration, Person creator, String description) {
+		this(title, start, duration, creator, description, 0);
+	}
+
+	public CalEvent(String title, Date start, int duration, Person creator, String description, long timestamp) {
 		super(EventType.CALENDAR);
 		setState(CalEventType.NEW);
 		this.title = title;
@@ -47,10 +38,10 @@ public class CalEvent extends NetworkEvent {
 		this.duration = duration;
 		participants = new HashMap<String, Person>();
 		this.description = description;
-		
-		timestamp = System.currentTimeMillis();
+
+		this.timestamp = (timestamp == 0) ? System.currentTimeMillis() : timestamp;
 		addParticipant(creator);
-		
+
 	}
 
 	public CalEvent addParticipant(Person... person) {
@@ -113,8 +104,9 @@ public class CalEvent extends NetworkEvent {
 	public long getTimestamp() {
 		return timestamp;
 	}
+
 	public void setParticipants(HashMap<String, Person> participants) {
 		this.participants = participants;
 	}
-	
+
 }

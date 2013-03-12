@@ -28,7 +28,7 @@ public class DatabaseQueries {
 	public boolean addUser(String username, String password, String name, long LastLoggedIn) {
 		username = processString(username);
 		try {
-			db.execute(String.format("insert into person values (%s,%s,%s,%s)", username, ("MD5("+processString(password)+")"),processString(name), LastLoggedIn));
+			db.execute(String.format("insert into person values (%s,%s,%s,%s)", username, ("MD5(" + processString(password) + ")"), processString(name), LastLoggedIn));
 			Singleton.log("successfully added: " + username);
 			return true;
 		} catch (SQLException e) {
@@ -108,59 +108,59 @@ public class DatabaseQueries {
 		}
 		return users;
 	}
-	
-	public void addEvent(CalEvent evt){
+
+	public void addEvent(CalEvent evt) {
 		String insertQuery = "insert into avtale (event_ID,title,startTime,duration,description,owner) values (?,?,?,?,?,?);";
 		PreparedStatement ps;
 		boolean addedAvtale = false;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
 			try {
-				ps.setString(1,""+evt.getTimestamp());
-				ps.setString(2,evt.getTitle());
-				ps.setString(3,""+evt.getStart().getTime());
-				ps.setString(4,""+evt.getDuration());
-				ps.setString(5,evt.getDescription());
-				ps.setString(6,evt.getCreator().getUsername());
+				ps.setString(1, "" + evt.getTimestamp());
+				ps.setString(2, evt.getTitle());
+				ps.setString(3, "" + evt.getStart().getTime());
+				ps.setString(4, "" + evt.getDuration());
+				ps.setString(5, evt.getDescription());
+				ps.setString(6, evt.getCreator().getUsername());
 				ps.addBatch();
-				Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
-						" and " + evt.getDuration() + " and " + evt.getDescription());
+				Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime() + " and " + evt.getDuration() + " and " + evt.getDescription());
 			} catch (SQLException e) {
-				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
-						" and " + evt.getDuration() + " and " + evt.getDescription());
+				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime() + " and " + evt.getDuration() + " and " + evt.getDescription());
 			}
 			ps.executeBatch();
 			ps.close();
 			addedAvtale = true;
-		}catch (SQLException e) {
-			Singleton.log("error executing: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
-						" and " + evt.getDuration() + " and " + evt.getDescription());
+		} catch (SQLException e) {
+			Singleton.log("error executing: " + evt.getTitle() + " with fields " + evt.getStart().getTime() + " and " + evt.getDuration() + " and " + evt.getDescription());
 			addedAvtale = false;
 		}
-		
+
 		/**
-		 * If the apointment is added sucessfully to the database, the participants are added and connected.
+		 * If the apointment is added sucessfully to the database, the
+		 * participants are added and connected.
 		 * */
 		if (addedAvtale) {
 			addParticipants(evt);
 		}
 	}
+
 	/**
 	 * Adds participants from a CalEvent to the DB.
+	 * 
 	 * @param evt
 	 */
-	public void addParticipants(CalEvent evt){
+	public void addParticipants(CalEvent evt) {
 		String insertQuery = "insert into participants (username,event_ID,alarm,status) values (?,?,?,?);";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
-			for (Person p :  evt.getParticipants().values()) {
+			for (Person p : evt.getParticipants().values()) {
 				try {
 					p.setStatus(Person.Status.WAITING);
 					ps.setString(1, p.getUsername());
-					ps.setString(2, ""+evt.getTimestamp());
+					ps.setString(2, "" + evt.getTimestamp());
 					ps.setString(3, null);
-					ps.setString(4,""+p.getStatus().ordinal());
+					ps.setString(4, "" + p.getStatus().ordinal());
 					ps.addBatch();
 					Singleton.log("successfully added participant: " + p.getUsername());
 				} catch (SQLException e) {
@@ -174,25 +174,26 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
+
 	/**
-	 * Returns an arraylist of all events the person is a participant of, either before or after last login
+	 * Returns an arraylist of all events the person is a participant of, either
+	 * before or after last login
+	 * 
 	 * @param per
 	 * @param afterLastLogin
 	 * @return ArrayList<CalEvent>
 	 */
-	public ArrayList<CalEvent> getEventByParticipant(Person per, boolean afterLastLogin){
+	public ArrayList<CalEvent> getEventByParticipant(Person per, boolean afterLastLogin) {
 		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
 		ResultSet rs;
 		String param;
 		if (afterLastLogin) {
 			param = "<";
-		}else{
+		} else {
 			param = ">";
 		}
-		String query = "SELECT event_ID,title,startTime,duration,description,username,name,lastLoggedIn" +
-				"FROM events, Participants, Person" +
-				"WHERE Events.event_ID = participants.event_ID AND participants.username ="+ per.getUsername()+
-				"AND person.username = events.owner AND" + per.getLastLoggedIn() + param +"event_ID";
+		String query = "SELECT event_ID,title,startTime,duration,description,username,name,lastLoggedIn" + "FROM events, Participants, Person" + "WHERE Events.event_ID = participants.event_ID AND participants.username =" + per.getUsername() + "AND person.username = events.owner AND"
+				+ per.getLastLoggedIn() + param + "event_ID";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -205,8 +206,7 @@ public class DatabaseQueries {
 				String username = rs.getString(6);
 				String name = rs.getString(7);
 				long lastLoggedIn = rs.getLong(8);
-				CalEvent evt = new CalEvent(title, new Date(start), duration,
-						new Person(username, name, lastLoggedIn), description, event_id);
+				CalEvent evt = new CalEvent(title, new Date(start), duration, new Person(username, name, lastLoggedIn), description, event_id);
 				evt.setParticipants(getParticipantsByEventId(event_id));
 				al.add(evt);
 			}
@@ -214,15 +214,13 @@ public class DatabaseQueries {
 			e.printStackTrace();
 		}
 		return al;
-		
+
 	}
 
 	private HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
-		String query = "SELECT username,name,lastLoggedIn" +
-				"FROM person, participants" +
-				"WHERE participants.event_ID ="+ id + "AND participants.username = person.username";
+		String query = "SELECT username,name,lastLoggedIn" + "FROM person, participants" + "WHERE participants.event_ID =" + id + "AND participants.username = person.username";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
