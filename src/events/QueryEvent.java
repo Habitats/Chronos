@@ -8,11 +8,22 @@ import java.util.ArrayList;
  */
 public class QueryEvent extends NetworkEvent {
 
-	public QueryEvent(EventType type) {
+	public enum QueryType {
+		ROOM, PERSON, CALEVENT;
+	}
+
+	private QueryType queryType;
+
+	public QueryEvent(EventType type, QueryType queryType) {
 		super(type);
+		setQueryType(queryType);
 	}
 
 	public void setResults(ArrayList<?> results) {
 		this.results = results;
+	}
+
+	public void setQueryType(QueryType queryType) {
+		this.queryType = queryType;
 	}
 }
