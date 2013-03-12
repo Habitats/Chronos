@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import chronos.DateManagement;
 import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
@@ -22,22 +24,23 @@ import events.CalEvent;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
-	JTextField eventName, time;
+	JTextField eventName, date;
 	JTextArea eventDescription;
 	JList participantList;
 	JCheckBox alert;
-	JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
+	JButton addParticipantButton, deleteParticipantButton, bookRoomButton,
+			editButton, deleteButton, applyButton, cancelButton;
 	Dimension button = new Dimension(50, 20);
 	EventConfigModel model;
 
-	public EventConfigWindow(ChronosModel model,MainFrame frame) {
-		super(model,frame);
+	public EventConfigWindow(ChronosModel model, MainFrame frame) {
+		super(model, frame);
 		setModel(model);
 		setVisible(false);
 
 		setLayout(new GridBagLayout());
 		eventName = new JTextField("Eventname");
-		time = new JTextField("dd.mm.yyyy");
+		date = new JTextField("dd.mm.yyyy");
 		eventDescription = new JTextArea("Description");
 		participantList = new JList<>();
 		alert = new JCheckBox();
@@ -50,23 +53,29 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		cancelButton = new JButton("Cancel");
 
 		eventName.setColumns(20);
-		time.setColumns(20);
+		date.setColumns(20);
 		eventName.setMaximumSize(new Dimension(80, 20));
 		eventDescription.setPreferredSize(new Dimension(100, 100));
 		participantList.setPreferredSize(new Dimension(100, 100));
 		editButton.setPreferredSize(button);
 		editButton.setMinimumSize(new Dimension(50, 20));
 		deleteButton.setPreferredSize(button);
-
+		
+		eventName.addActionListener(new EventNameAction());
+		date.addActionListener(new DateAction());
+		bookRoomButton.addActionListener(new BookRoomAction());
+		editButton.addActionListener(new EditAction());
+		deleteButton.addActionListener(new DeleteAction());
+		applyButton.addActionListener(new ApplyAction());
+		cancelButton.addActionListener(new CancelAction());
+		
 		add(eventName, new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 1));
 		add(eventDescription, new GBC(0, 1).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 6));
 		add(editButton, new GBC(0, 7));
 		add(deleteButton, new GBC(1, 7));
-
-		add(time, new GBC(2, 0).setSpan(2, 1));
+		add(date, new GBC(2, 0).setSpan(2, 1));
 		add(participantList, new GBC(2, 1).setSpan(1, 6));
 		add(applyButton, new GBC(2, 7));
-
 		add(new Label("Enable alert 15 min before event."), new GBC(3, 1));
 		add(new Label("Alert:"), new GBC(3, 2));
 		add(alert, new GBC(3, 2));
@@ -78,27 +87,80 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 	}
 
-
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (EventConfigModel) model;
 	}
-	
+
 	public EventConfigModel getModel() {
 		return model;
+	}
+
+	public class DateAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String dateString = e.getActionCommand();
+			Date date = DateManagement.getDateFromString(dateString);
+			System.out.println((date == null) ? "Date was invalid: " + date
+					: "Date was valid: "
+							+ DateManagement.getFormattedSimple(date));
+		}
+	}
+	
+	public class EventNameAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String eventNameString = e.getActionCommand();
+			
+			
+		}
+	}
+	
+	public class BookRoomAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			getFrame().getRoomBookingWindow().setVisible(true);
+		}
+	}
+	
+	public class EditAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	public class DeleteAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//slett event i DB
+			getFrame().getEventConfigWindow().setVisible(false);
+			
+		}
+	}
+	public class CancelAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			getFrame().getEventConfigWindow().setVisible(false);
+		}	
+	}
+	
+	public class ApplyAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// send til DB (navn, tid, beskrivelse ...)
+			
+			getFrame().getEventConfigWindow().setVisible(false);
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-	}
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame("EventConfig");
-		frame.add(new EventConfigWindow(null,null));
-		frame.pack();
-		frame.setVisible(true);
-
 	}
 
 }

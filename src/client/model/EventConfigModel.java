@@ -7,16 +7,15 @@ import events.NetworkEvent;
 import events.CalEvent.CalEventType;
 
 public class EventConfigModel extends ChronosModel {
-
-	public enum ConfigState {
-		EDIT, NEW, VIEW;
-	}
-
 	String eventName, eventDescription;
 	Person participant, creator;
 	Boolean alert;
 	String roomNumber;
 	private ConfigState state;
+	
+	public enum ConfigState {
+		EDIT, NEW, VIEW;
+	}
 
 	public EventConfigModel(ClientController controller) {
 		super(controller);
@@ -51,7 +50,6 @@ public class EventConfigModel extends ChronosModel {
 	public void setParticipant(Person participant) {
 		this.participant = participant;
 	}
-
 	
 	public Boolean getAlert() {
 		return alert;

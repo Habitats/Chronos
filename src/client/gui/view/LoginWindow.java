@@ -30,7 +30,6 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	JButton loginButton, cancelButton;
 
 	public LoginWindow(ChronosModel model,MainFrame frame) {
-	//public LoginWindow() {
 		super(model, frame);
 		setLayout(new GridBagLayout());
 		usernameField = new JTextField();
@@ -52,8 +51,6 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 		add(passwordField, new GBC(0,3, Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
 		add(loginButton, new GBC(0,4).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_END));
 		add(cancelButton, new GBC(1,4).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_END));
-	
-		//setModel(model);
 	}
 	
 	public class UsernameListener implements KeyListener {
@@ -107,12 +104,4 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		model.login("bob", "password");
 	}
-	/*
-	public static void main(String[] args) {
-		JFrame frame = new JFrame("Login");
-		frame.add(new LoginWindow());
-		frame.pack();
-		frame.setVisible(true);
-	}
-	*/
 }
