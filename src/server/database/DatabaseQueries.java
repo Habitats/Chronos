@@ -93,15 +93,15 @@ public class DatabaseQueries {
 	public ArrayList<Person> getUsers() {
 		ArrayList<Person> users = new ArrayList<Person>();
 		ResultSet rs;
-		String query = "select brukernavn,navn from person";
+		String query = "select brukernavn,navn,lastLoggedIn from person";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
 			while (rs.next()) {
 				String name = rs.getString(1);
 				String username = rs.getString(2);
-				// String password = rs.getString(3);
-				users.add(new Person(username, name));
+				String lastLoggedIn = rs.getString(3);
+				users.add(new Person(username, name, Long.parseLong(lastLoggedIn)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,7 +150,7 @@ public class DatabaseQueries {
 	 * @param evt
 	 */
 	public void addParticipants(CalEvent evt){
-		String insertQuery = "insert into innkallelse (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
+		String insertQuery = "insert into participants (brukernavn,avtaleID,alarm,status) values (?,?,?,?);";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
@@ -174,33 +174,68 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
-	
-	public ArrayList<CalEvent> getEventByParticipant(Person per){
+	/**
+	 * Returns an arraylist of all events the person is a participant of, either before or after last login
+	 * @param per
+	 * @param afterLogin
+	 * @return ArrayList<CalEvent>
+	 */
+	public ArrayList<CalEvent> getEventByParticipant(Person per, boolean afterLogin){
 		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
 		ResultSet rs;
-		String query = "SELECT avtaleID,tittel,starttid,varighet,beskrivelse,brukernavn,navn,lastLoggedIn" +
+		String param;
+		if (afterLogin) {
+			param = "<";
+		}else{
+			param = ">";
+		}
+		String query = "SELECT event_ID,tittel,starttid,varighet,beskrivelse,brukernavn,navn,lastLoggedIn" +
 				"FROM avtale, inkallelse, person" +
-				"WHERE avtale.avtaleID = innkallelse.avtaleID AND innkallelse.brukernavn ="+ per.getUsername()+
-				"AND person.brukernavn = avlate.eier";
+				"WHERE avtale.avtaleID = participants.avtaleID AND participants.brukernavn ="+ per.getUsername()+
+				"AND person.brukernavn = avlate.eier AND" + per.getLastLoggedIn() + param +"event_ID";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
 			while (rs.next()) {
-				String avtaleID = rs.getString(1);
+				long event_id = rs.getLong(1);
 				String title = rs.getString(2);
-				String start = rs.getString(3);
-				String duration = rs.getString(4);
+				long start = rs.getLong(3);
+				int duration = rs.getInt(4);
 				String description = rs.getString(5);
 				String username = rs.getString(6);
 				String name = rs.getString(7);
-				al.add(new CalEvent(title, new Date(Long.parseLong(start)), Integer.parseInt(duration),
-						new Person(username, name), description, Integer.parseInt(avtaleID)));
+				long lastLoggedIn = rs.getLong(8);
+				CalEvent evt = new CalEvent(title, new Date(start), duration,
+						new Person(username, name, lastLoggedIn), description, event_id);
+				evt.setParticipants(getParticipantsByEventId(event_id));
+				al.add(evt);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return al;
 		
+	}
+
+	private HashMap<String, Person> getParticipantsByEventId(long id) {
+		HashMap<String, Person> participants = new HashMap<String, Person>();
+		ResultSet rs;
+		String query = "SELECT username,name,lastLoggedIn" +
+				"FROM person, participants" +
+				"WHERE participants.eventID ="+ id + "AND participants.username = person.username";
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			while (rs.next()) {
+				String username = rs.getString(1);
+				String name = rs.getString(2);
+				long lastLoggedIn = rs.getLong(3);
+				participants.put(username, new Person(username, name, lastLoggedIn));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return participants;
 	}
 
 	private String processString(String str) {

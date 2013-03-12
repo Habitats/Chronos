@@ -29,14 +29,14 @@ public class DatabaseTest {
 
 		db.initialize();
 
-		CalEvent evt = new CalEvent("Foo",new Date(1991, 12, 15, 5, 30, 00), 3600, new Person("gunnar", "some user"));
-
-		System.out.println(""+evt.getStart().getTime());
-		evt.setDescription("No title");
-		evt.setTitle("Some event");
-		evt.addParticipant(new Person("loverBoy", "some other user"));
-		evt.setPerson(queries.getUsers().get(0));
-		queries.addEvent(evt);
+//		CalEvent evt = new CalEvent("Foo",new Date(1991, 12, 15, 5, 30, 00), 3600, new Person("gunnar", "some user"));
+//
+//		System.out.println(""+evt.getStart().getTime());
+//		evt.setDescription("No title");
+//		evt.setTitle("Some event");
+//		evt.addParticipant(new Person("loverBoy", "some other user"));
+//		evt.setPerson(queries.getUsers().get(0));
+//		queries.addEvent(evt);
 //		String user = "gunnar";
 //		queries.addUser(user, null, null);
 //		queries.updateUser(user, "passord", "nyttpw");
