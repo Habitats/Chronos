@@ -3,6 +3,7 @@ package server.database;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Properties;
 
 import chronos.Person;
@@ -34,16 +35,15 @@ public class DatabaseTest {
 		/**
 		 * AddUser
 		 */
-//		queries.addUser("sexyboy","derp", "kyrre", 1829000);
+//		queries.addUser("shitForBrains","derp", "kyrre", 1829000);
 //		queries.addUser("childlover","derp", "hallvard", 1829000);
+//		queries.addUser("shitForBrains","derp", "patrick", 1829000);
 
 		
 		/**
 		 * AddEvent
 		 */
-//		Person p = queries.getUsers().get(0);
-//		System.out.println(p);
-//		CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999, p, "Dette er en test event");
+//		CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999, queries.getUsers().get(0), "Dette er en test event");
 //		evt.addParticipant(queries.getUsers().get(1));
 //		queries.addEvent(evt);
 
@@ -74,7 +74,9 @@ public class DatabaseTest {
 		 */
 		
 		//new
-		System.out.println(queries.getEventByParticipant(queries.getUsers().get(0), true).get(0).toString());
+		//System.out.println(queries.getUsers().get(0));
+		//System.out.println(queries.getParticipantsByEventId(1363110427115L));
+		//System.out.println(queries.getEventsByParticipant(queries.getUsers().get(0), true).get(0).getParticipants());
 		
 	}
 }
