@@ -37,4 +37,12 @@ public class AuthEvent extends NetworkEvent {
 	public boolean getAccessGranted() {
 		return accessGranted;
 	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 }

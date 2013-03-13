@@ -24,7 +24,6 @@ import events.QueryEvent.QueryType;
 public class ClientController implements Runnable, ClientControllerInterface {
 
 	private Client client;
-	private Person person;
 	private boolean loggedIn;
 	private MainFrame mainFrame;
 	private HashMap<ChronosType, ChronosModel> models;
@@ -53,7 +52,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		// sendTestEvent();
 		// break;
 		case LOGIN:
-			setPerson(((AuthEvent) event).getSender());
+			Singleton.getInstance().setSelf(((AuthEvent) event).getPerson());
 			loggedIn = true;
 			mainFrame.buildGui();
 			break;
@@ -108,19 +107,22 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		Singleton.log("sending networkEvent to server");
 
 		// Send to server
-		 client.sendNetworkEvent(event);
+		if (Singleton.getInstance().networkEnabled()) {
+			client.sendNetworkEvent(event);
+		} else {
 
-		// simulate authevent
-//		if (event.getType() == EventType.LOGIN) {
-//			((AuthEvent) event).setAccessGranted(true);
-//			evaluateNetworkEvent(event);
-//		} else {
-//			// simulate networkEvent
-//			ArrayList<Comparable> results = new ArrayList<Comparable>();
-//			results.add((CalEvent) event);
-//			QueryEvent queryEvent = new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(results);
-//			models.get(ChronosType.CALENDAR).receiveNetworkEvent(queryEvent);
-//		}
+			// simulate authevent
+			if (event.getType() == EventType.LOGIN) {
+				((AuthEvent) event).setAccessGranted(true);
+				evaluateNetworkEvent(event);
+			} else {
+				// simulate networkEvent
+				ArrayList<Comparable> results = new ArrayList<Comparable>();
+				results.add((CalEvent) event);
+				QueryEvent queryEvent = new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(results);
+				models.get(ChronosType.CALENDAR).receiveNetworkEvent(queryEvent);
+			}
+		}
 
 	}
 
@@ -140,7 +142,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		Scanner sc = new Scanner(System.in);
 		Singleton.log("Entering test event loop. Write messages to test the server connection:");
 		String msg = sc.nextLine();
-		client.sendNetworkEvent(new TestEvent(msg, getSelf()));
+		client.sendNetworkEvent(new TestEvent(msg, Singleton.getInstance().getSelf()));
 	}
 
 	private void sendCalEvent() {
@@ -148,15 +150,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		Person bob = new Person("bob");
 		Person carl = new Person("carl");
 		Person lisa = new Person("lisa");
-		CalEvent calEvent = new CalEvent("test", date, 5, getSelf(), null).addParticipant(bob, carl, lisa);
-	}
-
-	public Person getSelf() {
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
+		CalEvent calEvent = new CalEvent("test", date, 5, Singleton.getInstance().getSelf(), null).addParticipant(bob, carl, lisa);
 	}
 
 	/**

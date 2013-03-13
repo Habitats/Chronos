@@ -54,4 +54,8 @@ public class QueryEvent extends NetworkEvent {
 	public QueryType getQueryType() {
 		return queryType;
 	}
+
+	public String toString() {
+		return "[QueryEvern] ~";
+	}
 }

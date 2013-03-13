@@ -21,6 +21,10 @@ public class Singleton {
 	private String username;
 	private boolean networkEnabled = false;
 	private boolean loginEnabled = false;
+	
+	// Current logged in user
+	private Person person;
+
 
 	private Singleton() {
 	}
@@ -78,5 +82,12 @@ public class Singleton {
 
 	public boolean loginEnabled() {
 		return loginEnabled;
+	}
+
+	public void setSelf(Person person) {
+		this.person = person;
+	}
+	public Person getSelf(){
+		return person;
 	}
 }

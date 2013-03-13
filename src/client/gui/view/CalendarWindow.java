@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 
 import chronos.DateManagement;
 import chronos.Person;
+import chronos.Singleton;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
@@ -54,6 +55,7 @@ public class CalendarWindow extends ChronosWindow {
 		newEventButton.setMinimumSize(new Dimension(140, 30));
 		add(newEventButton, new GBC(i, 0));
 		newEventButton.addActionListener(new NewEventListener());
+
 
 		eventsPanel = new BoxPanel();
 
@@ -149,7 +151,6 @@ public class CalendarWindow extends ChronosWindow {
 
 		updateLabels();
 		CalEvent calEvent = new CalEvent("Jostein", new Date(), 30, new Person("Per"), "jososososo");
-
 	}
 
 	@Override
@@ -192,6 +193,8 @@ public class CalendarWindow extends ChronosWindow {
 		default:
 			break;
 		}
+
+		getFrame().pack();
 	}
 
 	public void removeEvents() {

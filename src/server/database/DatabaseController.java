@@ -26,7 +26,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 	@Override
 	public AuthEvent authenticateUser(AuthEvent event) {
 		Singleton.log("Authenticating " + event.getUsername());
-		// event.setPerson(new Person(event.getUsername(), "bob", -1));
+		event.setPerson(new Person(event.getUsername(), "bob"));
 		event.setAccessGranted(true);
 		return event;
 	}
@@ -44,9 +44,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getCalEvents(Person person) {
-		CalEvent event1 = new CalEvent("derp1", new Date(), 10, person, "test");
-		CalEvent event2 = new CalEvent("derp2", new Date(), 10, person, "test");
-		CalEvent event3 = new CalEvent("derp3", new Date(), 10, person, "test");
+		CalEvent event1 = new CalEvent("event1", new Date(), 10, person, "test");
+		CalEvent event2 = new CalEvent("event2", new Date(), 10, person, "test");
+		CalEvent event3 = new CalEvent("event3", new Date(), 10, person, "test");
 
 		ArrayList<Comparable> results = new ArrayList<Comparable>();
 		results.add(event1);
@@ -54,6 +54,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 		results.add(event3);
 
 		QueryEvent event = new QueryEvent(EventType.QUERY, QueryType.CALEVENT);
+		event.setPerson(person);
 		event.setResults(results);
 
 		return event;

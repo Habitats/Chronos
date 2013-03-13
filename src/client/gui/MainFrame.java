@@ -6,6 +6,7 @@ import java.awt.Window;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import chronos.Singleton;
@@ -124,8 +125,11 @@ public class MainFrame extends JFrame {
 
 	// initialize the GUI here
 	public void buildGui() {
-		if (loginFrame != null)
+		if (loginFrame != null) {
 			loginFrame.dispose();
+			JLabel currentUser = new JLabel(Singleton.getInstance().getSelf().toString());
+			calendarWindow.add(currentUser, new GBC(0, 100).setSpan(10, 1));
+		}
 		JLayeredPane layeredPane = buildLayeredPane();
 		getContentPane().add(layeredPane);
 

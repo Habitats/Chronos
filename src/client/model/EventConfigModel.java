@@ -7,6 +7,7 @@ import java.util.Date;
 import chronos.DateManagement;
 import chronos.Person;
 import chronos.Room;
+import chronos.Singleton;
 import client.ClientController;
 import client.gui.view.ChronosWindow;
 import client.gui.view.EventConfigWindow;
@@ -116,10 +117,10 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void newCalEvent() {
-		Person user1 = new Person("username1", "user1");
-		Person user2 = new Person("username2", "user2");
-		Person user3 = new Person("username3", "user3");
-		Person creator = new Person("owner", "bob");
+		Person user1 = new Person("herp");
+		Person user2 = new Person("derp");
+		Person user3 = new Person("snerp");
+		Person creator = Singleton.getInstance().getSelf();
 		CalEvent event;
 		if (validateInput()) {
 			event = new CalEvent(getEventName(), getStartTime(), getDuration(), creator, getEventDescription()).setState(CalEventType.NEW).addParticipant(user1, user2, user3);
@@ -150,7 +151,7 @@ public class EventConfigModel extends ChronosModel {
 
 		view.getStartDateField().setText("13.03.2013");
 		view.getStartDateField().setBackground(Color.white);
-		
+
 		view.getStartTimeField().setText("10");
 		view.getStartTimeField().setBackground(Color.white);
 
