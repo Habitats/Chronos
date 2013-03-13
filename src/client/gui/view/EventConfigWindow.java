@@ -68,6 +68,8 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		dateField.addActionListener(new DateAction());
 
 		bookRoomButton.addActionListener(new BookRoomAction());
+		addParticipantButton.addActionListener(new AddParticipantAction());
+		deleteParticipantButton.addActionListener(new DeleteParticipantAction());
 		editButton.addActionListener(new EditAction());
 		deleteButton.addActionListener(new DeleteAction());
 		applyButton.addActionListener(new ApplyAction());
@@ -134,7 +136,20 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 			getFrame().getRoomBookingWindow().setVisible(true);
 		}
 	}
+	private class AddParticipantAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			getFrame().getAddParticipantWindow().setVisible(true);
+		}
+	}
+	private class DeleteParticipantAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
 
+	
 	private class EditAction implements ActionListener {
 
 		@Override
