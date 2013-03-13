@@ -38,8 +38,8 @@ public class CalendarWindow extends ChronosWindow {
 	private JScrollPane eventsPane, othersCalPane;
 	private BoxPanel eventsPanel, othersCalPanel;
 	private DayPanel mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel, sundayPanel;
-	private CalLabel dateLbl, weekNumberLbl, mondayLbl, tuesdayLbl,wednesdayLbl,thursdayLbl,fridayLbl,saturdayLbl,sundayLbl;
-	
+	private CalLabel dateLbl, weekNumberLbl, mondayLbl, tuesdayLbl, wednesdayLbl, thursdayLbl, fridayLbl, saturdayLbl, sundayLbl;
+
 	public CalendarWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
 		setModel(model);
@@ -146,7 +146,7 @@ public class CalendarWindow extends ChronosWindow {
 
 		sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
-		
+
 		updateLabels();
 	}
 
@@ -202,26 +202,28 @@ public class CalendarWindow extends ChronosWindow {
 		sundayPanel.removeAll();
 		eventsPanel.removeAll();
 	}
+
 	public void updateLabels() {
 		Date currentDate = model.getCurrentDisplayedDate();
 		weekNumberLbl.setText("Week " + model.getCurrentDisplayedWeek());
 		dateLbl.setText(model.getCurrentDisplayedDateIntervall());
-		mondayLbl.setText("Monday "+ DateManagement.getFormattedSimple(currentDate));
+		mondayLbl.setText("Monday " + DateManagement.getFormattedSimple(currentDate));
 		currentDate = DateManagement.getNextDay(currentDate);
-		tuesdayLbl.setText("Tuesday "+ DateManagement.getFormattedSimple(currentDate));
+		tuesdayLbl.setText("Tuesday " + DateManagement.getFormattedSimple(currentDate));
 		currentDate = DateManagement.getNextDay(currentDate);
-		wednesdayLbl.setText("Wednesday "+ DateManagement.getFormattedSimple(currentDate));
+		wednesdayLbl.setText("Wednesday " + DateManagement.getFormattedSimple(currentDate));
 		currentDate = DateManagement.getNextDay(currentDate);
-		thursdayLbl.setText("Thursday "+ DateManagement.getFormattedSimple(currentDate));
+		thursdayLbl.setText("Thursday " + DateManagement.getFormattedSimple(currentDate));
 		currentDate = DateManagement.getNextDay(currentDate);
-		fridayLbl.setText("Friday "+ DateManagement.getFormattedSimple(currentDate));
+		fridayLbl.setText("Friday " + DateManagement.getFormattedSimple(currentDate));
 		currentDate = DateManagement.getNextDay(currentDate);
-		saturdayLbl.setText("Saturday "+ DateManagement.getFormattedSimple(currentDate));
+		saturdayLbl.setText("Saturday " + DateManagement.getFormattedSimple(currentDate));
 		currentDate = DateManagement.getNextDay(currentDate);
-		sundayLbl.setText("Sunday "+ DateManagement.getFormattedSimple(currentDate));
+		sundayLbl.setText("Sunday " + DateManagement.getFormattedSimple(currentDate));
 		currentDate = DateManagement.getNextDay(currentDate);
-		
+
 	}
+
 	private class NewEventListener implements ActionListener {
 
 		@Override

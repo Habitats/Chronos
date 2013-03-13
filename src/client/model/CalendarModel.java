@@ -8,6 +8,7 @@ import chronos.DateManagement;
 import chronos.Person;
 import client.ClientController;
 import client.gui.view.CalendarWindow;
+import client.gui.view.ChronosWindow;
 import events.CalEvent;
 import events.NetworkEvent;
 import events.NetworkEvent.EventType;
@@ -38,12 +39,15 @@ public class CalendarModel extends ChronosModel {
 		currentDisplayedWeek = DateManagement.getCurrentWeek();
 		currentDisplayedDate = new Date();
 	}
+
 	public String getCurrentDisplayedDateIntervall() {
 		return DateManagement.getFormattedDateIntervall(currentDisplayedDate);
 	}
+
 	public Date getCurrentDisplayedDate() {
 		return currentDisplayedDate;
 	}
+
 	public String getCurrentDisplayedWeek() {
 		return Integer.toString(currentDisplayedWeek);
 	}
@@ -82,11 +86,6 @@ public class CalendarModel extends ChronosModel {
 		}
 	}
 
-	public void setView(CalendarWindow calendarWindow) {
-		this.calendarWindow = calendarWindow;
-
-	}
-
 	private void getPersonEvents(Person person) {
 		QueryEvent event = new QueryEvent(EventType.BATCH_CALENDAR, person);
 		// BRUK DENNE METODEN
@@ -114,26 +113,28 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	public void nextWeek() {
-		if(currentDisplayedWeek < 52) {
+		if (currentDisplayedWeek < 52) {
 			currentDisplayedWeek++;
-		} else currentDisplayedWeek = 1;
+		} else
+			currentDisplayedWeek = 1;
 		currentDisplayedDate = DateManagement.getDateFromString(DateManagement.getNextWeek(currentDisplayedDate));
 	}
 
 	public void prevWeek() {
-		if(currentDisplayedWeek > 1) {
+		if (currentDisplayedWeek > 1) {
 			currentDisplayedWeek--;
-		} else currentDisplayedWeek = 52;
+		} else
+			currentDisplayedWeek = 52;
 		currentDisplayedDate = DateManagement.getDateFromString(DateManagement.getPrevWeek(currentDisplayedDate));
 	}
 
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
 		switch (event.getType()) {
-			
+
 		case QUERY:
 			evaluateQueryEvent((QueryEvent) event);
-			
+
 			break;
 
 		default:
@@ -152,11 +153,17 @@ public class CalendarModel extends ChronosModel {
 		default:
 			break;
 		}
-		
+
 	}
+
 	@Override
 	public NetworkEvent newNetworkEvent() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setView(ChronosWindow calendarWindow) {
+		this.calendarWindow = (CalendarWindow) calendarWindow;
 	}
 }

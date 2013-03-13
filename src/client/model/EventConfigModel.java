@@ -4,6 +4,7 @@ import java.util.Date;
 
 import chronos.Person;
 import client.ClientController;
+import client.gui.view.ChronosWindow;
 import client.gui.view.EventConfigWindow;
 import events.CalEvent;
 import events.NetworkEvent;
@@ -15,10 +16,12 @@ public class EventConfigModel extends ChronosModel {
 	private Person participant, creator;
 	private Boolean alert;
 	private String roomNumber;
+	private EventConfigWindow eventConfigWindow;
 
 	private ConfigState state;
 	private Date start;
 	private int duration;
+	private EventConfigWindow view;
 
 	public enum ConfigState {
 		EDIT, NEW, VIEW;
@@ -122,6 +125,7 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public Date getStart() {
+
 		return start;
 	}
 
@@ -138,5 +142,10 @@ public class EventConfigModel extends ChronosModel {
 	public NetworkEvent newNetworkEvent() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setView(ChronosWindow view) {
+		this.view = (EventConfigWindow) view;
 	}
 }

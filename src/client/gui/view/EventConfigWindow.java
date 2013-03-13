@@ -74,28 +74,28 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		deleteButton.addActionListener(new DeleteAction());
 		applyButton.addActionListener(new ApplyAction());
 		cancelButton.addActionListener(new CancelAction());
-		
+
 		add(eventNameField, new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 1));
 		add(eventDescriptionArea, new GBC(0, 1).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 6));
 		add(editButton, new GBC(0, 7));
-		
+
 		add(deleteButton, new GBC(1, 7).setFill(GridBagConstraints.NONE));
-		
+
 		add(dateField, new GBC(2, 0).setAnchor(GridBagConstraints.FIRST_LINE_START));
 		add(participantList, new GBC(2, 1).setSpan(1, 6));
 		add(applyButton, new GBC(2, 7));
-		
+
 		add(startTimeField, new GBC(3, 0).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
 		add(new Label("Enable alert 15 min before"), new GBC(3, 1).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
 		add(new Label("min before event."), new GBC(3, 1).setSpan(2, 1).setAnchor(GridBagConstraints.SOUTH));
-		
+
 		add(new Label("Alert:"), new GBC(3, 2));
 		add(new Label("Room no."), new GBC(3, 3).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
 		add(bookRoomButton, new GBC(3, 4).setSpan(2, 1));
 		add(addParticipantButton, new GBC(3, 5).setSpan(2, 1));
 		add(deleteParticipantButton, new GBC(3, 6).setSpan(2, 1));
 		add(cancelButton, new GBC(3, 7).setSpan(2, 1));
-		
+
 		add(durationField, new GBC(4, 0));
 		add(alert, new GBC(4, 2));
 		add(roomNumberField, new GBC(4, 3));
@@ -104,7 +104,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (EventConfigModel) model;
-		//model.addPropertyChangeListener(this)
+		model.setView(this);
 	}
 
 	public EventConfigModel getModel() {
@@ -136,20 +136,21 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 			getFrame().getRoomBookingWindow().setVisible(true);
 		}
 	}
+
 	private class AddParticipantAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getFrame().getAddParticipantWindow().setVisible(true);
 		}
 	}
+
 	private class DeleteParticipantAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 		}
 	}
 
-	
 	private class EditAction implements ActionListener {
 
 		@Override

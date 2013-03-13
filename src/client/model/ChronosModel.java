@@ -1,6 +1,7 @@
 package client.model;
 
 import client.ClientController;
+import client.gui.view.ChronosWindow;
 import events.NetworkEvent;
 
 abstract public class ChronosModel {
@@ -29,7 +30,6 @@ abstract public class ChronosModel {
 
 	}
 
-
 	public ChronosType getType() {
 		return chronosType;
 	}
@@ -37,4 +37,6 @@ abstract public class ChronosModel {
 	abstract public void receiveNetworkEvent(NetworkEvent event);
 
 	abstract public NetworkEvent newNetworkEvent();
+
+	abstract public void setView(ChronosWindow view);
 }

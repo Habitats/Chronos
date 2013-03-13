@@ -2,11 +2,14 @@ package client.model;
 
 import chronos.Person;
 import client.ClientController;
+import client.gui.view.ChronosWindow;
+import client.gui.view.LoginWindow;
 import events.AuthEvent;
 
 public class LoginModel extends ChronosModel {
 	private String username;
 	private char[] password;
+	private LoginWindow view;
 
 	public LoginModel(ClientController controller) {
 		super(controller, ChronosType.LOGIN);
@@ -39,5 +42,10 @@ public class LoginModel extends ChronosModel {
 	@Override
 	public events.NetworkEvent newNetworkEvent() {
 		return null;
+	}
+
+	@Override
+	public void setView(ChronosWindow view) {
+		this.view = (LoginWindow) view;
 	};
 }

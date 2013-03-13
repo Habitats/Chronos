@@ -1,10 +1,13 @@
 package client.model;
 
 import client.ClientController;
+import client.gui.view.ChronosWindow;
+import client.gui.view.RoomBookingWindow;
 import events.NetworkEvent;
 
 public class RoomBookingModel extends ChronosModel {
 	String roomNumber;
+	private RoomBookingWindow view;
 	
 	public RoomBookingModel(ClientController controller) {
 		super(controller, ChronosType.ROOM_BOOK);
@@ -28,6 +31,11 @@ public class RoomBookingModel extends ChronosModel {
 	public NetworkEvent newNetworkEvent() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setView(ChronosWindow view) {
+		this.view = (RoomBookingWindow) view;
 	}
 
 }
