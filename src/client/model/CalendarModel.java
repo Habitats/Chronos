@@ -68,8 +68,8 @@ public class CalendarModel extends ChronosModel {
 			Date startDate = calEvent.getStart();
 			int eventWeek = DateManagement.getWeek(startDate);
 			int eventYear = DateManagement.getYear(startDate);
-			int currentYear = DateManagement.getYear(currentDisplayedDate);
-			if (currentDisplayedWeek == eventWeek && eventYear == currentYear) {
+			int currentDisplayedYear = DateManagement.getYear(currentDisplayedDate);
+			if (currentDisplayedWeek == eventWeek && eventYear == currentDisplayedYear) {
 				calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate));
 			} else {
 				calendarWindow.addEvent(calEvent, Weekday.NONE);
@@ -131,9 +131,31 @@ public class CalendarModel extends ChronosModel {
 
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
+		switch (event.getType()) {
+			
+		case QUERY:
+			evaluateQueryEvent((QueryEvent) event);
+			
+			break;
 
+		default:
+			break;
+		}
 	}
 
+	private void evaluateQueryEvent(QueryEvent queryEvent) {
+		switch (queryEvent.getQueryType()) {
+		case CALEVENT:
+			addEvents(queryEvent);
+			break;
+		case PERSON:
+			addOtherPersons(queryEvent);
+			break;
+		default:
+			break;
+		}
+		
+	}
 	@Override
 	public NetworkEvent newNetworkEvent() {
 		// TODO Auto-generated method stub
