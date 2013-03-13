@@ -1,5 +1,6 @@
 package server.database;
 
+import java.util.ArrayList;
 import java.util.Date;
 import chronos.Person;
 import chronos.Singleton;
@@ -43,7 +44,19 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getCalEvents(Person person) {
-		return null;
+		CalEvent event1 = new CalEvent("derp1", new Date(), 10, person, "test");
+		CalEvent event2 = new CalEvent("derp2", new Date(), 10, person, "test");
+		CalEvent event3 = new CalEvent("derp3", new Date(), 10, person, "test");
+
+		ArrayList<Comparable> results = new ArrayList<Comparable>();
+		results.add(event1);
+		results.add(event2);
+		results.add(event3);
+
+		QueryEvent event = new QueryEvent(EventType.QUERY, QueryType.CALEVENT);
+		event.setResults(results);
+
+		return event;
 	}
 
 	@Override

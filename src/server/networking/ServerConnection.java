@@ -19,6 +19,8 @@ public class ServerConnection implements Runnable {
 
 	private final Socket clientSocket;
 	private final Server server;
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
 
 	public ServerConnection(Socket clientSocket, Server server) {
 		this.clientSocket = clientSocket;
@@ -26,8 +28,8 @@ public class ServerConnection implements Runnable {
 	}
 
 	private void initConnection() throws IOException {
-		ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
-		ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
+		out = new ObjectOutputStream(clientSocket.getOutputStream());
+		in = new ObjectInputStream(clientSocket.getInputStream());
 		server.getClientConnections().add(new ClientConnection(out, clientSocket));
 
 		NetworkEvent event;
@@ -59,8 +61,14 @@ public class ServerConnection implements Runnable {
 	public void run() {
 		try {
 			initConnection();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			try {
+				out.close();
+				in.close();
+				clientSocket.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 }

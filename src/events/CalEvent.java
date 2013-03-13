@@ -23,13 +23,13 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	private final Person creator;
 	private final String title;
 	private String description;
-	private final long timestamp;
+	private final long timestampPrimaryKey;
 
 	public CalEvent(String title, Date start, int duration, Person creator, String description) {
 		this(title, start, duration, creator, description, 0);
 	}
 
-	public CalEvent(String title, Date start, int duration, Person creator, String description, long timestamp) {
+	public CalEvent(String title, Date start, int duration, Person creator, String description, long timestampPrimaryKey) {
 		super(EventType.CALENDAR);
 		setState(CalEventType.NEW);
 		this.title = title;
@@ -39,7 +39,7 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		participants = new HashMap<String, Person>();
 		this.description = description;
 
-		this.timestamp = (timestamp == 0) ? System.currentTimeMillis() : timestamp;
+		this.timestampPrimaryKey = (timestampPrimaryKey == 0) ? System.currentTimeMillis() : timestampPrimaryKey;
 		addParticipant(creator);
 	}
 
@@ -101,8 +101,11 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		Title = title;
 	}
 
+	/**
+	 * used as primary key in the db, HATERS GONNA' HATE
+	 */
 	public long getTimestamp() {
-		return timestamp;
+		return timestampPrimaryKey;
 	}
 
 	public void setParticipants(HashMap<String, Person> participants) {
