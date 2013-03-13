@@ -2,7 +2,6 @@ package client.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;

@@ -12,7 +12,6 @@ import events.CalEvent;
 import events.NetworkEvent;
 import events.NetworkEvent.EventType;
 import events.QueryEvent;
-import events.QueryEvent.QueryType;
 
 public class CalendarModel extends ChronosModel {
 
@@ -115,5 +114,11 @@ public class CalendarModel extends ChronosModel {
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
 		
+	}
+
+	@Override
+	public NetworkEvent newNetworkEvent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -2,7 +2,6 @@ package client.model;
 
 import client.ClientController;
 import events.NetworkEvent;
-import events.QueryEvent;
 
 public class UserListModel extends ChronosModel {
 
@@ -15,6 +14,12 @@ public class UserListModel extends ChronosModel {
 	public void receiveNetworkEvent(NetworkEvent event) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public NetworkEvent newNetworkEvent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

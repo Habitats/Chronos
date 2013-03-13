@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -20,10 +19,6 @@ import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
-import client.model.EventConfigModel.ConfigState;
-import events.CalEvent;
-import events.CalEvent.CalEventType;
-import events.NetworkEvent.EventType;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 

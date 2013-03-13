@@ -35,4 +35,9 @@ public class LoginModel extends ChronosModel {
 	@Override
 	public void receiveNetworkEvent(events.NetworkEvent event) {
 	};
+
+	@Override
+	public events.NetworkEvent newNetworkEvent() {
+		return null;
+	};
 }

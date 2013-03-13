@@ -78,11 +78,11 @@ public class ServerController implements Runnable {
 		case CALEVENT:
 			break;
 		case PERSON:
-			event = dbController.getUsers((QueryEvent) event);
+			event = dbController.getUsers(event);
 			echoNetworkEventToSender(event);
 			break;
 		case ROOM:
-			event = dbController.getAvailableRooms((QueryEvent) event);
+			event = dbController.getAvailableRooms(event);
 			echoNetworkEventToSender(event);
 			break;
 		}

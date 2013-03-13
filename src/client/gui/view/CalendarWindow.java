@@ -7,11 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
@@ -29,7 +25,6 @@ import client.gui.view.CalendarWindowHelper.PersonCheckBox;
 import client.model.CalendarModel;
 import client.model.CalendarModel.Weekday;
 import client.model.ChronosModel;
-import client.model.EventConfigModel;
 import events.CalEvent;
 
 public class CalendarWindow extends ChronosWindow {
@@ -213,9 +208,9 @@ public class CalendarWindow extends ChronosWindow {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			Person person = ((PersonCheckBox)e.getItemSelectable()).getPerson();
-			if(e.getStateChange() == e.SELECTED){
+			if(e.getStateChange() == ItemEvent.SELECTED){
 				model.addSelectedPerson(person);
-			} else if (e.getStateChange() == e.DESELECTED) {
+			} else if (e.getStateChange() == ItemEvent.DESELECTED) {
 				model.removeSelectedPerson(person);
 				model.update();
 			}

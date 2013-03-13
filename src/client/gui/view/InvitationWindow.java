@@ -1,6 +1,5 @@
 package client.gui.view;
 
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -8,10 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-
 import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;

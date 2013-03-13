@@ -1,8 +1,6 @@
 package client;
 
-import chronos.Person;
 import events.NetworkEvent;
-import events.QueryEvent;
 
 public interface ClientControllerInterface {
 

@@ -110,4 +110,10 @@ public class EventConfigModel extends ChronosModel {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public NetworkEvent newNetworkEvent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

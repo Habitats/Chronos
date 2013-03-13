@@ -10,11 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;

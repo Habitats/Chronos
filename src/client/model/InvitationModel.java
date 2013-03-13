@@ -30,4 +30,9 @@ public class InvitationModel extends ChronosModel {
 	public void receiveNetworkEvent(events.NetworkEvent event) {
 	};
 
+	@Override
+	public events.NetworkEvent newNetworkEvent() {
+		return null;
+	};
+
 }

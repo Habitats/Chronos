@@ -1,14 +1,9 @@
 package events;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
-import com.mysql.jdbc.DatabaseMetaData;
-
-import chronos.DateManagement;
 import chronos.Person;
-import chronos.Room;
 
 /**
  * Event that holds a single array of elements (list of users, list of rooms,
