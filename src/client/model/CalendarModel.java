@@ -67,7 +67,9 @@ public class CalendarModel extends ChronosModel {
 		for (CalEvent calEvent : calEvents) {
 			Date startDate = calEvent.getStart();
 			int eventWeek = DateManagement.getWeek(startDate);
-			if (currentDisplayedWeek == eventWeek) {
+			int eventYear = DateManagement.getYear(startDate);
+			int currentYear = DateManagement.getYear(currentDisplayedDate);
+			if (currentDisplayedWeek == eventWeek && eventYear == currentYear) {
 				calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate));
 			} else {
 				calendarWindow.addEvent(calEvent, Weekday.NONE);
