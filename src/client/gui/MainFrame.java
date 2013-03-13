@@ -8,12 +8,14 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
 import client.ClientController;
+import client.gui.view.AddParticipantWindow;
 import client.gui.view.CalendarWindow;
 import client.gui.view.ChronosWindow;
 import client.gui.view.EventConfigWindow;
 import client.gui.view.InvitationWindow;
 import client.gui.view.LoginWindow;
 import client.gui.view.RoomBookingWindow;
+import client.model.AddParticipantModel;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
@@ -48,6 +50,9 @@ public class MainFrame extends JFrame {
 	private ChronosWindow roomBookingWindow;
 	private RoomBookingModel roomBookingModel;
 
+	private ChronosWindow addParticipantWindow;
+	private AddParticipantModel addParticipantModel;
+
 	private int frameWidth = 1150;
 	private int frameHeight = 620;
 
@@ -70,6 +75,9 @@ public class MainFrame extends JFrame {
 
 		roomBookingModel = new RoomBookingModel(controller);
 		roomBookingWindow = new RoomBookingWindow(roomBookingModel, this);
+
+		addParticipantModel = new AddParticipantModel(controller);
+		addParticipantWindow = new AddParticipantWindow(addParticipantModel, this);
 	}
 
 	private JLayeredPane buildLayeredPane() {
@@ -82,6 +90,7 @@ public class MainFrame extends JFrame {
 		layeredPane.add(invitationWindow, new Integer(4));
 		layeredPane.add(loginWindow, new Integer(10));
 		layeredPane.add(roomBookingWindow, new Integer(14));
+		layeredPane.add(addParticipantWindow, new Integer(16));
 
 		// SET BOUNDS ON EVERY COMPONENT ADDED DIRECTLY TO A LAYER
 		calendarWindow.setBounds(0, 0, frameWidth, frameHeight);
@@ -93,6 +102,10 @@ public class MainFrame extends JFrame {
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 4;
 		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 4, (frameHeight - roomBookingHeight) / 4, roomBookingWidth, roomBookingHeight);
+		
+		int addParticipantWidth = frameWidth / 4;
+		int addParticipantHeight = frameHeight / 4;
+		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 4, (frameHeight - roomBookingHeight) / 4, addParticipantWidth, addParticipantHeight);
 
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
 		layeredPane.setOpaque(true);
@@ -119,5 +132,9 @@ public class MainFrame extends JFrame {
 
 	public ChronosWindow getRoomBookingWindow() {
 		return roomBookingWindow;
+	}
+	
+	public ChronosWindow getAddParticipantWindow() {
+		return addParticipantWindow;
 	}
 }
