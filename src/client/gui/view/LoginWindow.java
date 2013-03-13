@@ -17,7 +17,7 @@ import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.LoginModel;
 
-public class LoginWindow extends ChronosWindow implements ActionListener {
+public class LoginWindow extends ChronosWindow {
 	private LoginModel model;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
@@ -26,6 +26,7 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 
 	public LoginWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
+		setModel(model);
 		setLayout(new GridBagLayout());
 		usernameField = new JTextField();
 		passwordField = new JPasswordField();
@@ -35,8 +36,6 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 		usernameField.setColumns(15);
 		passwordField.setColumns(15);
 
-		usernameField.addKeyListener(new UsernameListener());
-		passwordField.addKeyListener(new PasswordListener());
 		loginButton.addActionListener(new LoginAction());
 		cancelButton.addActionListener(new CancelAction());
 
@@ -48,51 +47,17 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 		add(cancelButton, new GBC(1, 4).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_END));
 	}
 
-	private class UsernameListener implements KeyListener {
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-		}
-	}
-
-	private class PasswordListener implements KeyListener {
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-		}
-	}
-
 	private class LoginAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			model.login(usernameField.getText(), passwordField.getPassword());
 		}
 	}
 
 	private class CancelAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			System.exit(0);
 		}
 	}
 
@@ -100,10 +65,5 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	public void setModel(ChronosModel model) {
 		this.model = (LoginModel) model;
 		this.model.setView(this);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		model.login("bob", "password");
 	}
 }

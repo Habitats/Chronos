@@ -157,12 +157,6 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	@Override
-	public NetworkEvent newNetworkEvent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setView(ChronosWindow calendarWindow) {
 		this.calendarWindow = (CalendarWindow) calendarWindow;
 	}

@@ -27,11 +27,7 @@ public class RoomBookingModel extends ChronosModel {
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public NetworkEvent newNetworkEvent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public void setView(ChronosWindow view) {

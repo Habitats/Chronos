@@ -2,6 +2,7 @@ package client.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Window;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -55,14 +56,12 @@ public class MainFrame extends JFrame {
 
 	private int frameWidth = 1150;
 	private int frameHeight = 620;
+	private JFrame loginFrame;
 
 	public MainFrame(ClientController controller) {
 		this.controller = controller;
 
 		panels = new ArrayList<ChronosWindow>();
-
-		loginModel = new LoginModel(controller);
-		loginWindow = new LoginWindow(loginModel, this);
 
 		calendarModel = new CalendarModel(controller);
 		calendarWindow = new CalendarWindow(calendarModel, this);
@@ -88,7 +87,6 @@ public class MainFrame extends JFrame {
 		layeredPane.add(calendarWindow, new Integer(0));
 		layeredPane.add(eventConfigWindow, new Integer(2));
 		layeredPane.add(invitationWindow, new Integer(4));
-		layeredPane.add(loginWindow, new Integer(10));
 		layeredPane.add(roomBookingWindow, new Integer(14));
 		layeredPane.add(addParticipantWindow, new Integer(16));
 
@@ -102,7 +100,7 @@ public class MainFrame extends JFrame {
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 4;
 		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, roomBookingWidth, roomBookingHeight);
-		
+
 		int addParticipantWidth = frameWidth / 4;
 		int addParticipantHeight = frameHeight / 4;
 		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, addParticipantWidth, addParticipantHeight);
@@ -113,18 +111,38 @@ public class MainFrame extends JFrame {
 		return layeredPane;
 	}
 
+	private void buildFrame(JFrame frame) {
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setLocationRelativeTo(getRootPane());
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.setExtendedState(JFrame.NORMAL);
+	}
+
 	// initialize the GUI here
 	public void buildGui() {
+		if (loginFrame != null)
+			loginFrame.dispose();
 		JLayeredPane layeredPane = buildLayeredPane();
-
 		getContentPane().add(layeredPane);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		pack();
-		setLocationRelativeTo(getRootPane());
-		setVisible(true);
-		setResizable(false);
-		
+		buildFrame(this);
+	}
+
+	public void loginPrompt() {
+		loginFrame = new JFrame();
+		int frameWidth = 300;
+		int frameHeight = 200;
+
+		loginFrame.setSize(frameWidth, frameHeight);
+
+		loginModel = new LoginModel(controller);
+		loginWindow = new LoginWindow(loginModel, this);
+		loginWindow.setBounds(0, 0, frameWidth, frameHeight);
+		loginFrame.add(loginWindow);
+
+		buildFrame(loginFrame);
 	}
 
 	public ChronosWindow getEventConfigWindow() {
@@ -134,7 +152,7 @@ public class MainFrame extends JFrame {
 	public ChronosWindow getRoomBookingWindow() {
 		return roomBookingWindow;
 	}
-	
+
 	public ChronosWindow getAddParticipantWindow() {
 		return addParticipantWindow;
 	}

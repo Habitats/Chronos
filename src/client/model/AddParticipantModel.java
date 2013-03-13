@@ -22,12 +22,6 @@ public class AddParticipantModel extends ChronosModel {
 	}
 
 	@Override
-	public NetworkEvent newNetworkEvent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setView(ChronosWindow view) {
 		this.view = (AddParticipantWindow) view;
 	}
