@@ -148,6 +148,43 @@ public class CalendarWindow extends ChronosWindow {
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 		
 		updateLabels();
+		CalEvent calEvent = new CalEvent("Jostein", new Date(), 30, new Person("Per"), "jososososo");
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		mondayPanel.add(new CalEventPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		eventsPanel.add(new CalEventListPanel(calEvent));
+		
+		othersCalPanel.add(new PersonCheckBox(new Person("Perjkfdjdkfjkdjfkdjfkdj")));
+
 	}
 
 	@Override
@@ -201,6 +238,7 @@ public class CalendarWindow extends ChronosWindow {
 		saturdayPanel.removeAll();
 		sundayPanel.removeAll();
 		eventsPanel.removeAll();
+		updateUI();
 	}
 	public void updateLabels() {
 		Date currentDate = model.getCurrentDisplayedDate();

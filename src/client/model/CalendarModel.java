@@ -90,7 +90,7 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	private void getPersonEvents(Person person) {
-		QueryEvent event = new QueryEvent(EventType.BATCH_CALENDAR, person);
+		QueryEvent event = new QueryEvent(EventType.QUERY, person);
 		// BRUK DENNE METODEN
 		fireNetworkEvent(event);
 
