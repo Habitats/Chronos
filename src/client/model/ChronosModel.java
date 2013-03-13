@@ -4,7 +4,7 @@ import client.ClientController;
 import events.NetworkEvent;
 
 abstract public class ChronosModel {
-	public final ClientController controller;
+	private final ClientController controller;
 	private final ChronosType chronosType;
 
 	public enum ChronosType {
@@ -29,9 +29,6 @@ abstract public class ChronosModel {
 
 	}
 
-	public ClientController getController() {
-		return controller;
-	}
 
 	public ChronosType getType() {
 		return chronosType;
