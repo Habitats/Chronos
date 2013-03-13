@@ -10,7 +10,7 @@ import events.NetworkEvent;
 import events.CalEvent.CalEventType;
 
 public class EventConfigModel extends ChronosModel {
-	
+
 	private String eventName, eventDescription;
 	private Person participant, creator;
 	private Boolean alert;
@@ -29,7 +29,7 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void clearModel() {
-		
+
 	}
 
 	public void setCalEvent(CalEvent event) {
@@ -74,7 +74,7 @@ public class EventConfigModel extends ChronosModel {
 	public void setCreator(Person creator) {
 		this.creator = creator;
 	}
-	
+
 	public Person getParticipant() {
 		return participant;
 	}
@@ -113,7 +113,11 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void newCalEvent() {
-		CalEvent event = new CalEvent(getEventName(), getStartTime(), getDuration(), new Person("bobsUsername", "bob"), getEventDescription()).setState(CalEventType.NEW);
+		Person user1 = new Person("username1", "user1");
+		Person user2 = new Person("username2", "user2");
+		Person user3 = new Person("username3", "user3");
+		Person creator = new Person("owner", "bob");
+		CalEvent event = new CalEvent(getEventName(), getStartTime(), getDuration(), creator, getEventDescription()).setState(CalEventType.NEW).addParticipant(user1, user2, user3);
 		fireNetworkEvent(event);
 	}
 

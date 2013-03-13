@@ -32,8 +32,6 @@ public class CalendarModel extends ChronosModel {
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
 
-	private final ChronosType CHRONOS_TYPE = ChronosType.CALENDAR;
-
 	public CalendarModel(ClientController controller) {
 		super(controller, ChronosType.CALENDAR);
 		selectedPersonsEvents = new HashMap<Person, ArrayList<CalEvent>>();
@@ -90,7 +88,7 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	private void getPersonEvents(Person person) {
-		QueryEvent event = new QueryEvent(EventType.BATCH_CALENDAR, person);
+		QueryEvent event = new QueryEvent(EventType.QUERY, person);
 		// BRUK DENNE METODEN
 		fireNetworkEvent(event);
 

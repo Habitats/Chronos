@@ -1,5 +1,6 @@
 package client;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -14,6 +15,8 @@ import events.CalEvent;
 import events.NetworkEvent;
 import events.QueryEvent;
 import events.TestEvent;
+import events.NetworkEvent.EventType;
+import events.QueryEvent.QueryType;
 
 /**
  * Handles the communication between GUI, models and server
@@ -100,8 +103,16 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	@Override
 	public void sendNetworkEvent(NetworkEvent event) {
 		Singleton.log("sending networkEvent to server");
-		client.sendNetworkEvent(event);
 
+		// Send to server
+		// client.sendNetworkEvent(event);
+
+		// simulate networkEvent
+		ArrayList<Comparable> results = new ArrayList<Comparable>();
+		results.add((CalEvent) event);
+		QueryEvent queryEvent = new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(results);
+
+		models.get(ChronosType.CALENDAR).receiveNetworkEvent(queryEvent);
 	}
 
 	public void sendAuthEvent() {
@@ -112,7 +123,8 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	@Override
 	public void run() {
 		Thread clientThread = new Thread(client);
-		clientThread.start();
+		if (Singleton.getInstance().networkEnabled())
+			clientThread.start();
 	}
 
 	private void sendTestEvent() {

@@ -101,11 +101,11 @@ public class MainFrame extends JFrame {
 
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 4;
-		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 4, (frameHeight - roomBookingHeight) / 4, roomBookingWidth, roomBookingHeight);
+		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, roomBookingWidth, roomBookingHeight);
 		
 		int addParticipantWidth = frameWidth / 4;
 		int addParticipantHeight = frameHeight / 4;
-		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 4, (frameHeight - roomBookingHeight) / 4, addParticipantWidth, addParticipantHeight);
+		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, addParticipantWidth, addParticipantHeight);
 
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
 		layeredPane.setOpaque(true);

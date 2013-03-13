@@ -148,6 +148,8 @@ public class CalendarWindow extends ChronosWindow {
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 		
 		updateLabels();
+		CalEvent calEvent = new CalEvent("Jostein", new Date(), 30, new Person("Per"), "jososososo");
+
 	}
 
 	@Override
@@ -201,6 +203,7 @@ public class CalendarWindow extends ChronosWindow {
 		saturdayPanel.removeAll();
 		sundayPanel.removeAll();
 		eventsPanel.removeAll();
+		updateUI();
 	}
 	public void updateLabels() {
 		Date currentDate = model.getCurrentDisplayedDate();
