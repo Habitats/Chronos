@@ -80,6 +80,7 @@ public class DateManagement {
 		c.add(Calendar.DATE, 1);  // number of days to add
 		return c.getTime(); 
 	}
+	
 	public static String getNextWeek(Date start) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(start);
