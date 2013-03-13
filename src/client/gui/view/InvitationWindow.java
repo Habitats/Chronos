@@ -15,7 +15,7 @@ import client.model.InvitationModel;
 public class InvitationWindow extends ChronosWindow implements ActionListener {
 	private InvitationModel model;
 	private JButton acceptButton, declineButton;
-	Date eventDate;
+	private Date eventDate;
 
 	public InvitationWindow(ChronosModel model, MainFrame frame) {
 

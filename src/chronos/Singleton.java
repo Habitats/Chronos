@@ -5,7 +5,16 @@ package chronos;
  * http://en.wikipedia.org/wiki/Singleton_pattern
  */
 public class Singleton {
+	/**
+	 * Other constants
+	 */
+	public final static String APP_NAME = "Chronos - FUCK YEAH";
+
+	/**
+	 * Singleton variables
+	 */
 	private static Singleton instance;
+
 	private boolean logEnabled;
 	private int port = 25000;
 	private String hostname = "localhost";

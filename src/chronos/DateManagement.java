@@ -53,6 +53,7 @@ public class DateManagement {
 	public static Weekday getWeekday(Date start) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(start);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		int ordinal = cal.get(Calendar.DAY_OF_WEEK);
 		return Weekday.getWeekday(ordinal);
 	}
@@ -70,13 +71,11 @@ public class DateManagement {
 
 		SimpleDateFormat format = new SimpleDateFormat("ww");
 		format.setCalendar(cal);
-		int weekNumber = -1;
 		try {
-			weekNumber = Integer.parseInt(format.format(start));
+			return Integer.parseInt(format.format(start));
 		} catch (Exception e) {
-			// TODO: handle exception
+			return -1;
 		}
-		return weekNumber;
 	}
 
 	public static int getCurrentYear() {
@@ -99,12 +98,11 @@ public class DateManagement {
 
 	public static int getYear(Date start) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy");
-		int year = -1;
 		try {
-			Integer.parseInt(format.format(start));
+			return Integer.parseInt(format.format(start));
 		} catch (Exception e) {
+			return -1;
 		}
-		return year;
 	}
 
 	public static String getNextWeek(Date start) {
@@ -122,6 +120,8 @@ public class DateManagement {
 	}
 
 	public static void main(String[] args) {
+		Singleton.getInstance().enableLog();
+
 		Singleton.log(DateManagement.getFormattedFull(new Date()));
 		Singleton.log(DateManagement.getFormattedSimple(new Date()));
 		Singleton.log("Current years: " + getCurrentYear());
@@ -134,5 +134,6 @@ public class DateManagement {
 		Singleton.log("Date 7 days from now: " + getNextWeek(new Date()));
 		Singleton.log("Year (from Date): " + getYear(new Date()));
 		Singleton.log("Monady in week: " + getMondayOfWeek(new Date()));
+		Singleton.log("Weekday: " + getWeekday(new Date()));
 	}
 }

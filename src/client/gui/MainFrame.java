@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import chronos.Singleton;
 import client.ClientController;
 import client.gui.view.AddParticipantWindow;
 import client.gui.view.CalendarWindow;
@@ -60,6 +61,7 @@ public class MainFrame extends JFrame {
 
 	public MainFrame(ClientController controller) {
 		this.controller = controller;
+		setTitle(Singleton.APP_NAME);
 
 		panels = new ArrayList<ChronosWindow>();
 
