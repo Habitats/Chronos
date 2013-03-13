@@ -149,41 +149,6 @@ public class CalendarWindow extends ChronosWindow {
 		
 		updateLabels();
 		CalEvent calEvent = new CalEvent("Jostein", new Date(), 30, new Person("Per"), "jososososo");
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		mondayPanel.add(new CalEventPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		eventsPanel.add(new CalEventListPanel(calEvent));
-		
-		othersCalPanel.add(new PersonCheckBox(new Person("Perjkfdjdkfjkdjfkdjfkdj")));
 
 	}
 
