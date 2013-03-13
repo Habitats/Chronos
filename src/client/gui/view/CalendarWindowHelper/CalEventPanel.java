@@ -10,13 +10,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import client.gui.view.CalendarWindow;
+import client.gui.view.EventConfigWindow;
+
 import chronos.DateManagement;
 
 import events.CalEvent;
 
 public class CalEventPanel extends JPanel {
-
-	public CalEventPanel(CalEvent event) {
+	
+	private CalEvent calEvent;
+	private CalendarWindow view;
+	
+	public CalEventPanel(CalEvent event, CalendarWindow view) {
 		super();
 		CalLabel title = new CalLabel(event.getTitle());
 		title.setPreferredSize(new Dimension(130, 20));
@@ -29,12 +35,16 @@ public class CalEventPanel extends JPanel {
 		this.setMinimumSize(new Dimension(130, 50));
 		this.setMaximumSize(new Dimension(130, 50));
 		this.addMouseListener(new CalPanelMouseAdapter());
+		this.calEvent = event;
+		this.view = view;
 	}
 
 	private class CalPanelMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
+			((EventConfigWindow)view.getFrame().getEventConfigWindow()).getModel().setCalEvent(calEvent);
+			((EventConfigWindow)view.getFrame().getEventConfigWindow()).setVisible(true);
 
 		}
 

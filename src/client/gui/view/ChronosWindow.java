@@ -18,7 +18,7 @@ abstract public class ChronosWindow extends JPanel {
 		setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 
-	protected MainFrame getFrame() {
+	public MainFrame getFrame() {
 		return frame;
 	}
 
