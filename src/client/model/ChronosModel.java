@@ -36,7 +36,5 @@ abstract public class ChronosModel {
 
 	abstract public void receiveNetworkEvent(NetworkEvent event);
 
-	abstract public NetworkEvent newNetworkEvent();
-
 	abstract public void setView(ChronosWindow view);
 }

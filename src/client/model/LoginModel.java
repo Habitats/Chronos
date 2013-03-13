@@ -5,6 +5,7 @@ import client.ClientController;
 import client.gui.view.ChronosWindow;
 import client.gui.view.LoginWindow;
 import events.AuthEvent;
+import events.NetworkEvent;
 
 public class LoginModel extends ChronosModel {
 	private String username;
@@ -15,8 +16,8 @@ public class LoginModel extends ChronosModel {
 		super(controller, ChronosType.LOGIN);
 	}
 
-	public void login(String username, String password) {
-		fireNetworkEvent(new AuthEvent(new Person(username, null), password));
+	public void login(String username, char[] cs) {
+		fireNetworkEvent(new AuthEvent(new Person(username), cs.toString()));
 	}
 
 	public String getUsername() {
@@ -40,12 +41,8 @@ public class LoginModel extends ChronosModel {
 	};
 
 	@Override
-	public events.NetworkEvent newNetworkEvent() {
-		return null;
-	}
-
-	@Override
 	public void setView(ChronosWindow view) {
 		this.view = (LoginWindow) view;
-	};
+	}
+
 }

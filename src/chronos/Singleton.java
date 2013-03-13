@@ -11,6 +11,7 @@ public class Singleton {
 	private String hostname = "localhost";
 	private String username;
 	private boolean networkEnabled = false;
+	private boolean loginEnabled = false;
 
 	private Singleton() {
 	}
@@ -60,5 +61,13 @@ public class Singleton {
 
 	public boolean networkEnabled() {
 		return networkEnabled;
+	}
+
+	public void enableLogin() {
+		loginEnabled = true;
+	}
+
+	public boolean loginEnabled() {
+		return logEnabled;
 	}
 }

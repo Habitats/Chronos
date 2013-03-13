@@ -30,8 +30,8 @@ public class Person implements Serializable, Comparable<Person> {
 		this(username, name, 0);
 	}
 
-	public Person(String string) {
-		this(string, null, -1);
+	public Person(String username) {
+		this(username, null, -1);
 	}
 
 	public String getName() {

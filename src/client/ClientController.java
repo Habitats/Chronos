@@ -32,7 +32,10 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	public ClientController() {
 		models = new HashMap<ChronosType, ChronosModel>();
 		mainFrame = new MainFrame(this);
-		mainFrame.buildGui();
+		if (Singleton.getInstance().loginEnabled()) {
+			mainFrame.loginPrompt();
+		} else
+			mainFrame.buildGui();
 
 		client = new Client(Singleton.getInstance().getPort(), Singleton.getInstance().getHostname(), this);
 
@@ -52,7 +55,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		case LOGIN:
 			setPerson(((AuthEvent) event).getSender());
 			loggedIn = true;
-			// sendTestEvent();
+			mainFrame.buildGui();
 			break;
 		// case CALENDAR:
 		// evaluateCalEvent((CalEvent) event);
@@ -107,12 +110,18 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		// Send to server
 		// client.sendNetworkEvent(event);
 
-		// simulate networkEvent
-		ArrayList<Comparable> results = new ArrayList<Comparable>();
-		results.add((CalEvent) event);
-		QueryEvent queryEvent = new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(results);
+		// simulate authevent
+		if (event.getType() == EventType.LOGIN) {
+			((AuthEvent) event).setAccessGranted(true);
+			evaluateNetworkEvent(event);
+		} else {
+			// simulate networkEvent
+			ArrayList<Comparable> results = new ArrayList<Comparable>();
+			results.add((CalEvent) event);
+			QueryEvent queryEvent = new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(results);
+			models.get(ChronosType.CALENDAR).receiveNetworkEvent(queryEvent);
+		}
 
-		models.get(ChronosType.CALENDAR).receiveNetworkEvent(queryEvent);
 	}
 
 	public void sendAuthEvent() {
