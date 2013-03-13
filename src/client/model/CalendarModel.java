@@ -37,7 +37,7 @@ public class CalendarModel extends ChronosModel {
 		super(controller, ChronosType.CALENDAR);
 		selectedPersonsEvents = new HashMap<Person, ArrayList<CalEvent>>();
 		currentDisplayedWeek = DateManagement.getCurrentWeek();
-		currentDisplayedDate = new Date();
+		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 	}
 
 	public String getCurrentDisplayedDateIntervall() {

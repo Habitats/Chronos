@@ -148,16 +148,16 @@ public class EventConfigModel extends ChronosModel {
 		view.getEventNameField().setText("Event name");
 		view.getEventNameField().setBackground(Color.white);
 
-		view.getDurationField().setText("");
+		view.getDurationField().setText("10");
 		view.getDurationField().setBackground(Color.white);
 
 		view.getEventDescriptionArea().setText("Description");
 		view.getEventDescriptionArea().setBackground(Color.white);
 
-		view.getStartDateField().setText("DD.MM.YYYY");
+		view.getStartDateField().setText("13.03.2013");
 		view.getStartDateField().setBackground(Color.white);
 		
-		view.getStartTimeField().setText("");
+		view.getStartTimeField().setText("10");
 		view.getStartTimeField().setBackground(Color.white);
 
 		view.getAlert().setSelected(false);

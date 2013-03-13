@@ -162,7 +162,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	private class ApplyAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.setDefaultModel();
 			model.newCalEvent();
 		}
 	}
