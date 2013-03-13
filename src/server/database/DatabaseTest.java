@@ -2,6 +2,7 @@ package server.database;
 
 import java.util.Date;
 import java.util.Properties;
+import events.*;
 
 import chronos.Singleton;
 
@@ -28,17 +29,28 @@ public class DatabaseTest {
 		/**
 		 * AddUser
 		 */
-		// queries.addUser("shitForBrains","derp", "kyrre", 1829000);
-		// queries.addUser("childlover","derp", "hallvard", 1829000);
-		// queries.addUser("shitForBrains","derp", "patrick", 1829000);
-
+//		queries.addUser("sexyboy","derp", "kyrre", 1829000);
+//		queries.addUser("childlover","derp", "hallvard", 1829000);
+//		queries.addUser("shitForBrains","derp", "patrick", 1829000);
+//		queries.addUser("bieberfever","derp", "emilie", 1829000);
+//		queries.addUser("hornyGirl96","derp", "Jens", 1829000);
+//		queries.addUser("boytoy","derp", "Jostein", 1829000);
+		
 		/**
 		 * AddEvent
 		 */
-		// CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999,
-		// queries.getUsers().get(0), "Dette er en test event");
-		// evt.addParticipant(queries.getUsers().get(1));
-		// queries.addEvent(evt);
+//		 CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999,
+//		 queries.getUsers().get(0), "Dette er en test event");
+//		 evt.addParticipant(queries.getUsers().get(1));
+//		 evt.addParticipant(queries.getUsers().get(2));
+//		 queries.addEvent(evt);
+//		
+//		 CalEvent evt2 = new CalEvent("testevent2",new Date(2013, 4, 3), 2829000,
+//		 queries.getUsers().get(1), "Dette er en test event");
+//		 evt2.addParticipant(queries.getUsers().get(0));
+//		 evt2.addParticipant(queries.getUsers().get(2));
+//		 evt2.addParticipant(queries.getUsers().get(3));
+//		 queries.addEvent(evt2);
 
 		/**
 		 * GetUsers
