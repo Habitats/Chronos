@@ -42,7 +42,7 @@ public class Client implements Runnable {
 			in = new ObjectInputStream(socket.getInputStream());
 
 			// sends auth event to server on connect
-			clientController.sendAuthEvent();
+			// clientController.sendAuthEvent();
 
 			NetworkEvent event;
 			Singleton.log("Initiating streams...");

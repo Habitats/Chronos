@@ -145,8 +145,6 @@ public class DatabaseQueries {
 
 	/**
 	 * Adds participants from a CalEvent to the DB.
-	 * 
-	 * @param evt
 	 */
 	public void addParticipants(CalEvent evt) {
 		String insertQuery = "insert into participants (username,event_ID,alarm,status) values (?,?,?,?);";
@@ -177,10 +175,6 @@ public class DatabaseQueries {
 	/**
 	 * Returns an arraylist of all events the person is a participant of, either
 	 * before or after last login
-	 * 
-	 * @param per
-	 * @param afterLastLogin
-	 * @return ArrayList<CalEvent>
 	 */
 	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();

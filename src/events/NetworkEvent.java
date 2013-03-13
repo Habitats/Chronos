@@ -14,10 +14,7 @@ abstract public class NetworkEvent implements Serializable {
 	public enum EventType {
 		LOGIN, //
 		CALENDAR, //
-		ROOM_BOOK, //
-		USER_SEARCH, //
 		TEST, //
-		BATCH_CALENDAR, //
 		QUERY, //
 	}
 
