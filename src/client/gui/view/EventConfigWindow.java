@@ -20,18 +20,20 @@ import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
+import client.model.EventConfigModel.ConfigState;
 import events.CalEvent;
+import events.CalEvent.CalEventType;
+import events.NetworkEvent.EventType;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
-	JTextField eventName, date;
-	JTextArea eventDescription;
-	JList participantList;
-	JCheckBox alert;
-	JButton addParticipantButton, deleteParticipantButton, bookRoomButton,
-			editButton, deleteButton, applyButton, cancelButton;
-	Dimension button = new Dimension(50, 20);
-	EventConfigModel model;
+	private JTextField eventName, date;
+	private JTextArea eventDescription;
+	private JList participantList;
+	private JCheckBox alert;
+	private JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
+	private Dimension button = new Dimension(50, 20);
+	private EventConfigModel model;
 
 	public EventConfigWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -60,7 +62,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		editButton.setPreferredSize(button);
 		editButton.setMinimumSize(new Dimension(50, 20));
 		deleteButton.setPreferredSize(button);
-		
+
 		eventName.addActionListener(new EventNameAction());
 		date.addActionListener(new DateAction());
 		bookRoomButton.addActionListener(new BookRoomAction());
@@ -68,7 +70,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		deleteButton.addActionListener(new DeleteAction());
 		applyButton.addActionListener(new ApplyAction());
 		cancelButton.addActionListener(new CancelAction());
-		
+
 		add(eventName, new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 1));
 		add(eventDescription, new GBC(0, 1).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 6));
 		add(editButton, new GBC(0, 7));
@@ -96,64 +98,62 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		return model;
 	}
 
-	public class DateAction implements ActionListener {
+	private class DateAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String dateString = e.getActionCommand();
 			Date date = DateManagement.getDateFromString(dateString);
-			System.out.println((date == null) ? "Date was invalid: " + date
-					: "Date was valid: "
-							+ DateManagement.getFormattedSimple(date));
+			model.setStart(date);
+			System.out.println((date == null) ? "Date was invalid: " + date : "Date was valid: " + DateManagement.getFormattedSimple(date));
 		}
 	}
-	
-	public class EventNameAction implements ActionListener {
+
+	private class EventNameAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String eventNameString = e.getActionCommand();
-			
-			
+
 		}
 	}
-	
-	public class BookRoomAction implements ActionListener {
+
+	private class BookRoomAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getFrame().getRoomBookingWindow().setVisible(true);
 		}
 	}
-	
-	public class EditAction implements ActionListener {
+
+	private class EditAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
-	
-	public class DeleteAction implements ActionListener {
+
+	private class DeleteAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//slett event i DB
+			// slett event i DB
 			getFrame().getEventConfigWindow().setVisible(false);
-			
+
 		}
 	}
-	public class CancelAction implements ActionListener {
+
+	private class CancelAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getFrame().getEventConfigWindow().setVisible(false);
-		}	
+		}
 	}
-	
-	public class ApplyAction implements ActionListener {
+
+	private class ApplyAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// send til DB (navn, tid, beskrivelse ...)
-			
+			model.newCalEvent();
 			getFrame().getEventConfigWindow().setVisible(false);
 		}
 	}

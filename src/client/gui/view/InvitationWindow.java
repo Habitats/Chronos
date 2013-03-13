@@ -19,8 +19,8 @@ import client.model.InvitationModel;
 
 
 public class InvitationWindow extends ChronosWindow implements ActionListener {
-	InvitationModel model;
-	JButton acceptButton, declineButton;
+	private InvitationModel model;
+	private JButton acceptButton, declineButton;
 	Date eventDate;
 	
 	public InvitationWindow(ChronosModel model,MainFrame frame) {
@@ -40,7 +40,7 @@ public class InvitationWindow extends ChronosWindow implements ActionListener {
 		add(declineButton, new GBC(1,2));
 	}
 	
-	public class acceptAction implements ActionListener {
+	private class acceptAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -49,7 +49,7 @@ public class InvitationWindow extends ChronosWindow implements ActionListener {
 		}
 		
 	}
-	public class declineAction implements ActionListener {
+	private class declineAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {

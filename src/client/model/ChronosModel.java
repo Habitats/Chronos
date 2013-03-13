@@ -1,10 +1,16 @@
 package client.model;
 
 import client.ClientController;
+import client.model.ChronosModel.ChronosType;
 import events.NetworkEvent;
 
 abstract public class ChronosModel {
 	public final ClientController controller;
+	private final ChronosType chronosType;
+
+	public enum ChronosType {
+		EVENT_CONFIG, INVITATION, LOGIN, ROOM_BOOK, CALENDAR, USER_LIST
+	}
 
 	/**
 	 * fires a networkEvent from the model, which in turn forwards the event to
@@ -17,11 +23,20 @@ abstract public class ChronosModel {
 		controller.sendNetworkEvent(event);
 	}
 
-	public ChronosModel(ClientController controller) {
+	public ChronosModel(ClientController controller, ChronosType chronosType) {
+		this.chronosType = chronosType;
 		this.controller = controller;
+		controller.addModel(this);
+
 	}
 
 	public ClientController getController() {
 		return controller;
 	}
+
+	public ChronosType getType() {
+		return chronosType;
+	}
+
+	abstract public void receiveNetworkEvent(NetworkEvent event);
 }

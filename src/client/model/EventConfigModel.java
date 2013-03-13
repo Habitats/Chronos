@@ -1,5 +1,7 @@
 package client.model;
 
+import java.util.Date;
+
 import chronos.Person;
 import client.ClientController;
 import events.CalEvent;
@@ -7,18 +9,20 @@ import events.NetworkEvent;
 import events.CalEvent.CalEventType;
 
 public class EventConfigModel extends ChronosModel {
-	String eventName, eventDescription;
-	Person participant, creator;
-	Boolean alert;
-	String roomNumber;
+	private String eventName, eventDescription;
+	private Person participant, creator;
+	private Boolean alert;
+	private String roomNumber;
 	private ConfigState state;
+	private Date start;
+	private int duration;
 	
 	public enum ConfigState {
 		EDIT, NEW, VIEW;
 	}
 
 	public EventConfigModel(ClientController controller) {
-		super(controller);
+		super(controller,ChronosType.EVENT_CONFIG);
 	}
 
 	public void clearModel() {
@@ -81,7 +85,29 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void newCalEvent() {
-		//CalEvent event = new CalEvent(getEventName(), start, duration, creator, getEventDescription()).setState(CalEventType.UPDATE);
-		//fireNetworkEvent(event);
+		CalEvent event = new CalEvent(getEventName(), getStart(), getDuration(), new Person("bobsUsername","bob"), getEventDescription()).setState(CalEventType.NEW);
+		fireNetworkEvent(event);
+	}
+	public Date getStart() {
+		return start;
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	public Person getCreator() {
+		return creator;
+	}
+	public void setDuration(int duration){
+		this.duration = duration;
+	}
+	public int getDuration() {
+		return duration;
+	}
+
+	@Override
+	public void receiveNetworkEvent(NetworkEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -186,8 +186,8 @@ public class DatabaseQueries {
 	 * @param afterLastLogin
 	 * @return ArrayList<CalEvent>
 	 */
-	public ArrayList<CalEvent> getEventsByParticipant(Person per, boolean afterLastLogin) {
-		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
+	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
+		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
 		if (afterLastLogin) {

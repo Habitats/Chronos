@@ -49,8 +49,8 @@ public class MainFrame extends JFrame {
 	private ChronosWindow roomBookingWindow;
 	private RoomBookingModel roomBookingModel;
 
-	private int frameWidth = 1200;
-	private int frameHeight = 700;
+	private int frameWidth = 1150;
+	private int frameHeight = 620;
 
 	public MainFrame(ClientController controller) {
 		this.controller = controller;
@@ -108,9 +108,9 @@ public class MainFrame extends JFrame {
 
 		getContentPane().add(layeredPane);
 
-		setLocationRelativeTo(getRootPane());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
+		setLocationRelativeTo(getRootPane());
 		setVisible(true);
 		setResizable(false);
 	}

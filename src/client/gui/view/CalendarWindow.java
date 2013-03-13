@@ -200,7 +200,7 @@ public class CalendarWindow extends ChronosWindow {
 		eventsPanel.removeAll();
 	}
 
-	public class NewEventListener implements ActionListener {
+	private class NewEventListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -208,7 +208,7 @@ public class CalendarWindow extends ChronosWindow {
 			getFrame().getEventConfigWindow().setVisible(true);
 		}
 	}
-	public class CheckBoxListener implements ItemListener {
+	private class CheckBoxListener implements ItemListener {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
@@ -222,7 +222,7 @@ public class CalendarWindow extends ChronosWindow {
 			
 		}
 	}
-	public class PrevButtonListener implements ActionListener {
+	private class PrevButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -232,7 +232,7 @@ public class CalendarWindow extends ChronosWindow {
 		}
 		
 	}
-	public class NextButtonListener implements ActionListener {
+	private class NextButtonListener implements ActionListener {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {

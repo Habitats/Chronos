@@ -23,11 +23,11 @@ import client.model.LoginModel;
 
 
 public class LoginWindow extends ChronosWindow implements ActionListener {
-	LoginModel model;
-	JTextField usernameField;
-	JPasswordField passwordField;
+	private LoginModel model;
+	private JTextField usernameField;
+	private JPasswordField passwordField;
 	String username, password;
-	JButton loginButton, cancelButton;
+	private JButton loginButton, cancelButton;
 
 	public LoginWindow(ChronosModel model,MainFrame frame) {
 		super(model, frame);
@@ -53,7 +53,7 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 		add(cancelButton, new GBC(1,4).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_END));
 	}
 	
-	public class UsernameListener implements KeyListener {
+	private class UsernameListener implements KeyListener {
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub	
@@ -67,7 +67,7 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 			// TODO Auto-generated method stub
 		}	
 	}
-	public class PasswordListener implements KeyListener {
+	private class PasswordListener implements KeyListener {
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
@@ -82,13 +82,13 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 		}
 	}
 
-	public class LoginAction implements ActionListener {
+	private class LoginAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 		}
 	}
-	public class CancelAction implements ActionListener {
+	private class CancelAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub

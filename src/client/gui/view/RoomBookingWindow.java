@@ -15,8 +15,8 @@ import client.gui.MainFrame;
 import client.model.ChronosModel;
 
 public class RoomBookingWindow extends ChronosWindow implements ActionListener {
-	JList roomList;
-	JButton bookButton, cancelButton, autobookButton;
+	private JList roomList;
+	private JButton bookButton, cancelButton, autobookButton;
 	
 	public RoomBookingWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -44,21 +44,21 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 		
 	}
 
-	public class AutoBookAction implements ActionListener {
+	private class AutoBookAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//autobook room
 			getFrame().getRoomBookingWindow().setVisible(false);	
 		}
 	}
-	public class BookAction implements ActionListener {
+	private class BookAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//save booked room
 			getFrame().getRoomBookingWindow().setVisible(false);
 		}
 	}
-	public class CancelAction implements ActionListener {
+	private class CancelAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getFrame().getRoomBookingWindow().setVisible(false);
