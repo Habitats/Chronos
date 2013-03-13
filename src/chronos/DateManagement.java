@@ -122,17 +122,17 @@ public class DateManagement {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(DateManagement.getFormattedFull(new Date()));
-		System.out.println(DateManagement.getFormattedSimple(new Date()));
-		System.out.println("Current years: " + getCurrentYear());
-		System.out.println("Current week: " + getCurrentWeek());
-		System.out.println("Current week (from date): " + getWeek(new Date()));
-		System.out.println(getFormattedSimple(getDateFromString("13.03.2013")));
-		System.out.println("Next day: " + getNextDay(new Date()));
-		System.out.println("Date today: " + getFormattedDate(new Date()));
-		System.out.println("Date intervall(one week from date): " + getFormattedDateIntervall(new Date()));
-		System.out.println("Date 7 days from now: " + getNextWeek(new Date()));
-		System.out.println("Year (from Date): " + getYear(new Date()));
-		System.out.println("Monady in week: " + getMondayOfWeek(new Date()));
+		Singleton.log(DateManagement.getFormattedFull(new Date()));
+		Singleton.log(DateManagement.getFormattedSimple(new Date()));
+		Singleton.log("Current years: " + getCurrentYear());
+		Singleton.log("Current week: " + getCurrentWeek());
+		Singleton.log("Current week (from date): " + getWeek(new Date()));
+		Singleton.log(getFormattedSimple(getDateFromString("13.03.2013")));
+		Singleton.log("Next day: " + getNextDay(new Date()));
+		Singleton.log("Date today: " + getFormattedDate(new Date()));
+		Singleton.log("Date intervall(one week from date): " + getFormattedDateIntervall(new Date()));
+		Singleton.log("Date 7 days from now: " + getNextWeek(new Date()));
+		Singleton.log("Year (from Date): " + getYear(new Date()));
+		Singleton.log("Monady in week: " + getMondayOfWeek(new Date()));
 	}
 }
