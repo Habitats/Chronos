@@ -99,6 +99,7 @@ public class LoginWindow extends ChronosWindow implements ActionListener {
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (LoginModel) model;
+		this.model.setView(this);
 	}
 
 	@Override

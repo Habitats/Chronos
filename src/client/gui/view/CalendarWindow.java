@@ -155,7 +155,7 @@ public class CalendarWindow extends ChronosWindow {
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (CalendarModel) model;
-		((CalendarModel) model).setView(this);
+		this.model.setView(this);
 	}
 
 	public void addOtherPerson(Person person) {
@@ -231,7 +231,7 @@ public class CalendarWindow extends ChronosWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			((EventConfigWindow) getFrame().getEventConfigWindow()).getModel().clearModel();
+			((EventConfigWindow) getFrame().getEventConfigWindow()).getModel().setDefaultModel();
 			getFrame().getEventConfigWindow().setVisible(true);
 		}
 	}

@@ -13,10 +13,12 @@ import javax.swing.JList;
 import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
+import client.model.RoomBookingModel;
 
 public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 	private JList roomList;
 	private JButton bookButton, cancelButton, autobookButton;
+	private RoomBookingModel model;
 
 	public RoomBookingWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -89,8 +91,7 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 
 	@Override
 	public void setModel(ChronosModel model) {
-		// TODO Auto-generated method stub
-
+		this.model = (RoomBookingModel) model;
+		this.model.setView(this);
 	}
-
 }

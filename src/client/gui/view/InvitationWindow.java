@@ -62,5 +62,6 @@ public class InvitationWindow extends ChronosWindow implements ActionListener {
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (InvitationModel) model;
+		this.model.setView(this);
 	}
 }

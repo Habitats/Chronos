@@ -15,6 +15,7 @@ public class DateManagement {
 	public static String getFormattedFull(Date start) {
 		return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(start);
 	}
+
 	public static String getFormattedDate(Date start) {
 		return new SimpleDateFormat("dd.MM.yyyy").format(start);
 	}
@@ -22,22 +23,22 @@ public class DateManagement {
 	public static String getFormattedSimple(Date start) {
 		return new SimpleDateFormat("dd.MM").format(start);
 	}
+
 	public static String getFormattedDateIntervall(Date start) {
 		String returnString = "";
 		returnString += getFormattedDate(start);
 		Calendar c = Calendar.getInstance();
 		c.setTime(start);
-		c.add(Calendar.DATE, 6);  // number of days to add
-		returnString += " - " + getFormattedDate(c.getTime()); 
+		c.add(Calendar.DATE, 6); // number of days to add
+		returnString += " - " + getFormattedDate(c.getTime());
 		return returnString;
-		
+
 	}
 
 	public static Date getDateFromString(String str) {
 		try {
 			return new SimpleDateFormat("dd.MM.yyyy").parse(str);
 		} catch (ParseException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -62,34 +63,50 @@ public class DateManagement {
 
 		SimpleDateFormat format = new SimpleDateFormat("ww");
 		format.setCalendar(cal);
-		return Integer.parseInt(format.format(start));
+		int weekNumber = -1;
+		try {
+			weekNumber = Integer.parseInt(format.format(start));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return weekNumber;
 	}
 
 	public static int getCurrentYear() {
 		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(System.currentTimeMillis()));
 		return year;
 	}
+
 	/**
-	 * Method to increase a date by 1 
+	 * Method to increase a date by 1
+	 * 
 	 * @param start
 	 * @return
 	 */
 	public static Date getNextDay(Date start) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(start);
-		c.add(Calendar.DATE, 1);  // number of days to add
-		return c.getTime(); 
+		c.add(Calendar.DATE, 1); // number of days to add
+		return c.getTime();
 	}
+
 	public static int getYear(Date start) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy");
-		return Integer.parseInt(format.format(start));
+		int year = -1;
+		try {
+			Integer.parseInt(format.format(start));
+		} catch (Exception e) {
+		}
+		return year;
 	}
+
 	public static String getNextWeek(Date start) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(start);
 		c.add(Calendar.DATE, 7);
 		return getFormattedDate(c.getTime());
 	}
+
 	public static String getPrevWeek(Date start) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(start);

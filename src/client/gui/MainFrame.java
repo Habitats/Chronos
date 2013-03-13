@@ -124,6 +124,7 @@ public class MainFrame extends JFrame {
 		setLocationRelativeTo(getRootPane());
 		setVisible(true);
 		setResizable(false);
+		
 	}
 
 	public ChronosWindow getEventConfigWindow() {

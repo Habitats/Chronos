@@ -9,7 +9,6 @@ import client.model.ChronosModel;
 
 abstract public class ChronosWindow extends JPanel {
 
-	private ChronosModel model;
 	private final MainFrame frame;
 
 	abstract public void setModel(ChronosModel model);

@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JCheckBox;
@@ -36,11 +37,11 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		setVisible(false);
 
 		setLayout(new GridBagLayout());
-		eventNameField = new JTextField("Eventname");
-		dateField = new JTextField("DD.MM.YY");
-		startTimeField = new JTextField("00:00");
-		durationField = new JTextField("1h");
-		eventDescriptionArea = new JTextArea("Description");
+		eventNameField = new JTextField();
+		dateField = new JTextField();
+		startTimeField = new JTextField();
+		durationField = new JTextField();
+		eventDescriptionArea = new JTextArea();
 		participantList = new JList<>();
 		alert = new JCheckBox();
 		roomNumberField = new JTextField("");
@@ -63,9 +64,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		editButton.setPreferredSize(button);
 		editButton.setMinimumSize(new Dimension(50, 20));
 		deleteButton.setPreferredSize(button);
-
-		eventNameField.addActionListener(new EventNameAction());
-		dateField.addActionListener(new DateAction());
 
 		bookRoomButton.addActionListener(new BookRoomAction());
 		addParticipantButton.addActionListener(new AddParticipantAction());
@@ -99,35 +97,19 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		add(durationField, new GBC(4, 0));
 		add(alert, new GBC(4, 2));
 		add(roomNumberField, new GBC(4, 3));
+		
+		// sets the default model (IE. empty)
+		this.model.setDefaultModel();
 	}
 
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (EventConfigModel) model;
-		model.setView(this);
+		this.model.setView(this);
 	}
 
 	public EventConfigModel getModel() {
 		return model;
-	}
-
-	private class DateAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String dateString = e.getActionCommand();
-			Date date = DateManagement.getDateFromString(dateString);
-			model.setStart(date);
-			System.out.println((date == null) ? "Date was invalid: " + date : "Date was valid: " + DateManagement.getFormattedSimple(date));
-		}
-	}
-
-	private class EventNameAction implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String eventNameString = e.getActionCommand();
-
-		}
 	}
 
 	private class BookRoomAction implements ActionListener {
@@ -180,14 +162,49 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	private class ApplyAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			model.setDefaultModel();
 			model.newCalEvent();
-			getFrame().getEventConfigWindow().setVisible(false);
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * General input info from veiw made available for the model
+	 */
+	public JTextField getEventNameField() {
+		return eventNameField;
+	}
+
+	public JTextField getStartDateField() {
+		return dateField;
+	}
+
+	public JTextField getStartTimeField() {
+		return startTimeField;
+	}
+
+	public JTextField getDurationField() {
+		return durationField;
+	}
+
+	public JTextField getRoomNumberField() {
+		return roomNumberField;
+	}
+
+	public JTextArea getEventDescriptionArea() {
+		return eventDescriptionArea;
+	}
+
+	public JList getParticipantList() {
+		return participantList;
+	}
+
+	public JCheckBox getAlert() {
+		return alert;
 	}
 
 }
