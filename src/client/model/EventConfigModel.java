@@ -10,20 +10,22 @@ import events.NetworkEvent;
 import events.CalEvent.CalEventType;
 
 public class EventConfigModel extends ChronosModel {
-	String eventName, eventDescription;
-	Date startTime;
-	int duration;
-	Person participant, creator;
-	Boolean alert;
-	String roomNumber;
-	private ConfigState state;
 	
+	private String eventName, eventDescription;
+	private Person participant, creator;
+	private Boolean alert;
+	private String roomNumber;
+
+	private ConfigState state;
+	private Date start;
+	private int duration;
+
 	public enum ConfigState {
 		EDIT, NEW, VIEW;
 	}
 
 	public EventConfigModel(ClientController controller) {
-		super(controller);
+		super(controller, ChronosType.EVENT_CONFIG);
 	}
 
 	public void clearModel() {
@@ -50,11 +52,11 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public Date getStartTime() {
-		return startTime;
+		return start;
 	}
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setStartTime(Date start) {
+		this.start = start;
 	}
 
 	public int getDuration() {
@@ -80,7 +82,7 @@ public class EventConfigModel extends ChronosModel {
 	public void setParticipant(Person participant) {
 		this.participant = participant;
 	}
-	
+
 	public Boolean getAlert() {
 		return alert;
 	}
@@ -106,12 +108,31 @@ public class EventConfigModel extends ChronosModel {
 		return state;
 	}
 
-	public void editEvent(){
+	public void editEvent() {
 		setState(ConfigState.EDIT);
 	}
 
-	public void applyEvent() {
-		CalEvent event = new CalEvent(getEventName(), getStartTime(), getDuration(), getCreator(), getEventDescription()); //setState(CalEventType.UPDATE
+	public void newCalEvent() {
+		CalEvent event = new CalEvent(getEventName(), getStartTime(), getDuration(), new Person("bobsUsername", "bob"), getEventDescription()).setState(CalEventType.NEW);
 		fireNetworkEvent(event);
+	}
+
+	public Date getStart() {
+		return start;
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	@Override
+	public void receiveNetworkEvent(NetworkEvent event) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public NetworkEvent newNetworkEvent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

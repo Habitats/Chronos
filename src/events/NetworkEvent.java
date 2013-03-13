@@ -21,7 +21,7 @@ abstract public class NetworkEvent implements Serializable {
 		QUERY, //
 	}
 
-	ArrayList<?> results;
+	ArrayList<Comparable> results;
 	private EventType type;
 	protected Person person;
 

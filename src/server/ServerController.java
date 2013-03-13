@@ -39,17 +39,12 @@ public class ServerController implements Runnable {
 		case CALENDAR:
 			evaluateCalEvent((CalEvent) event);
 			break;
-		case ROOM_BOOK:
-			event = dbController.getAvailableRooms((QueryEvent) event);
-			echoNetworkEventToSender(event);
+		case QUERY:
+			evaluateQueryEvent((QueryEvent) event);
 			break;
-		case TEST:
-			echoNetworkEventToSender(event);
-			break;
-		case USER_SEARCH:
-			event = dbController.getUsers((QueryEvent) event);
-			echoNetworkEventToSender(event);
-			break;
+		// case TEST:
+		// echoNetworkEventToSender(event);
+		// break;
 		}
 	}
 
@@ -57,6 +52,7 @@ public class ServerController implements Runnable {
 	 * Further evaluation of calendar events
 	 */
 	private void evaluateCalEvent(CalEvent event) {
+		Singleton.log("Evaluating calEvent...");
 		switch (event.getState()) {
 		case DELETE:
 			if (event.getSender().getUsername().toLowerCase().equals(event.getCreator().getUsername().toLowerCase()))
@@ -74,6 +70,22 @@ public class ServerController implements Runnable {
 			break;
 		}
 		sendUpdateToAllParticipants(event.getParticipants());
+	}
+
+	private void evaluateQueryEvent(QueryEvent event) {
+		Singleton.log("Evaluating queryEvent...");
+		switch (event.getQueryType()) {
+		case CALEVENT:
+			break;
+		case PERSON:
+			event = dbController.getUsers(event);
+			echoNetworkEventToSender(event);
+			break;
+		case ROOM:
+			event = dbController.getAvailableRooms(event);
+			echoNetworkEventToSender(event);
+			break;
+		}
 	}
 
 	/**
@@ -110,8 +122,8 @@ public class ServerController implements Runnable {
 	private void sendSingleNetworkEvent(NetworkEvent event, Person person) {
 		try {
 			for (ClientConnection clientConnection : server.getClientConnections()) {
+				Singleton.log("Echoing event: " + event + " - Recepient: " + person.getUsername());
 				if (clientConnection.getPerson().getUsername().toLowerCase().equals(person.getUsername().toLowerCase())) {
-					Singleton.log("Echoing event: " + event + " - Recepient: " + person.getUsername());
 					clientConnection.getOut().writeObject(event);
 				}
 			}

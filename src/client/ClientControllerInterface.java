@@ -1,15 +1,12 @@
 package client;
 
-import chronos.Person;
-import events.QueryEvent;
+import events.NetworkEvent;
 
 public interface ClientControllerInterface {
-	
+
 	/**
-	 * method to get events for a specified person, the person lies in the event. Updated constructor for QueryEvent
-	 * @param event
+	 * Used by models to communicate with the controller
 	 */
-	
-	public void sendQueryEvent(QueryEvent event);
+	public void sendNetworkEvent(NetworkEvent event);
 
 }

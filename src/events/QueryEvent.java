@@ -1,6 +1,7 @@
 package events;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import chronos.Person;
 
@@ -21,16 +22,18 @@ public class QueryEvent extends NetworkEvent {
 		super(type);
 		setQueryType(queryType);
 	}
+
 	public QueryEvent(EventType type, Person person) {
 		super(type);
 		setQueryType(QueryType.CALEVENT);
 		this.person = person;
 	}
-	public Person getPerson(){
+
+	public Person getPerson() {
 		return person;
 	}
 
-	public QueryEvent setResults(ArrayList<?> results) {
+	public QueryEvent setResults(ArrayList<Comparable> results) {
 		this.results = results;
 		return this;
 	}
@@ -41,5 +44,14 @@ public class QueryEvent extends NetworkEvent {
 
 	public ArrayList<?> getResults() {
 		return results;
+	}
+
+	public ArrayList<Comparable> getSortedResults() {
+		Collections.sort(results);
+		return results;
+	}
+
+	public QueryType getQueryType() {
+		return queryType;
 	}
 }

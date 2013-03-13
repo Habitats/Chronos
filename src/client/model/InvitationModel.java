@@ -4,11 +4,11 @@ import client.ClientController;
 
 public class InvitationModel extends ChronosModel {
 	public InvitationModel(ClientController controller) {
-		super(controller);
+		super(controller, ChronosType.INVITATION);
 	}
 
-	String eventName;
-	String eventDescription;
+	private String eventName;
+	private String eventDescription;
 
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
@@ -25,5 +25,14 @@ public class InvitationModel extends ChronosModel {
 	public String getEventDescription() {
 		return eventDescription;
 	}
+
+	@Override
+	public void receiveNetworkEvent(events.NetworkEvent event) {
+	};
+
+	@Override
+	public events.NetworkEvent newNetworkEvent() {
+		return null;
+	};
 
 }

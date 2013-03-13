@@ -4,9 +4,11 @@ import client.ClientController;
 import server.ServerController;
 
 /**
- * Main class. Starts either a server or a client, depending on args input. ALL HAIL THE CHRONOS.
+ * Main class. Starts either a server or a client, depending on args input. ALL
+ * HAIL THE CHRONOS.
+ * 
  * @author anon
- *
+ * 
  */
 public class Chronos {
 	public static void main(String[] args) {
@@ -20,12 +22,10 @@ public class Chronos {
 				startServer();
 			else
 				startClient();
-		
-		
-		
+
 		Singleton.getInstance().enableLog();
 		startClient();
-//		startServer();
+		// startServer();
 
 	}
 

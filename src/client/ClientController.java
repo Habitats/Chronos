@@ -1,11 +1,14 @@
 package client;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import chronos.Person;
 import chronos.Singleton;
 import client.gui.MainFrame;
+import client.model.ChronosModel;
+import client.model.ChronosModel.ChronosType;
 import events.AuthEvent;
 import events.CalEvent;
 import events.NetworkEvent;
@@ -20,9 +23,12 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	private Client client;
 	private Person person;
 	private boolean loggedIn;
+	private MainFrame mainFrame;
+	private HashMap<ChronosType, ChronosModel> models;
 
 	public ClientController() {
-		MainFrame mainFrame = new MainFrame(this);
+		models = new HashMap<ChronosType, ChronosModel>();
+		mainFrame = new MainFrame(this);
 		mainFrame.buildGui();
 
 		client = new Client(Singleton.getInstance().getPort(), Singleton.getInstance().getHostname(), this);
@@ -33,30 +39,68 @@ public class ClientController implements Runnable, ClientControllerInterface {
 
 	/**
 	 * takes networkEvent FROM server, and evalutes it
-	 * 
-	 * @param event
 	 */
 	public void evaluateNetworkEvent(NetworkEvent event) {
 		Singleton.log("Client evaluating: " + event);
 		switch (event.getType()) {
-		case TEST:
-			sendTestEvent();
-			break;
+		// case TEST:
+		// sendTestEvent();
+		// break;
 		case LOGIN:
 			setPerson(((AuthEvent) event).getSender());
 			loggedIn = true;
-			sendTestEvent();
+			// sendTestEvent();
+			break;
+		// case CALENDAR:
+		// evaluateCalEvent((CalEvent) event);
+		// break;
+		case QUERY:
+			evaluateQueryEvent((QueryEvent) event);
+			break;
+		}
+	}
+
+	/**
+	 * this is never supposed to happend!
+	 */
+	// private void evaluateCalEvent(CalEvent event) {
+	// Singleton.log("Evaluating calEvent...");
+	// switch (event.getState()) {
+	// case DELETE:
+	// break;
+	// case NEW:
+	// break;
+	// case UPDATE:
+	// break;
+	// }
+	// }
+
+	/**
+	 * Acts as a router for the events -- making sure they end up in the correct
+	 * model
+	 */
+	private void evaluateQueryEvent(QueryEvent event) {
+		Singleton.log("Evaluating queryEvent...");
+		switch (event.getQueryType()) {
+		case CALEVENT:
+			models.get(ChronosType.CALENDAR).receiveNetworkEvent(event);
+			break;
+		case PERSON:
+			models.get(ChronosType.USER_LIST).receiveNetworkEvent(event);
+			break;
+		case ROOM:
+			models.get(ChronosType.ROOM_BOOK).receiveNetworkEvent(event);
 			break;
 		}
 	}
 
 	/**
 	 * sends network event TO server
-	 * 
-	 * @param event
 	 */
+	@Override
 	public void sendNetworkEvent(NetworkEvent event) {
 		Singleton.log("sending networkEvent to server");
+		client.sendNetworkEvent(event);
 
 	}
 
@@ -68,7 +112,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	@Override
 	public void run() {
 		Thread clientThread = new Thread(client);
-//		clientThread.start();
+		clientThread.start();
 	}
 
 	private void sendTestEvent() {
@@ -94,6 +138,10 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		this.person = person;
 	}
 
-	public void sendQueryEvent(QueryEvent event) {
+	/**
+	 * Used by models to add themselves to the controller
+	 */
+	public void addModel(ChronosModel chronosModel) {
+		models.put(chronosModel.getType(), chronosModel);
 	}
 }

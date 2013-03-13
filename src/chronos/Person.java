@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author anon
  * 
  */
-public class Person implements Serializable {
+public class Person implements Serializable, Comparable<Person> {
 	public enum Status {
 		ACCEPTED, REJECTED, WAITING,
 	}
@@ -61,5 +61,10 @@ public class Person implements Serializable {
 
 	public void setLastLoggedIn(long lastLoggedIn) {
 		this.lastLoggedIn = lastLoggedIn;
+	}
+
+	@Override
+	public int compareTo(Person o) {
+		return getName().compareTo(o.getName());
 	}
 }

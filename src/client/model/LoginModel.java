@@ -5,11 +5,11 @@ import client.ClientController;
 import events.AuthEvent;
 
 public class LoginModel extends ChronosModel {
-	String username;
-	char[] password;
+	private String username;
+	private char[] password;
 
 	public LoginModel(ClientController controller) {
-		super(controller);
+		super(controller, ChronosType.LOGIN);
 	}
 
 	public void login(String username, String password) {
@@ -31,4 +31,13 @@ public class LoginModel extends ChronosModel {
 	public void setPassword(char[] password) {
 		this.password = password;
 	}
+
+	@Override
+	public void receiveNetworkEvent(events.NetworkEvent event) {
+	};
+
+	@Override
+	public events.NetworkEvent newNetworkEvent() {
+		return null;
+	};
 }

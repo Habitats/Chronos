@@ -6,9 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import chronos.Person;
 import chronos.Singleton;
 import events.CalEvent;
@@ -27,7 +24,7 @@ public class DatabaseQueries {
 
 	public boolean addUser(String username, String password, String name, long LastLoggedIn) {
 		try {
-			db.execute(String.format("insert into person values (%s,%s,%s,%s)", processString(username), ("MD5("+processString(password)+")"),processString(name), LastLoggedIn));
+			db.execute(String.format("insert into person values (%s,%s,%s,%s)", processString(username), ("MD5(" + processString(password) + ")"), processString(name), LastLoggedIn));
 			Singleton.log("successfully added: " + username);
 			return true;
 		} catch (SQLException e) {
@@ -76,7 +73,7 @@ public class DatabaseQueries {
 					ps.setString(1, user.getUsername());
 					ps.setString(2, "derp");
 					ps.setString(3, user.getName());
-					ps.setString(4, ""+user.getLastLoggedIn());
+					ps.setString(4, "" + user.getLastLoggedIn());
 					ps.addBatch();
 					Singleton.log("successfully added: " + user.getUsername() + " with name" + user.getName());
 				} catch (SQLException e) {
@@ -108,8 +105,8 @@ public class DatabaseQueries {
 		}
 		return users;
 	}
-	
-	public void addEvent(CalEvent evt){
+
+	public void addEvent(CalEvent evt) {
 		String insertQuery = "insert into Events (event_ID,title,startTime,duration,description,owner) values (?,?,?,?,?,?);";
 		PreparedStatement ps;
 		boolean addedAvtale = false;
@@ -125,8 +122,7 @@ public class DatabaseQueries {
 				ps.addBatch();
 				Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime() + " and " + evt.getDuration() + " and " + evt.getDescription());
 			} catch (SQLException e) {
-				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime()+
-						" and " + evt.getDuration() + " and " + evt.getDescription());
+				Singleton.log("error adding: " + evt.getTitle() + " with fields " + evt.getStart().getTime() + " and " + evt.getDuration() + " and " + evt.getDescription());
 				e.printStackTrace();
 			}
 			ps.executeBatch();
@@ -186,8 +182,8 @@ public class DatabaseQueries {
 	 * @param afterLastLogin
 	 * @return ArrayList<CalEvent>
 	 */
-	public ArrayList<CalEvent> getEventsByParticipant(Person per, boolean afterLastLogin) {
-		ArrayList<CalEvent> al = new ArrayList<CalEvent>();
+	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
+		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
 		if (afterLastLogin) {
@@ -195,10 +191,8 @@ public class DatabaseQueries {
 		} else {
 			param = ">";
 		}
-		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " +
-				"FROM Events, Participants, Person " +
-				"WHERE Events.event_ID = participants.event_ID AND participants.username = "+ processString(per.getUsername())+
-				" AND person.username = events.owner AND " + per.getLastLoggedIn() +" "+ param +" participants.event_ID;";
+		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
+				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -225,9 +219,7 @@ public class DatabaseQueries {
 	public HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
-		String query = "SELECT person.username, name, lastLoggedIn " +
-				"FROM person, participants " +
-				"WHERE participants.event_ID = "+ id + " AND participants.username = person.username";
+		String query = "SELECT person.username, name, lastLoggedIn " + "FROM person, participants " + "WHERE participants.event_ID = " + id + " AND participants.username = person.username";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();

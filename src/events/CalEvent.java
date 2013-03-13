@@ -9,7 +9,7 @@ import chronos.Person;
  * Calendar event used for all calendar related thing (update, delete, add etc).
  * Holds a list over all participants (if any)
  */
-public class CalEvent extends NetworkEvent {
+public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	public enum CalEventType {
 		UPDATE, NEW, DELETE;
 	}
@@ -64,8 +64,9 @@ public class CalEvent extends NetworkEvent {
 		return participants;
 	}
 
-	public void setState(CalEventType type) {
+	public CalEvent setState(CalEventType type) {
 		this.type = type;
+		return this;
 	}
 
 	public CalEventType getState() {
@@ -106,6 +107,11 @@ public class CalEvent extends NetworkEvent {
 
 	public void setParticipants(HashMap<String, Person> participants) {
 		this.participants = participants;
+	}
+
+	@Override
+	public int compareTo(CalEvent otherEvent) {
+		return (int) ((start.getTime() - otherEvent.getStart().getTime()) / 1000);
 	}
 
 }
