@@ -30,7 +30,13 @@ public class DateManagement {
 		c.add(Calendar.DATE, 6);  // number of days to add
 		returnString += " - " + getFormattedDate(c.getTime()); 
 		return returnString;
+	}
+	public static Date getMondayOfWeek(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		
+		return cal.getTime();
 	}
 
 	public static Date getDateFromString(String str) {
@@ -109,5 +115,6 @@ public class DateManagement {
 		System.out.println("Date intervall(one week from date): " + getFormattedDateIntervall(new Date()));
 		System.out.println("Date 7 days from now: " + getNextWeek(new Date()));
 		System.out.println("Year (from Date): " + getYear(new Date()));
+		System.out.println("Monady in week: " + getMondayOfWeek(new Date()));
 	}
 }
