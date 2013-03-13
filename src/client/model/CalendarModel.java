@@ -40,11 +40,6 @@ public class CalendarModel extends ChronosModel {
 
 	}
 
-	@Override
-	public void fireNetworkEvent(NetworkEvent event) {
-
-	}
-
 	/**
 	 * method that adds events for a specified person, the person lies in the
 	 * QueryEvent
@@ -84,7 +79,11 @@ public class CalendarModel extends ChronosModel {
 
 	private void getPersonEvents(Person person) {
 		QueryEvent event = new QueryEvent(EventType.BATCH_CALENDAR, person);
-		controller.sendNetworkEvent(event);
+		// BRUK DENNE METODEN
+		fireNetworkEvent(event);
+
+		// IKKE DENNE
+		// controller.sendNetworkEvent(event);
 	}
 
 	public void addSelectedPerson(Person person) {
