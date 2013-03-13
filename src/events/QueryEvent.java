@@ -50,7 +50,7 @@ public class QueryEvent extends NetworkEvent {
 		Collections.sort(results);
 		return results;
 	}
-	
+
 	public QueryType getQueryType() {
 		return queryType;
 	}

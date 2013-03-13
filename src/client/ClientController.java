@@ -49,7 +49,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		case LOGIN:
 			setPerson(((AuthEvent) event).getSender());
 			loggedIn = true;
-//			sendTestEvent();
+			// sendTestEvent();
 			break;
 		// case CALENDAR:
 		// evaluateCalEvent((CalEvent) event);
@@ -76,7 +76,8 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	// }
 
 	/**
-	 * Acts as a router for the events -- making sure they end up in the correct model
+	 * Acts as a router for the events -- making sure they end up in the correct
+	 * model
 	 */
 	private void evaluateQueryEvent(QueryEvent event) {
 		Singleton.log("Evaluating queryEvent...");

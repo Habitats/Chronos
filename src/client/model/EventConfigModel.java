@@ -16,13 +16,13 @@ public class EventConfigModel extends ChronosModel {
 	private ConfigState state;
 	private Date start;
 	private int duration;
-	
+
 	public enum ConfigState {
 		EDIT, NEW, VIEW;
 	}
 
 	public EventConfigModel(ClientController controller) {
-		super(controller,ChronosType.EVENT_CONFIG);
+		super(controller, ChronosType.EVENT_CONFIG);
 	}
 
 	public void clearModel() {
@@ -54,7 +54,7 @@ public class EventConfigModel extends ChronosModel {
 	public void setParticipant(Person participant) {
 		this.participant = participant;
 	}
-	
+
 	public Boolean getAlert() {
 		return alert;
 	}
@@ -80,14 +80,15 @@ public class EventConfigModel extends ChronosModel {
 		return state;
 	}
 
-	public void editEvent(){
+	public void editEvent() {
 		setState(ConfigState.EDIT);
 	}
 
 	public void newCalEvent() {
-		CalEvent event = new CalEvent(getEventName(), getStart(), getDuration(), new Person("bobsUsername","bob"), getEventDescription()).setState(CalEventType.NEW);
+		CalEvent event = new CalEvent(getEventName(), getStart(), getDuration(), new Person("bobsUsername", "bob"), getEventDescription()).setState(CalEventType.NEW);
 		fireNetworkEvent(event);
 	}
+
 	public Date getStart() {
 		return start;
 	}
@@ -95,12 +96,15 @@ public class EventConfigModel extends ChronosModel {
 	public void setStart(Date start) {
 		this.start = start;
 	}
+
 	public Person getCreator() {
 		return creator;
 	}
-	public void setDuration(int duration){
+
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+
 	public int getDuration() {
 		return duration;
 	}
@@ -108,7 +112,7 @@ public class EventConfigModel extends ChronosModel {
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

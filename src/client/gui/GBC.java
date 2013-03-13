@@ -4,14 +4,15 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 /**
- * Helper class for gridBagLayout 
+ * Helper class for gridBagLayout
+ * 
  * @author anon
- *
+ * 
  */
 public class GBC extends GridBagConstraints {
 
 	public enum Align {
-		LEFT, RIGHT, MID, TIGHT, BOTTOM, LEFT_BOTTOM, MID_BOTTOM, RIGHT_BOTTOM, ALONE, FULL_WIDTH, FULL_WIDTH_BOTTOM,NONE;
+		LEFT, RIGHT, MID, TIGHT, BOTTOM, LEFT_BOTTOM, MID_BOTTOM, RIGHT_BOTTOM, ALONE, FULL_WIDTH, FULL_WIDTH_BOTTOM, NONE;
 	}
 
 	public GBC(int gridx, int gridy, Align align) {
@@ -34,7 +35,7 @@ public class GBC extends GridBagConstraints {
 			else if (align == Align.FULL_WIDTH_BOTTOM)
 				setInsets(b, b, b, b);
 			else if (align == Align.NONE)
-				setInsets(0,0,0,0);
+				setInsets(0, 0, 0, 0);
 		}
 		setFill(BOTH);
 	}

@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
 
 	private ArrayList<ChronosWindow> panels;
 	private final ClientController controller;
-	
+
 	private ChronosWindow calendarWindow;
 	private ChronosModel calendarModel;
 
@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
 
 	private ChronosWindow eventConfigWindow;
 	private ChronosModel eventConfigModel;
-	
+
 	private ChronosWindow roomBookingWindow;
 	private RoomBookingModel roomBookingModel;
 
@@ -57,19 +57,19 @@ public class MainFrame extends JFrame {
 		panels = new ArrayList<ChronosWindow>();
 
 		loginModel = new LoginModel(controller);
-		loginWindow = new LoginWindow(loginModel,this);
+		loginWindow = new LoginWindow(loginModel, this);
 
 		calendarModel = new CalendarModel(controller);
-		calendarWindow = new CalendarWindow(calendarModel,this);
+		calendarWindow = new CalendarWindow(calendarModel, this);
 
 		invitationModel = new InvitationModel(controller);
-		invitationWindow = new InvitationWindow(invitationModel,this);
+		invitationWindow = new InvitationWindow(invitationModel, this);
 
 		eventConfigModel = new EventConfigModel(controller);
-		eventConfigWindow = new EventConfigWindow(eventConfigModel,this);
-		
+		eventConfigWindow = new EventConfigWindow(eventConfigModel, this);
+
 		roomBookingModel = new RoomBookingModel(controller);
-		roomBookingWindow = new RoomBookingWindow(roomBookingModel,this);
+		roomBookingWindow = new RoomBookingWindow(roomBookingModel, this);
 	}
 
 	private JLayeredPane buildLayeredPane() {
@@ -89,12 +89,11 @@ public class MainFrame extends JFrame {
 		int eventConfigWidth = frameWidth / 2;
 		int eventConfigHeight = frameHeight / 2;
 		eventConfigWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
-		
+
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 2;
 		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 4, (frameHeight - roomBookingHeight) / 2, roomBookingWidth, roomBookingHeight);
 
-		
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
 		layeredPane.setOpaque(true);
 
@@ -113,10 +112,11 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 		setResizable(false);
 	}
-	
+
 	public ChronosWindow getEventConfigWindow() {
 		return eventConfigWindow;
 	}
+
 	public ChronosWindow getRoomBookingWindow() {
 		return roomBookingWindow;
 	}

@@ -6,14 +6,14 @@ import events.NetworkEvent;
 public class RoomBookingModel extends ChronosModel {
 
 	public RoomBookingModel(ClientController controller) {
-		super(controller,ChronosType.ROOM_BOOK);
+		super(controller, ChronosType.ROOM_BOOK);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

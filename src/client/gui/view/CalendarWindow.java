@@ -147,14 +147,15 @@ public class CalendarWindow extends ChronosWindow {
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (CalendarModel) model;
-		((CalendarModel)model).setView(this);
+		((CalendarModel) model).setView(this);
 	}
-	
+
 	public void addOtherPerson(Person person) {
 		PersonCheckBox box = new PersonCheckBox(person);
 		box.addItemListener(new CheckBoxListener());
 		othersCalPanel.add(box);
 	}
+
 	public void addEvent(CalEvent event, Weekday weekday) {
 		CalEventPanel panel = new CalEventPanel(event);
 		eventsPanel.add(new CalEventListPanel(event));
@@ -184,6 +185,7 @@ public class CalendarWindow extends ChronosWindow {
 			break;
 		}
 	}
+
 	public void removeEvents() {
 		mondayPanel.removeAll();
 		tuesdayPanel.removeAll();
@@ -199,24 +201,26 @@ public class CalendarWindow extends ChronosWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			((EventConfigWindow)getFrame().getEventConfigWindow()).getModel().clearModel();
+			((EventConfigWindow) getFrame().getEventConfigWindow()).getModel().clearModel();
 			getFrame().getEventConfigWindow().setVisible(true);
 		}
 	}
+
 	private class CheckBoxListener implements ItemListener {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			Person person = ((PersonCheckBox)e.getItemSelectable()).getPerson();
-			if(e.getStateChange() == ItemEvent.SELECTED){
+			Person person = ((PersonCheckBox) e.getItemSelectable()).getPerson();
+			if (e.getStateChange() == ItemEvent.SELECTED) {
 				model.addSelectedPerson(person);
 			} else if (e.getStateChange() == ItemEvent.DESELECTED) {
 				model.removeSelectedPerson(person);
 				model.update();
 			}
-			
+
 		}
 	}
+
 	private class PrevButtonListener implements ActionListener {
 
 		@Override
@@ -225,10 +229,11 @@ public class CalendarWindow extends ChronosWindow {
 			model.update();
 			System.out.println("prev");
 		}
-		
+
 	}
+
 	private class NextButtonListener implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.nextWeek();

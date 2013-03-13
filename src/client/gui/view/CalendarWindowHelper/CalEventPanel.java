@@ -14,34 +14,34 @@ import chronos.DateManagement;
 import events.CalEvent;
 
 public class CalEventPanel extends JPanel {
-	
-	
-	
+
 	public CalEventPanel(CalEvent event) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(new JLabel(event.getTitle()));
 		this.add(new JLabel(DateManagement.getFormattedFull(event.getStart())));
 		this.setBackground(Color.pink);
-		this.setPreferredSize(new Dimension(130,50));
+		this.setPreferredSize(new Dimension(130, 50));
 		this.addMouseListener(new CalPanelMouseAdapter());
 	}
-	private class CalPanelMouseAdapter extends MouseAdapter{
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		super.mouseClicked(e);
-		
-		
-	}
-	@Override
+
+	private class CalPanelMouseAdapter extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			super.mouseClicked(e);
+
+		}
+
+		@Override
 		public void mouseEntered(MouseEvent e) {
 			super.mouseEntered(e);
 			setBackground(Color.red);
-			
+
 		}
-	@Override
+
+		@Override
 		public void mouseExited(MouseEvent e) {
 			super.mouseExited(e);
 			setBackground(Color.pink);
 		}
-}
+	}
 }

@@ -22,5 +22,5 @@ abstract public class ChronosWindow extends JPanel {
 	protected MainFrame getFrame() {
 		return frame;
 	}
-	
+
 }

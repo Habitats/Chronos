@@ -13,7 +13,7 @@ public class UserListModel extends ChronosModel {
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -21,6 +21,5 @@ public class UserListModel extends ChronosModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

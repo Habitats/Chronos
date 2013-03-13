@@ -113,5 +113,5 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	public int compareTo(CalEvent otherEvent) {
 		return (int) ((start.getTime() - otherEvent.getStart().getTime()) / 1000);
 	}
-	
+
 }

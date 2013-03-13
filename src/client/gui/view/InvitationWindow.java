@@ -12,50 +12,51 @@ import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.InvitationModel;
 
-
 public class InvitationWindow extends ChronosWindow implements ActionListener {
 	private InvitationModel model;
 	private JButton acceptButton, declineButton;
 	Date eventDate;
-	
-	public InvitationWindow(ChronosModel model,MainFrame frame) {
-		
-		super(model,frame);
+
+	public InvitationWindow(ChronosModel model, MainFrame frame) {
+
+		super(model, frame);
 		setModel(model);
 		setLayout(new GridBagLayout());
 		acceptButton = new JButton("Accept");
 		declineButton = new JButton("Decline");
-		
+
 		acceptButton.addActionListener(new acceptAction());
 		declineButton.addActionListener(new declineAction());
-		
-		add(new Label("EventName"), new GBC(0,0).setSpan(2,1));
-		add(new Label("EventDescription"), new GBC(0,1).setSpan(2,1));
-		add(acceptButton, new GBC(0,2));
-		add(declineButton, new GBC(1,2));
+
+		add(new Label("EventName"), new GBC(0, 0).setSpan(2, 1));
+		add(new Label("EventDescription"), new GBC(0, 1).setSpan(2, 1));
+		add(acceptButton, new GBC(0, 2));
+		add(declineButton, new GBC(1, 2));
 	}
-	
+
 	private class acceptAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
+
 	private class declineAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class CalendarModel extends ChronosModel {
 	private final ChronosType CHRONOS_TYPE = ChronosType.CALENDAR;
 
 	public CalendarModel(ClientController controller) {
-		super(controller,ChronosType.CALENDAR);
+		super(controller, ChronosType.CALENDAR);
 		selectedPersonsEvents = new HashMap<Person, ArrayList<CalEvent>>();
 		currentDisplayedWeek = DateManagement.getCurrentWeek();
 
@@ -113,7 +113,7 @@ public class CalendarModel extends ChronosModel {
 
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
-		
+
 	}
 
 	@Override

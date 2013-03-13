@@ -5,11 +5,10 @@ import java.net.Socket;
 
 import chronos.Person;
 
-
-
-/** 
- * Used to identify the different socket streams. Acts as a link between Person and Client.
- *
+/**
+ * Used to identify the different socket streams. Acts as a link between Person
+ * and Client.
+ * 
  */
 public class ClientConnection {
 
