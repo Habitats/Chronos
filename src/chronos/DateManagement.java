@@ -80,7 +80,10 @@ public class DateManagement {
 		c.add(Calendar.DATE, 1);  // number of days to add
 		return c.getTime(); 
 	}
-	
+	public static int getYear(Date start) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy");
+		return Integer.parseInt(format.format(start));
+	}
 	public static String getNextWeek(Date start) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(start);
@@ -105,6 +108,6 @@ public class DateManagement {
 		System.out.println("Date today: " + getFormattedDate(new Date()));
 		System.out.println("Date intervall(one week from date): " + getFormattedDateIntervall(new Date()));
 		System.out.println("Date 7 days from now: " + getNextWeek(new Date()));
-		
+		System.out.println("Year (from Date): " + getYear(new Date()));
 	}
 }
