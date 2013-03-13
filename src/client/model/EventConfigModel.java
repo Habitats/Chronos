@@ -26,6 +26,7 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void clearModel() {
+		
 	}
 
 	public void setCalEvent(CalEvent event) {

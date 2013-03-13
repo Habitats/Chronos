@@ -15,9 +15,22 @@ public class DateManagement {
 	public static String getFormattedFull(Date start) {
 		return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(start);
 	}
+	public static String getFormattedDate(Date start) {
+		return new SimpleDateFormat("dd.MM.yyyy").format(start);
+	}
 
 	public static String getFormattedSimple(Date start) {
 		return new SimpleDateFormat("dd.MM").format(start);
+	}
+	public static String getFormattedDateIntervall(Date start) {
+		String returnString = "";
+		returnString += getFormattedDate(start);
+		Calendar c = Calendar.getInstance();
+		c.setTime(start);
+		c.add(Calendar.DATE, 6);  // number of days to add
+		returnString += " - " + getFormattedDate(c.getTime()); 
+		return returnString;
+		
 	}
 
 	public static Date getDateFromString(String str) {
@@ -56,6 +69,29 @@ public class DateManagement {
 		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(System.currentTimeMillis()));
 		return year;
 	}
+	/**
+	 * Method to increase a date by 1 
+	 * @param start
+	 * @return
+	 */
+	public static Date getNextDay(Date start) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(start);
+		c.add(Calendar.DATE, 1);  // number of days to add
+		return c.getTime(); 
+	}
+	public static String getNextWeek(Date start) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(start);
+		c.add(Calendar.DATE, 7);
+		return getFormattedDate(c.getTime());
+	}
+	public static String getPrevWeek(Date start) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(start);
+		c.add(Calendar.DATE, -7);
+		return getFormattedDate(c.getTime());
+	}
 
 	public static void main(String[] args) {
 		System.out.println(DateManagement.getFormattedFull(new Date()));
@@ -64,5 +100,10 @@ public class DateManagement {
 		System.out.println("Current week: " + getCurrentWeek());
 		System.out.println("Current week (from date): " + getWeek(new Date()));
 		System.out.println(getFormattedSimple(getDateFromString("20.12.2013")));
+		System.out.println("Next day: " + getNextDay(new Date()));
+		System.out.println("Date today: " + getFormattedDate(new Date()));
+		System.out.println("Date intervall(one week from date): " + getFormattedDateIntervall(new Date()));
+		System.out.println("Date 7 days from now: " + getNextWeek(new Date()));
+		
 	}
 }

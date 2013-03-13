@@ -7,10 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import chronos.DateManagement;
 import chronos.Person;
 import client.gui.GBC;
 import client.gui.GBC.Align;
@@ -35,7 +38,8 @@ public class CalendarWindow extends ChronosWindow {
 	private JScrollPane eventsPane, othersCalPane;
 	private BoxPanel eventsPanel, othersCalPanel;
 	private DayPanel mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel, sundayPanel;
-
+	private CalLabel dateLbl, weekNumberLbl, mondayLbl, tuesdayLbl,wednesdayLbl,thursdayLbl,fridayLbl,saturdayLbl,sundayLbl;
+	
 	public CalendarWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
 		setModel(model);
@@ -78,7 +82,7 @@ public class CalendarWindow extends ChronosWindow {
 		mondayPanel = new DayPanel();
 		add(mondayPanel, new GBC(i, 3, Align.NONE).setSpan(1, 2));
 
-		JLabel mondayLbl = new CalLabel("Monday");
+		mondayLbl = new CalLabel("Monday "+ DateManagement.getFormattedSimple(this.model.getCurrentDisplayedDate()));
 		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
 		i++;
@@ -86,7 +90,7 @@ public class CalendarWindow extends ChronosWindow {
 		tuesdayPanel = new DayPanel();
 		add(tuesdayPanel, new GBC(i, 3, Align.NONE).setSpan(1, 2));
 
-		JLabel tuesdayLbl = new CalLabel("Tuesday");
+		tuesdayLbl = new CalLabel("Tuesday "+ DateManagement.getFormattedSimple(this.model.getCurrentDisplayedDate()));
 		add(tuesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
 		i++;
@@ -94,7 +98,7 @@ public class CalendarWindow extends ChronosWindow {
 		wednesdayPanel = new DayPanel();
 		add(wednesdayPanel, new GBC(i, 3, Align.NONE).setSpan(1, 2));
 
-		JLabel wednesdayLbl = new CalLabel("Wednesday");
+		wednesdayLbl = new CalLabel("Wednesday");
 		add(wednesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
 		prevButton = new ChangeWeekButton("<");
@@ -106,10 +110,10 @@ public class CalendarWindow extends ChronosWindow {
 		thursdayPanel = new DayPanel();
 		add(thursdayPanel, new GBC(i, 3, Align.NONE).setSpan(1, 2));
 
-		JLabel thursdayLbl = new CalLabel("Thursday");
+		thursdayLbl = new CalLabel("Thursday");
 		add(thursdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
-		JLabel weekNumberLbl = new CalLabel("Week ##");
+		weekNumberLbl = new CalLabel("Week " + this.model.getCurrentDisplayedWeek());
 		add(weekNumberLbl, new GBC(i, 0).setAnchor(GridBagConstraints.CENTER));
 
 		i++;
@@ -117,7 +121,7 @@ public class CalendarWindow extends ChronosWindow {
 		fridayPanel = new DayPanel();
 		add(fridayPanel, new GBC(i, 3, Align.NONE).setSpan(1, 2));
 
-		JLabel fridayLbl = new CalLabel("Friday");
+		fridayLbl = new CalLabel("Friday");
 		add(fridayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
 		nextButton = new ChangeWeekButton(">");
@@ -129,10 +133,10 @@ public class CalendarWindow extends ChronosWindow {
 		saturdayPanel = new DayPanel();
 		add(saturdayPanel, new GBC(i, 3, Align.NONE).setSpan(1, 2));
 
-		JLabel saturdayLbl = new CalLabel("Saturday");
+		saturdayLbl = new CalLabel("Saturday");
 		add(saturdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
-		CalLabel dateLbl = new CalLabel("feb. 25 - mar 3. 2013");
+		dateLbl = new CalLabel(this.model.getCurrentDisplayedDateIntervall());
 		add(dateLbl, new GBC(i, 0).setSpan(2, 1));
 
 		i++;
@@ -140,7 +144,7 @@ public class CalendarWindow extends ChronosWindow {
 		sundayPanel = new DayPanel();
 		add(sundayPanel, new GBC(i, 3, Align.NONE).setSpan(1, 2));
 
-		JLabel sundayLbl = new CalLabel("Sunday");
+		sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 	}
 
@@ -196,7 +200,13 @@ public class CalendarWindow extends ChronosWindow {
 		sundayPanel.removeAll();
 		eventsPanel.removeAll();
 	}
-
+	public void updateLabels() {
+		Date currentDate = model.getCurrentDisplayedDate();
+		weekNumberLbl.setText("Week " + model.getCurrentDisplayedWeek());
+		dateLbl.setText(model.getCurrentDisplayedDateIntervall());
+		mondayLbl.setText("Monday "+ DateManagement.getFormattedSimple(currentDate));
+		currentDate = DateManagement.getNextDay(currentDate);
+	}
 	private class NewEventListener implements ActionListener {
 
 		@Override
@@ -227,7 +237,6 @@ public class CalendarWindow extends ChronosWindow {
 		public void actionPerformed(ActionEvent e) {
 			model.prevWeek();
 			model.update();
-			System.out.println("prev");
 		}
 
 	}
@@ -238,7 +247,6 @@ public class CalendarWindow extends ChronosWindow {
 		public void actionPerformed(ActionEvent e) {
 			model.nextWeek();
 			model.update();
-			System.out.println("next");
 		}
 	}
 }

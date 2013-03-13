@@ -30,6 +30,7 @@ public class CalendarModel extends ChronosModel {
 	private CalendarWindow calendarWindow;
 	private HashMap<Person, ArrayList<CalEvent>> selectedPersonsEvents;
 	private int currentDisplayedWeek;
+	private Date currentDisplayedDate;
 
 	private final ChronosType CHRONOS_TYPE = ChronosType.CALENDAR;
 
@@ -37,7 +38,16 @@ public class CalendarModel extends ChronosModel {
 		super(controller, ChronosType.CALENDAR);
 		selectedPersonsEvents = new HashMap<Person, ArrayList<CalEvent>>();
 		currentDisplayedWeek = DateManagement.getCurrentWeek();
-
+		currentDisplayedDate = new Date();
+	}
+	public String getCurrentDisplayedDateIntervall() {
+		return DateManagement.getFormattedDateIntervall(currentDisplayedDate);
+	}
+	public Date getCurrentDisplayedDate() {
+		return currentDisplayedDate;
+	}
+	public String getCurrentDisplayedWeek() {
+		return Integer.toString(currentDisplayedWeek);
 	}
 
 	/**
@@ -97,17 +107,24 @@ public class CalendarModel extends ChronosModel {
 
 	public void update() {
 		calendarWindow.removeEvents();
+		calendarWindow.updateLabels();
 		for (Person personKeys : selectedPersonsEvents.keySet()) {
 			addEventsArrayList(selectedPersonsEvents.get(personKeys));
 		}
 	}
 
 	public void nextWeek() {
-		currentDisplayedWeek++;
+		if(currentDisplayedWeek < 52) {
+			currentDisplayedWeek++;
+		} else currentDisplayedWeek = 1;
+		currentDisplayedDate = DateManagement.getDateFromString(DateManagement.getNextWeek(currentDisplayedDate));
 	}
 
 	public void prevWeek() {
-		currentDisplayedWeek--;
+		if(currentDisplayedWeek > 1) {
+			currentDisplayedWeek--;
+		} else currentDisplayedWeek = 52;
+		currentDisplayedDate = DateManagement.getDateFromString(DateManagement.getPrevWeek(currentDisplayedDate));
 	}
 
 	@Override
