@@ -1,13 +1,18 @@
 package client.model;
 
+import java.util.Date;
+
 import chronos.Person;
 import client.ClientController;
+import client.gui.view.EventConfigWindow;
 import events.CalEvent;
 import events.NetworkEvent;
 import events.CalEvent.CalEventType;
 
 public class EventConfigModel extends ChronosModel {
 	String eventName, eventDescription;
+	Date startTime;
+	int duration;
 	Person participant, creator;
 	Boolean alert;
 	String roomNumber;
@@ -22,6 +27,7 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void clearModel() {
+		
 	}
 
 	public void setCalEvent(CalEvent event) {
@@ -43,6 +49,30 @@ public class EventConfigModel extends ChronosModel {
 		this.eventDescription = eventDescription;
 	}
 
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public Person getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Person creator) {
+		this.creator = creator;
+	}
+	
 	public Person getParticipant() {
 		return participant;
 	}
@@ -80,8 +110,8 @@ public class EventConfigModel extends ChronosModel {
 		setState(ConfigState.EDIT);
 	}
 
-	public void newCalEvent() {
-		//CalEvent event = new CalEvent(getEventName(), start, duration, creator, getEventDescription()).setState(CalEventType.UPDATE);
-		//fireNetworkEvent(event);
+	public void applyEvent() {
+		CalEvent event = new CalEvent(getEventName(), getStartTime(), getDuration(), getCreator(), getEventDescription()); //setState(CalEventType.UPDATE
+		fireNetworkEvent(event);
 	}
 }
