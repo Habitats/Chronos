@@ -29,7 +29,21 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 		bookButton = new JButton("Book");
 		cancelButton = new JButton("Cancel");
 		autobookButton = new JButton("Autobook");
-
+		
+		roomList.setPreferredSize(new Dimension(100,100));
+		roomList.setMinimumSize(new Dimension(100,80));
+		bookButton.setMinimumSize(new Dimension(100,20));
+		
+		autobookButton.addActionListener(new AutoBookAction());
+		bookButton.addActionListener(new BookAction());
+		cancelButton.addActionListener(new CancelAction());
+		
+		add(new Label("Book room"), new GBC(0,0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
+		add(roomList, new GBC(0,1).setSpan(1, 6));
+		add(autobookButton, new GBC(1,1));
+		add(bookButton, new GBC(0,7));
+		add(cancelButton, new GBC(1,7));
+	
 		roomList.setPreferredSize(new Dimension(100, 100));
 
 		autobookButton.addActionListener(new AutoBookAction());

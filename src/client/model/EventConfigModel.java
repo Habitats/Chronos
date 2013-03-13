@@ -4,15 +4,18 @@ import java.util.Date;
 
 import chronos.Person;
 import client.ClientController;
+import client.gui.view.EventConfigWindow;
 import events.CalEvent;
 import events.NetworkEvent;
 import events.CalEvent.CalEventType;
 
 public class EventConfigModel extends ChronosModel {
+	
 	private String eventName, eventDescription;
 	private Person participant, creator;
 	private Boolean alert;
 	private String roomNumber;
+
 	private ConfigState state;
 	private Date start;
 	private int duration;
@@ -48,6 +51,30 @@ public class EventConfigModel extends ChronosModel {
 		this.eventDescription = eventDescription;
 	}
 
+	public Date getStartTime() {
+		return start;
+	}
+
+	public void setStartTime(Date start) {
+		this.start = start;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public Person getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Person creator) {
+		this.creator = creator;
+	}
+	
 	public Person getParticipant() {
 		return participant;
 	}
@@ -86,7 +113,7 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void newCalEvent() {
-		CalEvent event = new CalEvent(getEventName(), getStart(), getDuration(), new Person("bobsUsername", "bob"), getEventDescription()).setState(CalEventType.NEW);
+		CalEvent event = new CalEvent(getEventName(), getStartTime(), getDuration(), new Person("bobsUsername", "bob"), getEventDescription()).setState(CalEventType.NEW);
 		fireNetworkEvent(event);
 	}
 
@@ -98,22 +125,9 @@ public class EventConfigModel extends ChronosModel {
 		this.start = start;
 	}
 
-	public Person getCreator() {
-		return creator;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
