@@ -32,8 +32,6 @@ public class CalendarModel extends ChronosModel {
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
 
-	private final ChronosType CHRONOS_TYPE = ChronosType.CALENDAR;
-
 	public CalendarModel(ClientController controller) {
 		super(controller, ChronosType.CALENDAR);
 		selectedPersonsEvents = new HashMap<Person, ArrayList<CalEvent>>();

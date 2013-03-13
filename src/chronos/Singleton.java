@@ -10,6 +10,7 @@ public class Singleton {
 	private int port = 25000;
 	private String hostname = "localhost";
 	private String username;
+	private boolean networkEnabled = false;
 
 	private Singleton() {
 	}
@@ -51,5 +52,13 @@ public class Singleton {
 
 	public void setUsersname(String username) {
 		this.username = username;
+	}
+
+	public void enableNetwork() {
+		networkEnabled = true;
+	}
+
+	public boolean networkEnabled() {
+		return networkEnabled;
 	}
 }

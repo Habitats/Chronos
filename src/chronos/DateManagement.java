@@ -103,7 +103,7 @@ public class DateManagement {
 		System.out.println("Current years: " + getCurrentYear());
 		System.out.println("Current week: " + getCurrentWeek());
 		System.out.println("Current week (from date): " + getWeek(new Date()));
-		System.out.println(getFormattedSimple(getDateFromString("20.12.2013")));
+		System.out.println(getFormattedSimple(getDateFromString("13.03.2013")));
 		System.out.println("Next day: " + getNextDay(new Date()));
 		System.out.println("Date today: " + getFormattedDate(new Date()));
 		System.out.println("Date intervall(one week from date): " + getFormattedDateIntervall(new Date()));
