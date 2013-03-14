@@ -171,7 +171,6 @@ public class DatabaseQueries {
 			ps = db.makeBatchUpdate(insertQuery);
 			for (Person p : evt.getParticipants().values()) {
 				try {
-					p.setStatus(Person.Status.WAITING);
 					ps.setString(1, p.getUsername());
 					ps.setString(2, "" + evt.getTimestamp());
 					ps.setString(3, null);
@@ -204,7 +203,7 @@ public class DatabaseQueries {
 			param = ">";
 		}
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
-				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID;";
+				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID ORDER BY events.startTime DESC;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -247,6 +246,10 @@ public class DatabaseQueries {
 		return participants;
 	}
 
+	public void updateCalEvent(CalEvent event, Person person) {
+		//TODO
+	}
+	
 	private String processString(String str) {
 		str = "'" + str + "'";
 		return str;
