@@ -67,6 +67,7 @@ public class DatabaseQueries {
 	}
 
 	public void addMultipleUsers(ArrayList<Person> users) {
+
 		String insertQuery = "insert into person (username,password,name, lastLoggedIn) values (?,?,?,?)";
 		PreparedStatement ps;
 		try {
@@ -90,6 +91,7 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
+	
 	public void setTimestampOfUser(long time, String username){
 		try {
 			db.execute(String.format("UPDATE Person SET lastLoggedIn=(%s) WHERE username="+processString(username),time));

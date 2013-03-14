@@ -29,7 +29,6 @@ public class DatabaseController implements DatabaseControllerInterface {
 		Singleton.log("Authenticating " + event.getUsername());
 		if(dbQueries.isUsernameAndPassword(event)){
 			event.setAccessGranted(true);
-			dbQueries.setTimestampOfUser(-1L, event.getUsername());
 			event.setSender(dbQueries.getUserByUsername(event.getUsername()));
 
 		}
@@ -65,12 +64,14 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 	@Override
 	public QueryEvent getNewCalEvents(Person person) {
-		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
+		QueryEvent qe = new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
+		dbQueries.setTimestampOfUser(Long.MAX_VALUE, person.getUsername());
+		return qe;
 	}
 
 	@Override
 	public QueryEvent getConfirmedEvents(Person person) {
-		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
+		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, false));
 	}
 
 	@Override
