@@ -248,7 +248,7 @@ public class DatabaseQueries {
 			param = ">";
 		}
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
-				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID ORDER BY events.startTime DESC;";
+				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID ORDER BY events.startTime ASC;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
