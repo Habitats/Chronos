@@ -66,4 +66,8 @@ public interface DatabaseControllerInterface {
 	 */
 	public Date lastLoggedIn(Person person);
 
+	/**
+	 * Logout the specified user and set the timestamp for lastLoggedIn
+	 */
+	public void logout(Person person);
 }

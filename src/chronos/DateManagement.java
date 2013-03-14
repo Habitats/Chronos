@@ -53,7 +53,6 @@ public class DateManagement {
 	public static Weekday getWeekday(Date start) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(start);
-		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		int ordinal = cal.get(Calendar.DAY_OF_WEEK);
 		return Weekday.getWeekday(ordinal);
 	}

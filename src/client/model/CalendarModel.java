@@ -17,11 +17,11 @@ import events.QueryEvent;
 public class CalendarModel extends ChronosModel {
 
 	public enum Weekday {
-		MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY, NONE;
+		SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, NONE;
 
 		public static Weekday getWeekday(int ordinal) {
 			for (Weekday weekday : Weekday.values()) {
-				if (weekday.ordinal() == ordinal)
+				if ((weekday.ordinal() + 1) == ordinal)
 					return weekday;
 			}
 			return null;
