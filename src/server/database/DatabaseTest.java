@@ -1,9 +1,11 @@
 package server.database;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 import events.*;
 
+import chronos.Person;
 import chronos.Singleton;
 
 public class DatabaseTest {
@@ -55,11 +57,11 @@ public class DatabaseTest {
 		/**
 		 * GetUsers
 		 */
-		// ArrayList<Person> userInDb = queries.getUsers();
-		// Singleton.log("Users in db:");
-		// for (Person person : userInDb) {
-		// Singleton.log(person.toString());
-		// }
+		 ArrayList<Person> userInDb = queries.getUsers();
+		 Singleton.log("Users in db:");
+		 for (Person person : userInDb) {
+		 Singleton.log(person.toString());
+		 }
 
 		/**
 		 * Add multiple Users

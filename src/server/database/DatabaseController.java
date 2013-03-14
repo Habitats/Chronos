@@ -99,4 +99,8 @@ public class DatabaseController implements DatabaseControllerInterface {
 	public QueryEvent getOldEvents(Person person) {
 		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
 	}
+
+	@Override
+	public void logout(Person person) {
+	}
 }

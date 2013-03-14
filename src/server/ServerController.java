@@ -26,7 +26,8 @@ public class ServerController implements Runnable {
 	}
 
 	/**
-	 * Evaluates incoming event from client
+	 * Evaluates incoming event from client OR on disconnect from
+	 * serverConnection
 	 */
 	public void evaluateNetworkEvent(NetworkEvent event) {
 		Singleton.log("Server evaluating: " + event.toString());
@@ -35,6 +36,9 @@ public class ServerController implements Runnable {
 		case LOGIN:
 			event = dbController.authenticateUser((AuthEvent) event);
 			echoNetworkEventToSender(event);
+			break;
+		case LOGOUT:
+			dbController.logout(((AuthEvent) event).getPerson());
 			break;
 		case CALENDAR:
 			evaluateCalEvent((CalEvent) event);
