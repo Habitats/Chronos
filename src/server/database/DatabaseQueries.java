@@ -90,9 +90,9 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
-	public void setTimestampOfUser(long time){
+	public void setTimestampOfUser(long time, String username){
 		try {
-			db.execute(String.format("insert into person values (%s)",time));
+			db.execute(String.format("UPDATE Person SET lastLoggedIn=(%s) WHERE username="+processString(username),time));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -28,8 +28,8 @@ public class DatabaseController implements DatabaseControllerInterface {
 	public AuthEvent authenticateUser(AuthEvent event) {
 		Singleton.log("Authenticating " + event.getUsername());
 		if(dbQueries.isUsernameAndPassword(event)){
-			event.setAccessGranted(true);		
-			dbQueries.setTimestampOfUser(-1L);
+			event.setAccessGranted(true);
+			dbQueries.setTimestampOfUser(-1L, event.getUsername());
 			event.setSender(dbQueries.getUserByUsername(event.getUsername()));
 
 		}
@@ -75,7 +75,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public void logout(Person person) {
-		dbQueries.setTimestampOfUser(new Date().getTime());
+		dbQueries.setTimestampOfUser(new Date().getTime(), person.getUsername());
 		
 	}
 }
