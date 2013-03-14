@@ -91,7 +91,11 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Changes lastLoggedIn of user in the database to the specified time.
+	 * @param time
+	 * @param username
+	 */
 	public void setTimestampOfUser(long time, String username){
 		try {
 			db.execute(String.format("UPDATE Person SET lastLoggedIn=(%s) WHERE username="+processString(username),time));
@@ -99,7 +103,11 @@ public class DatabaseQueries {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Checks if the username and password is correct.
+	 * @param evt
+	 * @return
+	 */
 	public boolean isUsernameAndPassword(AuthEvent evt) {
 		ResultSet rs;
 		String query = "select username, name from person" + " WHERE person.username = " + processString(evt.getUsername().toLowerCase()) + " AND person.password = " + ("MD5(" + processString(evt.getPassword()) + ")");
@@ -112,7 +120,7 @@ public class DatabaseQueries {
 		}
 		return false;
 	}
-
+	
 	public Person getUserByUsername(String username) {
 		ResultSet rs;
 		String query = "SELECT name FROM person WHERE person.username = " + processString(username);
@@ -126,7 +134,10 @@ public class DatabaseQueries {
 		}
 		return null;
 	}
-
+	/**
+	 * Returns an ArrayList of chronos.Person
+	 * @return ArrayList
+	 */
 	public ArrayList<Comparable> getUsers() {
 		ArrayList<Comparable> users = new ArrayList<Comparable>();
 		ResultSet rs;
@@ -145,7 +156,10 @@ public class DatabaseQueries {
 		}
 		return users;
 	}
-
+	/**
+	 * 
+	 * @param evt
+	 */
 	public void addEvent(CalEvent evt) {
 		String insertQuery = "insert into Events (event_ID,title,startTime,duration,description,owner) values (?,?,?,?,?,?);";
 		PreparedStatement ps;
@@ -185,6 +199,7 @@ public class DatabaseQueries {
 
 	/**
 	 * Adds participants from a CalEvent to the DB.
+	 * @param evt
 	 */
 	public void addParticipants(CalEvent evt) {
 		String insertQuery = "insert into participants (username,event_ID,alarm,status) values (?,?,?,?);";
@@ -210,7 +225,10 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
-
+	/**
+	 * 
+	 * @param evt
+	 */
 	public void updateParticipants(CalEvent evt) {
 		String insertQuery = "UPDATE Participants SET alarm=?, status=? WHERE username=? AND event_ID=?;";
 		PreparedStatement ps;
@@ -237,8 +255,11 @@ public class DatabaseQueries {
 	}
 
 	/**
-	 * Returns an arraylist of all events the person is a participant of, either
-	 * before or after last login
+	 * Returns an ArrayList of all events the person is a participant of, either
+	 * before or after last login.
+	 * @param per
+	 * @param afterLastLogin
+	 * @return ArrayList<Comparable>
 	 */
 	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
@@ -273,7 +294,11 @@ public class DatabaseQueries {
 		return al;
 
 	}
-
+	/**
+	 * 
+	 * @param id
+	 * @return HashMap<String, chronos.Person>
+	 */
 	public HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
@@ -292,7 +317,10 @@ public class DatabaseQueries {
 		}
 		return participants;
 	}
-
+	/**
+	 * 
+	 * @param event
+	 */
 	public void updateCalEvent(CalEvent event) {
 		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?," + "room_ID=(SELECT room_ID FROM Rooms, Events WHERE Events.room_ID = Rooms.room_ID AND Rooms.name=?) " + "WHERE event_ID=?;";
 		PreparedStatement ps;
@@ -319,7 +347,10 @@ public class DatabaseQueries {
 		}
 		// deprecated?
 	}
-
+	/**
+	 * 
+	 * @param event
+	 */
 	public void removeCalEvent(CalEvent event) {
 		try {
 			db.execute(String.format("DELETE FROM Events WHERE event_id=%s", "" + event.getTimestamp()));
@@ -330,7 +361,11 @@ public class DatabaseQueries {
 		}
 	}
 
-	// Deprecated?
+	/**
+	 * 
+	 * @param person
+	 * @return java.util.Date
+	 */
 	public Date lastLoggedIn(Person person) {
 		ResultSet rs;
 		String query = "SELECT lastLoggedIn FROM Person WHERE username=" + processString(person.getUsername());
@@ -343,7 +378,11 @@ public class DatabaseQueries {
 		}
 		return null;
 	}
-
+	/**
+	 * Makes the string SQL compatible.
+	 * @param str
+	 * @return String
+	 */
 	private String processString(String str) {
 		str = "'" + str + "'";
 		return str;
