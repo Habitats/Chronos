@@ -53,6 +53,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public void updateCalEvent(CalEvent event) {
+		dbQueries.updateCalEvent(event);
 	}
 
 	@Override

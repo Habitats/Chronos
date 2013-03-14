@@ -201,12 +201,35 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
+	public void updateParticipants(CalEvent evt) {
+		String insertQuery = "UPDATE Participants SET alarm=?, status=? WHERE username=? AND event_ID=?;";
+		PreparedStatement ps;
+		String eventID = ""+evt.getTimestamp();
+		try {
+			ps = db.makeBatchUpdate(insertQuery);
+			for(Person p : evt.getParticipants().values()) {
+				try {
+					ps.setString(1, null);
+					ps.setString(2, ""+p.getStatus().ordinal());
+					ps.setString(3, p.getUsername());
+					ps.setString(4, eventID);
+					ps.addBatch();
+					Singleton.log("successfully updated participant \""+p.getUsername()+"\" to "+p.getStatus()); //TODO alarm?
+				} catch(SQLException e) {
+					Singleton.log("error updating "+p.getUsername());
+					e.printStackTrace();
+				}
+			}
+		} catch(SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
 
 	/**
 	 * Returns an arraylist of all events the person is a participant of, either
 	 * before or after last login
 	 */
-	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
+ 	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
@@ -259,10 +282,35 @@ public class DatabaseQueries {
 		return participants;
 	}
 
-	public void updateCalEvent(CalEvent event, Person person) {
-		// TODO
+	public void updateCalEvent(CalEvent event) {
+		String insertQuery = 	"UPDATE Events SET title=?, startTime=?, duration=?, description=?,"+
+								"room_ID=(SELECT room_ID FROM Rooms, Events WHERE Events.room_ID = Rooms.room_ID AND Rooms.name=?) "+
+								"WHERE event_ID=?;";
+		PreparedStatement ps;
+		try {
+			ps = db.makeBatchUpdate(insertQuery);
+			try {
+				ps.setString(1, processString(event.getTitle()));
+				ps.setString(2, ""+event.getStart());
+				ps.setString(3, ""+event.getDuration());
+				ps.setString(4, event.getDescription());
+//				ps.setString(5, processString(event.getRoom().getName()));
+				ps.setString(6, ""+event.getTimestamp());
+				ps.addBatch();
+				Singleton.log("successfully updated: "+event.getTitle()+" with fields "+event.getStart().getTime()+" and "+event.getDuration()+" and "+event.getDescription());
+			} catch (SQLException e) {
+				Singleton.log("error adding: "+event.getTitle()+" with fields "+event.getStart().getTime()+" and "+event.getDuration()+" and "+event.getDescription());
+				e.printStackTrace();
+			}
+			ps.executeBatch();
+			ps.close();
+		} catch (SQLException e) {
+			Singleton.log("error executing: "+event.getTitle()+" with fields "+event.getStart().getTime()+" and "+event.getDuration()+" and "+event.getDescription());
+			e.printStackTrace();
+		}
+		// deprecated?
 	}
-
+	
 	public Date lastLoggedIn(Person person) {
 		ResultSet rs;
 		String query = "SELECT lastLoggedIn FROM Person WHERE username=" + processString(person.getUsername());
