@@ -66,7 +66,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	private void evaluateQueryEvent(QueryEvent event) {
 		Singleton.log("Evaluating queryEvent...");
 		switch (event.getQueryType()) {
-		case CALEVENT_OLD:
+		case CALEVENT_CONFIRMED:
 			models.get(ChronosType.CALENDAR).receiveNetworkEvent(event);
 			break;
 		case PERSON:

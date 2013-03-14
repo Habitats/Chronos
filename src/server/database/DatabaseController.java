@@ -6,6 +6,7 @@ import chronos.Singleton;
 
 import events.AuthEvent;
 import events.CalEvent;
+import events.NetworkEvent.EventType;
 import events.QueryEvent.QueryType;
 import events.QueryEvent;
 
@@ -61,14 +62,14 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getNewCalEvents(Person person) {
-		QueryEvent qe = new QueryEvent(QueryType.CALEVENT_OLD).setResults(dbQueries.getEventsByParticipant(person, true));
+		QueryEvent qe = new QueryEvent(QueryType.CALEVENT_CONFIRMED).setResults(dbQueries.getEventsByParticipant(person, true));
 		dbQueries.setTimestampOfUser(Long.MAX_VALUE, person.getUsername());
 		return qe;
 	}
 
 	@Override
 	public QueryEvent getConfirmedEvents(Person person) {
-		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, false));
+		return new QueryEvent(QueryType.CALEVENT_CONFIRMED).setResults(dbQueries.getEventsByParticipant(person, false));
 	}
 
 	@Override

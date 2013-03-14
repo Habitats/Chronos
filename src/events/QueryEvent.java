@@ -13,7 +13,7 @@ import chronos.Singleton;
 public class QueryEvent extends NetworkEvent {
 
 	public enum QueryType {
-		ROOM, PERSON, CALEVENT_OLD, CALEVENT_NEW;
+		ROOM, PERSON, CALEVENT_CONFIRMED, CALEVENT_NEW;
 	}
 
 	private QueryType queryType;
