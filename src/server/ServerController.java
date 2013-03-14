@@ -67,10 +67,11 @@ public class ServerController implements Runnable {
 
 			break;
 		case NEW:
-			addCalEventForParticipants(event);
+//			addCalEventForParticipants(event);
+			dbController.addCalEvent(event);
 			break;
 		case UPDATE:
-			dbController.updateCalEvent(event, event.getSender());
+			dbController.updateCalEvent(event);
 			break;
 		}
 		sendUpdateToAllParticipants(event.getParticipants());

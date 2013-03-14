@@ -69,8 +69,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public void updateCalEvent(CalEvent event, Person person) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
