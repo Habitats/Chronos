@@ -12,7 +12,7 @@ import chronos.Room;
  */
 public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	public enum CalEventType {
-		UPDATE, NEW, DELETE;
+		UPDATE, NEW, DELETE, GET_CONFIRMED;
 	}
 
 	private HashMap<String, Person> participants;

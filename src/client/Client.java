@@ -49,6 +49,7 @@ public class Client implements Runnable {
 			while ((event = (NetworkEvent) in.readObject()) != null) {
 				// Singleton.log("Client received: " + event.toString());
 				getClientController().evaluateNetworkEvent(event);
+				out.reset();
 			}
 		} catch (IOException | ClassNotFoundException e) {
 			Singleton.log("Lost connection. Exiting...");
@@ -75,6 +76,8 @@ public class Client implements Runnable {
 				clientSocket.close();
 		} catch (IOException e) {
 			Singleton.log("Couldn't close socket...");
+		}finally{
+			System.exit(0);
 		}
 	}
 

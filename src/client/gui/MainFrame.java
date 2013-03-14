@@ -28,6 +28,9 @@ import client.model.EventConfigModel;
 import client.model.InvitationModel;
 import client.model.LoginModel;
 import client.model.RoomBookingModel;
+import events.QueryEvent;
+import events.NetworkEvent.EventType;
+import events.QueryEvent.QueryType;
 
 /**
  * The main GUI frame. Holds a layeredPane, each filled with it's individual
@@ -82,18 +85,17 @@ public class MainFrame extends JFrame {
 		roomBookingWindow = new RoomBookingWindow(roomBookingModel, this);
 
 		addParticipantModel = new AddParticipantModel(controller);
-		addParticipantWindow = new AddParticipantWindow(addParticipantModel,
-				this);
+		addParticipantWindow = new AddParticipantWindow(addParticipantModel, this);
 
-		Timer t = new Timer(10, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				repaint();
-
-			}
-		});
-		t.start();
+//		Timer t = new Timer(10, new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				repaint();
+//
+//			}
+//		});
+//		t.start();
 	}
 
 	private JLayeredPane buildLayeredPane() {
@@ -112,21 +114,15 @@ public class MainFrame extends JFrame {
 
 		int eventConfigWidth = 500;
 		int eventConfigHeight = 280;
-		eventConfigWindow.setBounds((frameWidth - eventConfigWidth) / 2,
-				(frameHeight - eventConfigHeight) / 2, eventConfigWidth,
-				eventConfigHeight);
+		eventConfigWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
 
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 4;
-		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2,
-				(frameHeight - roomBookingHeight) / 2, roomBookingWidth,
-				roomBookingHeight);
+		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, roomBookingWidth, roomBookingHeight);
 
 		int addParticipantWidth = frameWidth / 4;
 		int addParticipantHeight = frameHeight / 4;
-		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2,
-				(frameHeight - roomBookingHeight) / 2, addParticipantWidth,
-				addParticipantHeight);
+		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, addParticipantWidth, addParticipantHeight);
 
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
 		layeredPane.setOpaque(true);
@@ -147,9 +143,11 @@ public class MainFrame extends JFrame {
 	public void buildGui() {
 		if (loginFrame != null) {
 			loginFrame.dispose();
-			JLabel currentUser = new JLabel(Singleton.getInstance().getSelf()
-					.toString());
+			JLabel currentUser = new JLabel(Singleton.getInstance().getSelf().toString());
 			calendarWindow.add(currentUser, new GBC(0, 100).setSpan(10, 1));
+			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.CALEVENT_OLD, Singleton.getInstance().getSelf()));
+			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.CALEVENT_NEW, Singleton.getInstance().getSelf()));
+			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.PERSON));
 		}
 		JLayeredPane layeredPane = buildLayeredPane();
 		getContentPane().add(layeredPane);

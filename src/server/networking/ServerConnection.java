@@ -54,7 +54,7 @@ public class ServerConnection implements Runnable {
 				}
 				// forward event to serverController that handles it
 				server.getServerController().evaluateNetworkEvent(event);
-
+				out.reset();
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

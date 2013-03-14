@@ -27,8 +27,7 @@ public class CalEventListPanel extends JPanel {
 		super();
 		String text = DateManagement.getFormattedSimple(event.getStart()) + " " + event.getTitle();
 		JLabel label = new JLabel(text);
-		// label.setHorizontalAlignment(SwingConstants.WEST);
-		label.setAlignmentY(Component.LEFT_ALIGNMENT);
+		label.setHorizontalAlignment(SwingConstants.LEFT);
 
 		this.setBackground(Color.white);
 		this.setPreferredSize(new Dimension(120, 20));
