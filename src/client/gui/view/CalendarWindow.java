@@ -10,6 +10,7 @@ import java.awt.event.ItemListener;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
@@ -25,6 +26,7 @@ import client.gui.view.CalendarWindowHelper.CalEventPanel;
 import client.gui.view.CalendarWindowHelper.CalLabel;
 import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
 import client.gui.view.CalendarWindowHelper.DayPanel;
+import client.gui.view.CalendarWindowHelper.NotificationPanel;
 import client.gui.view.CalendarWindowHelper.PersonCheckBox;
 import client.model.CalendarModel;
 import client.model.CalendarModel.Weekday;
@@ -86,6 +88,9 @@ public class CalendarWindow extends ChronosWindow {
 
 		mondayLbl = new CalLabel("Monday");
 		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
+		
+		JComboBox<NotificationPanel> notificationBox = new JComboBox<>();
+		add(notificationBox, new GBC(i, 0).setSpan(2, 1).setAnchor(GridBagConstraints.CENTER));
 
 		i++;
 

@@ -99,11 +99,7 @@ public class CalendarModel extends ChronosModel {
 
 	private void getPersonEvents(Person person) {
 		QueryEvent event = new QueryEvent(EventType.QUERY, person);
-		// BRUK DENNE METODEN
 		fireNetworkEvent(event);
-
-		// IKKE DENNE
-		// controller.sendNetworkEvent(event);
 	}
 
 	public void addSelectedPerson(Person person) {
