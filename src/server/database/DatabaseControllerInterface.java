@@ -47,7 +47,7 @@ public interface DatabaseControllerInterface {
 	/**
 	 * Updates a calendar event, IE. the state from "accepted" to "declined"
 	 */
-	public void updateCalEvent(CalEvent event, Person person);
+	public void updateCalEvent(CalEvent event);
 
 	/**
 	 * Removes a calendar event for the specified person

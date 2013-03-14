@@ -263,6 +263,19 @@ public class DatabaseQueries {
 		//TODO
 	}
 	
+	public Date lastLoggedIn(Person person) {
+		ResultSet rs;
+		String query = "SELECT lastLoggedIn FROM Person WHERE username="+processString(person.getUsername());
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.first();
+			return new Date(rs.getLong(1));
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	private String processString(String str) {
 		str = "'" + str + "'";
 		return str;

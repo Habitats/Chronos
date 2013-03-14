@@ -68,15 +68,14 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public void updateCalEvent(CalEvent event, Person person) {
+	public void updateCalEvent(CalEvent event) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public Date lastLoggedIn(Person person) {
-		// TODO Auto-generated method stub
-		return null;
+		return dbQueries.lastLoggedIn(person);
 	}
 
 	@Override
