@@ -26,8 +26,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 	@Override
 	public AuthEvent authenticateUser(AuthEvent event) {
 		Singleton.log("Authenticating " + event.getUsername());
-		event.setPerson(new Person(event.getUsername(), "bob"));
-		event.setAccessGranted(true);
+		if(dbQueries.isUsernameAndPassword(event)){
+			event.setAccessGranted(true);			
+		}
 		return event;
 	}
 
