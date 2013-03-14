@@ -79,12 +79,6 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public QueryEvent getCalEventsFromTimeSlot(Person person, int year, int week) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public QueryEvent getNewCalEvents(Person person) {
 		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
 	}
@@ -96,7 +90,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public void logout(Person person) {
-		// TODO Auto-generated method stub
+		setTimeStampOfUser(new Date().getTime());
 		
 	}
 }
