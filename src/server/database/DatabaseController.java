@@ -82,7 +82,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public QueryEvent getAvailableRooms(CalEvent event) {
-		return new QueryEvent(EventType.QUERY, QueryType.ROOM).setResults(dbQueries.getAvailableRooms(event));
+	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event) {
+		return qe.setResults(dbQueries.getAvailableRooms(event));
 	}
 }

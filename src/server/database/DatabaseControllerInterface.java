@@ -59,6 +59,6 @@ public interface DatabaseControllerInterface {
 	/**
 	 * Get all available rooms in the time interval of the event
 	 */
-	public QueryEvent getAvailableRooms(CalEvent event);
+	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event);
 	
 }
