@@ -11,5 +11,6 @@ public class BoxPanel extends JPanel {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(Color.white);
+		this.setAlignmentX(LEFT_ALIGNMENT);
 	}
 }
