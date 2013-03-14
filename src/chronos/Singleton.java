@@ -17,7 +17,7 @@ public class Singleton {
 
 	private boolean logEnabled;
 	private int port = 25000;
-	private String hostname = "78.91.39.140";
+	private String hostname = "localhost";
 	private String username;
 	private boolean networkEnabled = false;
 	private boolean loginEnabled = false;

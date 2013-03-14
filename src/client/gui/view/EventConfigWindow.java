@@ -24,16 +24,16 @@ import client.model.EventConfigModel;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
-	private String[] startTimeArray = {"00:00","01:00","02:00","03:00","04:00"};
-	private Integer[] durationArray = {1,2,3,4,5,6,7,8,9,10,11,12};
-	
+	private String[] startTimeArray = { "00:00", "01:00", "02:00", "03:00", "04:00" };
+	private Integer[] durationArray = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+
 	protected JTextField eventNameField, dateField, roomNumberField;
 	protected JComboBox startTime, duration;
 	protected JTextArea eventDescriptionArea;
 	protected JList participantList;
 	protected JCheckBox alert;
 	protected JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
-	
+
 	private Dimension button = new Dimension(50, 20);
 	private EventConfigModel model;
 
@@ -105,11 +105,11 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		add(duration, new GBC(4, 0));
 		add(alert, new GBC(4, 2));
 		add(roomNumberField, new GBC(4, 3));
-		
+
 		// sets the default model (IE. empty)
 		this.model.setDefaultModel();
 	}
-	
+
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (EventConfigModel) model;
@@ -119,15 +119,15 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	public EventConfigModel getModel() {
 		return model;
 	}
-	
+
 	private class StartTimeListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
 
 	private class DurationListener implements ActionListener {
@@ -135,10 +135,11 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
+
 	private class BookRoomAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -177,9 +178,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// slett event i DB
-			getFrame().getEventConfigWindow().setVisible(false);
-
+			model.removeEvent();
 		}
 	}
 

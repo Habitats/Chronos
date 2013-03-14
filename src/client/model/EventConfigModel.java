@@ -33,6 +33,8 @@ public class EventConfigModel extends ChronosModel {
 
 	private String startTime;
 
+	private CalEvent event;
+
 	public enum ConfigState {
 		EDIT, NEW, VIEW;
 	}
@@ -42,6 +44,10 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void setCalEvent(CalEvent event) {
+		this.event = event;
+		view.getEventNameField().setText(event.getTitle());
+		view.getEventDescriptionArea().setText(event.getDescription());
+		view.getStartDateField().setText(DateManagement.getFormattedDate(event.getStart()));
 	}
 
 	public String getEventName() {
@@ -158,5 +164,10 @@ public class EventConfigModel extends ChronosModel {
 //		view.getStartTimeArray().setBackground(Color.white);
 
 		view.getAlert().setSelected(false);
+	}
+
+	public void removeEvent() {
+		// TODO Auto-generated method stub
+		
 	}
 }
