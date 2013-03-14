@@ -6,12 +6,15 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 
 import client.gui.GBC;
 import client.gui.MainFrame;
@@ -61,10 +64,15 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		cancelButton = new EditConfigButton("Cancel", bottomButtonDim);
 
 		eventNameField.setColumns(15);
+		Border border = BorderFactory.createEmptyBorder(0, 3, 0, 3);
+		eventNameField.setBorder(border);
+		
 		dateField.setColumns(8);
+		dateField.setBorder(border);
 		roomNumberField.setColumns(5);
-//		eventNameField.setMaximumSize(new Dimension(80, 20));
+		// eventNameField.setMaximumSize(new Dimension(80, 20));
 		eventDescriptionArea.setPreferredSize(new Dimension(100, 100));
+		eventDescriptionArea.setBorder(border);
 		participantList.setPreferredSize(new Dimension(100, 100));
 
 		startTime.addActionListener(new StartTimeListener());
@@ -78,7 +86,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		applyButton.addActionListener(new ApplyAction());
 		cancelButton.addActionListener(new CancelAction());
 
-		add(eventNameField, new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 1));
+		add(eventNameField, new GBC(0, 0).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 1));
 		add(eventDescriptionArea, new GBC(0, 1).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 6));
 
 		add(dateField, new GBC(2, 0).setAnchor(GridBagConstraints.FIRST_LINE_START));

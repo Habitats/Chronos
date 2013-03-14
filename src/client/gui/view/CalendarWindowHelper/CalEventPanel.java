@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import client.gui.GBC;
+import client.gui.GBC.Align;
 import client.gui.view.CalendarWindow;
 import client.gui.view.EventConfigWindow;
 
@@ -34,10 +35,10 @@ public class CalEventPanel extends JPanel {
 
 		JLabel title = new JLabel(event.getTitle());
 		title.setMaximumSize(new Dimension(130, 20));
-		add(title, new GBC(0, 0).setIpad(0, 0).setWeight(1, 0));
+		add(title, new GBC(0, 0, Align.FULL_WIDTH).setWeight(1, 0));
 
-		JLabel startDate = new JLabel(DateManagement.getFormattedDate(event.getStart()));
-		add(startDate, new GBC(0, 1).setIpad(0, 0).setWeight(1, 0));
+		JLabel startDate = new JLabel(DateManagement.getFormattedDate(event.getStart()) + " - 13:37");
+		add(startDate, new GBC(0, 1, Align.FULL_WIDTH_BOTTOM).setWeight(1, 0));
 
 		this.calEvent = event;
 		this.view = view;

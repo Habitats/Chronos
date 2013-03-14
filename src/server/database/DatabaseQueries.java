@@ -106,7 +106,7 @@ public class DatabaseQueries {
 					ps.setString(1, user.getUsername());
 					ps.setString(2, "MD5(derp)");
 					ps.setString(3, user.getName());
-					ps.setString(4, "" + user.getLastLoggedIn());
+					// ps.setString(4, "" + user.getLastLoggedIn());
 					ps.addBatch();
 					Singleton.log("successfully added: " + user.getUsername() + " with name" + user.getName());
 				} catch (SQLException e) {
@@ -303,13 +303,18 @@ public class DatabaseQueries {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
+
+		long FIX_THIS_LOL;
 		if (afterLastLogin) {
 			param = "<";
+			FIX_THIS_LOL = 0;
 		} else {
 			param = ">";
+			FIX_THIS_LOL = Long.MAX_VALUE - 10;
+
 		}
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
-				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID ORDER BY events.startTime ASC;";
+				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + FIX_THIS_LOL + " " + param + " participants.event_ID ORDER BY events.startTime ASC;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();

@@ -31,7 +31,7 @@ public class DatabaseConnection {
 	private Properties loadConfig() {
 		Properties prop = new Properties();
 		try {
-			prop.load(new FileInputStream(new File("Properties.properties")));
+			prop.load(new FileInputStream(new File("chronosDb.properties")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

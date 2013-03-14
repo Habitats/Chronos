@@ -2,8 +2,11 @@ package client.gui.view.CalendarWindowHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -15,27 +18,27 @@ import chronos.DateManagement;
 
 import events.CalEvent;
 
-public class CalEventListPanel extends JPanel {
+public class CalEventListPanel extends JLabel {
 
 	private CalEvent calEvent;
 	private CalendarWindow view;
 
-	public CalEventListPanel(CalEvent event, CalendarWindow view) {
+	public CalEventListPanel(CalEvent calEvent, CalendarWindow view, int width) {
 		super();
-		String text = DateManagement.getFormattedSimple(event.getStart()) + " " + event.getTitle();
-		JLabel label = new JLabel(text);
-		label.setHorizontalAlignment(SwingConstants.LEFT);
+		String text = DateManagement.getFormattedSimple(calEvent.getStart()) + " " + calEvent.getTitle();
+		setText(text);
+		setHorizontalAlignment(SwingConstants.LEFT);
+		setOpaque(true);
 
-		this.setBackground(Color.white);
-		this.setPreferredSize(new Dimension(120, 20));
-		this.setMinimumSize(new Dimension(120, 20));
-		this.setMaximumSize(new Dimension(120, 20));
-		this.addMouseListener(new EventListPanelListener());
-		this.setAlignmentX(LEFT_ALIGNMENT);
-		this.add(label);
-		this.calEvent = event;
+		setPreferredSize(new Dimension(width, 0));
+		setMinimumSize(new Dimension(width, 0));
+		setMaximumSize(new Dimension(width,19));
+
+		setBackground(Color.white);
+		addMouseListener(new EventListPanelListener());
+		setAlignmentX(LEFT_ALIGNMENT);
+		this.calEvent = calEvent;
 		this.view = view;
-
 	}
 
 	private class EventListPanelListener extends MouseAdapter {

@@ -1,5 +1,7 @@
 package client.gui.view.CalendarWindowHelper;
 
+import java.awt.Color;
+
 import javax.swing.JCheckBox;
 
 import chronos.Person;
@@ -11,6 +13,7 @@ public class PersonCheckBox extends JCheckBox {
 	public PersonCheckBox(Person person) {
 		super(person.getUsername());
 		this.person = person;
+		setBackground(Color.white);
 	}
 
 	public Person getPerson() {
