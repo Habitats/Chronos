@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import client.gui.view.CalendarWindow;
 import client.gui.view.EventConfigWindow;
@@ -24,12 +25,15 @@ public class CalEventListPanel extends JPanel {
 	public CalEventListPanel(CalEvent event, CalendarWindow view) {
 		super();
 		String text = DateManagement.getFormattedSimple(event.getStart()) + " " + event.getTitle();
-		CalLabel label = new CalLabel(text);
+		JLabel label = new JLabel(text);
+		label.setHorizontalAlignment(SwingConstants.WEST);
+		
 		this.setBackground(Color.white);
 		this.setPreferredSize(new Dimension(120, 20));
 		this.setMinimumSize(new Dimension(120, 20));
 		this.setMaximumSize(new Dimension(120, 20));
 		this.addMouseListener(new EventListPanelListener());
+		this.setAlignmentX(LEFT_ALIGNMENT);
 		this.add(label);
 		this.calEvent = event;
 		this.view = view;
