@@ -55,13 +55,6 @@ public class Person implements Serializable, Comparable<Person> {
 		return String.format("Username: %s - Name: %s", username, name);
 	}
 
-	public long getLastLoggedIn() {
-		return lastLoggedIn;
-	}
-
-	public void setLastLoggedIn(long lastLoggedIn) {
-		this.lastLoggedIn = lastLoggedIn;
-	}
 
 	@Override
 	public int compareTo(Person o) {

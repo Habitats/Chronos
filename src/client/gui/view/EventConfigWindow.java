@@ -63,7 +63,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		eventNameField.setColumns(15);
 		dateField.setColumns(8);
 		roomNumberField.setColumns(5);
-		eventNameField.setMaximumSize(new Dimension(80, 20));
+//		eventNameField.setMaximumSize(new Dimension(80, 20));
 		eventDescriptionArea.setPreferredSize(new Dimension(100, 100));
 		participantList.setPreferredSize(new Dimension(100, 100));
 
