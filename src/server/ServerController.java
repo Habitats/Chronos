@@ -79,8 +79,13 @@ public class ServerController implements Runnable {
 	private void evaluateQueryEvent(QueryEvent event) {
 		Singleton.log("Evaluating queryEvent...");
 		switch (event.getQueryType()) {
-		case CALEVENT:
+		case CALEVENT_OLD:
+			event = dbController.getConfirmedEvents(event.getPerson());
+			echoNetworkEventToSender(event);
 			break;
+		case CALEVENT_NEW:
+			event = dbController.getNewCalEvents(event.getPerson());
+			echoNetworkEventToSender(event);
 		case PERSON:
 			event = dbController.getUsers(event);
 			echoNetworkEventToSender(event);

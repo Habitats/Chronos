@@ -2,11 +2,13 @@ package chronos;
 
 public class Room implements Comparable<Room> {
 	String name;
+	private String description;
 	int capacity;
 
-	public Room(String name, int capacity) {
+	public Room(String name, int capacity, String description) {
 		this.name = name;
 		this.capacity = capacity;
+		this.description = description;
 	}
 
 	public int getCapacity() {
@@ -20,5 +22,13 @@ public class Room implements Comparable<Room> {
 	@Override
 	public int compareTo(Room o) {
 		return capacity - o.getCapacity();
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

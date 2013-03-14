@@ -6,17 +6,13 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
-
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-import chronos.DateManagement;
 import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
@@ -67,7 +63,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		eventNameField.setColumns(15);
 		dateField.setColumns(8);
 		roomNumberField.setColumns(5);
-		eventNameField.setMaximumSize(new Dimension(80, 20));
+//		eventNameField.setMaximumSize(new Dimension(80, 20));
 		eventDescriptionArea.setPreferredSize(new Dimension(100, 100));
 		participantList.setPreferredSize(new Dimension(100, 100));
 

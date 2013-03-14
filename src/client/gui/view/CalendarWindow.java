@@ -56,7 +56,6 @@ public class CalendarWindow extends ChronosWindow {
 		add(newEventButton, new GBC(i, 0));
 		newEventButton.addActionListener(new NewEventListener());
 
-
 		eventsPanel = new BoxPanel();
 
 		CalLabel eventsLbl = new CalLabel("Events");
@@ -86,7 +85,7 @@ public class CalendarWindow extends ChronosWindow {
 
 		mondayLbl = new CalLabel("Monday");
 		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
-		
+
 		JComboBox<NotificationPanel> notificationBox = new JComboBox<>();
 		add(notificationBox, new GBC(i, 0).setSpan(2, 1).setAnchor(GridBagConstraints.CENTER));
 
@@ -209,7 +208,7 @@ public class CalendarWindow extends ChronosWindow {
 		saturdayPanel.removeAll();
 		sundayPanel.removeAll();
 		eventsPanel.removeAll();
-		//updateUI();
+		// updateUI();
 		repaint();
 	}
 

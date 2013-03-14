@@ -1,7 +1,6 @@
 package client.model;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Date;
 
 import chronos.DateManagement;
@@ -103,7 +102,7 @@ public class EventConfigModel extends ChronosModel {
 		// DateManagement.getDateFromString(view.getStartTimeArray().getText());
 		room = null;
 		try {
-			room = new Room(null, Integer.parseInt(view.getRoomNumberField().getText()));
+			room = new Room(null, Integer.parseInt(view.getRoomNumberField().getText()), null);
 		} catch (Exception e) {
 		}
 		duration = -1;

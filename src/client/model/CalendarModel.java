@@ -11,7 +11,7 @@ import client.gui.view.CalendarWindow;
 import client.gui.view.ChronosWindow;
 import events.CalEvent;
 import events.NetworkEvent;
-import events.NetworkEvent.EventType;
+import events.QueryEvent.QueryType;
 import events.QueryEvent;
 
 public class CalendarModel extends ChronosModel {
@@ -29,13 +29,13 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	private CalendarWindow calendarWindow;
-	private HashMap<Person, ArrayList<CalEvent>> selectedPersonsEvents;
+	private HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
 
 	public CalendarModel(ClientController controller) {
 		super(controller, ChronosType.CALENDAR);
-		selectedPersonsEvents = new HashMap<Person, ArrayList<CalEvent>>();
+		selectedPersonsEvents = new HashMap<String, ArrayList<CalEvent>>();
 		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 		currentDisplayedWeek = DateManagement.getWeek(currentDisplayedDate);
 	}
@@ -63,7 +63,7 @@ public class CalendarModel extends ChronosModel {
 		@SuppressWarnings("unchecked")
 		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent.getResults();
 		// addEventsToSelectedPersonEvents(queryEvent.getPerson(), calEvents);
-		selectedPersonsEvents.put(queryEvent.getPerson(), calEvents);
+		selectedPersonsEvents.put(queryEvent.getPerson().getUsername(), calEvents);
 		update();
 	}
 
@@ -74,7 +74,7 @@ public class CalendarModel extends ChronosModel {
 			selectedPersonsEvents.get(person).removeAll(selectedPersonsEvents.get(person));
 			selectedPersonsEvents.get(person).addAll(events);
 		} else
-			selectedPersonsEvents.put(person, events);
+			selectedPersonsEvents.put(person.getUsername(), events);
 	}
 
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents) {
@@ -99,7 +99,7 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	private void getPersonEvents(Person person) {
-		QueryEvent event = new QueryEvent(EventType.QUERY, person);
+		QueryEvent event = new QueryEvent(QueryType.CALEVENT_OLD, person);
 		fireNetworkEvent(event);
 	}
 
@@ -115,8 +115,8 @@ public class CalendarModel extends ChronosModel {
 	public void update() {
 		calendarWindow.removeEvents();
 		calendarWindow.updateLabels();
-		for (Person personKeys : selectedPersonsEvents.keySet()) {
-			addEventsArrayList(selectedPersonsEvents.get(personKeys));
+		for (String username : selectedPersonsEvents.keySet()) {
+			addEventsArrayList(selectedPersonsEvents.get(username));
 		}
 	}
 
@@ -143,21 +143,18 @@ public class CalendarModel extends ChronosModel {
 		case QUERY:
 			evaluateQueryEvent((QueryEvent) event);
 			break;
-
 		}
 	}
 
 	private void evaluateQueryEvent(QueryEvent queryEvent) {
 		switch (queryEvent.getQueryType()) {
-		case CALEVENT:
+		case CALEVENT_OLD:
 			addEvents(queryEvent);
 			break;
 		case PERSON:
 			addOtherPersons(queryEvent);
 			break;
-
 		}
-
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package server.database;
 
-import java.util.Date;
-
 import chronos.Person;
 import events.AuthEvent;
 import events.CalEvent;
@@ -14,7 +12,7 @@ public interface DatabaseControllerInterface {
 	public QueryEvent getAvailableRooms(QueryEvent event);
 
 	/**
-	 * Retruns a query event with an array of all users in the DB
+	 * Returns a query event with an array of all users in the DB
 	 */
 	public QueryEvent getUsers(QueryEvent event);
 
@@ -55,4 +53,10 @@ public interface DatabaseControllerInterface {
 	 * Logout the specified user and set the timestamp for lastLoggedIn
 	 */
 	public void logout(Person person);
+
+	/**
+	 * Get all available rooms in the time interval of the event
+	 */
+	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event);
+
 }

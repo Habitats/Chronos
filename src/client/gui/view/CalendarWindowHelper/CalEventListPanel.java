@@ -1,12 +1,9 @@
 package client.gui.view.CalendarWindowHelper;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Calendar;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -27,8 +24,7 @@ public class CalEventListPanel extends JPanel {
 		super();
 		String text = DateManagement.getFormattedSimple(event.getStart()) + " " + event.getTitle();
 		JLabel label = new JLabel(text);
-		// label.setHorizontalAlignment(SwingConstants.WEST);
-		label.setAlignmentY(Component.LEFT_ALIGNMENT);
+		label.setHorizontalAlignment(SwingConstants.LEFT);
 
 		this.setBackground(Color.white);
 		this.setPreferredSize(new Dimension(120, 20));

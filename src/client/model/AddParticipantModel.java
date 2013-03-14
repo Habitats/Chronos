@@ -3,7 +3,6 @@ package client.model;
 import client.ClientController;
 import client.gui.view.AddParticipantWindow;
 import client.gui.view.ChronosWindow;
-import client.model.ChronosModel.ChronosType;
 import events.NetworkEvent;
 
 public class AddParticipantModel extends ChronosModel {

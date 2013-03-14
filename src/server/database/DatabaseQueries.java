@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import chronos.Person;
+import chronos.Room;
 import chronos.Singleton;
 import events.AuthEvent;
 import events.CalEvent;
@@ -18,6 +19,7 @@ import events.CalEvent;
 public class DatabaseQueries {
 
 	private final DatabaseConnection db;
+
 	/**
 	 * 
 	 * @param db
@@ -25,6 +27,7 @@ public class DatabaseQueries {
 	public DatabaseQueries(DatabaseConnection db) {
 		this.db = db;
 	}
+
 	/**
 	 * 
 	 * @param username
@@ -35,8 +38,7 @@ public class DatabaseQueries {
 	 */
 	public boolean addUser(String username, String password, String name, long LastLoggedIn) {
 		try {
-			db.execute(String.format("insert into person values (%s,%s,%s,%s)",
-					processString(username), ("MD5(" + processString(password) + ")"), processString(name), LastLoggedIn));
+			db.execute(String.format("insert into person values (%s,%s,%s,%s)", processString(username), ("MD5(" + processString(password) + ")"), processString(name), LastLoggedIn));
 			Singleton.log("successfully added: " + username);
 			return true;
 		} catch (SQLException e) {
@@ -45,6 +47,7 @@ public class DatabaseQueries {
 			return false;
 		}
 	}
+
 	/**
 	 * 
 	 * @param username
@@ -62,6 +65,7 @@ public class DatabaseQueries {
 			return false;
 		}
 	}
+
 	/**
 	 * 
 	 * @param username
@@ -85,6 +89,7 @@ public class DatabaseQueries {
 
 		}
 	}
+
 	/**
 	 * 
 	 * @param users
@@ -114,20 +119,24 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
+
 	/**
 	 * Changes lastLoggedIn of user in the database to the specified time.
+	 * 
 	 * @param time
 	 * @param username
 	 */
-	public void setTimestampOfUser(long time, String username){
+	public void setTimestampOfUser(long time, String username) {
 		try {
-			db.execute(String.format("UPDATE Person SET lastLoggedIn=(%s) WHERE username="+processString(username),time));
+			db.execute(String.format("UPDATE Person SET lastLoggedIn=(%s) WHERE username=" + processString(username), time));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Checks if the username and password is correct.
+	 * 
 	 * @param evt
 	 * @return
 	 */
@@ -136,14 +145,14 @@ public class DatabaseQueries {
 		String query = "select username, name from person" + " WHERE person.username = " + processString(evt.getUsername().toLowerCase()) + " AND person.password = " + ("MD5(" + processString(evt.getPassword()) + ")");
 		try {
 			rs = db.makeSingleQuery(query);
-			rs.beforeFirst();			
-				return rs.next();
+			rs.beforeFirst();
+			return rs.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-	
+
 	public Person getUserByUsername(String username) {
 		ResultSet rs;
 		String query = "SELECT name FROM person WHERE person.username = " + processString(username);
@@ -157,8 +166,10 @@ public class DatabaseQueries {
 		}
 		return null;
 	}
+
 	/**
 	 * Returns an ArrayList of chronos.Person
+	 * 
 	 * @return ArrayList
 	 */
 	public ArrayList<Comparable> getUsers() {
@@ -179,6 +190,7 @@ public class DatabaseQueries {
 		}
 		return users;
 	}
+
 	/**
 	 * 
 	 * @param evt
@@ -223,6 +235,7 @@ public class DatabaseQueries {
 
 	/**
 	 * Adds participants from a CalEvent to the DB.
+	 * 
 	 * @param evt
 	 */
 	public void addParticipants(CalEvent evt) {
@@ -249,6 +262,7 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
+
 	/**
 	 * 
 	 * @param evt
@@ -281,6 +295,7 @@ public class DatabaseQueries {
 	/**
 	 * Returns an ArrayList of all events the person is a participant of, either
 	 * before or after last login.
+	 * 
 	 * @param per
 	 * @param afterLastLogin
 	 * @return ArrayList<Comparable>
@@ -318,6 +333,7 @@ public class DatabaseQueries {
 		return al;
 
 	}
+
 	/**
 	 * 
 	 * @param id
@@ -341,6 +357,7 @@ public class DatabaseQueries {
 		}
 		return participants;
 	}
+
 	/**
 	 * 
 	 * @param event
@@ -371,6 +388,7 @@ public class DatabaseQueries {
 		}
 		// deprecated?
 	}
+
 	/**
 	 * 
 	 * @param event
@@ -402,8 +420,31 @@ public class DatabaseQueries {
 		}
 		return null;
 	}
+
+	public ArrayList<Comparable> getAvailableRooms(CalEvent event) {
+		ArrayList<Comparable> roomList = new ArrayList<Comparable>();
+		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms, Events WHERE Events.room_ID=Rooms.room_ID" + " AND (startTime+duration <" + event.getStart().getTime() + " OR startTime >" + (event.getStart().getTime() + event.getDuration()) + ") GROUP BY events.room_id";
+		ResultSet rs;
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			while (rs.next()) {
+				String name = rs.getString(1);
+				String desc = rs.getString(2);
+				int cap = rs.getInt(3);
+				roomList.add(new Room(name, cap, desc));
+				Singleton.log("Successfully retrieved all available rooms for \"" + event.getTitle() + "\"");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Singleton.log("Error retrieving all available rooms for \"" + event.getTitle() + "\"");
+		}
+		return roomList;
+	}
+
 	/**
 	 * Makes the string SQL compatible.
+	 * 
 	 * @param str
 	 * @return String
 	 */

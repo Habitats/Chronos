@@ -6,7 +6,6 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.naming.PartialResultException;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JTextField;
@@ -63,7 +62,7 @@ public class AddParticipantWindow extends ChronosWindow implements ActionListene
 	public class ApplyAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-		
+
 		}
 	}
 
