@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import chronos.Person;
 import chronos.Singleton;
+import events.AuthEvent;
 import events.CalEvent;
 
 /**
@@ -87,6 +88,21 @@ public class DatabaseQueries {
 		}
 	}
 
+	public boolean isUsernameAndPassword(AuthEvent evt){
+		ResultSet rs;
+		String query = "select username, name, from person" +
+				" WHERE username = " + processString(evt.getUsername()) +" AND password = " + processString(evt.getPassword());
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			while (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public ArrayList<Person> getUsers() {
 		ArrayList<Person> users = new ArrayList<Person>();
 		ResultSet rs;
