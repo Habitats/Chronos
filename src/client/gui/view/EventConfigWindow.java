@@ -6,10 +6,11 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -23,11 +24,16 @@ import client.model.EventConfigModel;
 
 public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
-	private JTextField eventNameField, dateField, startTimeField, durationField, roomNumberField;
-	private JTextArea eventDescriptionArea;
-	private JList participantList;
-	private JCheckBox alert;
-	private JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
+	private String[] startTimeArray = {"00:00","01:00","02:00","03:00","04:00"};
+	private Integer[] durationArray = {1,2,3,4,5,6,7,8,9,10,11,12};
+	
+	protected JTextField eventNameField, dateField, roomNumberField;
+	protected JComboBox startTime, duration;
+	protected JTextArea eventDescriptionArea;
+	protected JList participantList;
+	protected JCheckBox alert;
+	protected JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
+	
 	private Dimension button = new Dimension(50, 20);
 	private EventConfigModel model;
 
@@ -39,12 +45,14 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		setLayout(new GridBagLayout());
 		eventNameField = new JTextField();
 		dateField = new JTextField();
-		startTimeField = new JTextField();
-		durationField = new JTextField();
+		startTime = new JComboBox(startTimeArray);
+		duration = new JComboBox(durationArray);
 		eventDescriptionArea = new JTextArea();
 		participantList = new JList<>();
+		participantList.setEnabled(false);
 		alert = new JCheckBox();
 		roomNumberField = new JTextField("");
+		roomNumberField.setEditable(false);
 		addParticipantButton = new JButton("Add participant");
 		deleteParticipantButton = new JButton("Delete participant");
 		bookRoomButton = new JButton("Book room");
@@ -55,8 +63,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 		eventNameField.setColumns(15);
 		dateField.setColumns(8);
-		startTimeField.setColumns(5);
-		durationField.setColumns(2);
 		roomNumberField.setColumns(5);
 		eventNameField.setMaximumSize(new Dimension(80, 20));
 		eventDescriptionArea.setPreferredSize(new Dimension(100, 100));
@@ -65,6 +71,8 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		editButton.setMinimumSize(new Dimension(50, 20));
 		deleteButton.setPreferredSize(button);
 
+		startTime.addActionListener(new StartTimeListener());
+		duration.addActionListener(new DurationListener());
 		bookRoomButton.addActionListener(new BookRoomAction());
 		addParticipantButton.addActionListener(new AddParticipantAction());
 		deleteParticipantButton.addActionListener(new DeleteParticipantAction());
@@ -83,7 +91,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		add(participantList, new GBC(2, 1).setSpan(1, 6));
 		add(applyButton, new GBC(2, 7));
 
-		add(startTimeField, new GBC(3, 0).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
+		add(startTime, new GBC(3, 0).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
 		add(new Label("Enable alert 15 min before"), new GBC(3, 1).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
 		add(new Label("min before event."), new GBC(3, 1).setSpan(2, 1).setAnchor(GridBagConstraints.SOUTH));
 
@@ -94,14 +102,14 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		add(deleteParticipantButton, new GBC(3, 6).setSpan(2, 1));
 		add(cancelButton, new GBC(3, 7).setSpan(2, 1));
 
-		add(durationField, new GBC(4, 0));
+		add(duration, new GBC(4, 0));
 		add(alert, new GBC(4, 2));
 		add(roomNumberField, new GBC(4, 3));
 		
 		// sets the default model (IE. empty)
 		this.model.setDefaultModel();
 	}
-
+	
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (EventConfigModel) model;
@@ -111,7 +119,26 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	public EventConfigModel getModel() {
 		return model;
 	}
+	
+	private class StartTimeListener implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+
+	private class DurationListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 	private class BookRoomAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -129,6 +156,10 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	private class DeleteParticipantAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			int selectedParticipant = participantList.getSelectedIndex();
+			if (selectedParticipant != -1) {
+				participantList.remove(selectedParticipant);
+			}
 
 		}
 	}
@@ -182,12 +213,12 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		return dateField;
 	}
 
-	public JTextField getStartTimeField() {
-		return startTimeField;
+	public String[] getStartTimeArray() {
+		return startTimeArray;
 	}
 
-	public JTextField getDurationField() {
-		return durationField;
+	public Integer[] getDurationArray() {
+		return durationArray;
 	}
 
 	public JTextField getRoomNumberField() {
