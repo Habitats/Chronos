@@ -33,6 +33,7 @@ public class CalEventListPanel extends JPanel {
 		this.add(label);
 		this.calEvent = event;
 		this.view = view;
+		
 
 	}
 

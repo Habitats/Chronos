@@ -206,7 +206,8 @@ public class CalendarWindow extends ChronosWindow {
 		saturdayPanel.removeAll();
 		sundayPanel.removeAll();
 		eventsPanel.removeAll();
-		updateUI();
+		//updateUI();
+		repaint();
 	}
 
 	public void updateLabels() {
