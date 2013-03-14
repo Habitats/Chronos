@@ -19,19 +19,9 @@ public interface DatabaseControllerInterface {
 	public QueryEvent getUsers(QueryEvent event);
 
 	/**
-	 * Get all calendar events in the DB for a given person
-	 */
-	public QueryEvent getCalEvents(Person person);
-
-	/**
-	 * Get all calendar events from a specified time slot
-	 */
-	public QueryEvent getCalEventsFromTimeSlot(Person person, int year, int week);
-
-	/**
 	 * Get events the user already accepted and viewed
 	 */
-	public QueryEvent getOldEvents(Person person);
+	public QueryEvent getConfirmedEvents(Person person);
 
 	/**
 	 * Get calendar events added since last login. Acts as a cache.
@@ -42,12 +32,12 @@ public interface DatabaseControllerInterface {
 	 * adds a new calendar event for the person with a "neutral" (IE. waiting,
 	 * person hasn't yet accepted/declined) state
 	 */
-	public void addCalEvent(CalEvent event, Person person);
+	public void addCalEvent(CalEvent event);
 
 	/**
 	 * Updates a calendar event, IE. the state from "accepted" to "declined"
 	 */
-	public void updateCalEvent(CalEvent event, Person person);
+	public void updateCalEvent(CalEvent event);
 
 	/**
 	 * Removes a calendar event for the specified person
@@ -60,11 +50,6 @@ public interface DatabaseControllerInterface {
 	 * @return sets accessGranted true/false and returns event
 	 */
 	public AuthEvent authenticateUser(AuthEvent event);
-
-	/**
-	 * @return Date object from when the specified user was last logged in
-	 */
-	public Date lastLoggedIn(Person person);
 
 	/**
 	 * Logout the specified user and set the timestamp for lastLoggedIn

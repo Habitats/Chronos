@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import chronos.Person;
+import chronos.Singleton;
 
 /**
  * Wrapper class for all events sent to server.
@@ -25,6 +26,7 @@ abstract public class NetworkEvent implements Serializable {
 	protected Person person;
 
 	public NetworkEvent(EventType type) {
+		setSender(Singleton.getInstance().getSelf());
 		this.type = type;
 	}
 
@@ -32,7 +34,7 @@ abstract public class NetworkEvent implements Serializable {
 		return person;
 	}
 
-	public void setPerson(Person person) {
+	private void setSender(Person person) {
 		this.person = person;
 	}
 

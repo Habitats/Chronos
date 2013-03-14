@@ -60,9 +60,18 @@ public class CalendarModel extends ChronosModel {
 	 */
 
 	public void addEvents(QueryEvent queryEvent) {
+		@SuppressWarnings("unchecked")
 		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent.getResults();
+		//addEventsToSelectedPersonEvents(queryEvent.getPerson(), calEvents);
 		selectedPersonsEvents.put(queryEvent.getPerson(), calEvents);
-		addEventsArrayList(calEvents);
+		update();
+	}
+	public void addEventsToSelectedPersonEvents(Person person, ArrayList<CalEvent> events) {
+		if(selectedPersonsEvents.containsKey(person)) {
+			//selectedPersonsEvents.put(person, selectedPersonsEvents.get(person).addAll(events));
+			selectedPersonsEvents.get(person).removeAll(selectedPersonsEvents.get(person));
+			selectedPersonsEvents.get(person).addAll(events);
+		} else selectedPersonsEvents.put(person, events);
 	}
 
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents) {
@@ -90,11 +99,7 @@ public class CalendarModel extends ChronosModel {
 
 	private void getPersonEvents(Person person) {
 		QueryEvent event = new QueryEvent(EventType.QUERY, person);
-		// BRUK DENNE METODEN
 		fireNetworkEvent(event);
-
-		// IKKE DENNE
-		// controller.sendNetworkEvent(event);
 	}
 
 	public void addSelectedPerson(Person person) {

@@ -10,6 +10,7 @@ import chronos.Singleton;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.ChronosModel.ChronosType;
+import client.model.LoginModel;
 import events.AuthEvent;
 import events.CalEvent;
 import events.NetworkEvent;
@@ -52,9 +53,12 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		// sendTestEvent();
 		// break;
 		case LOGIN:
-			Singleton.getInstance().setSelf(((AuthEvent) event).getPerson());
-			loggedIn = true;
-			mainFrame.buildGui();
+			if (((AuthEvent) event).getAccessGranted()) {
+				Singleton.getInstance().setSelf(((AuthEvent) event).getPerson());
+				loggedIn = true;
+				mainFrame.buildGui();
+			} else
+				((LoginModel) models.get(ChronosType.LOGIN)).setDenied();
 			break;
 		// case CALENDAR:
 		// evaluateCalEvent((CalEvent) event);

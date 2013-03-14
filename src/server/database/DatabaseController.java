@@ -20,6 +20,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	public DatabaseController() {
 		DatabaseConnection dbConnection = new DatabaseConnection();
+		dbConnection.initialize();
 		dbQueries = new DatabaseQueries(dbConnection);
 	}
 
@@ -28,8 +29,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 		Singleton.log("Authenticating " + event.getUsername());
 		if(dbQueries.isUsernameAndPassword(event)){
 			event.setAccessGranted(true);		
-			event.setPerson(dbQueries.getUserByUsername(event.getUsername()));
 			dbQueries.setTimestampOfUser(-1L);
+			event.setSender(dbQueries.getUserByUsername(event.getUsername()));
+
 		}
 		return event;
 	}
@@ -44,53 +46,24 @@ public class DatabaseController implements DatabaseControllerInterface {
 		return new QueryEvent(EventType.QUERY, QueryType.PERSON).setResults(dbQueries.getUsers());
 	}
 
-	@Override
-	public QueryEvent getCalEvents(Person person) {
-		CalEvent event1 = new CalEvent("event1", new Date(), 10, person, "test");
-		CalEvent event2 = new CalEvent("event2", new Date(), 10, person, "test");
-		CalEvent event3 = new CalEvent("event3", new Date(), 10, person, "test");
-
-		ArrayList<Comparable> results = new ArrayList<Comparable>();
-		results.add(event1);
-		results.add(event2);
-		results.add(event3);
-
-		QueryEvent event = new QueryEvent(EventType.QUERY, QueryType.CALEVENT);
-		event.setPerson(person);
-		event.setResults(results);
-
-		return event;
-	}
 
 	@Override
-	public void addCalEvent(CalEvent event, Person person) {
+	public void addCalEvent(CalEvent event) {
 		dbQueries.addEvent(event);
 
 	}
 
 	@Override
-	public void updateCalEvent(CalEvent event, Person person) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Date lastLoggedIn(Person person) {
-		// TODO Auto-generated method stub
-		return null;
+	public void updateCalEvent(CalEvent event) {
+		dbQueries.updateCalEvent(event);
 	}
 
 	@Override
 	public void removeCalEvent(CalEvent event, Person person) {
-		// TODO Auto-generated method stub
+		dbQueries.removeCalEvent(event);
 
 	}
 
-	@Override
-	public QueryEvent getCalEventsFromTimeSlot(Person person, int year, int week) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public QueryEvent getNewCalEvents(Person person) {
@@ -98,7 +71,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public QueryEvent getOldEvents(Person person) {
+	public QueryEvent getConfirmedEvents(Person person) {
 		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
 	}
 
@@ -107,4 +80,5 @@ public class DatabaseController implements DatabaseControllerInterface {
 		// TODO Auto-generated method stub
 		
 	}
+
 }
