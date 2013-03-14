@@ -66,7 +66,6 @@ public class DatabaseTest {
 //		 Singleton.log("Users in db:");
 //		 for (Person person : userInDb) {
 //		 Singleton.log(person.toString());
-		 }
 
 		/**
 		 * Add multiple Users
@@ -86,10 +85,16 @@ public class DatabaseTest {
 		 * Get Events
 		 */
 
-		// new
 		// System.out.println(queries.getUsers().get(0));
 		// System.out.println(queries.getParticipantsByEventId(1363110427115L));
 		// System.out.println(queries.getEventsByParticipant(queries.getUsers().get(0),
 		// true).get(0).getParticipants());
+		
+		/**
+		 * Update Event
+		 */
+		
+	}
+		
 
 }

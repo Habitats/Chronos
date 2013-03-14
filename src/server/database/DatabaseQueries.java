@@ -311,6 +311,15 @@ public class DatabaseQueries {
 		
 	}
 	
+	public void removeCalEvent(CalEvent event) {
+		try {
+			db.execute(String.format("DELETE FROM Events WHERE event_id=%s", ""+event.getTimestamp()));
+			Singleton.log("successfully deleted event "+event.getTitle());
+		} catch (SQLException e) {
+			Singleton.log("error deleting event "+event.getTitle());
+			e.printStackTrace();
+		}
+	}
 	
 	//Deprecated?
 	public Date lastLoggedIn(Person person) {

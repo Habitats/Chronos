@@ -73,13 +73,8 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public Date lastLoggedIn(Person person) {
-		return dbQueries.lastLoggedIn(person);
-	}
-
-	@Override
 	public void removeCalEvent(CalEvent event, Person person) {
-		// TODO Auto-generated method stub
+		dbQueries.removeCalEvent(event);
 
 	}
 
