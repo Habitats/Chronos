@@ -117,13 +117,14 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void newCalEvent() {
-		Person user1 = new Person("herp");
-		Person user2 = new Person("derp");
-		Person user3 = new Person("snerp");
+		// Person user1 = new Person("herp");
+		// Person user2 = new Person("derp");
+		// Person user3 = new Person("snerp");
 		Person creator = Singleton.getInstance().getSelf();
+		creator.setStatus(Person.Status.WAITING);
 		CalEvent event;
 		if (validateInput()) {
-			event = new CalEvent(getEventName(), getStartTime(), getDuration(), creator, getEventDescription()).setState(CalEventType.NEW).addParticipant(user1, user2, user3);
+			event = new CalEvent(getEventName(), getStartTime(), getDuration(), creator, getEventDescription()).setState(CalEventType.NEW);
 			fireNetworkEvent(event);
 			view.setVisible(false);
 		}

@@ -10,31 +10,19 @@ import events.NetworkEvent.EventType;
 
 public class LoginModel extends ChronosModel {
 	private String username;
-	private char[] password;
+	private String password;
 	private LoginWindow view;
 
 	public LoginModel(ClientController controller) {
 		super(controller, ChronosType.LOGIN);
 	}
 
-	public void login(String username, char[] cs) {
-		fireNetworkEvent(new AuthEvent(EventType.LOGIN, new Person(username), cs.toString()));
+	public void login(String username, String password) {
+		fireNetworkEvent(new AuthEvent(EventType.LOGIN, new Person(username), password));
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public char[] getPassword() {
-		return password;
-	}
-
-	public void setPassword(char[] password) {
-		this.password = password;
+	public void setDenied() {
+		view.getStatusLabel().setText("Access denied!");
 	}
 
 	@Override

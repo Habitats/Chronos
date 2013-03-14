@@ -51,6 +51,8 @@ public class DatabaseQueries {
 	public boolean updateUser(String username, String fieldToUpdate, String newValue) {
 		username = processString(username);
 		newValue = processString(newValue);
+		if (fieldToUpdate.equals("password"))
+			newValue = "MD5(" + newValue + ")";
 		try {
 			db.execute(String.format("update person set %s=%s where username = %s", fieldToUpdate, newValue, username));
 			Singleton.log(String.format("successfully updated %s to %s in %s", fieldToUpdate, newValue, username));
@@ -72,7 +74,7 @@ public class DatabaseQueries {
 			for (Person user : users) {
 				try {
 					ps.setString(1, user.getUsername());
-					ps.setString(2, "derp");
+					ps.setString(2, "MD5(derp)");
 					ps.setString(3, user.getName());
 					ps.setString(4, "" + user.getLastLoggedIn());
 					ps.addBatch();
@@ -88,23 +90,36 @@ public class DatabaseQueries {
 		}
 	}
 
-	public boolean isUsernameAndPassword(AuthEvent evt){
+	public boolean isUsernameAndPassword(AuthEvent evt) {
 		ResultSet rs;
-		String query = "select username, name, from person" +
-				" WHERE username = " + processString(evt.getUsername()) +" AND password = " + processString(evt.getPassword());
+		String query = "select username, name from person" + " WHERE person.username = " + processString(evt.getUsername().toLowerCase()) + " AND person.password = " + ("MD5(" + processString(evt.getPassword()) + ")");
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
-			while (rs.next()) {
-				return true;
-			}
+			return rs.next();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-	public ArrayList<Person> getUsers() {
-		ArrayList<Person> users = new ArrayList<Person>();
+
+	public Person getUserByUsername(String username) {
+		ResultSet rs;
+		String query = "SELECT name FROM person WHERE person.username = " + processString(username);
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.first();
+			String name = rs.getString(1);
+			return new Person(username, name);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public ArrayList<Comparable> getUsers() {
+		ArrayList<Comparable> users = new ArrayList<Comparable>();
 		ResultSet rs;
 		String query = "select username,name,lastLoggedIn from person";
 		try {
@@ -169,7 +184,6 @@ public class DatabaseQueries {
 			ps = db.makeBatchUpdate(insertQuery);
 			for (Person p : evt.getParticipants().values()) {
 				try {
-					p.setStatus(Person.Status.WAITING);
 					ps.setString(1, p.getUsername());
 					ps.setString(2, "" + evt.getTimestamp());
 					ps.setString(3, null);
@@ -202,7 +216,7 @@ public class DatabaseQueries {
 			param = ">";
 		}
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
-				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID;";
+				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID ORDER BY events.startTime DESC;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -243,6 +257,23 @@ public class DatabaseQueries {
 			e.printStackTrace();
 		}
 		return participants;
+	}
+
+	public void updateCalEvent(CalEvent event, Person person) {
+		// TODO
+	}
+
+	public Date lastLoggedIn(Person person) {
+		ResultSet rs;
+		String query = "SELECT lastLoggedIn FROM Person WHERE username=" + processString(person.getUsername());
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.first();
+			return new Date(rs.getLong(1));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private String processString(String str) {

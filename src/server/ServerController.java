@@ -64,10 +64,9 @@ public class ServerController implements Runnable {
 			else {
 				deleteCalEventForSingleParticipan(event, event.getSender());
 			}
-
 			break;
 		case NEW:
-//			addCalEventForParticipants(event);
+			// addCalEventForParticipants(event);
 			dbController.addCalEvent(event);
 			break;
 		case UPDATE:
@@ -103,7 +102,7 @@ public class ServerController implements Runnable {
 	private void sendUpdateToAllParticipants(HashMap<String, Person> participants) {
 		for (String username : participants.keySet()) {
 			Person person = participants.get(username);
-			QueryEvent event = dbController.getCalEvents(person);
+			QueryEvent event = dbController.getConfirmedEvents(person);
 			sendSingleNetworkEvent(event, person);
 		}
 	}
@@ -118,11 +117,12 @@ public class ServerController implements Runnable {
 		}
 	}
 
-	private void addCalEventForParticipants(CalEvent event) {
-		for (String username : event.getParticipants().keySet()) {
-			dbController.addCalEvent(event, event.getParticipants().get(username));
-		}
-	}
+	//
+	// private void addCalEventForParticipants(CalEvent event) {
+	// for (String username : event.getParticipants().keySet()) {
+	// dbController.addCalEvent(event, event.getParticipants().get(username));
+	// }
+	// }
 
 	private void sendSingleNetworkEvent(NetworkEvent event, Person person) {
 		try {
