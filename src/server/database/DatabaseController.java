@@ -78,4 +78,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 		dbQueries.setTimestampOfUser(new Date().getTime());
 		
 	}
+
+	@Override
+	public QueryEvent getAvailableRooms(CalEvent event) {
+		return new QueryEvent(EventType.QUERY, QueryType.ROOM).setResults(dbQueries.getAvailableRooms(event));
+	}
 }
