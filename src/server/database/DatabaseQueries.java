@@ -18,11 +18,21 @@ import events.CalEvent;
 public class DatabaseQueries {
 
 	private final DatabaseConnection db;
-
+	/**
+	 * 
+	 * @param db
+	 */
 	public DatabaseQueries(DatabaseConnection db) {
 		this.db = db;
 	}
-
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @param name
+	 * @param LastLoggedIn
+	 * @return
+	 */
 	public boolean addUser(String username, String password, String name, long LastLoggedIn) {
 		try {
 			db.execute(String.format("insert into person values (%s,%s,%s,%s)",
@@ -35,7 +45,11 @@ public class DatabaseQueries {
 			return false;
 		}
 	}
-
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 */
 	public boolean removeUser(String username) {
 		username = processString(username);
 		try {
@@ -48,7 +62,13 @@ public class DatabaseQueries {
 			return false;
 		}
 	}
-
+	/**
+	 * 
+	 * @param username
+	 * @param fieldToUpdate
+	 * @param newValue
+	 * @return
+	 */
 	public boolean updateUser(String username, String fieldToUpdate, String newValue) {
 		username = processString(username);
 		newValue = processString(newValue);
@@ -65,7 +85,10 @@ public class DatabaseQueries {
 
 		}
 	}
-
+	/**
+	 * 
+	 * @param users
+	 */
 	public void addMultipleUsers(ArrayList<Person> users) {
 
 		String insertQuery = "insert into person (username,password,name, lastLoggedIn) values (?,?,?,?)";
