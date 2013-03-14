@@ -37,6 +37,10 @@ public class DatabaseTest {
 //		queries.addUser("boytoy","derp", "Jostein", 1829000);
 		
 		/**
+		 * 
+		 */
+		System.out.println(queries.isUsernameAndPassword(new AuthEvent(queries.getUsers().get(0), "derp")));
+		/**
 		 * AddEvent
 		 */
 //		 CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999,
