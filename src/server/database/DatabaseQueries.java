@@ -105,8 +105,21 @@ public class DatabaseQueries {
 		}
 		return false;
 	}
-	public ArrayList<Person> getUsers() {
-		ArrayList<Person> users = new ArrayList<Person>();
+	
+	public Person getUserByUsername(String username) {
+		ResultSet rs;
+		String query = "SELECT name FROM person WHERE person.username = " + processString(username);
+		try {
+			rs = db.makeSingleQuery(query);
+			String name = rs.getString(1);
+			return new Person(username, name);			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public ArrayList<Comparable> getUsers() {
+		ArrayList<Comparable> users = new ArrayList<Comparable>();
 		ResultSet rs;
 		String query = "select username,name,lastLoggedIn from person";
 		try {

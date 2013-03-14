@@ -61,10 +61,10 @@ public class DatabaseTest {
 		/**
 		 * GetUsers
 		 */
-		 ArrayList<Person> userInDb = queries.getUsers();
-		 Singleton.log("Users in db:");
-		 for (Person person : userInDb) {
-		 Singleton.log(person.toString());
+//		 ArrayList<Person> userInDb = queries.getUsers();
+//		 Singleton.log("Users in db:");
+//		 for (Person person : userInDb) {
+//		 Singleton.log(person.toString());
 		 }
 
 		/**
@@ -91,5 +91,4 @@ public class DatabaseTest {
 		// System.out.println(queries.getEventsByParticipant(queries.getUsers().get(0),
 		// true).get(0).getParticipants());
 
-	}
 }
