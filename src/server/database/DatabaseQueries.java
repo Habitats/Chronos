@@ -25,7 +25,8 @@ public class DatabaseQueries {
 
 	public boolean addUser(String username, String password, String name, long LastLoggedIn) {
 		try {
-			db.execute(String.format("insert into person values (%s,%s,%s,%s)", processString(username), ("MD5(" + processString(password) + ")"), processString(name), LastLoggedIn));
+			db.execute(String.format("insert into person values (%s,%s,%s,%s)",
+					processString(username), ("MD5(" + processString(password) + ")"), processString(name), LastLoggedIn));
 			Singleton.log("successfully added: " + username);
 			return true;
 		} catch (SQLException e) {
@@ -90,6 +91,13 @@ public class DatabaseQueries {
 		}
 	}
 
+	public void setTimestampOfUser(long time){
+		try {
+			db.execute(String.format("insert into person values (%s)",time));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public boolean isUsernameAndPassword(AuthEvent evt){
 		ResultSet rs;
 		String query = "select username, name from person" +
@@ -98,6 +106,7 @@ public class DatabaseQueries {
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
+				
 				return rs.next();
 
 		} catch (SQLException e) {

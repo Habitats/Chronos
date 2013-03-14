@@ -29,6 +29,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 		if(dbQueries.isUsernameAndPassword(event)){
 			event.setAccessGranted(true);		
 			event.setPerson(dbQueries.getUserByUsername(event.getUsername()));
+			dbQueries.setTimestampOfUser(-1L);
 		}
 		return event;
 	}
