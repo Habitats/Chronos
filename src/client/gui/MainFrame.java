@@ -110,8 +110,8 @@ public class MainFrame extends JFrame {
 		// SET BOUNDS ON EVERY COMPONENT ADDED DIRECTLY TO A LAYER
 		calendarWindow.setBounds(0, 0, frameWidth, frameHeight);
 
-		int eventConfigWidth = frameWidth / 2;
-		int eventConfigHeight = frameHeight / 2;
+		int eventConfigWidth = 500;
+		int eventConfigHeight = 280;
 		eventConfigWindow.setBounds((frameWidth - eventConfigWidth) / 2,
 				(frameHeight - eventConfigHeight) / 2, eventConfigWidth,
 				eventConfigHeight);
