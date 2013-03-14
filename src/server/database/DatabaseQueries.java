@@ -354,7 +354,7 @@ public class DatabaseQueries {
 				ps.setString(2, "" + event.getStart());
 				ps.setString(3, "" + event.getDuration());
 				ps.setString(4, event.getDescription());
-				// ps.setString(5, processString(event.getRoom().getName()));
+				ps.setString(5, processString(event.getRoom().getName()));
 				ps.setString(6, "" + event.getTimestamp());
 				ps.addBatch();
 				Singleton.log("successfully updated: " + event.getTitle() + " with fields " + event.getStart().getTime() + " and " + event.getDuration() + " and " + event.getDescription());
