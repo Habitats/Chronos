@@ -24,7 +24,7 @@ public interface DatabaseControllerInterface {
 	public QueryEvent getCalEvents(Person person);
 
 	/**
-	 * Get all calendar events from a spcified time slot
+	 * Get all calendar events from a specified time slot
 	 */
 	public QueryEvent getCalEventsFromTimeSlot(Person person, int year, int week);
 
