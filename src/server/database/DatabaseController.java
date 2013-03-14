@@ -75,8 +75,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public void logout(Person person) {
-		setTimeStampOfUser(new Date().getTime());
+		dbQueries.setTimestampOfUser(new Date().getTime());
 		
 	}
-
 }

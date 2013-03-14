@@ -19,11 +19,6 @@ public interface DatabaseControllerInterface {
 	public QueryEvent getUsers(QueryEvent event);
 
 	/**
-	 * Get all calendar events in the DB for a given person
-	 */
-	public QueryEvent getCalEvents(Person person);
-
-	/**
 	 * Get events the user already accepted and viewed
 	 */
 	public QueryEvent getConfirmedEvents(Person person);

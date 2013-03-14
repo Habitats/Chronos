@@ -45,14 +45,11 @@ public class DatabaseTest {
 		/**
 		 * Authenticate user
 		 */
-<<<<<<< HEAD
-		System.out.println(queries.isUsernameAndPassword(new AuthEvent(EventType.LOGIN ,(Person)queries.getUsers().get(0), "derp")));
-=======
+		// System.out.println(queries.isUsernameAndPassword(new AuthEvent(EventType.LOGIN ,(Person)queries.getUsers().get(0), "derp")));
 
 		// System.out.println(queries.isUsernameAndPassword(new
 		// AuthEvent(queries.getUsers().get(0), "derp")));
 
->>>>>>> e7d539fb9fe9a036839b03e7298efcb5265cb4e5
 		/**
 		 * AddEvent
 		 */
