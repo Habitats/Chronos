@@ -69,6 +69,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
+	//skal være false, men patrick må getNewCalEvents
 	public QueryEvent getConfirmedEvents(Person person) {
 		return new QueryEvent(QueryType.CALEVENT_OLD).setResults(dbQueries.getEventsByParticipant(person, false));
 	}
@@ -77,5 +78,10 @@ public class DatabaseController implements DatabaseControllerInterface {
 	public void logout(Person person) {
 		dbQueries.setTimestampOfUser(new Date().getTime(), person.getUsername());
 
+	}
+
+	@Override
+	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event) {
+		return qe.setResults(dbQueries.getAvailableRooms(event));
 	}
 }

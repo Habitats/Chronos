@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import chronos.Person;
+import chronos.Room;
 import chronos.Singleton;
 import events.AuthEvent;
 import events.CalEvent;
@@ -18,11 +19,21 @@ import events.CalEvent;
 public class DatabaseQueries {
 
 	private final DatabaseConnection db;
-
+	/**
+	 * 
+	 * @param db
+	 */
 	public DatabaseQueries(DatabaseConnection db) {
 		this.db = db;
 	}
-
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @param name
+	 * @param LastLoggedIn
+	 * @return
+	 */
 	public boolean addUser(String username, String password, String name, long LastLoggedIn) {
 		try {
 			db.execute(String.format("insert into person values (%s,%s,%s,%s)",
@@ -35,7 +46,11 @@ public class DatabaseQueries {
 			return false;
 		}
 	}
-
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 */
 	public boolean removeUser(String username) {
 		username = processString(username);
 		try {
@@ -48,7 +63,13 @@ public class DatabaseQueries {
 			return false;
 		}
 	}
-
+	/**
+	 * 
+	 * @param username
+	 * @param fieldToUpdate
+	 * @param newValue
+	 * @return
+	 */
 	public boolean updateUser(String username, String fieldToUpdate, String newValue) {
 		username = processString(username);
 		newValue = processString(newValue);
@@ -65,7 +86,10 @@ public class DatabaseQueries {
 
 		}
 	}
-
+	/**
+	 * 
+	 * @param users
+	 */
 	public void addMultipleUsers(ArrayList<Person> users) {
 
 		String insertQuery = "insert into person (username,password,name, lastLoggedIn) values (?,?,?,?)";
@@ -331,7 +355,7 @@ public class DatabaseQueries {
 				ps.setString(2, "" + event.getStart());
 				ps.setString(3, "" + event.getDuration());
 				ps.setString(4, event.getDescription());
-				// ps.setString(5, processString(event.getRoom().getName()));
+				ps.setString(5, processString(event.getRoom().getName()));
 				ps.setString(6, "" + event.getTimestamp());
 				ps.addBatch();
 				Singleton.log("successfully updated: " + event.getTitle() + " with fields " + event.getStart().getTime() + " and " + event.getDuration() + " and " + event.getDescription());
@@ -378,6 +402,29 @@ public class DatabaseQueries {
 		}
 		return null;
 	}
+
+	public ArrayList<Comparable> getAvailableRooms(CalEvent event) {
+		ArrayList<Comparable> roomList = new ArrayList<Comparable>();
+		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms, Events WHERE Events.room_ID=Rooms.room_ID" +
+							" AND (startTime+duration <"+event.getStart().getTime()+" OR startTime >"+(event.getStart().getTime()+event.getDuration())+") GROUP BY events.room_id";
+		ResultSet rs;
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			while(rs.next()) {
+				String name = rs.getString(1);
+				String desc = rs.getString(2);
+				int cap = rs.getInt(3);
+				roomList.add(new Room(name, cap, desc));
+				Singleton.log("Successfully retrieved all available rooms for \""+event.getTitle()+"\"");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+			Singleton.log("Error retrieving all available rooms for \""+event.getTitle()+"\"");
+		}
+		return roomList;
+	}
+	
 	/**
 	 * Makes the string SQL compatible.
 	 * @param str
