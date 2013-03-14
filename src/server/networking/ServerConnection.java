@@ -8,7 +8,9 @@ import java.util.List;
 
 import chronos.Singleton;
 
+import events.AuthEvent;
 import events.NetworkEvent;
+import events.NetworkEvent.EventType;
 
 /**
  * Handles the connection with a single client. Event client gets it's own
@@ -21,6 +23,8 @@ public class ServerConnection implements Runnable {
 	private final Server server;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
+
+	private ClientConnection clientConnection;
 
 	public ServerConnection(Socket clientSocket, Server server) {
 		this.clientSocket = clientSocket;
@@ -42,12 +46,15 @@ public class ServerConnection implements Runnable {
 					for (ClientConnection clientConnection : clientConnections) {
 						if (clientConnection.getClientSocket() == clientSocket && clientConnection.getPerson() == null) {
 							clientConnection.setPerson(event.getSender());
+							if (clientConnection == null)
+								this.clientConnection = clientConnection;
+
 							break;
 						}
 					}
 				}
 				// forward event to serverController that handles it
-				server.getServerController().evaluateNetworkEvent(event);
+
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -55,6 +62,7 @@ public class ServerConnection implements Runnable {
 		out.close();
 		in.close();
 		clientSocket.close();
+		server.getServerController().evaluateNetworkEvent(new AuthEvent(EventType.LOG_OUT, clientConnection.getPerson(), null));
 	}
 
 	@Override

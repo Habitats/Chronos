@@ -16,6 +16,8 @@ abstract public class NetworkEvent implements Serializable {
 		CALENDAR, //
 		TEST, //
 		QUERY, //
+		LOGOUT, //
+		LOG_OUT, //
 	}
 
 	ArrayList<Comparable> results;

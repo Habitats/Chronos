@@ -6,12 +6,13 @@ import chronos.Person;
  * Event used to authenitcate the user/client with the server/db
  */
 public class AuthEvent extends NetworkEvent {
+
 	private final String username;
 	private final String password;
 	private boolean accessGranted = false;
 
-	public AuthEvent(Person person, String password) {
-		super(EventType.LOGIN);
+	public AuthEvent(EventType type, Person person, String password) {
+		super(type);
 		super.person = person;
 		this.username = person.getUsername();
 		this.password = password;

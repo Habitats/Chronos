@@ -30,7 +30,6 @@ public class Chronos {
 		if (Singleton.getInstance().networkEnabled())
 			startServer();
 		 startClient();
-
 	}
 
 	private void startServer() {

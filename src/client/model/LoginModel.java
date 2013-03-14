@@ -6,6 +6,7 @@ import client.gui.view.ChronosWindow;
 import client.gui.view.LoginWindow;
 import events.AuthEvent;
 import events.NetworkEvent;
+import events.NetworkEvent.EventType;
 
 public class LoginModel extends ChronosModel {
 	private String username;
@@ -17,7 +18,7 @@ public class LoginModel extends ChronosModel {
 	}
 
 	public void login(String username, char[] cs) {
-		fireNetworkEvent(new AuthEvent(new Person(username), cs.toString()));
+		fireNetworkEvent(new AuthEvent(EventType.LOGIN, new Person(username), cs.toString()));
 	}
 
 	public String getUsername() {

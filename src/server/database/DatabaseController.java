@@ -27,7 +27,8 @@ public class DatabaseController implements DatabaseControllerInterface {
 	public AuthEvent authenticateUser(AuthEvent event) {
 		Singleton.log("Authenticating " + event.getUsername());
 		if(dbQueries.isUsernameAndPassword(event)){
-			event.setAccessGranted(true);			
+			event.setAccessGranted(true);		
+			event.setPerson(dbQueries.getUserByUsername(event.getUsername()));
 		}
 		return event;
 	}
@@ -39,8 +40,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getUsers(QueryEvent event) {
-		// TODO Auto-generated method stub
-		return null;
+		return new QueryEvent(EventType.QUERY, QueryType.PERSON).setResults(dbQueries.getUsers());
 	}
 
 	@Override
@@ -68,15 +68,14 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public void updateCalEvent(CalEvent event, Person person) {
+	public void updateCalEvent(CalEvent event) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public Date lastLoggedIn(Person person) {
-		// TODO Auto-generated method stub
-		return null;
+		return dbQueries.lastLoggedIn(person);
 	}
 
 	@Override
@@ -99,5 +98,11 @@ public class DatabaseController implements DatabaseControllerInterface {
 	@Override
 	public QueryEvent getOldEvents(Person person) {
 		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
+	}
+
+	@Override
+	public void logout(Person person) {
+		// TODO Auto-generated method stub
+		
 	}
 }
