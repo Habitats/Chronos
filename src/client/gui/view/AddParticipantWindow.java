@@ -6,18 +6,22 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.naming.PartialResultException;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JTextField;
 
+import chronos.Person;
 import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.AddParticipantModel;
 import client.model.ChronosModel;
 
 public class AddParticipantWindow extends ChronosWindow implements ActionListener {
+	Person person;
 	JTextField userSearchField;
 	JList userList;
+	JList participants;
 	JButton searchButton, applyButton, cancelButton;
 	private AddParticipantModel model;
 
@@ -29,7 +33,7 @@ public class AddParticipantWindow extends ChronosWindow implements ActionListene
 		setLayout(new GridBagLayout());
 
 		userSearchField = new JTextField();
-		userList = new JList<>();
+		userList = new JList<Person>();
 		searchButton = new JButton("Search");
 		applyButton = new JButton("Apply");
 		cancelButton = new JButton("Cancel");
@@ -59,7 +63,7 @@ public class AddParticipantWindow extends ChronosWindow implements ActionListene
 	public class ApplyAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+		
 		}
 	}
 
