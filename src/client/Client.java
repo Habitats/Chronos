@@ -76,7 +76,7 @@ public class Client implements Runnable {
 				clientSocket.close();
 		} catch (IOException e) {
 			Singleton.log("Couldn't close socket...");
-		}finally{
+		} finally {
 			System.exit(0);
 		}
 	}

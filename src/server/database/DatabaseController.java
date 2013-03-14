@@ -1,13 +1,11 @@
 package server.database;
 
-import java.util.ArrayList;
 import java.util.Date;
 import chronos.Person;
 import chronos.Singleton;
 
 import events.AuthEvent;
 import events.CalEvent;
-import events.NetworkEvent.EventType;
 import events.QueryEvent.QueryType;
 import events.QueryEvent;
 
@@ -69,7 +67,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	//skal være false, men patrick må getNewCalEvents
+	// skal være false, men patrick må getNewCalEvents
 	public QueryEvent getConfirmedEvents(Person person) {
 		return new QueryEvent(QueryType.CALEVENT_OLD).setResults(dbQueries.getEventsByParticipant(person, false));
 	}

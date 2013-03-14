@@ -2,16 +2,12 @@ package client.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Frame;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.Timer;
-
 import chronos.Singleton;
 import client.ClientController;
 import client.gui.view.AddParticipantWindow;
@@ -29,7 +25,6 @@ import client.model.InvitationModel;
 import client.model.LoginModel;
 import client.model.RoomBookingModel;
 import events.QueryEvent;
-import events.NetworkEvent.EventType;
 import events.QueryEvent.QueryType;
 
 /**
@@ -87,15 +82,15 @@ public class MainFrame extends JFrame {
 		addParticipantModel = new AddParticipantModel(controller);
 		addParticipantWindow = new AddParticipantWindow(addParticipantModel, this);
 
-//		Timer t = new Timer(10, new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				repaint();
-//
-//			}
-//		});
-//		t.start();
+		// Timer t = new Timer(10, new ActionListener() {
+		//
+		// @Override
+		// public void actionPerformed(ActionEvent e) {
+		// repaint();
+		//
+		// }
+		// });
+		// t.start();
 	}
 
 	private JLayeredPane buildLayeredPane() {
@@ -136,7 +131,7 @@ public class MainFrame extends JFrame {
 		frame.setLocationRelativeTo(getRootPane());
 		frame.setVisible(true);
 		frame.setResizable(false);
-		frame.setExtendedState(JFrame.NORMAL);
+		frame.setExtendedState(Frame.NORMAL);
 	}
 
 	// initialize the GUI here

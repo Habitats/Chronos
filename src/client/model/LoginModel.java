@@ -5,7 +5,6 @@ import client.ClientController;
 import client.gui.view.ChronosWindow;
 import client.gui.view.LoginWindow;
 import events.AuthEvent;
-import events.NetworkEvent;
 import events.NetworkEvent.EventType;
 
 public class LoginModel extends ChronosModel {

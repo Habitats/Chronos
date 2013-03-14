@@ -1,15 +1,8 @@
 package server.database;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.annotation.Resource.AuthenticationType;
-
-import events.*;
-import events.NetworkEvent.EventType;
-
-import chronos.Person;
 import chronos.Singleton;
 
 public class DatabaseTest {
@@ -45,7 +38,9 @@ public class DatabaseTest {
 		/**
 		 * Authenticate user
 		 */
-		// System.out.println(queries.isUsernameAndPassword(new AuthEvent(EventType.LOGIN ,(Person)queries.getUsers().get(0), "derp")));
+		// System.out.println(queries.isUsernameAndPassword(new
+		// AuthEvent(EventType.LOGIN ,(Person)queries.getUsers().get(0),
+		// "derp")));
 		// System.out.println(queries.isUsernameAndPassword(new
 		// AuthEvent(queries.getUsers().get(0), "derp")));
 		queries.setTimestampOfUser(-1, queries.getUserByUsername("sexyboy").getUsername());

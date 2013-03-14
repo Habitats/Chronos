@@ -8,7 +8,7 @@ import events.NetworkEvent;
 public class RoomBookingModel extends ChronosModel {
 	String roomNumber;
 	private RoomBookingWindow view;
-	
+
 	public RoomBookingModel(ClientController controller) {
 		super(controller, ChronosType.ROOM_BOOK);
 		// TODO Auto-generated constructor stub
@@ -21,13 +21,11 @@ public class RoomBookingModel extends ChronosModel {
 	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
 	}
-	
+
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
 		// TODO Auto-generated method stub
 	}
-
-
 
 	@Override
 	public void setView(ChronosWindow view) {

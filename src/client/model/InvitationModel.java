@@ -33,8 +33,6 @@ public class InvitationModel extends ChronosModel {
 	public void receiveNetworkEvent(events.NetworkEvent event) {
 	};
 
-
-
 	@Override
 	public void setView(ChronosWindow view) {
 		this.view = (InvitationWindow) view;

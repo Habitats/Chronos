@@ -44,7 +44,11 @@ public class ServerConnection implements Runnable {
 				List<ClientConnection> clientConnections = server.getClientConnections();
 				synchronized (clientConnections) {
 					for (ClientConnection clientConnection : clientConnections) {
-						if (clientConnection.getClientSocket() == clientSocket){// && clientConnection.getPerson() == null) {
+						if (clientConnection.getClientSocket() == clientSocket) {// &&
+																					// clientConnection.getPerson()
+																					// ==
+																					// null)
+																					// {
 							clientConnection.setPerson(event.getSender());
 							this.clientConnection = clientConnection;
 

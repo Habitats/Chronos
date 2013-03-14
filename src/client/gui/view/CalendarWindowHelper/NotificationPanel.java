@@ -4,10 +4,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class NotificationPanel extends JPanel {
-	
+
 	JButton attendingButton;
 	JButton notGoingToMakeItToTheMeetingButton;
-	
+
 	public NotificationPanel() {
 		attendingButton = new JButton("Ja");
 		notGoingToMakeItToTheMeetingButton = new JButton("Nei");

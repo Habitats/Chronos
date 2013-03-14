@@ -27,9 +27,9 @@ public class Chronos {
 		Singleton.getInstance().enableLogin();
 		Singleton.getInstance().enableNetwork();
 
-		 if (Singleton.getInstance().networkEnabled())
-			 startServer();
-		
+		if (Singleton.getInstance().networkEnabled())
+			startServer();
+
 		startClient();
 	}
 

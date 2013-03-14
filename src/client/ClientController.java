@@ -1,6 +1,5 @@
 package client;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -16,8 +15,6 @@ import events.CalEvent;
 import events.NetworkEvent;
 import events.QueryEvent;
 import events.TestEvent;
-import events.NetworkEvent.EventType;
-import events.QueryEvent.QueryType;
 
 /**
  * Handles the communication between GUI, models and server
