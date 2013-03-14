@@ -1,6 +1,7 @@
 package client.gui.view.CalendarWindowHelper;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,7 +19,7 @@ import chronos.DateManagement;
 import events.CalEvent;
 
 public class CalEventListPanel extends JPanel {
-	
+
 	private CalEvent calEvent;
 	private CalendarWindow view;
 
@@ -26,8 +27,9 @@ public class CalEventListPanel extends JPanel {
 		super();
 		String text = DateManagement.getFormattedSimple(event.getStart()) + " " + event.getTitle();
 		JLabel label = new JLabel(text);
-		label.setHorizontalAlignment(SwingConstants.WEST);
-		
+		// label.setHorizontalAlignment(SwingConstants.WEST);
+		label.setAlignmentY(Component.LEFT_ALIGNMENT);
+
 		this.setBackground(Color.white);
 		this.setPreferredSize(new Dimension(120, 20));
 		this.setMinimumSize(new Dimension(120, 20));
@@ -37,7 +39,6 @@ public class CalEventListPanel extends JPanel {
 		this.add(label);
 		this.calEvent = event;
 		this.view = view;
-		
 
 	}
 
@@ -46,8 +47,8 @@ public class CalEventListPanel extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
-			((EventConfigWindow)view.getFrame().getEventConfigWindow()).getModel().setCalEvent(calEvent);
-			((EventConfigWindow)view.getFrame().getEventConfigWindow()).setVisible(true);
+			((EventConfigWindow) view.getFrame().getEventConfigWindow()).getModel().setCalEvent(calEvent);
+			((EventConfigWindow) view.getFrame().getEventConfigWindow()).setVisible(true);
 		}
 
 		@Override

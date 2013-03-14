@@ -62,16 +62,19 @@ public class CalendarModel extends ChronosModel {
 	public void addEvents(QueryEvent queryEvent) {
 		@SuppressWarnings("unchecked")
 		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent.getResults();
-		//addEventsToSelectedPersonEvents(queryEvent.getPerson(), calEvents);
+		// addEventsToSelectedPersonEvents(queryEvent.getPerson(), calEvents);
 		selectedPersonsEvents.put(queryEvent.getPerson(), calEvents);
 		update();
 	}
+
 	public void addEventsToSelectedPersonEvents(Person person, ArrayList<CalEvent> events) {
-		if(selectedPersonsEvents.containsKey(person)) {
-			//selectedPersonsEvents.put(person, selectedPersonsEvents.get(person).addAll(events));
+		if (selectedPersonsEvents.containsKey(person)) {
+			// selectedPersonsEvents.put(person,
+			// selectedPersonsEvents.get(person).addAll(events));
 			selectedPersonsEvents.get(person).removeAll(selectedPersonsEvents.get(person));
 			selectedPersonsEvents.get(person).addAll(events);
-		} else selectedPersonsEvents.put(person, events);
+		} else
+			selectedPersonsEvents.put(person, events);
 	}
 
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents) {
@@ -81,8 +84,6 @@ public class CalendarModel extends ChronosModel {
 			int eventYear = DateManagement.getYear(startDate);
 			int currentDisplayedYear = DateManagement.getYear(currentDisplayedDate);
 			if (currentDisplayedWeek == eventWeek && eventYear == currentDisplayedYear) {
-				System.out.println(DateManagement.getFormattedDate(startDate));
-				System.out.println(DateManagement.getWeekday(startDate));
 				calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate));
 			} else {
 				calendarWindow.addEvent(calEvent, Weekday.NONE);
@@ -141,11 +142,8 @@ public class CalendarModel extends ChronosModel {
 
 		case QUERY:
 			evaluateQueryEvent((QueryEvent) event);
-
 			break;
 
-		default:
-			break;
 		}
 	}
 
@@ -157,8 +155,7 @@ public class CalendarModel extends ChronosModel {
 		case PERSON:
 			addOtherPersons(queryEvent);
 			break;
-		default:
-			break;
+
 		}
 
 	}

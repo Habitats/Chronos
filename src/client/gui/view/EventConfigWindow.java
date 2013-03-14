@@ -34,7 +34,8 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	protected JCheckBox alert;
 	protected JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
 
-	private Dimension button = new Dimension(50, 20);
+	private Dimension bottomButtonDim = new Dimension(80, 20);
+	private Dimension bigButtonDim = new Dimension(170, 20);
 	private EventConfigModel model;
 
 	public EventConfigWindow(ChronosModel model, MainFrame frame) {
@@ -53,13 +54,15 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		alert = new JCheckBox();
 		roomNumberField = new JTextField("");
 		roomNumberField.setEditable(false);
-		addParticipantButton = new JButton("Add participant");
-		deleteParticipantButton = new JButton("Delete participant");
-		bookRoomButton = new JButton("Book room");
-		editButton = new JButton("Edit");
-		deleteButton = new JButton("Delete");
-		applyButton = new JButton("Apply");
-		cancelButton = new JButton("Cancel");
+
+		addParticipantButton = new EditConfigButton("Add participant", bigButtonDim);
+		deleteParticipantButton = new EditConfigButton("Delete participant", bigButtonDim);
+		bookRoomButton = new EditConfigButton("Book room", bigButtonDim);
+
+		editButton = new EditConfigButton("Edit", bottomButtonDim);
+		deleteButton = new EditConfigButton("Delete", bottomButtonDim);
+		applyButton = new EditConfigButton("Apply", bottomButtonDim);
+		cancelButton = new EditConfigButton("Cancel", bottomButtonDim);
 
 		eventNameField.setColumns(15);
 		dateField.setColumns(8);
@@ -67,12 +70,10 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		eventNameField.setMaximumSize(new Dimension(80, 20));
 		eventDescriptionArea.setPreferredSize(new Dimension(100, 100));
 		participantList.setPreferredSize(new Dimension(100, 100));
-		editButton.setPreferredSize(button);
-		editButton.setMinimumSize(new Dimension(50, 20));
-		deleteButton.setPreferredSize(button);
 
 		startTime.addActionListener(new StartTimeListener());
 		duration.addActionListener(new DurationListener());
+
 		bookRoomButton.addActionListener(new BookRoomAction());
 		addParticipantButton.addActionListener(new AddParticipantAction());
 		deleteParticipantButton.addActionListener(new DeleteParticipantAction());
@@ -83,24 +84,24 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 		add(eventNameField, new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 1));
 		add(eventDescriptionArea, new GBC(0, 1).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 6));
-		add(editButton, new GBC(0, 7));
-
-		add(deleteButton, new GBC(1, 7).setFill(GridBagConstraints.NONE));
 
 		add(dateField, new GBC(2, 0).setAnchor(GridBagConstraints.FIRST_LINE_START));
 		add(participantList, new GBC(2, 1).setSpan(1, 6));
-		add(applyButton, new GBC(2, 7));
 
 		add(startTime, new GBC(3, 0).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
 		add(new Label("Enable alert 15 min before"), new GBC(3, 1).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
-		add(new Label("min before event."), new GBC(3, 1).setSpan(2, 1).setAnchor(GridBagConstraints.SOUTH));
 
 		add(new Label("Alert:"), new GBC(3, 2));
 		add(new Label("Room no."), new GBC(3, 3).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
+
 		add(bookRoomButton, new GBC(3, 4).setSpan(2, 1));
 		add(addParticipantButton, new GBC(3, 5).setSpan(2, 1));
 		add(deleteParticipantButton, new GBC(3, 6).setSpan(2, 1));
-		add(cancelButton, new GBC(3, 7).setSpan(2, 1));
+
+		add(editButton, new GBC(0, 7));
+		add(deleteButton, new GBC(1, 7));
+		add(applyButton, new GBC(3, 7));
+		add(cancelButton, new GBC(4, 7).setSpan(2, 1));
 
 		add(duration, new GBC(4, 0));
 		add(alert, new GBC(4, 2));

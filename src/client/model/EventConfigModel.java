@@ -99,7 +99,8 @@ public class EventConfigModel extends ChronosModel {
 		eventName = view.getEventNameField().getText();
 		eventDescription = view.getEventDescriptionArea().getText();
 		startDate = DateManagement.getDateFromString(view.getStartDateField().getText());
-//		startTime = DateManagement.getDateFromString(view.getStartTimeArray().getText());
+		// startTime =
+		// DateManagement.getDateFromString(view.getStartTimeArray().getText());
 		room = null;
 		try {
 			room = new Room(null, Integer.parseInt(view.getRoomNumberField().getText()));
@@ -107,7 +108,7 @@ public class EventConfigModel extends ChronosModel {
 		}
 		duration = -1;
 		try {
-//			duration = Integer.parseInt(view.getDurationField().getText());
+			// duration = Integer.parseInt(view.getDurationField().getText());
 			duration = 10;
 		} catch (Exception e) {
 		}
@@ -116,9 +117,11 @@ public class EventConfigModel extends ChronosModel {
 		view.getEventNameField().setBackground(eventName == null ? Color.red : Color.green);
 		view.getEventDescriptionArea().setBackground(eventDescription == null ? Color.red : Color.green);
 		view.getStartDateField().setBackground(startDate == null ? Color.red : Color.green);
-//		view.getStartTimeArray().setBackground(startTime == null ? Color.red : Color.green);
-//		view.getDurationArray().setBackground(duration == -1 ? Color.red : Color.green);
-		//ArrayList<Person> participants = view.getParticipantList();
+		// view.getStartTimeArray().setBackground(startTime == null ? Color.red
+		// : Color.green);
+		// view.getDurationArray().setBackground(duration == -1 ? Color.red :
+		// Color.green);
+		// ArrayList<Person> participants = view.getParticipantList();
 
 		return eventName != null && eventDescription != null && startDate != null && duration != -1;
 	}
@@ -151,23 +154,24 @@ public class EventConfigModel extends ChronosModel {
 		view.getEventNameField().setText("Event name");
 		view.getEventNameField().setBackground(Color.white);
 
-//		view.getDurationArray().setText("10");
-//		view.getDurationArray().setBackground(Color.white);
+		// view.getDurationArray().setText("10");
+		// view.getDurationArray().setBackground(Color.white);
 
 		view.getEventDescriptionArea().setText("Description");
 		view.getEventDescriptionArea().setBackground(Color.white);
 
-		view.getStartDateField().setText("13.03.2013");
+		view.getStartDateField().setText(DateManagement.getFormattedDate(new Date()));
 		view.getStartDateField().setBackground(Color.white);
 
-//		view.getStartTimeArray().setText("10");
-//		view.getStartTimeArray().setBackground(Color.white);
+		// view.getStartTimeArray().setText("10");
+		// view.getStartTimeArray().setBackground(Color.white);
 
 		view.getAlert().setSelected(false);
 	}
 
 	public void removeEvent() {
-		// TODO Auto-generated method stub
-		
+		event.setState(CalEventType.DELETE);
+		view.setVisible(false);
+		fireNetworkEvent(event);
 	}
 }
