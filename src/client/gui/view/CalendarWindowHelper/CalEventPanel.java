@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,6 +38,8 @@ public class CalEventPanel extends JPanel {
 		this.addMouseListener(new CalPanelMouseAdapter());
 		this.calEvent = event;
 		this.view = view;
+		
+		setBorder(BorderFactory.createLineBorder(Color.white, 2));
 	}
 
 	private class CalPanelMouseAdapter extends MouseAdapter {

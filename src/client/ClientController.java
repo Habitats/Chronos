@@ -126,11 +126,6 @@ public class ClientController implements Runnable, ClientControllerInterface {
 
 	}
 
-	public void sendAuthEvent() {
-		NetworkEvent authEvent = new AuthEvent(new Person(Singleton.getInstance().getUsername(), null), "asd");
-		client.sendNetworkEvent(authEvent);
-	}
-
 	@Override
 	public void run() {
 		Thread clientThread = new Thread(client);

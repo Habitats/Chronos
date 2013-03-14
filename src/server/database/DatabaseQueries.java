@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import chronos.Person;
 import chronos.Singleton;
+import events.AuthEvent;
 import events.CalEvent;
 
 /**
@@ -50,6 +51,8 @@ public class DatabaseQueries {
 	public boolean updateUser(String username, String fieldToUpdate, String newValue) {
 		username = processString(username);
 		newValue = processString(newValue);
+		if(fieldToUpdate.equals("password"))
+			newValue = "MD5("+newValue+")";
 		try {
 			db.execute(String.format("update person set %s=%s where username = %s", fieldToUpdate, newValue, username));
 			Singleton.log(String.format("successfully updated %s to %s in %s", fieldToUpdate, newValue, username));
@@ -71,7 +74,7 @@ public class DatabaseQueries {
 			for (Person user : users) {
 				try {
 					ps.setString(1, user.getUsername());
-					ps.setString(2, "derp");
+					ps.setString(2, "MD5(derp)");
 					ps.setString(3, user.getName());
 					ps.setString(4, "" + user.getLastLoggedIn());
 					ps.addBatch();
@@ -87,8 +90,36 @@ public class DatabaseQueries {
 		}
 	}
 
-	public ArrayList<Person> getUsers() {
-		ArrayList<Person> users = new ArrayList<Person>();
+	public boolean isUsernameAndPassword(AuthEvent evt){
+		ResultSet rs;
+		String query = "select username, name from person" +
+				" WHERE person.username = " + processString(evt.getUsername()) +
+				" AND person.password = " + ("MD5(" + processString(evt.getPassword()) + ")");
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			return rs.next();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public Person getUserByUsername(String username) {
+		ResultSet rs;
+		String query = "SELECT name FROM person WHERE person.username = " + processString(username);
+		try {
+			rs = db.makeSingleQuery(query);
+			String name = rs.getString(1);
+			return new Person(username, name);			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public ArrayList<Comparable> getUsers() {
+		ArrayList<Comparable> users = new ArrayList<Comparable>();
 		ResultSet rs;
 		String query = "select username,name,lastLoggedIn from person";
 		try {
@@ -153,7 +184,6 @@ public class DatabaseQueries {
 			ps = db.makeBatchUpdate(insertQuery);
 			for (Person p : evt.getParticipants().values()) {
 				try {
-					p.setStatus(Person.Status.WAITING);
 					ps.setString(1, p.getUsername());
 					ps.setString(2, "" + evt.getTimestamp());
 					ps.setString(3, null);
@@ -171,12 +201,35 @@ public class DatabaseQueries {
 			e1.printStackTrace();
 		}
 	}
+	public void updateParticipants(CalEvent evt) {
+		String insertQuery = "UPDATE Participants SET alarm=?, status=? WHERE username=? AND event_ID=?;";
+		PreparedStatement ps;
+		String eventID = ""+evt.getTimestamp();
+		try {
+			ps = db.makeBatchUpdate(insertQuery);
+			for(Person p : evt.getParticipants().values()) {
+				try {
+					ps.setString(1, null);
+					ps.setString(2, ""+p.getStatus().ordinal());
+					ps.setString(3, p.getUsername());
+					ps.setString(4, eventID);
+					ps.addBatch();
+					Singleton.log("successfully updated participant \""+p.getUsername()+"\" to "+p.getStatus()); //TODO alarm?
+				} catch(SQLException e) {
+					Singleton.log("error updating "+p.getUsername());
+					e.printStackTrace();
+				}
+			}
+		} catch(SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
 
 	/**
 	 * Returns an arraylist of all events the person is a participant of, either
 	 * before or after last login
 	 */
-	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
+ 	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
@@ -186,7 +239,7 @@ public class DatabaseQueries {
 			param = ">";
 		}
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
-				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID;";
+				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + per.getLastLoggedIn() + " " + param + " participants.event_ID ORDER BY events.startTime DESC;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -229,6 +282,50 @@ public class DatabaseQueries {
 		return participants;
 	}
 
+	public void updateCalEvent(CalEvent event) {
+		String insertQuery = 	"UPDATE Events SET title=?, startTime=?, duration=?, description=?,"+
+								"room_ID=(SELECT room_ID FROM Rooms, Events WHERE Events.room_ID = Rooms.room_ID AND Rooms.name=?) "+
+								"WHERE event_ID=?;";
+		PreparedStatement ps;
+		try {
+			ps = db.makeBatchUpdate(insertQuery);
+			try {
+				ps.setString(1, processString(event.getTitle()));
+				ps.setString(2, ""+event.getStart());
+				ps.setString(3, ""+event.getDuration());
+				ps.setString(4, event.getDescription());
+//				ps.setString(5, processString(event.getRoom().getName()));
+				ps.setString(6, ""+event.getTimestamp());
+				ps.addBatch();
+				Singleton.log("successfully updated: "+event.getTitle()+" with fields "+event.getStart().getTime()+" and "+event.getDuration()+" and "+event.getDescription());
+			} catch (SQLException e) {
+				Singleton.log("error adding: "+event.getTitle()+" with fields "+event.getStart().getTime()+" and "+event.getDuration()+" and "+event.getDescription());
+				e.printStackTrace();
+			}
+			ps.executeBatch();
+			ps.close();
+		} catch (SQLException e) {
+			Singleton.log("error executing: "+event.getTitle()+" with fields "+event.getStart().getTime()+" and "+event.getDuration()+" and "+event.getDescription());
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	//Deprecated?
+	public Date lastLoggedIn(Person person) {
+		ResultSet rs;
+		String query = "SELECT lastLoggedIn FROM Person WHERE username="+processString(person.getUsername());
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.first();
+			return new Date(rs.getLong(1));
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	private String processString(String str) {
 		str = "'" + str + "'";
 		return str;
