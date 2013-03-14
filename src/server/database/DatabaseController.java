@@ -6,7 +6,6 @@ import chronos.Singleton;
 
 import events.AuthEvent;
 import events.CalEvent;
-import events.NetworkEvent.EventType;
 import events.QueryEvent.QueryType;
 import events.QueryEvent;
 

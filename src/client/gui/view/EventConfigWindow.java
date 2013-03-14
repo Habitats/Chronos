@@ -66,7 +66,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		eventNameField.setColumns(15);
 		Border border = BorderFactory.createEmptyBorder(0, 3, 0, 3);
 		eventNameField.setBorder(border);
-		
+
 		dateField.setColumns(8);
 		dateField.setBorder(border);
 		roomNumberField.setColumns(5);

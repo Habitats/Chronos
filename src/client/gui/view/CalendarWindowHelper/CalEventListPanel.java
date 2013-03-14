@@ -2,13 +2,10 @@ package client.gui.view.CalendarWindowHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import client.gui.view.CalendarWindow;
@@ -32,7 +29,7 @@ public class CalEventListPanel extends JLabel {
 
 		setPreferredSize(new Dimension(width, 0));
 		setMinimumSize(new Dimension(width, 0));
-		setMaximumSize(new Dimension(width,19));
+		setMaximumSize(new Dimension(width, 19));
 
 		setBackground(Color.white);
 		addMouseListener(new EventListPanelListener());

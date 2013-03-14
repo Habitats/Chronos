@@ -55,7 +55,6 @@ public class Person implements Serializable, Comparable<Person> {
 		return String.format("Username: %s - Name: %s", username, name);
 	}
 
-
 	@Override
 	public int compareTo(Person o) {
 		return getName().compareTo(o.getName());

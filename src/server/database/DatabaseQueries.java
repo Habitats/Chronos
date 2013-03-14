@@ -202,13 +202,13 @@ public class DatabaseQueries {
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
 			try {
-				ps.setLong(1,evt.getTimestamp());
+				ps.setLong(1, evt.getTimestamp());
 				ps.setString(2, evt.getTitle());
 				ps.setLong(3, evt.getStart().getTime());
-				ps.setInt(4,evt.getDuration());
+				ps.setInt(4, evt.getDuration());
 				ps.setString(5, evt.getDescription());
 				ps.setString(6, evt.getCreator().getUsername());
-				//ps.setInt(7, evt.getRoom().getRoomId);
+				// ps.setInt(7, evt.getRoom().getRoomId);
 				ps.addBatch();
 				Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime() + " and " + evt.getDuration() + " and " + evt.getDescription());
 			} catch (SQLException e) {
