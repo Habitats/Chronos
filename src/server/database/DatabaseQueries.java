@@ -51,6 +51,8 @@ public class DatabaseQueries {
 	public boolean updateUser(String username, String fieldToUpdate, String newValue) {
 		username = processString(username);
 		newValue = processString(newValue);
+		if(fieldToUpdate.equals("password"))
+			newValue = "MD5("+newValue+")";
 		try {
 			db.execute(String.format("update person set %s=%s where username = %s", fieldToUpdate, newValue, username));
 			Singleton.log(String.format("successfully updated %s to %s in %s", fieldToUpdate, newValue, username));
@@ -72,7 +74,7 @@ public class DatabaseQueries {
 			for (Person user : users) {
 				try {
 					ps.setString(1, user.getUsername());
-					ps.setString(2, "derp");
+					ps.setString(2, "MD5(derp)");
 					ps.setString(3, user.getName());
 					ps.setString(4, "" + user.getLastLoggedIn());
 					ps.addBatch();
