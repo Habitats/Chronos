@@ -90,14 +90,14 @@ public class DatabaseQueries {
 
 	public boolean isUsernameAndPassword(AuthEvent evt){
 		ResultSet rs;
-		String query = "select username, name, from person" +
-				" WHERE username = " + processString(evt.getUsername()) +" AND password = " + processString(evt.getPassword());
+		String query = "select username, name from person" +
+				" WHERE person.username = " + processString(evt.getUsername()) +
+				" AND person.password = " + ("MD5(" + processString(evt.getPassword()) + ")");
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
-			while (rs.next()) {
-				return true;
-			}
+				return rs.next();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
