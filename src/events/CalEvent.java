@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import chronos.Person;
+import chronos.Room;
 
 /**
  * Calendar event used for all calendar related thing (update, delete, add etc).
@@ -24,6 +25,7 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	private final String title;
 	private String description;
 	private final long timestampPrimaryKey;
+	private Room room;
 
 	public CalEvent(String title, Date start, int duration, Person creator, String description) {
 		this(title, start, duration, creator, description, 0);
@@ -101,6 +103,15 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		Title = title;
 	}
 
+	public Room getRoom() {
+		return room;
+	}
+
+	public CalEvent setRoom(Room room) {
+		this.room = room;
+		return this;
+	}
+
 	/**
 	 * used as primary key in the db, HATERS GONNA' HATE
 	 */
@@ -116,5 +127,4 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	public int compareTo(CalEvent otherEvent) {
 		return (int) ((start.getTime() - otherEvent.getStart().getTime()) / 1000);
 	}
-
 }

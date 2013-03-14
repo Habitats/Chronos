@@ -44,16 +44,16 @@ public class ServerConnection implements Runnable {
 				List<ClientConnection> clientConnections = server.getClientConnections();
 				synchronized (clientConnections) {
 					for (ClientConnection clientConnection : clientConnections) {
-						if (clientConnection.getClientSocket() == clientSocket && clientConnection.getPerson() == null) {
+						if (clientConnection.getClientSocket() == clientSocket){// && clientConnection.getPerson() == null) {
 							clientConnection.setPerson(event.getSender());
-							if (clientConnection == null)
-								this.clientConnection = clientConnection;
+							this.clientConnection = clientConnection;
 
 							break;
 						}
 					}
 				}
 				// forward event to serverController that handles it
+				server.getServerController().evaluateNetworkEvent(event);
 
 			}
 		} catch (ClassNotFoundException e) {
@@ -70,6 +70,7 @@ public class ServerConnection implements Runnable {
 		try {
 			initConnection();
 		} catch (Exception e) {
+			e.printStackTrace();
 			try {
 				out.close();
 				in.close();

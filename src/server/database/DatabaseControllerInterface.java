@@ -26,7 +26,7 @@ public interface DatabaseControllerInterface {
 	/**
 	 * Get events the user already accepted and viewed
 	 */
-	public QueryEvent getOldEvents(Person person);
+	public QueryEvent getConfirmedEvents(Person person);
 
 	/**
 	 * Get calendar events added since last login. Acts as a cache.
@@ -37,7 +37,7 @@ public interface DatabaseControllerInterface {
 	 * adds a new calendar event for the person with a "neutral" (IE. waiting,
 	 * person hasn't yet accepted/declined) state
 	 */
-	public void addCalEvent(CalEvent event, Person person);
+	public void addCalEvent(CalEvent event);
 
 	/**
 	 * Updates a calendar event, IE. the state from "accepted" to "declined"

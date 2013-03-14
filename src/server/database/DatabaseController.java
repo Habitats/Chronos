@@ -20,6 +20,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	public DatabaseController() {
 		DatabaseConnection dbConnection = new DatabaseConnection();
+		dbConnection.initialize();
 		dbQueries = new DatabaseQueries(dbConnection);
 	}
 
@@ -28,7 +29,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 		Singleton.log("Authenticating " + event.getUsername());
 		if(dbQueries.isUsernameAndPassword(event)){
 			event.setAccessGranted(true);		
-			event.setPerson(dbQueries.getUserByUsername(event.getUsername()));
+			dbQueries.setTimestampOfUser(-1L);
+			event.setSender(dbQueries.getUserByUsername(event.getUsername()));
+
 		}
 		return event;
 	}
@@ -43,26 +46,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 		return new QueryEvent(EventType.QUERY, QueryType.PERSON).setResults(dbQueries.getUsers());
 	}
 
-	@Override
-	public QueryEvent getCalEvents(Person person) {
-		CalEvent event1 = new CalEvent("event1", new Date(), 10, person, "test");
-		CalEvent event2 = new CalEvent("event2", new Date(), 10, person, "test");
-		CalEvent event3 = new CalEvent("event3", new Date(), 10, person, "test");
-
-		ArrayList<Comparable> results = new ArrayList<Comparable>();
-		results.add(event1);
-		results.add(event2);
-		results.add(event3);
-
-		QueryEvent event = new QueryEvent(EventType.QUERY, QueryType.CALEVENT);
-		event.setPerson(person);
-		event.setResults(results);
-
-		return event;
-	}
 
 	@Override
-	public void addCalEvent(CalEvent event, Person person) {
+	public void addCalEvent(CalEvent event) {
 		dbQueries.addEvent(event);
 
 	}
@@ -77,14 +63,13 @@ public class DatabaseController implements DatabaseControllerInterface {
 		dbQueries.removeCalEvent(event);
 
 	}
-
 	@Override
 	public QueryEvent getNewCalEvents(Person person) {
 		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
 	}
 
 	@Override
-	public QueryEvent getOldEvents(Person person) {
+	public QueryEvent getConfirmedEvents(Person person) {
 		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
 	}
 
@@ -93,4 +78,5 @@ public class DatabaseController implements DatabaseControllerInterface {
 		setTimeStampOfUser(new Date().getTime());
 		
 	}
+
 }

@@ -43,7 +43,7 @@ public class AuthEvent extends NetworkEvent {
 		return person;
 	}
 
-	public void setPerson(Person person) {
+	public void setSender(Person person) {
 		this.person = person;
 	}
 }
