@@ -70,9 +70,8 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	//skal være false, men patrick må getNewCalEvents
 	public QueryEvent getConfirmedEvents(Person person) {
-		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, true));
+		return new QueryEvent(EventType.QUERY, QueryType.CALEVENT).setResults(dbQueries.getEventsByParticipant(person, false));
 	}
 
 	@Override

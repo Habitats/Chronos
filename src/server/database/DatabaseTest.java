@@ -48,7 +48,7 @@ public class DatabaseTest {
 		// System.out.println(queries.isUsernameAndPassword(new AuthEvent(EventType.LOGIN ,(Person)queries.getUsers().get(0), "derp")));
 		// System.out.println(queries.isUsernameAndPassword(new
 		// AuthEvent(queries.getUsers().get(0), "derp")));
-		queries.setTimestampOfUser(-1, queries.getUserByUsername("sexyboy").getUsername());
+		//queries.setTimestampOfUser(-1, queries.getUserByUsername("sexyboy").getUsername());
 
 		/**
 		 * AddEvent
@@ -59,13 +59,13 @@ public class DatabaseTest {
 		// evt.addParticipant(queries.getUsers().get(2));
 		// queries.addEvent(evt);
 		//
-		// CalEvent evt2 = new CalEvent("testevent2",new Date(2013, 4, 3),
-		// 2829000,
-		// queries.getUsers().get(1), "Dette er en test event");
-		// evt2.addParticipant(queries.getUsers().get(0));
-		// evt2.addParticipant(queries.getUsers().get(2));
-		// evt2.addParticipant(queries.getUsers().get(3));
-		// queries.addEvent(evt2);
+		 CalEvent evt2 = new CalEvent("testevent4",new Date(2013, 4, 3),
+		 2829000,
+		 (Person)queries.getUsers().get(1), "Dette er en test event");
+		 evt2.addParticipant((Person)queries.getUsers().get(0));
+		 evt2.addParticipant((Person)queries.getUsers().get(2));
+		 evt2.addParticipant((Person)queries.getUsers().get(3));
+		 queries.addEvent(evt2);
 
 		/**
 		 * GetUsers
