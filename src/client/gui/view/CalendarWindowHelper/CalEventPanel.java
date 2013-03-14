@@ -42,7 +42,6 @@ public class CalEventPanel extends JPanel {
 		
 		JLabel startDate = new JLabel(DateManagement.getFormattedDate(event.getStart()));
 		add(startDate, new GBC(0, 1).setIpad(0, 0).setWeight(1, 0));
-		System.out.println("hhh");
 		
 		this.calEvent = event;
 		this.view = view;
