@@ -65,34 +65,39 @@ public class DatabaseTest {
 		/**
 		 * GetUsers
 		 */
+
 		// ArrayList<Person> userInDb = queries.getUsers();
 		// Singleton.log("Users in db:");
 		// for (Person person : userInDb) {
 		// Singleton.log(person.toString());
+
+		/**
+		 * Add multiple Users
+		 */
+		// ArrayList<Person> peeps = new ArrayList<Person>();
+		// peeps.add(new Person("yolo", "Yolo Swaggins", 133333337));
+		// peeps.add(new Person("Kyra", "Kyyra, kom no sa!", new
+		// Date().getTime()));
+		// queries.addMultipleUsers(peeps);
+
+		/**
+		 * Update users
+		 */
+		// queries.updateUser("yolo", "name", "Patrick Swaggins");
+
+		/**
+		 * Get Events
+		 */
+
+		// System.out.println(queries.getUsers().get(0));
+		// System.out.println(queries.getParticipantsByEventId(1363110427115L));
+		// System.out.println(queries.getEventsByParticipant(queries.getUsers().get(0),
+		// true).get(0).getParticipants());
+
+		/**
+		 * Update Event
+		 */
+
 	}
-
-	/**
-	 * Add multiple Users
-	 */
-	// ArrayList<Person> peeps = new ArrayList<Person>();
-	// peeps.add(new Person("yolo", "Yolo Swaggins", 133333337));
-	// peeps.add(new Person("Kyra", "Kyyra, kom no sa!", new
-	// Date().getTime()));
-	// queries.addMultipleUsers(peeps);
-
-	/**
-	 * Update users
-	 */
-	// queries.updateUser("yolo", "name", "Patrick Swaggins");
-
-	/**
-	 * Get Events
-	 */
-
-	// new
-	// System.out.println(queries.getUsers().get(0));
-	// System.out.println(queries.getParticipantsByEventId(1363110427115L));
-	// System.out.println(queries.getEventsByParticipant(queries.getUsers().get(0),
-	// true).get(0).getParticipants());
 
 }

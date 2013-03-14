@@ -52,11 +52,6 @@ public interface DatabaseControllerInterface {
 	public AuthEvent authenticateUser(AuthEvent event);
 
 	/**
-	 * @return Date object from when the specified user was last logged in
-	 */
-	public Date lastLoggedIn(Person person);
-
-	/**
 	 * Logout the specified user and set the timestamp for lastLoggedIn
 	 */
 	public void logout(Person person);
