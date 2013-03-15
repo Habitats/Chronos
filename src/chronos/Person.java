@@ -24,6 +24,11 @@ public class Person implements Serializable, Comparable<Person> {
 		this.name = name;
 	}
 
+	public Person(String username, String name, int ordinal) {
+		this(username, name);
+		setStatus(ordinal);
+	}
+
 	public Person(String username) {
 		this(username, null);
 	}
@@ -42,6 +47,13 @@ public class Person implements Serializable, Comparable<Person> {
 
 	public Status getStatus() {
 		return status;
+	}
+
+	public void setStatus(int ordinal) {
+		for (Status status : Status.values()) {
+			if (ordinal == status.ordinal())
+				this.status = status;
+		}
 	}
 
 	@Override
