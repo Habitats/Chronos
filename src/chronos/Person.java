@@ -18,20 +18,14 @@ public class Person implements Serializable, Comparable<Person> {
 	private String name;
 	private String username;
 	private Status status;
-	private long lastLoggedIn;
-
-	public Person(String username, String name, long lastLoggedIn) {
-		this.username = username;
-		this.name = name;
-		this.lastLoggedIn = lastLoggedIn;
-	}
 
 	public Person(String username, String name) {
-		this(username, name, 0);
+		this.username = username;
+		this.name = name;
 	}
 
 	public Person(String username) {
-		this(username, null, -1);
+		this(username, null);
 	}
 
 	public String getName() {

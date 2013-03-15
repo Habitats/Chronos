@@ -141,7 +141,7 @@ public class MainFrame extends JFrame {
 			JLabel currentUser = new JLabel(Singleton.getInstance().getSelf().toString());
 			calendarWindow.add(currentUser, new GBC(0, 100).setSpan(10, 1));
 			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.CALEVENT_CONFIRMED, Singleton.getInstance().getSelf()));
-			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.CALEVENT_NEW, Singleton.getInstance().getSelf()));
+//			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.CALEVENT_NEW, Singleton.getInstance().getSelf()));
 			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.PERSON));
 		}
 		JLayeredPane layeredPane = buildLayeredPane();
