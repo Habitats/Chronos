@@ -99,7 +99,7 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	private void getPersonEvents(Person person) {
-		QueryEvent event = new QueryEvent(QueryType.CALEVENT_CONFIRMED, person);
+		QueryEvent event = new QueryEvent(QueryType.CALEVENTS, person);
 		fireNetworkEvent(event);
 	}
 
@@ -148,10 +148,10 @@ public class CalendarModel extends ChronosModel {
 
 	private void evaluateQueryEvent(QueryEvent queryEvent) {
 		switch (queryEvent.getQueryType()) {
-		case CALEVENT_CONFIRMED:
+		case CALEVENTS:
 			addEvents(queryEvent);
 			break;
-		case PERSON:
+		case PERSONS:
 			addOtherPersons(queryEvent);
 			break;
 		}

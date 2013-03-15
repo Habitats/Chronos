@@ -19,12 +19,7 @@ public interface DatabaseControllerInterface {
 	/**
 	 * Get events the user already accepted and viewed
 	 */
-	public QueryEvent getConfirmedEvents(Person person);
-
-	/**
-	 * Get calendar events added since last login. Acts as a cache.
-	 */
-	public QueryEvent getNewCalEvents(Person person);
+	public QueryEvent getCalEvents(Person person);
 
 	/**
 	 * adds a new calendar event for the person with a "neutral" (IE. waiting,
