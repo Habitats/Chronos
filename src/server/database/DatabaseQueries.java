@@ -183,7 +183,7 @@ public class DatabaseQueries {
 				String username = rs.getString(1);
 				String name = rs.getString(2);
 				long lastLoggedIn = rs.getLong(3);
-				users.add(new Person(username, name, lastLoggedIn));
+				users.add(new Person(username, name));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

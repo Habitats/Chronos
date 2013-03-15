@@ -70,7 +70,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		dateField.setColumns(8);
 		dateField.setBorder(border);
 		roomNumberField.setColumns(5);
-		// eventNameField.setMaximumSize(new Dimension(80, 20));
+		
 		eventDescriptionArea.setPreferredSize(new Dimension(100, 100));
 		eventDescriptionArea.setBorder(border);
 		participantList.setPreferredSize(new Dimension(100, 100));
@@ -129,8 +129,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
@@ -139,8 +137,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
@@ -166,7 +162,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 			if (selectedParticipant != -1) {
 				participantList.remove(selectedParticipant);
 			}
-
 		}
 	}
 
@@ -174,8 +169,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 	}
 
@@ -203,7 +196,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	/**

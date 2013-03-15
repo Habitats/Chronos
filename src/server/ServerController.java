@@ -79,18 +79,15 @@ public class ServerController implements Runnable {
 	private void evaluateQueryEvent(QueryEvent event) {
 		Singleton.log("Evaluating queryEvent...");
 		switch (event.getQueryType()) {
-		case CALEVENT_CONFIRMED:
-			event = dbController.getConfirmedEvents(event.getPerson());
+		case CALEVENTS:
+			event = dbController.getCalEvents(event.getPerson());
 			echoNetworkEventToSender(event);
 			break;
-		case CALEVENT_NEW:
-			event = dbController.getNewCalEvents(event.getPerson());
-			echoNetworkEventToSender(event);
-		case PERSON:
+		case PERSONS:
 			event = dbController.getUsers(event);
 			echoNetworkEventToSender(event);
 			break;
-		case ROOM:
+		case ROOMS:
 			event = dbController.getAvailableRooms(event);
 			echoNetworkEventToSender(event);
 			break;
@@ -107,7 +104,7 @@ public class ServerController implements Runnable {
 	private void sendUpdateToAllParticipants(HashMap<String, Person> participants) {
 		for (String username : participants.keySet()) {
 			Person person = participants.get(username);
-			QueryEvent event = dbController.getConfirmedEvents(person);
+			QueryEvent event = dbController.getCalEvents(person);
 			sendSingleNetworkEvent(event, person);
 		}
 	}
@@ -121,13 +118,6 @@ public class ServerController implements Runnable {
 			dbController.removeCalEvent(event, event.getParticipants().get(username));
 		}
 	}
-
-	//
-	// private void addCalEventForParticipants(CalEvent event) {
-	// for (String username : event.getParticipants().keySet()) {
-	// dbController.addCalEvent(event, event.getParticipants().get(username));
-	// }
-	// }
 
 	private void sendSingleNetworkEvent(NetworkEvent event, Person person) {
 		try {
