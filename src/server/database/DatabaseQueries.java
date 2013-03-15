@@ -293,24 +293,18 @@ public class DatabaseQueries {
 	}
 
 	/**
-	 * Returns an ArrayList of all events the person is a participant of, either
-	 * before or after last login.
-	 * 
+	 * Returns an ArrayList of all events the person is a participant of.
 	 * @param per
-	 * @param afterLastLogin
 	 * @return ArrayList<Comparable>
 	 */
-	public ArrayList<Comparable> getEventsByParticipant(Person per, boolean afterLastLogin) {
+	public ArrayList<Comparable> getEventsByParticipant(Person per) {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
-		if (afterLastLogin) {
-			param = "<";
-		} else {
-			param = ">";
-		}
-		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
-				+ processString(per.getUsername()) + " AND person.username = events.owner AND person.lastLoggedIn " + param + " participants.event_ID ORDER BY events.startTime ASC;";
+		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration," +
+				"events.description, person.username, person.name "+
+				"FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
+				+ processString(per.getUsername()) + " AND person.username = events.owner ORDER BY events.startTime ASC;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -322,8 +316,7 @@ public class DatabaseQueries {
 				String description = rs.getString(5);
 				String username = rs.getString(6);
 				String name = rs.getString(7);
-				long lastLoggedIn = rs.getLong(8);
-				CalEvent evt = new CalEvent(title, new Date(start), duration, new Person(username, name, lastLoggedIn), description, event_id);
+				CalEvent evt = new CalEvent(title, new Date(start), duration, new Person(username, name), description, event_id);
 				evt.setParticipants(getParticipantsByEventId(event_id));
 				al.add(evt);
 			}
@@ -342,15 +335,16 @@ public class DatabaseQueries {
 	public HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
-		String query = "SELECT person.username, name, lastLoggedIn " + "FROM person, participants " + "WHERE participants.event_ID = " + id + " AND participants.username = person.username";
+		String query = "SELECT person.username, name, status " + "FROM person, participants "+
+		"WHERE participants.event_ID = " + id + " AND participants.username = person.username";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
 			while (rs.next()) {
 				String username = rs.getString(1);
 				String name = rs.getString(2);
-				long lastLoggedIn = rs.getLong(3);
-				participants.put(username, new Person(username, name, lastLoggedIn));
+				int status = rs.getInt(3);
+				participants.put(username, new Person(username, name, status));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

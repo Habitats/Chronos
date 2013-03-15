@@ -92,9 +92,9 @@ public class DatabaseTest {
 		 * Get Events
 		 */
 
-		// System.out.println(queries.getUsers().get(0));
-		// System.out.println(queries.getParticipantsByEventId(1363110427115L));
-		//System.out.println(((CalEvent)queries.getEventsByParticipant((Person)queries.getUsers().get(0), false).get(0)).getTitle());
+		//System.out.println(queries.getUsers().get(0));
+		//System.out.println(queries.getParticipantsByEventId(1363184812475L));
+		System.out.println(((CalEvent)queries.getEventsByParticipant((Person)queries.getUsers().get(0)).get(0)).getTitle());
 
 		/**
 		 * Update Event
