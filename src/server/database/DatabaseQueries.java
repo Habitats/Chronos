@@ -126,7 +126,7 @@ public class DatabaseQueries {
 	 * @param time
 	 * @param username
 	 */
-	public void setTimestampOfUser(long time, String username) {
+	public void setlastLoggedIn(long time, String username) {
 		try {
 			db.execute(String.format("UPDATE Person SET lastLoggedIn=(%s) WHERE username=" + processString(username), time));
 		} catch (SQLException e) {
@@ -308,14 +308,12 @@ public class DatabaseQueries {
 		long FIX_THIS_LOL;
 		if (afterLastLogin) {
 			param = "<";
-			FIX_THIS_LOL = 0;
 		} else {
 			param = ">";
-			FIX_THIS_LOL = Long.MAX_VALUE - 10;
 
 		}
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
-				+ processString(per.getUsername()) + " AND person.username = events.owner AND " + FIX_THIS_LOL + " " + param + " participants.event_ID ORDER BY events.startTime ASC;";
+				+ processString(per.getUsername()) + " AND person.username = events.owner AND person.lastLoggedIn " + param + " participants.event_ID ORDER BY events.startTime ASC;";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();

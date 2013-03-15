@@ -62,7 +62,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 	@Override
 	public QueryEvent getNewCalEvents(Person person) {
 		QueryEvent qe = new QueryEvent(QueryType.CALEVENT_CONFIRMED).setResults(dbQueries.getEventsByParticipant(person, true));
-		dbQueries.setTimestampOfUser(Long.MAX_VALUE, person.getUsername());
+		dbQueries.setlastLoggedIn(Long.MAX_VALUE, person.getUsername());
 		return qe;
 	}
 
@@ -73,7 +73,7 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public void logout(Person person) {
-		dbQueries.setTimestampOfUser(new Date().getTime(), person.getUsername());
+		dbQueries.setlastLoggedIn(new Date().getTime(), person.getUsername());
 
 	}
 

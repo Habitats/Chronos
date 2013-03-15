@@ -3,6 +3,7 @@ package server.database;
 import java.util.Date;
 import java.util.Properties;
 
+import chronos.Person;
 import chronos.Singleton;
 
 public class DatabaseTest {
@@ -92,8 +93,7 @@ public class DatabaseTest {
 
 		// System.out.println(queries.getUsers().get(0));
 		// System.out.println(queries.getParticipantsByEventId(1363110427115L));
-		// System.out.println(queries.getEventsByParticipant(queries.getUsers().get(0),
-		// true).get(0).getParticipants());
+		 System.out.println(queries.getEventsByParticipant((Person)queries.getUsers().get(0), false));
 
 		/**
 		 * Update Event
