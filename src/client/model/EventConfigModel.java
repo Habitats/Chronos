@@ -130,7 +130,7 @@ public class EventConfigModel extends ChronosModel {
 		// Person user2 = new Person("derp");
 		// Person user3 = new Person("snerp");
 		Person creator = Singleton.getInstance().getSelf();
-		creator.setStatus(Person.Status.WAITING);
+		creator.setStatus(Person.Status.ACCEPTED);
 		CalEvent event;
 		if (validateInput()) {
 			event = new CalEvent(getEventName(), getStartTime(), getDuration(), creator, getEventDescription()).setState(CalEventType.NEW);

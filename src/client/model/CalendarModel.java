@@ -65,12 +65,10 @@ public class CalendarModel extends ChronosModel {
 
 	public void addEvents(QueryEvent queryEvent) {
 		@SuppressWarnings("unchecked")
-		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent
-				.getResults();
+		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent.getResults();
 		Person person = queryEvent.getPerson();
 		String username = person.getUsername();
-		selectedPersonsEvents.put(username,
-				calEvents);
+		selectedPersonsEvents.put(username, calEvents);
 		persons.put(username, person);
 		update();
 	}
@@ -81,12 +79,9 @@ public class CalendarModel extends ChronosModel {
 				Date startDate = calEvent.getStart();
 				int eventWeek = DateManagement.getWeek(startDate);
 				int eventYear = DateManagement.getYear(startDate);
-				int currentDisplayedYear = DateManagement
-						.getYear(currentDisplayedDate);
-				if (currentDisplayedWeek == eventWeek
-						&& eventYear == currentDisplayedYear) {
-					calendarWindow.addEvent(calEvent,
-							DateManagement.getWeekday(startDate));
+				int currentDisplayedYear = DateManagement.getYear(currentDisplayedDate);
+				if (currentDisplayedWeek == eventWeek && eventYear == currentDisplayedYear) {
+					calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate));
 				} else {
 					calendarWindow.addEvent(calEvent, Weekday.NONE);
 				}
@@ -95,19 +90,22 @@ public class CalendarModel extends ChronosModel {
 			}
 		}
 	}
+
 	private boolean statusIsWaiting(CalEvent event, String username) {
 		HashMap<String, Person> participants = event.getParticipants();
 		Person participant = participants.get(username);
-		if(participant.getStatus() == Status.WAITING)
+		if (participant.getStatus() == Status.WAITING)
 			return true;
 		return false;
 	}
+
 	private boolean personIsAttending(CalEvent event, String username) {
 		HashMap<String, Person> participants = event.getParticipants();
 		Person participant = participants.get(username);
-		if(participant.getStatus() == Status.ACCEPTED)
+		if (participant.getStatus() == Status.ACCEPTED)
 			return true;
-		else return false;
+		else
+			return false;
 	}
 
 	public void addOtherPersons(QueryEvent queryEvent) {
@@ -144,8 +142,7 @@ public class CalendarModel extends ChronosModel {
 			currentDisplayedWeek++;
 		} else
 			currentDisplayedWeek = 1;
-		currentDisplayedDate = DateManagement.getDateFromString(DateManagement
-				.getNextWeek(currentDisplayedDate));
+		currentDisplayedDate = DateManagement.getDateFromString(DateManagement.getNextWeek(currentDisplayedDate));
 	}
 
 	public void prevWeek() {
@@ -153,8 +150,7 @@ public class CalendarModel extends ChronosModel {
 			currentDisplayedWeek--;
 		} else
 			currentDisplayedWeek = 52;
-		currentDisplayedDate = DateManagement.getDateFromString(DateManagement
-				.getPrevWeek(currentDisplayedDate));
+		currentDisplayedDate = DateManagement.getDateFromString(DateManagement.getPrevWeek(currentDisplayedDate));
 	}
 
 	@Override
