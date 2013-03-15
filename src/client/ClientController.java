@@ -23,7 +23,7 @@ public class ClientController implements Runnable, ClientControllerInterface {
 
 	private Client client;
 	private boolean loggedIn;
-	private MainFrame mainFrame;
+	public MainFrame mainFrame;
 	private HashMap<ChronosType, ChronosModel> models;
 
 	public ClientController() {

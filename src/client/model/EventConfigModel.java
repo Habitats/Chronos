@@ -135,7 +135,6 @@ public class EventConfigModel extends ChronosModel {
 		if (validateInput()) {
 			event = new CalEvent(getEventName(), getStartTime(), getDuration(), creator, getEventDescription()).setState(CalEventType.NEW);
 			fireNetworkEvent(event);
-			view.setVisible(false);
 		}
 	}
 

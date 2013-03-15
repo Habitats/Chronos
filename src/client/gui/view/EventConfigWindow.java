@@ -177,6 +177,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.removeEvent();
+			setVisible(false);
 		}
 	}
 
@@ -191,6 +192,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.newCalEvent();
+			setVisible(false);
 		}
 	}
 

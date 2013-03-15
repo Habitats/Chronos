@@ -5,7 +5,7 @@ import client.gui.view.ChronosWindow;
 import events.NetworkEvent;
 
 abstract public class ChronosModel {
-	private final ClientController controller;
+	protected final ClientController controller;
 	private final ChronosType chronosType;
 
 	public enum ChronosType {
