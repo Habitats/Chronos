@@ -423,7 +423,10 @@ public class DatabaseQueries {
 
 	public ArrayList<Comparable> getAvailableRooms(CalEvent event) {
 		ArrayList<Comparable> roomList = new ArrayList<Comparable>();
-		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms, Events WHERE Events.room_ID=Rooms.room_ID" + " AND (startTime+duration <" + event.getStart().getTime() + " OR startTime >" + (event.getStart().getTime() + event.getDuration()) + ") GROUP BY events.room_id";
+//		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms, Events WHERE Events.room_ID=Rooms.room_ID" + " AND (startTime+duration <" + event.getStart().getTime() + " OR startTime >" + (event.getStart().getTime() + event.getDuration()) + ") GROUP BY events.room_id";
+		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " +
+				"ON Events.room_ID=Rooms.room_ID AND (startTime+duration<"+event.getStart().getTime()+" " +
+				"OR startTime > "+(event.getStart().getTime()+event.getDuration())+");";
 		ResultSet rs;
 		try {
 			rs = db.makeSingleQuery(query);

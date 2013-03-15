@@ -51,9 +51,9 @@ public class DatabaseTest {
 		/**
 		 * AddEvent
 		 */
-		// CalEvent evt = new CalEvent("testevent",new Date(2013, 4, 3), 99999,
-		// queries.getUsers().get(0), "Dette er en test event");
-		// evt.addParticipant(queries.getUsers().get(1));
+		 CalEvent evt = new CalEvent("testeventet",new Date(2013, 4, 3), 99999,
+		 (Person) queries.getUsers().get(0), "Dette er en test event, dawg!");
+		// evt.addParticipant((Person)queries.getUsers().get(1));
 		// evt.addParticipant(queries.getUsers().get(2));
 		// queries.addEvent(evt);
 		//
@@ -99,6 +99,11 @@ public class DatabaseTest {
 		/**
 		 * Update Event
 		 */
+		
+		/**
+		 * Get available rooms
+		 */
+		System.out.println(queries.getAvailableRooms(evt));
 
 	}
 
