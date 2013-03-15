@@ -31,4 +31,9 @@ public class Room implements Comparable<Room> {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	@Override
+	public String toString() {
+		return ("Room "+this.name+" with capacity "+this.capacity);
+	}
 }

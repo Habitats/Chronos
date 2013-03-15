@@ -196,7 +196,7 @@ public class DatabaseQueries {
 	 * @param evt
 	 */
 	public void addEvent(CalEvent evt) {
-		String insertQuery = "insert into Events (event_ID,title,startTime,duration,description,owner) values (?,?,?,?,?,?);";
+		String insertQuery = "insert into Events (event_ID,title,startTime,duration,description,owner,room) values (?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 		boolean addedAvtale = false;
 		try {
@@ -208,7 +208,10 @@ public class DatabaseQueries {
 				ps.setInt(4, evt.getDuration());
 				ps.setString(5, evt.getDescription());
 				ps.setString(6, evt.getCreator().getUsername());
-				// ps.setInt(7, evt.getRoom().getRoomId);
+				if(evt.getRoom() != null)
+					ps.setString(7,  evt.getRoom().getName());
+				else
+					ps.setString(7, null);
 				ps.addBatch();
 				Singleton.log("successfully added: " + evt.getTitle() + " with fields " + evt.getStart().getTime() + " and " + evt.getDuration() + " and " + evt.getDescription());
 			} catch (SQLException e) {
@@ -302,7 +305,7 @@ public class DatabaseQueries {
 		ResultSet rs;
 		String param;
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration," +
-				"events.description, person.username, person.name "+
+				"events.description, person.username, person.name, events.room "+
 				"FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
 				+ processString(per.getUsername()) + " AND person.username = events.owner ORDER BY events.startTime ASC;";
 		try {
@@ -316,7 +319,10 @@ public class DatabaseQueries {
 				String description = rs.getString(5);
 				String username = rs.getString(6);
 				String name = rs.getString(7);
+				String room = rs.getString(8);
 				CalEvent evt = new CalEvent(title, new Date(start), duration, new Person(username, name), description, event_id);
+				if(room != null)
+					evt.setRoom(getRoom(room));
 				evt.setParticipants(getParticipantsByEventId(event_id));
 				al.add(evt);
 			}
@@ -326,6 +332,22 @@ public class DatabaseQueries {
 		return al;
 
 	}
+	
+	public Room getRoom(String name) {
+		ResultSet rs;
+		String query = "SELECT capacity, description FROM rooms WHERE name="+processString(name);
+		try{
+			rs = db.makeSingleQuery(query);
+			rs.first();
+			int cap = rs.getInt(1);
+			String desc = rs.getString(2);
+			return new Room(name, cap, desc);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 	/**
 	 * 
@@ -357,7 +379,7 @@ public class DatabaseQueries {
 	 * @param event
 	 */
 	public void updateCalEvent(CalEvent event) {
-		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?," + "room_ID=(SELECT room_ID FROM Rooms, Events WHERE Events.room_ID = Rooms.room_ID AND Rooms.name=?) " + "WHERE event_ID=?;";
+		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?, room=? WHERE event_ID=?;";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
@@ -419,7 +441,7 @@ public class DatabaseQueries {
 		ArrayList<Comparable> roomList = new ArrayList<Comparable>();
 //		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms, Events WHERE Events.room_ID=Rooms.room_ID" + " AND (startTime+duration <" + event.getStart().getTime() + " OR startTime >" + (event.getStart().getTime() + event.getDuration()) + ") GROUP BY events.room_id";
 		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " +
-				"ON Events.room_ID=Rooms.room_ID AND (startTime+duration<"+event.getStart().getTime()+" " +
+				"ON Events.room=Rooms.name AND (startTime+duration<"+event.getStart().getTime()+" " +
 				"OR startTime > "+(event.getStart().getTime()+event.getDuration())+");";
 		ResultSet rs;
 		try {
