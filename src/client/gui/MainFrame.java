@@ -17,6 +17,7 @@ import client.gui.view.EventConfigWindow;
 import client.gui.view.InvitationWindow;
 import client.gui.view.LoginWindow;
 import client.gui.view.RoomBookingWindow;
+import client.gui.view.NotificationWindow;
 import client.model.AddParticipantModel;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
@@ -49,6 +50,7 @@ public class MainFrame extends JFrame {
 	private InvitationModel invitationModel;
 
 	private ChronosWindow eventConfigWindow;
+	private ChronosWindow notificationWindow;
 	private ChronosModel eventConfigModel;
 
 	private ChronosWindow roomBookingWindow;
@@ -75,6 +77,7 @@ public class MainFrame extends JFrame {
 
 		eventConfigModel = new EventConfigModel(controller);
 		eventConfigWindow = new EventConfigWindow(eventConfigModel, this);
+		notificationWindow = new NotificationWindow(eventConfigModel, this);
 
 		roomBookingModel = new RoomBookingModel(controller);
 		roomBookingWindow = new RoomBookingWindow(roomBookingModel, this);
@@ -100,6 +103,7 @@ public class MainFrame extends JFrame {
 		// ADD COMPONENTS
 		layeredPane.add(calendarWindow, new Integer(0));
 		layeredPane.add(eventConfigWindow, new Integer(2));
+		layeredPane.add(notificationWindow, new Integer(2));
 		layeredPane.add(invitationWindow, new Integer(4));
 		layeredPane.add(roomBookingWindow, new Integer(14));
 		layeredPane.add(addParticipantWindow, new Integer(16));
@@ -110,7 +114,8 @@ public class MainFrame extends JFrame {
 		int eventConfigWidth = 500;
 		int eventConfigHeight = 280;
 		eventConfigWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
-
+		notificationWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
+		
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 4;
 		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, roomBookingWidth, roomBookingHeight);
@@ -175,5 +180,8 @@ public class MainFrame extends JFrame {
 
 	public ChronosWindow getAddParticipantWindow() {
 		return addParticipantWindow;
+	}
+	public ChronosWindow getNotificationWindow() {
+		return notificationWindow;
 	}
 }

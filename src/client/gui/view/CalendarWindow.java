@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
@@ -40,8 +41,8 @@ public class CalendarWindow extends ChronosWindow {
 	private CalendarModel model;
 	private JButton newEventButton;
 	private ChangeWeekButton prevButton, nextButton;
-	private JScrollPane eventsPane, othersCalPane;
-	private BoxPanel eventsPanel, othersCalPanel;
+	private JScrollPane eventsPane, othersCalPane, notificationsPane;
+	private BoxPanel eventsPanel, othersCalPanel, notificationsPanel;
 	private DayPanel mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel, sundayPanel;
 	private CalLabel dateLbl, weekNumberLbl, mondayLbl, tuesdayLbl, wednesdayLbl, thursdayLbl, fridayLbl, saturdayLbl, sundayLbl;
 	private int eventsPanelHeight = 250;
@@ -61,19 +62,32 @@ public class CalendarWindow extends ChronosWindow {
 		newEventButton.setMinimumSize(new Dimension(140, 25));
 		add(newEventButton, new GBC(i, 0));
 		newEventButton.addActionListener(new NewEventListener());
+		
+		JTabbedPane tabbedPane = new JTabbedPane();
+		add(tabbedPane, new GBC(i, 3));
 
 		eventsPanel = new BoxPanel();
-
-		CalLabel eventsLbl = new CalLabel("Events");
-
-		Border border = BorderFactory.createLineBorder(Color.white, 3);
 		eventsPane = new JScrollPane(eventsPanel);
-		eventsPane.setColumnHeaderView(eventsLbl);
-		eventsPane.setPreferredSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
-		eventsPane.setMinimumSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
-		eventsPane.setBorder(border);
-		add(eventsPane, new GBC(i, 3));
+		
+		notificationsPanel = new BoxPanel();
+		notificationsPane = new JScrollPane(notificationsPanel);
 
+
+//		CalLabel eventsLbl = new CalLabel("Events");
+//		eventsPane.setColumnHeaderView(eventsLbl);
+//		eventsPane.setPreferredSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
+//		eventsPane.setMinimumSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
+//		eventsPane.setBorder(border);
+//		add(eventsPane, new GBC(i, 3));
+		tabbedPane.add(eventsPane);
+		tabbedPane.add(notificationsPane);
+		tabbedPane.setTitleAt(0, "Events");
+		tabbedPane.setTitleAt(1, "Not");
+		tabbedPane.setMaximumSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
+		tabbedPane.setMinimumSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
+		
+		notificationsPanel.add(new NotificationPanel(new CalEvent("Jostein", new Date(), 10, new Person("Jossi"), "hehehhehe"),this, eventsPanelWidth));
+		Border border = BorderFactory.createLineBorder(Color.white, 3);
 		othersCalPanel = new BoxPanel();
 
 		CalLabel othersLbl = new CalLabel("Others");
@@ -94,10 +108,7 @@ public class CalendarWindow extends ChronosWindow {
 
 		mondayLbl = new CalLabel("Monday");
 		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
-
-		JComboBox<NotificationPanel> notificationBox = new JComboBox<>();
-		add(notificationBox, new GBC(i, 0).setSpan(2, 1).setAnchor(GridBagConstraints.CENTER));
-
+		
 		i++;
 
 		tuesdayPanel = new DayPanel();
@@ -283,5 +294,9 @@ public class CalendarWindow extends ChronosWindow {
 			model.nextWeek();
 			model.update();
 		}
+	}
+
+	public void addNotification(CalEvent calEvent) {
+		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPanelWidth));
 	}
 }

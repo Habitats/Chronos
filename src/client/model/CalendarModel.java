@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import chronos.DateManagement;
 import chronos.Person;
+import chronos.Person.Status;
+import chronos.Singleton;
 import client.ClientController;
 import client.gui.view.CalendarWindow;
 import client.gui.view.ChronosWindow;
@@ -30,12 +32,14 @@ public class CalendarModel extends ChronosModel {
 
 	private CalendarWindow calendarWindow;
 	private HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
+	private HashMap<String, Person> persons;
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
 
 	public CalendarModel(ClientController controller) {
 		super(controller, ChronosType.CALENDAR);
 		selectedPersonsEvents = new HashMap<String, ArrayList<CalEvent>>();
+		persons = new HashMap<String, Person>();
 		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 		currentDisplayedWeek = DateManagement.getWeek(currentDisplayedDate);
 	}
@@ -61,34 +65,49 @@ public class CalendarModel extends ChronosModel {
 
 	public void addEvents(QueryEvent queryEvent) {
 		@SuppressWarnings("unchecked")
-		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent.getResults();
-		// addEventsToSelectedPersonEvents(queryEvent.getPerson(), calEvents);
-		selectedPersonsEvents.put(queryEvent.getPerson().getUsername(), calEvents);
+		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent
+				.getResults();
+		Person person = queryEvent.getPerson();
+		String username = person.getUsername();
+		selectedPersonsEvents.put(username,
+				calEvents);
+		persons.put(username, person);
 		update();
 	}
 
-	public void addEventsToSelectedPersonEvents(Person person, ArrayList<CalEvent> events) {
-		if (selectedPersonsEvents.containsKey(person)) {
-			// selectedPersonsEvents.put(person,
-			// selectedPersonsEvents.get(person).addAll(events));
-			selectedPersonsEvents.get(person).removeAll(selectedPersonsEvents.get(person));
-			selectedPersonsEvents.get(person).addAll(events);
-		} else
-			selectedPersonsEvents.put(person.getUsername(), events);
-	}
-
-	private void addEventsArrayList(ArrayList<CalEvent> calEvents) {
+	private void addEventsArrayList(ArrayList<CalEvent> calEvents, String username) {
 		for (CalEvent calEvent : calEvents) {
-			Date startDate = calEvent.getStart();
-			int eventWeek = DateManagement.getWeek(startDate);
-			int eventYear = DateManagement.getYear(startDate);
-			int currentDisplayedYear = DateManagement.getYear(currentDisplayedDate);
-			if (currentDisplayedWeek == eventWeek && eventYear == currentDisplayedYear) {
-				calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate));
-			} else {
-				calendarWindow.addEvent(calEvent, Weekday.NONE);
+			if (personIsAttending(calEvent, username)) {
+				Date startDate = calEvent.getStart();
+				int eventWeek = DateManagement.getWeek(startDate);
+				int eventYear = DateManagement.getYear(startDate);
+				int currentDisplayedYear = DateManagement
+						.getYear(currentDisplayedDate);
+				if (currentDisplayedWeek == eventWeek
+						&& eventYear == currentDisplayedYear) {
+					calendarWindow.addEvent(calEvent,
+							DateManagement.getWeekday(startDate));
+				} else {
+					calendarWindow.addEvent(calEvent, Weekday.NONE);
+				}
+			} else if (Singleton.getInstance().getSelf().getUsername().equals(username) && statusIsWaiting(calEvent, username)) {
+				calendarWindow.addNotification(calEvent);
 			}
 		}
+	}
+	private boolean statusIsWaiting(CalEvent event, String username) {
+		HashMap<String, Person> participants = event.getParticipants();
+		Person participant = participants.get(username);
+		if(participant.getStatus() == Status.WAITING)
+			return true;
+		return false;
+	}
+	private boolean personIsAttending(CalEvent event, String username) {
+		HashMap<String, Person> participants = event.getParticipants();
+		Person participant = participants.get(username);
+		if(participant.getStatus() == Status.ACCEPTED)
+			return true;
+		else return false;
 	}
 
 	public void addOtherPersons(QueryEvent queryEvent) {
@@ -116,7 +135,7 @@ public class CalendarModel extends ChronosModel {
 		calendarWindow.removeEvents();
 		calendarWindow.updateLabels();
 		for (String username : selectedPersonsEvents.keySet()) {
-			addEventsArrayList(selectedPersonsEvents.get(username));
+			addEventsArrayList(selectedPersonsEvents.get(username), username);
 		}
 	}
 
@@ -125,7 +144,8 @@ public class CalendarModel extends ChronosModel {
 			currentDisplayedWeek++;
 		} else
 			currentDisplayedWeek = 1;
-		currentDisplayedDate = DateManagement.getDateFromString(DateManagement.getNextWeek(currentDisplayedDate));
+		currentDisplayedDate = DateManagement.getDateFromString(DateManagement
+				.getNextWeek(currentDisplayedDate));
 	}
 
 	public void prevWeek() {
@@ -133,7 +153,8 @@ public class CalendarModel extends ChronosModel {
 			currentDisplayedWeek--;
 		} else
 			currentDisplayedWeek = 52;
-		currentDisplayedDate = DateManagement.getDateFromString(DateManagement.getPrevWeek(currentDisplayedDate));
+		currentDisplayedDate = DateManagement.getDateFromString(DateManagement
+				.getPrevWeek(currentDisplayedDate));
 	}
 
 	@Override
