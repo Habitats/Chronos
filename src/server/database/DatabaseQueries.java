@@ -304,13 +304,10 @@ public class DatabaseQueries {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
-
-		long FIX_THIS_LOL;
 		if (afterLastLogin) {
 			param = "<";
 		} else {
 			param = ">";
-
 		}
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration, events.description, person.username, person.name, person.lastLoggedIn " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
 				+ processString(per.getUsername()) + " AND person.username = events.owner AND person.lastLoggedIn " + param + " participants.event_ID ORDER BY events.startTime ASC;";
