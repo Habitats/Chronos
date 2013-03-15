@@ -59,16 +59,10 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	}
 
-	@Override
-	public QueryEvent getNewCalEvents(Person person) {
-		QueryEvent qe = new QueryEvent(QueryType.CALEVENT_CONFIRMED).setResults(dbQueries.getEventsByParticipant(person, true));
-		dbQueries.setlastLoggedIn(Long.MAX_VALUE, person.getUsername());
-		return qe;
-	}
 
 	@Override
-	public QueryEvent getConfirmedEvents(Person person) {
-		return new QueryEvent(QueryType.CALEVENT_CONFIRMED).setResults(dbQueries.getEventsByParticipant(person, false));
+	public QueryEvent getCalEvents(Person person) {
+		return new QueryEvent(QueryType.CALEVENTS).setResults(dbQueries.getEventsByParticipant(person, false));
 	}
 
 	@Override

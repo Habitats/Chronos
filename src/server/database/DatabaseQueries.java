@@ -183,7 +183,7 @@ public class DatabaseQueries {
 				String username = rs.getString(1);
 				String name = rs.getString(2);
 				long lastLoggedIn = rs.getLong(3);
-				users.add(new Person(username, name, lastLoggedIn));
+				users.add(new Person(username, name));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -323,7 +323,7 @@ public class DatabaseQueries {
 				String username = rs.getString(6);
 				String name = rs.getString(7);
 				long lastLoggedIn = rs.getLong(8);
-				CalEvent evt = new CalEvent(title, new Date(start), duration, new Person(username, name, lastLoggedIn), description, event_id);
+				CalEvent evt = new CalEvent(title, new Date(start), duration, new Person(username, name), description, event_id);
 				evt.setParticipants(getParticipantsByEventId(event_id));
 				al.add(evt);
 			}
@@ -350,7 +350,7 @@ public class DatabaseQueries {
 				String username = rs.getString(1);
 				String name = rs.getString(2);
 				long lastLoggedIn = rs.getLong(3);
-				participants.put(username, new Person(username, name, lastLoggedIn));
+				participants.put(username, new Person(username, name));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
