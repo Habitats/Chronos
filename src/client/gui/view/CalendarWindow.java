@@ -182,8 +182,8 @@ public class CalendarWindow extends ChronosWindow {
 		repaint();
 	}
 
-	public void addEvent(CalEvent event, Weekday weekday) {
-		CalEventPanel panel = new CalEventPanel(event, this);
+	public void addEvent(CalEvent event, Weekday weekday, int personColorNumber) {
+		CalEventPanel panel = new CalEventPanel(event, this, personColorNumber);
 		eventsPanel.add(new CalEventListPanel(event, this, eventsPanelWidth));
 		switch (weekday) {
 		case MONDAY:
