@@ -1,11 +1,14 @@
 package client.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import chronos.Person;
 import chronos.Room;
 import client.ClientController;
 import client.gui.view.ChronosWindow;
 import client.gui.view.RoomBookingWindow;
+import events.CalEvent;
 import events.NetworkEvent;
 import events.QueryEvent;
 import events.QueryEvent.QueryType;
@@ -33,7 +36,7 @@ public class RoomBookingModel extends ChronosModel {
 	}
 	
 	public void getRooms() {
-		fireNetworkEvent(new QueryEvent(QueryType.ROOMS));
+		fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", new Date(), 1829, new Person("penis"), "")));
 	}
 
 	public void setRoomNumber(String roomNumber) {

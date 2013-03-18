@@ -193,7 +193,6 @@ public class DatabaseQueries {
 		return null;
 	}
 	
-
 	/**
 	 * Returns an ArrayList of chronos.Person
 	 * 
@@ -411,11 +410,12 @@ public class DatabaseQueries {
 				ps.setString(1, processString(event.getTitle()));
 				ps.setString(2, "" + event.getStart());
 				ps.setString(3, "" + event.getDuration());
-				ps.setString(4, event.getDescription());
+				ps.setString(4, processString(event.getDescription()));
 				if (event.getRoom() != null)
 					ps.setString(5, event.getRoom().getName());
 				else
 					ps.setString(5, null);
+				System.out.println(ps.toString());
 				ps.addBatch();
 				Singleton.log("successfully updated: " + event.getTitle() + " with fields " + event.getStart().getTime() + " and " + event.getDuration() + " and " + event.getDescription());
 			} catch (SQLException e) {
