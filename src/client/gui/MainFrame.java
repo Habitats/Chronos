@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import chronos.Singleton;
 import client.ClientController;
 import client.gui.view.AddParticipantWindow;
@@ -63,9 +66,20 @@ public class MainFrame extends JFrame {
 	private int frameHeight = 620;
 	private JFrame loginFrame;
 
-	public MainFrame(ClientController controller) {
+	public MainFrame(ClientController controller){
 		this.controller = controller;
 		setTitle(Singleton.APP_NAME);
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 
 		panels = new ArrayList<ChronosWindow>();
 
