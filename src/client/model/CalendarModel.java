@@ -31,7 +31,8 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	private CalendarWindow calendarWindow;
-	private HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
+	public HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
+
 	private HashMap<String, Person> selectedPersons;
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
@@ -93,16 +94,26 @@ public class CalendarModel extends ChronosModel {
 	private boolean statusIsWaiting(CalEvent event, String username) {
 		HashMap<String, Person> participants = event.getParticipants();
 		Person participant = participants.get(username);
-		if (participant.getStatus() == Status.WAITING)
-			return true;
+		try {
+			if (participant.getStatus() == Status.WAITING)
+				return true;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return false;
 	}
 
 	private boolean personIsAttending(CalEvent event, String username) {
 		HashMap<String, Person> participants = event.getParticipants();
 		Person participant = participants.get(username);
-		if (participant.getStatus() == Status.ACCEPTED)
-			return true;
+		try {
+			if (participant.getStatus() == Status.ACCEPTED)
+				return true;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return false;
 	}
 
@@ -110,7 +121,7 @@ public class CalendarModel extends ChronosModel {
 		ArrayList<Person> persons = (ArrayList<Person>) queryEvent.getResults();
 		calendarWindow.removePersonCheckBoxes();
 		for (Person person : persons) {
-			if(selectedPersons.containsKey(person.getUsername())) {
+			if (selectedPersons.containsKey(person.getUsername())) {
 				calendarWindow.addOtherPerson(person, true);
 			} else {
 				calendarWindow.addOtherPerson(person, false);
@@ -137,6 +148,7 @@ public class CalendarModel extends ChronosModel {
 		calendarWindow.removeEvents();
 		calendarWindow.updateLabels();
 		for (String username : selectedPersonsEvents.keySet()) {
+			System.out.println(username);
 			addEventsArrayList(selectedPersonsEvents.get(username), username);
 		}
 	}

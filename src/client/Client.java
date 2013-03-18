@@ -92,7 +92,7 @@ public class Client implements Runnable {
 
 	public void sendNetworkEvent(NetworkEvent event) {
 		try {
-			Singleton.log("Client sending: " + event);
+//			Singleton.log("Client sending: " + event);
 			out.writeObject(event);
 		} catch (IOException e) {
 			e.printStackTrace();

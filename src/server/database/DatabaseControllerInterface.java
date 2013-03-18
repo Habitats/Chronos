@@ -19,7 +19,7 @@ public interface DatabaseControllerInterface {
 	/**
 	 * Get events the user already accepted and viewed
 	 */
-	public QueryEvent getCalEvents(Person person);
+	public QueryEvent getCalEvents(Person person, QueryEvent event);
 
 	/**
 	 * adds a new calendar event for the person with a "neutral" (IE. waiting,

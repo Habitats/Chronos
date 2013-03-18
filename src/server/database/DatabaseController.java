@@ -59,10 +59,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	}
 
-
 	@Override
-	public QueryEvent getCalEvents(Person person) {
-		return new QueryEvent(QueryType.CALEVENTS).setResults(dbQueries.getEventsByParticipant(person));
+	public QueryEvent getCalEvents(Person person, QueryEvent event) {
+		return event.setResults(dbQueries.getEventsByParticipant(person));
 	}
 
 	@Override
