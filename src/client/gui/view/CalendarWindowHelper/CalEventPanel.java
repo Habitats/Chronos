@@ -28,7 +28,7 @@ public class CalEventPanel extends JPanel {
 	public CalEventPanel(CalEvent event, CalendarWindow view, int personColorNumber) {
 		super();
 		setLayout(new GridBagLayout());
-		color = Color.pink;
+		color = Color.getHSBColor((float) personColorNumber/20, 1, 1);
 		setBackground(color);
 		setPreferredSize(new Dimension(130, 50));
 		setMinimumSize(new Dimension(130, 50));
@@ -46,6 +46,13 @@ public class CalEventPanel extends JPanel {
 		this.calEvent = event;
 		this.view = view;
 	}
+//	Method for creating n differen colors
+//	public Color[] createColors(int n) {
+//		Color[] cols = new Color[n];
+//		for (int i = 0; i < n; i++)
+//			cols[i] = Color.getHSBColor((float) i / n, 1, 1);
+//		return cols;
+//	}
 
 	private class CalPanelMouseAdapter extends MouseAdapter {
 		@Override
@@ -59,7 +66,7 @@ public class CalEventPanel extends JPanel {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			super.mouseEntered(e);
-			setBackground(Color.red);
+			setBackground(Color.pink);
 
 		}
 
