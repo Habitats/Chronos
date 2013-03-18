@@ -12,9 +12,9 @@ public class TestEvent extends NetworkEvent {
 
 	private String msg;
 
-	public TestEvent(String msg, Person person) {
+	public TestEvent(String msg, Person sender) {
 		super(EventType.TEST);
-		super.person = person;
+		super.sender = sender;
 		this.msg = msg;
 	}
 

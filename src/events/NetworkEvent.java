@@ -23,7 +23,7 @@ abstract public class NetworkEvent implements Serializable {
 
 	ArrayList<Comparable> results;
 	private EventType type;
-	protected Person person;
+	protected Person sender;
 
 	public NetworkEvent(EventType type) {
 		setSender(Singleton.getInstance().getSelf());
@@ -31,16 +31,16 @@ abstract public class NetworkEvent implements Serializable {
 	}
 
 	public Person getSender() {
-		return person;
+		return sender;
 	}
 
 	private void setSender(Person person) {
-		this.person = person;
+		this.sender = person;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Network Event with type: %s, from person: %s", type.name(), person.toString());
+		return String.format("Network Event with type: %s, from person: %s", type.name(), sender.toString());
 	}
 
 	public EventType getType() {

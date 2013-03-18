@@ -59,10 +59,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	}
 
-
 	@Override
-	public QueryEvent getCalEvents(Person person) {
-		return new QueryEvent(QueryType.CALEVENTS).setResults(dbQueries.getEventsByParticipant(person));
+	public QueryEvent getCalEvents(Person person, QueryEvent event) {
+		return event.setResults(dbQueries.getEventsByParticipant(person));
 	}
 
 	@Override
@@ -74,5 +73,10 @@ public class DatabaseController implements DatabaseControllerInterface {
 	@Override
 	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event) {
 		return qe.setResults(dbQueries.getAvailableRooms(event));
+	}
+
+	@Override
+	public QueryEvent searchForUser(QueryEvent qe, String searchString) {
+		return qe.setResults(dbQueries.searchUsers(searchString));
 	}
 }

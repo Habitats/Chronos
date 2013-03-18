@@ -19,7 +19,6 @@ public class PersonCheckBox extends JCheckBox {
 		this.person = person;
 		setBackground(Color.white);
 		this.setSelected(isSelected);
-		
 	}
 
 	public Person getPerson() {

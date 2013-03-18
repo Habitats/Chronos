@@ -114,15 +114,22 @@ public class DatabaseTest {
 //		queries.addEvent(douchEvent);
 		
 		//run query
-		CalEvent evt = new CalEvent("testeventet",new Date(2013, 4, 3, 2, 5), 99999,
-				 (Person) queries.getUsers().get(1), "Dette er en test event, dawg!");
-		ArrayList<Comparable> rooms = queries.getAvailableRooms(evt);
-		int i=1;
-		for( Comparable<Room> room : rooms) {
-			System.out.println(i+": "+room.toString());
-			i++;
-		}
+//		CalEvent evt = new CalEvent("testeventet",new Date(2013, 4, 3, 2, 5), 99999,
+//				 (Person) queries.getUsers().get(1), "Dette er en test event, dawg!");
+//		ArrayList<Comparable> rooms = queries.getAvailableRooms(evt);
+//		int i=1;
+//		for( Comparable<Room> room : rooms) {
+//			System.out.println(i+": "+room.toString());
+//			i++;
+//		}
+	
 		
+		/**
+		 * Search for users
+		 */
+		ArrayList<Comparable> res = queries.searchUsers("boy");
+		for( Comparable<Person> p : res) {
+			System.out.println(" "+p.toString());
+		}	
 	}
-
 }

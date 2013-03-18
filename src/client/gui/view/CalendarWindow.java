@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import chronos.DateManagement;
 import chronos.Person;
@@ -177,8 +179,7 @@ public class CalendarWindow extends ChronosWindow {
 
 		sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
-		
-		
+
 		updateLabels();
 	}
 
@@ -190,7 +191,7 @@ public class CalendarWindow extends ChronosWindow {
 
 	public void addOtherPerson(Person person, boolean isSelected) {
 		PersonCheckBox box = new PersonCheckBox(person, isSelected);
-		box.addItemListener(new CheckBoxListener());
+		box.addActionListener(new CheckBoxListener());
 		othersCalPanel.add(box);
 		repaint();
 	}
@@ -273,14 +274,20 @@ public class CalendarWindow extends ChronosWindow {
 		}
 	}
 
-	private class CheckBoxListener implements ItemListener {
+	private class CheckBoxListener implements ActionListener {
+
+		public void itemStateChanged(ItemEvent e) {
+
+		}
 
 		@Override
-		public void itemStateChanged(ItemEvent e) {
-			Person person = ((PersonCheckBox) e.getItemSelectable()).getPerson();
-			if (e.getStateChange() == ItemEvent.SELECTED) {
+		public void actionPerformed(ActionEvent e) {
+			PersonCheckBox checkBox = (PersonCheckBox) e.getSource();
+			Person person = checkBox.getPerson();
+			System.out.println("Clicked: " + checkBox.getPerson());
+			if (checkBox.isSelected()) {
 				model.addSelectedPerson(person);
-			} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+			} else {
 				model.removeSelectedPerson(person);
 				model.update();
 			}

@@ -19,7 +19,7 @@ public interface DatabaseControllerInterface {
 	/**
 	 * Get events the user already accepted and viewed
 	 */
-	public QueryEvent getCalEvents(Person person);
+	public QueryEvent getCalEvents(Person person, QueryEvent event);
 
 	/**
 	 * adds a new calendar event for the person with a "neutral" (IE. waiting,
@@ -54,4 +54,6 @@ public interface DatabaseControllerInterface {
 	 */
 	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event);
 
+	
+	public QueryEvent searchForUser(QueryEvent qe, String searchString);
 }
