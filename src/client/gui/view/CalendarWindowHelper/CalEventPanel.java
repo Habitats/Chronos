@@ -17,6 +17,7 @@ import client.gui.view.EventConfigWindow;
 import chronos.DateManagement;
 
 import events.CalEvent;
+import events.CalEvent.CalEventType;
 
 public class CalEventPanel extends JPanel {
 
@@ -49,7 +50,7 @@ public class CalEventPanel extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
 			((EventConfigWindow) view.getFrame().getEventConfigWindow()).getModel().setCalEvent(calEvent);
-			((EventConfigWindow) view.getFrame().getEventConfigWindow()).setVisible(true);
+			((EventConfigWindow) view.getFrame().getEventConfigWindow()).setVisible(true, CalEventType.UPDATE);
 
 		}
 
