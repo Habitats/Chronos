@@ -71,6 +71,7 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 	private class BookAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			model.getRooms();
 			// save booked room
 			getFrame().getRoomBookingWindow().setVisible(false);
 		}
@@ -94,4 +95,6 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 		this.model = (RoomBookingModel) model;
 		this.model.setView(this);
 	}
+	
+	
 }
