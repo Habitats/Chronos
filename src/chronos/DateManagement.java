@@ -2,6 +2,7 @@ package chronos;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -65,6 +66,7 @@ public class DateManagement {
 	 * method that returns which week the date-parameter is in.
 	 */
 	public static int getWeek(Date start) {
+
 		Calendar cal = Calendar.getInstance();
 		cal.setFirstDayOfWeek(Calendar.MONDAY);
 
@@ -75,6 +77,12 @@ public class DateManagement {
 		} catch (Exception e) {
 			return -1;
 		}
+	}
+	
+	public static int getHour(Date date){
+		Calendar cal = GregorianCalendar.getInstance();
+		cal.setTime(date);
+		return cal.get(Calendar.HOUR_OF_DAY);
 	}
 
 	public static int getCurrentYear() {
@@ -134,5 +142,6 @@ public class DateManagement {
 		Singleton.log("Year (from Date): " + getYear(new Date()));
 		Singleton.log("Monady in week: " + getMondayOfWeek(new Date()));
 		Singleton.log("Weekday: " + getWeekday(new Date()));
+		System.out.println(getHour(new Date()));
 	}
 }
