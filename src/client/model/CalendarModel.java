@@ -120,11 +120,11 @@ public class CalendarModel extends ChronosModel {
 
 	public void addSelectedPerson(Person person) {
 		getPersonEvents(person);
-
 	}
 
 	public void removeSelectedPerson(Person person) {
-		selectedPersonsEvents.remove(person);
+		selectedPersonsEvents.remove(person.getUsername());
+		persons.remove(person.getUsername());
 	}
 
 	public void update() {
