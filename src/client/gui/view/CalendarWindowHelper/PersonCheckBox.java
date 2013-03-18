@@ -9,7 +9,7 @@ import chronos.Person;
 public class PersonCheckBox extends JCheckBox {
 
 	private Person person;
-	
+
 	public PersonCheckBox(Person person) {
 		this(person, false);
 	}

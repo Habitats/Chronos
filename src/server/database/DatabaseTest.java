@@ -1,12 +1,10 @@
 package server.database;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
 import chronos.Person;
-import chronos.Room;
 import chronos.Singleton;
 import events.CalEvent;
 
@@ -54,8 +52,9 @@ public class DatabaseTest {
 		/**
 		 * AddEvent
 		 */
-		// CalEvent evt = new CalEvent("testeventet",new Date(2013, 4, 3), 99999,
-		//(Person) queries.getUsers().get(0), "Dette er en test event, dawg!");
+		// CalEvent evt = new CalEvent("testeventet",new Date(2013, 4, 3),
+		// 99999,
+		// (Person) queries.getUsers().get(0), "Dette er en test event, dawg!");
 		// evt.addParticipant((Person)queries.getUsers().get(1));
 		// evt.addParticipant(queries.getUsers().get(2));
 		// queries.addEvent(evt);
@@ -95,41 +94,42 @@ public class DatabaseTest {
 		 * Get Events
 		 */
 
-		//System.out.println(queries.getUsers().get(0));
-		//System.out.println(queries.getParticipantsByEventId(1363184812475L));
-		System.out.println(((CalEvent)queries.getEventsByParticipant((Person)queries.getUsers().get(0)).get(0)).getTitle());
+		// System.out.println(queries.getUsers().get(0));
+		// System.out.println(queries.getParticipantsByEventId(1363184812475L));
+		System.out.println(((CalEvent) queries.getEventsByParticipant((Person) queries.getUsers().get(0)).get(0)).getTitle());
 
 		/**
 		 * Update Event
 		 */
-		
+
 		/**
 		 * Get available rooms
 		 */
-		
-		//Add event that conflics
-//		 CalEvent douchEvent = new CalEvent("DouchEvent",new Date(2013, 4, 3, 2, 2), 99999,
-//				 (Person) queries.getUsers().get(0), "Jeg booket først. SUCK IT");
-//		douchEvent.setRoom(new Room("R10", 70, ""));
-//		queries.addEvent(douchEvent);
-		
-		//run query
-//		CalEvent evt = new CalEvent("testeventet",new Date(2013, 4, 3, 2, 5), 99999,
-//				 (Person) queries.getUsers().get(1), "Dette er en test event, dawg!");
-//		ArrayList<Comparable> rooms = queries.getAvailableRooms(evt);
-//		int i=1;
-//		for( Comparable<Room> room : rooms) {
-//			System.out.println(i+": "+room.toString());
-//			i++;
-//		}
-	
-		
+
+		// Add event that conflics
+		// CalEvent douchEvent = new CalEvent("DouchEvent",new Date(2013, 4, 3,
+		// 2, 2), 99999,
+		// (Person) queries.getUsers().get(0), "Jeg booket først. SUCK IT");
+		// douchEvent.setRoom(new Room("R10", 70, ""));
+		// queries.addEvent(douchEvent);
+
+		// run query
+		// CalEvent evt = new CalEvent("testeventet",new Date(2013, 4, 3, 2, 5),
+		// 99999,
+		// (Person) queries.getUsers().get(1), "Dette er en test event, dawg!");
+		// ArrayList<Comparable> rooms = queries.getAvailableRooms(evt);
+		// int i=1;
+		// for( Comparable<Room> room : rooms) {
+		// System.out.println(i+": "+room.toString());
+		// i++;
+		// }
+
 		/**
 		 * Search for users
 		 */
 		ArrayList<Comparable> res = queries.searchUsers("boy");
-		for( Comparable<Person> p : res) {
-			System.out.println(" "+p.toString());
-		}	
+		for (Comparable<Person> p : res) {
+			System.out.println(" " + p.toString());
+		}
 	}
 }

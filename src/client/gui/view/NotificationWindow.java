@@ -19,6 +19,6 @@ public class NotificationWindow extends EventConfigWindow {
 		eventDescriptionArea.setEditable(false);
 		eventNameField.setEditable(false);
 		startTime.setEnabled(false);
-		
+
 	}
 }
