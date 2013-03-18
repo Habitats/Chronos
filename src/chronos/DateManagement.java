@@ -12,7 +12,7 @@ import client.model.CalendarModel.Weekday;
  */
 public class DateManagement {
 
-	public static String getFormattedFull(Date start) {
+	private static String getFormattedFull(Date start) {
 		return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(start);
 	}
 
@@ -57,8 +57,12 @@ public class DateManagement {
 		return Weekday.getWeekday(ordinal);
 	}
 
-	public static int getCurrentWeek() {
+	private static int getCurrentWeek() {
 		return getWeek(new Date());
+	}
+
+	public static String getTimeOfDay(Date date) {
+		return new SimpleDateFormat("kk:mm").format(date);
 	}
 
 	/**
@@ -77,7 +81,7 @@ public class DateManagement {
 		}
 	}
 
-	public static int getCurrentYear() {
+	private static int getCurrentYear() {
 		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(System.currentTimeMillis()));
 		return year;
 	}
@@ -134,5 +138,6 @@ public class DateManagement {
 		Singleton.log("Year (from Date): " + getYear(new Date()));
 		Singleton.log("Monady in week: " + getMondayOfWeek(new Date()));
 		Singleton.log("Weekday: " + getWeekday(new Date()));
+		Singleton.log("Formatted clock: " + getTimeOfDay(new Date()));
 	}
 }

@@ -15,7 +15,7 @@ import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.RoomBookingModel;
 
-public class RoomBookingWindow extends ChronosWindow implements ActionListener {
+public class RoomBookingWindow extends ChronosWindow {
 	private JList roomList;
 	private JButton bookButton, cancelButton, autobookButton;
 	private RoomBookingModel model;
@@ -83,11 +83,6 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 		}
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void setModel(ChronosModel model) {

@@ -31,7 +31,7 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	private CalendarWindow calendarWindow;
-	public HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
+	private HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
 
 	private HashMap<String, Person> selectedPersons;
 	private int currentDisplayedWeek;
@@ -66,7 +66,7 @@ public class CalendarModel extends ChronosModel {
 	 * @param queryEvent
 	 */
 
-	public void addEvents(QueryEvent queryEvent) {
+	private void addEvents(QueryEvent queryEvent) {
 		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent.getResults();
 		Person person = queryEvent.getPerson();
 		String username = person.getUsername();

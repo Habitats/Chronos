@@ -5,11 +5,11 @@ import client.gui.view.ChronosWindow;
 import events.NetworkEvent;
 
 abstract public class ChronosModel {
-	protected final ClientController controller;
+	private final ClientController controller;
 	private final ChronosType chronosType;
 
 	public enum ChronosType {
-		EVENT_CONFIG, INVITATION, LOGIN, ROOM_BOOK, CALENDAR, USER_LIST
+		EVENT_CONFIG, INVITATION, LOGIN, ROOM_BOOK, CALENDAR, USER_LIST, NOTIFICATION;
 	}
 
 	/**

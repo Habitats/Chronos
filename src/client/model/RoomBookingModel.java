@@ -6,7 +6,7 @@ import client.gui.view.RoomBookingWindow;
 import events.NetworkEvent;
 
 public class RoomBookingModel extends ChronosModel {
-	String roomNumber;
+	private String roomNumber;
 	private RoomBookingWindow view;
 
 	public RoomBookingModel(ClientController controller) {

@@ -41,8 +41,9 @@ public class Person implements Serializable, Comparable<Person> {
 		return username;
 	}
 
-	public void setStatus(Status status) {
+	public Person setStatus(Status status) {
 		this.status = status;
+		return this;
 	}
 
 	public Status getStatus() {
@@ -58,7 +59,7 @@ public class Person implements Serializable, Comparable<Person> {
 
 	@Override
 	public String toString() {
-		return String.format("U: %s - N: %s", username, name);
+		return String.format("%s", username);
 	}
 
 	@Override

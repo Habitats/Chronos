@@ -12,7 +12,8 @@ import javax.swing.JPanel;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.view.CalendarWindow;
-import client.gui.view.EventConfigWindow;
+import client.gui.view.eventConfig.EventWindow;
+import client.model.EventConfigModel.ViewType;
 
 import chronos.DateManagement;
 
@@ -28,7 +29,7 @@ public class CalEventPanel extends JPanel {
 	public CalEventPanel(CalEvent event, CalendarWindow view, int personColorNumber) {
 		super();
 		setLayout(new GridBagLayout());
-		color = Color.getHSBColor((float) personColorNumber/20, 1, 1);
+		color = Color.getHSBColor((float) personColorNumber / 20, 1, 1);
 		setBackground(color);
 		setPreferredSize(new Dimension(130, 50));
 		setMinimumSize(new Dimension(130, 50));
@@ -46,20 +47,21 @@ public class CalEventPanel extends JPanel {
 		this.calEvent = event;
 		this.view = view;
 	}
-//	Method for creating n differen colors
-//	public Color[] createColors(int n) {
-//		Color[] cols = new Color[n];
-//		for (int i = 0; i < n; i++)
-//			cols[i] = Color.getHSBColor((float) i / n, 1, 1);
-//		return cols;
-//	}
+
+	// Method for creating n differen colors
+	// public Color[] createColors(int n) {
+	// Color[] cols = new Color[n];
+	// for (int i = 0; i < n; i++)
+	// cols[i] = Color.getHSBColor((float) i / n, 1, 1);
+	// return cols;
+	// }
 
 	private class CalPanelMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
-			((EventConfigWindow) view.getFrame().getEventConfigWindow()).getModel().setCalEvent(calEvent);
-			((EventConfigWindow) view.getFrame().getEventConfigWindow()).setVisible(true, CalEventType.UPDATE);
+			view.getFrame().getEventModel().setCalEvent(calEvent);
+			view.getFrame().getEventModel().setView(ViewType.UPDATE);
 
 		}
 

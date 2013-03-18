@@ -10,7 +10,8 @@ import javax.swing.SwingConstants;
 
 import chronos.DateManagement;
 import client.gui.view.CalendarWindow;
-import client.gui.view.NotificationWindow;
+import client.gui.view.eventConfig.EventWindowInvite;
+import client.model.EventConfigModel.ViewType;
 import events.CalEvent;
 
 public class NotificationPanel extends JLabel {
@@ -41,8 +42,8 @@ public class NotificationPanel extends JLabel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
-			((NotificationWindow) view.getFrame().getNotificationWindow()).getModel().setCalEvent(calEvent);
-			((NotificationWindow) view.getFrame().getNotificationWindow()).setVisible(true);
+			view.getFrame().getEventModel().setCalEvent(calEvent);
+			view.getFrame().getEventModel().setView(ViewType.INVITE);
 		}
 
 		@Override

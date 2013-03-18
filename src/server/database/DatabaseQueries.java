@@ -267,7 +267,7 @@ public class DatabaseQueries {
 	 * 
 	 * @param evt
 	 */
-	public void addParticipants(CalEvent evt) {
+	private void addParticipants(CalEvent evt) {
 		String insertQuery = "insert into participants (username,event_ID,alarm,status) values (?,?,?,?);";
 		PreparedStatement ps;
 		try {
@@ -358,7 +358,7 @@ public class DatabaseQueries {
 
 	}
 
-	public Room getRoom(String name) {
+	private Room getRoom(String name) {
 		ResultSet rs;
 		String query = "SELECT capacity, description FROM rooms WHERE name=" + processString(name);
 		try {
@@ -378,7 +378,7 @@ public class DatabaseQueries {
 	 * @param id
 	 * @return HashMap<String, chronos.Person>
 	 */
-	public HashMap<String, Person> getParticipantsByEventId(long id) {
+	private HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
 		String query = "SELECT person.username, name, status " + "FROM person, participants " + "WHERE participants.event_ID = " + id + " AND participants.username = person.username";

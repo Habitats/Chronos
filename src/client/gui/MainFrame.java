@@ -1,6 +1,7 @@
 package client.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.util.ArrayList;
@@ -16,10 +17,16 @@ import client.ClientController;
 import client.gui.view.ParticipantsWindow;
 import client.gui.view.CalendarWindow;
 import client.gui.view.ChronosWindow;
-import client.gui.view.EventConfigWindow;
-import client.gui.view.InvitationWindow;
 import client.gui.view.LoginWindow;
 import client.gui.view.RoomBookingWindow;
+import client.gui.view.eventConfig.EventWindow;
+import client.gui.view.eventConfig.EventWindowAdmin;
+import client.gui.view.eventConfig.EventWindowInvite;
+import client.gui.view.eventConfig.EventWindowNew;
+import client.gui.view.eventConfig.EventWindowOther;
+import client.gui.view.eventConfig.EventWindowParticipant;
+import client.gui.view.eventConfig.EventWindowUpdate;
+import client.model.InvitationModel;
 import client.model.ParticipantsModel;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
@@ -49,17 +56,22 @@ public class MainFrame extends JFrame {
 	private ChronosWindow loginWindow;
 
 	private ChronosWindow invitationWindow;
-	private InvitationModel invitationModel;
+	private ChronosModel invitationModel;
 
-	private ChronosWindow eventConfigWindow;
-	private ChronosWindow notificationWindow;
+	private ChronosWindow eventWindowAdmin;
+	private ChronosWindow eventWindowInvite;
+	private ChronosWindow eventWindowOther;
+	private ChronosWindow eventWindowParticipant;
+	private ChronosWindow eventWindowNew;
+	private ChronosWindow eventWindowUpdate;
+
 	private ChronosModel eventConfigModel;
 
 	private ChronosWindow roomBookingWindow;
-	private RoomBookingModel roomBookingModel;
+	private ChronosModel roomBookingModel;
 
 	private ChronosWindow addParticipantWindow;
-	private ParticipantsModel addParticipantModel;
+	private ChronosModel addParticipantModel;
 
 	private int frameWidth = 1200;
 	private int frameHeight = 620;
@@ -70,13 +82,7 @@ public class MainFrame extends JFrame {
 		setTitle(Singleton.APP_NAME);
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
 
@@ -85,12 +91,14 @@ public class MainFrame extends JFrame {
 		calendarModel = new CalendarModel(controller);
 		calendarWindow = new CalendarWindow(calendarModel, this);
 
-		invitationModel = new InvitationModel(controller);
-		invitationWindow = new InvitationWindow(invitationModel, this);
-
 		eventConfigModel = new EventConfigModel(controller);
-		eventConfigWindow = new EventConfigWindow(eventConfigModel, this);
-		// notificationWindow = new NotificationWindow(eventConfigModel, this);
+
+		eventWindowAdmin = new EventWindowAdmin(eventConfigModel, this);
+		eventWindowInvite = new EventWindowInvite(eventConfigModel, this);
+		eventWindowOther = new EventWindowOther(eventConfigModel, this);
+		eventWindowParticipant = new EventWindowParticipant(eventConfigModel, this);
+		eventWindowNew = new EventWindowNew(eventConfigModel, this);
+		eventWindowUpdate = new EventWindowUpdate(eventConfigModel, this);
 
 		roomBookingModel = new RoomBookingModel(controller);
 		roomBookingWindow = new RoomBookingWindow(roomBookingModel, this);
@@ -115,29 +123,26 @@ public class MainFrame extends JFrame {
 
 		// ADD COMPONENTS
 		layeredPane.add(calendarWindow, new Integer(0));
-		layeredPane.add(eventConfigWindow, new Integer(2));
-		// layeredPane.add(notificationWindow, new Integer(2));
-		layeredPane.add(invitationWindow, new Integer(4));
+		layeredPane.add(eventWindowAdmin, new Integer(2));
+		layeredPane.add(eventWindowInvite, new Integer(2));
+		layeredPane.add(eventWindowOther, new Integer(2));
+		layeredPane.add(eventWindowParticipant, new Integer(2));
+		layeredPane.add(eventWindowUpdate, new Integer(2));
+		layeredPane.add(eventWindowNew, new Integer(2));
+
 		layeredPane.add(roomBookingWindow, new Integer(14));
 		layeredPane.add(addParticipantWindow, new Integer(16));
 
 		// SET BOUNDS ON EVERY COMPONENT ADDED DIRECTLY TO A LAYER
 		calendarWindow.setBounds(0, 0, frameWidth, frameHeight);
 
-		int eventConfigWidth = 500;
-		int eventConfigHeight = frameHeight / 2;
-		eventConfigWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
-		// notificationWindow.setBounds((frameWidth - eventConfigWidth) / 2,
-		// (frameHeight - eventConfigHeight) / 2, eventConfigWidth,
-		// eventConfigHeight);
-
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 4;
 		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, roomBookingWidth, roomBookingHeight);
 
 		int addParticipantWidth = frameWidth / 6;
-		int addParticipantHeight = frameHeight / 2;
-		addParticipantWindow.setBounds((frameWidth + eventConfigWidth) / 2, (frameHeight - addParticipantHeight) / 2, addParticipantWidth, addParticipantHeight);
+		int addParticipantHeight = 300;
+		addParticipantWindow.setBounds((frameWidth + eventWindowAdmin.getWidth()) / 2, (frameHeight - addParticipantHeight) / 2, addParticipantWidth, addParticipantHeight);
 
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
 		layeredPane.setOpaque(true);
@@ -184,8 +189,16 @@ public class MainFrame extends JFrame {
 		buildFrame(loginFrame);
 	}
 
-	public ChronosWindow getEventConfigWindow() {
-		return eventConfigWindow;
+	public int getFrameHeight() {
+		return frameHeight;
+	}
+
+	public int getFrameWidth() {
+		return frameWidth;
+	}
+
+	public EventConfigModel getEventModel() {
+		return (EventConfigModel) eventConfigModel;
 	}
 
 	public ChronosWindow getRoomBookingWindow() {
@@ -193,12 +206,10 @@ public class MainFrame extends JFrame {
 	}
 
 	public ChronosWindow getAddParticipantWindow() {
-		System.out.println(addParticipantWindow.isVisible());
-		System.out.println(addParticipantWindow.getSize());
 		return addParticipantWindow;
 	}
 
 	public ChronosWindow getNotificationWindow() {
-		return notificationWindow;
+		return invitationWindow;
 	}
 }

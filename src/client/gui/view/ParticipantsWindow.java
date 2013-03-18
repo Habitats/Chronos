@@ -16,18 +16,15 @@ import client.gui.GBC;
 import client.gui.MainFrame;
 import client.gui.view.CalendarWindowHelper.BoxPanel;
 import client.gui.view.CalendarWindowHelper.PersonCheckBox;
+import client.gui.view.eventConfig.EventWindowAdmin;
 import client.model.ParticipantsModel;
 import client.model.ChronosModel;
 
 public class ParticipantsWindow extends ChronosWindow implements ActionListener {
-	Person person;
-	JTextField userSearchField;
-	JList userList;
-	JList participants;
-	JButton searchButton, applyButton, cancelButton;
+	private JTextField userSearchField;
+	private JButton searchButton, applyButton, cancelButton;
 	private ParticipantsModel model;
 	private BoxPanel userPanel;
-	private JScrollPane scrollPane;
 
 	public ParticipantsWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -39,7 +36,7 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 		userSearchField = new JTextField();
 		// userList = new JList<Person>();
 		searchButton = new JButton("Search");
-		applyButton = new JButton("Apply");
+		applyButton = new JButton("Add");
 		cancelButton = new JButton("Cancel");
 
 		// userList.setMinimumSize(new Dimension(80, 100));
@@ -48,33 +45,33 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 		cancelButton.addActionListener(new CancelAction());
 
 		userPanel = new BoxPanel();
-		userPanel.setPreferredSize(new Dimension(300, 200));
 
 		add(userSearchField, new GBC(0, 1));
 		add(searchButton, new GBC(1, 1));
-		add(userPanel, new GBC(0, 2).setSpan(2, 1));
-		add(applyButton, new GBC(0, 3));
-		add(cancelButton, new GBC(1, 3));
+		add(userPanel, new GBC(0, 2).setSpan(2, 1).setWeight(1, 1));
+		add(applyButton, new GBC(0, 3).setWeight(0.5, 0));
+		add(cancelButton, new GBC(1, 3).setWeight(0.5, 0));
 
 		// TODO Auto-generated constructor stub
 	}
 
-	public class SearchAction implements ActionListener {
+	private class SearchAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.getUsers();
 		}
 	}
 
-	public class ApplyAction implements ActionListener {
+	private class ApplyAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			((EventConfigWindow) getFrame().getEventConfigWindow()).setParticipants(model.getSelectedUsers());
+			getFrame().getEventModel().setParticipants(model.getSelectedUsers());
+			getFrame().getEventModel().updateViews();
 			setVisible(false);
 		}
 	}
 
-	public class CancelAction implements ActionListener {
+	private class CancelAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);

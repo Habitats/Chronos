@@ -28,8 +28,10 @@ import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
 import client.gui.view.CalendarWindowHelper.DayPanel;
 import client.gui.view.CalendarWindowHelper.NotificationPanel;
 import client.gui.view.CalendarWindowHelper.PersonCheckBox;
+import client.gui.view.eventConfig.EventWindow;
 import client.model.CalendarModel;
 import client.model.CalendarModel.Weekday;
+import client.model.EventConfigModel.ViewType;
 import client.model.ChronosModel;
 import events.CalEvent;
 import events.CalEvent.CalEventType;
@@ -255,8 +257,8 @@ public class CalendarWindow extends ChronosWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			((EventConfigWindow) getFrame().getEventConfigWindow()).getModel().setDefaultModel();
-			((EventConfigWindow) getFrame().getEventConfigWindow()).setVisible(true, CalEventType.NEW);
+			getFrame().getEventModel().setDefaultModel();
+			getFrame().getEventModel().setView(ViewType.NEW);
 		}
 	}
 

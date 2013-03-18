@@ -1,9 +1,14 @@
 package events;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import client.model.EventConfigModel.ViewType;
+
 import chronos.Person;
+import chronos.Singleton;
+import chronos.Person.Status;
 import chronos.Room;
 
 /**
@@ -12,7 +17,7 @@ import chronos.Room;
  */
 public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	public enum CalEventType {
-		UPDATE, NEW, DELETE, GET_CONFIRMED;
+		UPDATE, NEW, DELETE;
 	}
 
 	private HashMap<String, Person> participants;
@@ -26,6 +31,10 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	private String description;
 	private final long timestampPrimaryKey;
 	private Room room;
+
+	private boolean alert;
+
+	private int startTime;
 
 	public CalEvent(String title, Date start, int duration, Person creator, String description) {
 		this(title, start, duration, creator, description, 0);
@@ -48,6 +57,14 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	public CalEvent addParticipant(Person... person) {
 		for (int i = 0; i < person.length; i++)
 			participants.put(person[i].getUsername(), person[i]);
+		return this;
+	}
+
+	public CalEvent addParticipant(HashMap<String, Person> participants) {
+		for (Person person : participants.values()) {
+			person.setStatus(Status.WAITING);
+			addParticipant(person);
+		}
 		return this;
 	}
 
@@ -123,8 +140,24 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		this.participants = participants;
 	}
 
+	public void setAlert(boolean alert) {
+		this.alert = alert;
+	}
+
+	public boolean getAlert() {
+		return alert;
+	}
+
 	@Override
 	public int compareTo(CalEvent otherEvent) {
 		return (int) ((start.getTime() - otherEvent.getStart().getTime()) / 1000);
+	}
+
+	public CalEvent setState(ViewType viewType) {
+		if (viewType == ViewType.UPDATE)
+			setState(CalEventType.UPDATE);
+		else if (viewType == viewType.NEW)
+			setState(CalEventType.NEW);
+		return this;
 	}
 }

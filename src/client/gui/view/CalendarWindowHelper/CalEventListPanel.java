@@ -9,7 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import client.gui.view.CalendarWindow;
-import client.gui.view.EventConfigWindow;
+import client.gui.view.eventConfig.EventWindow;
+import client.model.EventConfigModel.ViewType;
 
 import chronos.DateManagement;
 
@@ -44,8 +45,8 @@ public class CalEventListPanel extends JLabel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
-			((EventConfigWindow) view.getFrame().getEventConfigWindow()).getModel().setCalEvent(calEvent);
-			((EventConfigWindow) view.getFrame().getEventConfigWindow()).setVisible(true, CalEventType.UPDATE);
+			view.getFrame().getEventModel().setCalEvent(calEvent);
+			view.getFrame().getEventModel().setView(ViewType.UPDATE);
 		}
 
 		@Override

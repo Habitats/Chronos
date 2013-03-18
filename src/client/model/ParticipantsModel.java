@@ -44,11 +44,11 @@ public class ParticipantsModel extends ChronosModel {
 		fireNetworkEvent(new QueryEvent(QueryType.PERSONS));
 	}
 
-	public ArrayList<Person> getSelectedUsers() {
-		ArrayList<Person> selectedUsers = new ArrayList<Person>();
+	public HashMap<String, Person> getSelectedUsers() {
+		HashMap<String, Person> selectedUsers = new HashMap<String, Person>();
 		for (Person user : users.keySet()) {
 			if (users.get(user).isSelected())
-				selectedUsers.add(user);
+				selectedUsers.put(user.getUsername(), user);
 		}
 		return selectedUsers;
 	}

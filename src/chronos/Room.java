@@ -1,9 +1,9 @@
 package chronos;
 
 public class Room implements Comparable<Room> {
-	String name;
+	private String name;
 	private String description;
-	int capacity;
+	private int capacity;
 
 	public Room(String name, int capacity, String description) {
 		this.name = name;
