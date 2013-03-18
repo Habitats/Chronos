@@ -205,7 +205,6 @@ public class EventConfigWindow extends ChronosWindow {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.newCalEvent();
-			setVisible(false);
 		}
 	}
 

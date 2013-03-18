@@ -91,7 +91,7 @@ public class MainFrame extends JFrame {
 
 		eventConfigModel = new EventConfigModel(controller);
 		eventConfigWindow = new EventConfigWindow(eventConfigModel, this);
-		notificationWindow = new NotificationWindow(eventConfigModel, this);
+//		notificationWindow = new NotificationWindow(eventConfigModel, this);
 
 		roomBookingModel = new RoomBookingModel(controller);
 		roomBookingWindow = new RoomBookingWindow(roomBookingModel, this);
@@ -117,7 +117,7 @@ public class MainFrame extends JFrame {
 		// ADD COMPONENTS
 		layeredPane.add(calendarWindow, new Integer(0));
 		layeredPane.add(eventConfigWindow, new Integer(2));
-		layeredPane.add(notificationWindow, new Integer(2));
+//		layeredPane.add(notificationWindow, new Integer(2));
 		layeredPane.add(invitationWindow, new Integer(4));
 		layeredPane.add(roomBookingWindow, new Integer(14));
 		layeredPane.add(addParticipantWindow, new Integer(16));
@@ -128,7 +128,7 @@ public class MainFrame extends JFrame {
 		int eventConfigWidth = 500;
 		int eventConfigHeight = frameHeight / 2;
 		eventConfigWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
-		notificationWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
+//		notificationWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
 
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 4;
