@@ -141,7 +141,7 @@ public class EventConfigModel extends ChronosModel {
 		view.getStartDateField().setBackground(Color.white);
 
 		view.getAlert().setSelected(false);
-		
+
 	}
 
 	public void removeEvent() {

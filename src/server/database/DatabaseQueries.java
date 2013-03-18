@@ -166,33 +166,32 @@ public class DatabaseQueries {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<Comparable> searchUsers(String streng) {
 		ArrayList<Comparable> users = new ArrayList<Comparable>();
 		ResultSet rs;
-		String query = "SELECT username, name FROM Person WHERE name like '%"+streng+"%'OR username like '%"+streng+"%';";
+		String query = "SELECT username, name FROM Person WHERE name like '%" + streng + "%'OR username like '%" + streng + "%';";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
 			String logg = "";
 			int results = 0;
-			while(rs.next()) {
+			while (rs.next()) {
 				String uname = rs.getString(1);
 				String name = rs.getString(2);
 				users.add(new Person(uname, name));
-				logg += " "+uname+",";
+				logg += " " + uname + ",";
 				results++;
 			}
 			logg = logg.substring(0, logg.length() - 1);
-			Singleton.log("Search for "+streng+" gave "+results+" matches:"+logg);
+			Singleton.log("Search for " + streng + " gave " + results + " matches:" + logg);
 			return users;
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			Singleton.log("error occurred while searching user machings for "+streng);
+			Singleton.log("error occurred while searching user machings for " + streng);
 		}
 		return null;
 	}
-	
 	/**
 	 * Returns an ArrayList of chronos.Person
 	 * 
@@ -402,7 +401,7 @@ public class DatabaseQueries {
 	 * @param event
 	 */
 	public void updateCalEvent(CalEvent event) {
-		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?, room=? WHERE event_ID="+event.getTimestamp()+";";
+		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?, room=? WHERE event_ID=" + event.getTimestamp() + ";";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);

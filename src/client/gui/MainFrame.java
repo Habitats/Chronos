@@ -20,7 +20,6 @@ import client.gui.view.EventConfigWindow;
 import client.gui.view.InvitationWindow;
 import client.gui.view.LoginWindow;
 import client.gui.view.RoomBookingWindow;
-import client.gui.view.NotificationWindow;
 import client.model.ParticipantsModel;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
@@ -62,7 +61,7 @@ public class MainFrame extends JFrame {
 	private ChronosWindow addParticipantWindow;
 	private ParticipantsModel addParticipantModel;
 
-	private int frameWidth = 1150;
+	private int frameWidth = 1200;
 	private int frameHeight = 620;
 	private JFrame loginFrame;
 
@@ -91,7 +90,7 @@ public class MainFrame extends JFrame {
 
 		eventConfigModel = new EventConfigModel(controller);
 		eventConfigWindow = new EventConfigWindow(eventConfigModel, this);
-//		notificationWindow = new NotificationWindow(eventConfigModel, this);
+		// notificationWindow = new NotificationWindow(eventConfigModel, this);
 
 		roomBookingModel = new RoomBookingModel(controller);
 		roomBookingWindow = new RoomBookingWindow(roomBookingModel, this);
@@ -117,7 +116,7 @@ public class MainFrame extends JFrame {
 		// ADD COMPONENTS
 		layeredPane.add(calendarWindow, new Integer(0));
 		layeredPane.add(eventConfigWindow, new Integer(2));
-//		layeredPane.add(notificationWindow, new Integer(2));
+		// layeredPane.add(notificationWindow, new Integer(2));
 		layeredPane.add(invitationWindow, new Integer(4));
 		layeredPane.add(roomBookingWindow, new Integer(14));
 		layeredPane.add(addParticipantWindow, new Integer(16));
@@ -128,7 +127,9 @@ public class MainFrame extends JFrame {
 		int eventConfigWidth = 500;
 		int eventConfigHeight = frameHeight / 2;
 		eventConfigWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
-//		notificationWindow.setBounds((frameWidth - eventConfigWidth) / 2, (frameHeight - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
+		// notificationWindow.setBounds((frameWidth - eventConfigWidth) / 2,
+		// (frameHeight - eventConfigHeight) / 2, eventConfigWidth,
+		// eventConfigHeight);
 
 		int roomBookingWidth = frameWidth / 4;
 		int roomBookingHeight = frameHeight / 4;
