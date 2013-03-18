@@ -23,6 +23,7 @@ import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
+import events.CalEvent.CalEventType;
 
 public class EventConfigWindow extends ChronosWindow {
 
@@ -208,6 +209,11 @@ public class EventConfigWindow extends ChronosWindow {
 		}
 	}
 
+	public void setVisible(boolean aFlag, CalEventType state) {
+		super.setVisible(aFlag);
+		model.setState(state);
+	}
+
 	/**
 	 * General input info from veiw made available for the model
 	 */
@@ -242,5 +248,4 @@ public class EventConfigWindow extends ChronosWindow {
 	public JCheckBox getAlert() {
 		return alert;
 	}
-
 }

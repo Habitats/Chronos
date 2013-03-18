@@ -18,7 +18,6 @@ public class EventConfigModel extends ChronosModel {
 
 	private EventConfigWindow eventConfigWindow;
 
-	private ConfigState state;
 	private EventConfigWindow view;
 
 	/**
@@ -33,13 +32,15 @@ public class EventConfigModel extends ChronosModel {
 	private String startTime;
 
 	private CalEvent event;
-
-	public enum ConfigState {
-		EDIT, NEW, VIEW;
-	}
+	private CalEventType state;
 
 	public EventConfigModel(ClientController controller) {
 		super(controller, ChronosType.EVENT_CONFIG);
+	}
+
+	public EventConfigModel setState(CalEventType state) {
+		this.state = state;
+		return this;
 	}
 
 	public void setCalEvent(CalEvent event) {
@@ -82,17 +83,6 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	// State of window
-	public void setState(ConfigState state) {
-		this.state = state;
-	}
-
-	public ConfigState getState() {
-		return state;
-	}
-
-	public void editEvent() {
-		setState(ConfigState.EDIT);
-	}
 
 	private boolean validateInput() {
 		eventName = view.getEventNameField().getText();
@@ -126,14 +116,11 @@ public class EventConfigModel extends ChronosModel {
 	}
 
 	public void newCalEvent() {
-		// Person user1 = new Person("herp");
-		// Person user2 = new Person("derp");
-		// Person user3 = new Person("snerp");
 		Person creator = Singleton.getInstance().getSelf();
 		creator.setStatus(Person.Status.ACCEPTED);
 		CalEvent event;
 		if (validateInput()) {
-			event = new CalEvent(getEventName(), getStartTime(), getDuration(), creator, getEventDescription()).setState(CalEventType.NEW);
+			event = new CalEvent(getEventName(), getStartTime(), getDuration(), creator, getEventDescription()).setState(state);
 			fireNetworkEvent(event);
 		}
 		view.setVisible(false);

@@ -208,8 +208,8 @@ public class DatabaseQueries {
 				ps.setInt(4, evt.getDuration());
 				ps.setString(5, evt.getDescription());
 				ps.setString(6, evt.getCreator().getUsername());
-				if(evt.getRoom() != null)
-					ps.setString(7,  evt.getRoom().getName());
+				if (evt.getRoom() != null)
+					ps.setString(7, evt.getRoom().getName());
 				else
 					ps.setString(7, null);
 				ps.addBatch();
@@ -297,6 +297,7 @@ public class DatabaseQueries {
 
 	/**
 	 * Returns an ArrayList of all events the person is a participant of.
+	 * 
 	 * @param per
 	 * @return ArrayList<Comparable>
 	 */
@@ -304,9 +305,7 @@ public class DatabaseQueries {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
-		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration," +
-				"events.description, person.username, person.name, events.room "+
-				"FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
+		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration," + "events.description, person.username, person.name, events.room " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
 				+ processString(per.getUsername()) + " AND person.username = events.owner ORDER BY events.startTime ASC;";
 		try {
 			rs = db.makeSingleQuery(query);
@@ -321,7 +320,7 @@ public class DatabaseQueries {
 				String name = rs.getString(7);
 				String room = rs.getString(8);
 				CalEvent evt = new CalEvent(title, new Date(start), duration, new Person(username, name), description, event_id);
-				if(room != null)
+				if (room != null)
 					evt.setRoom(getRoom(room));
 				evt.setParticipants(getParticipantsByEventId(event_id));
 				al.add(evt);
@@ -332,22 +331,21 @@ public class DatabaseQueries {
 		return al;
 
 	}
-	
+
 	public Room getRoom(String name) {
 		ResultSet rs;
-		String query = "SELECT capacity, description FROM rooms WHERE name="+processString(name);
-		try{
+		String query = "SELECT capacity, description FROM rooms WHERE name=" + processString(name);
+		try {
 			rs = db.makeSingleQuery(query);
 			rs.first();
 			int cap = rs.getInt(1);
 			String desc = rs.getString(2);
 			return new Room(name, cap, desc);
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
 
 	/**
 	 * 
@@ -357,8 +355,7 @@ public class DatabaseQueries {
 	public HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
-		String query = "SELECT person.username, name, status " + "FROM person, participants "+
-		"WHERE participants.event_ID = " + id + " AND participants.username = person.username";
+		String query = "SELECT person.username, name, status " + "FROM person, participants " + "WHERE participants.event_ID = " + id + " AND participants.username = person.username";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -379,7 +376,7 @@ public class DatabaseQueries {
 	 * @param event
 	 */
 	public void updateCalEvent(CalEvent event) {
-		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?, room=? WHERE event_ID=?;";
+		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?, room=? WHERE event_ID="+event.getTimestamp()+";";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
@@ -388,8 +385,10 @@ public class DatabaseQueries {
 				ps.setString(2, "" + event.getStart());
 				ps.setString(3, "" + event.getDuration());
 				ps.setString(4, event.getDescription());
-				ps.setString(5, processString(event.getRoom().getName()));
-				ps.setString(6, "" + event.getTimestamp());
+				if (event.getRoom() != null)
+					ps.setString(5, event.getRoom().getName());
+				else
+					ps.setString(5, null);
 				ps.addBatch();
 				Singleton.log("successfully updated: " + event.getTitle() + " with fields " + event.getStart().getTime() + " and " + event.getDuration() + " and " + event.getDescription());
 			} catch (SQLException e) {
@@ -439,10 +438,12 @@ public class DatabaseQueries {
 
 	public ArrayList<Comparable> getAvailableRooms(CalEvent event) {
 		ArrayList<Comparable> roomList = new ArrayList<Comparable>();
-//		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms, Events WHERE Events.room_ID=Rooms.room_ID" + " AND (startTime+duration <" + event.getStart().getTime() + " OR startTime >" + (event.getStart().getTime() + event.getDuration()) + ") GROUP BY events.room_id";
-		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " +
-				"ON Events.room=Rooms.name AND (startTime+duration<"+event.getStart().getTime()+" " +
-				"OR startTime > "+(event.getStart().getTime()+event.getDuration())+");";
+		// String query =
+		// "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms, Events WHERE Events.room_ID=Rooms.room_ID"
+		// + " AND (startTime+duration <" + event.getStart().getTime() +
+		// " OR startTime >" + (event.getStart().getTime() +
+		// event.getDuration()) + ") GROUP BY events.room_id";
+		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " + "ON Events.room=Rooms.name AND (startTime+duration<" + event.getStart().getTime() + " " + "OR startTime > " + (event.getStart().getTime() + event.getDuration()) + ");";
 		ResultSet rs;
 		try {
 			rs = db.makeSingleQuery(query);
