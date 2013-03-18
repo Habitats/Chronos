@@ -43,9 +43,8 @@ public class CalendarWindow extends ChronosWindow {
 
 	private CalendarModel model;
 	private JButton newEventButton;
-	private JPanel weekPanel;
 	private ChangeWeekButton prevButton, nextButton;
-	private JScrollPane eventsPane, othersCalPane, notificationsPane, weekScrollPane;
+	private JScrollPane eventsPane, othersCalPane, notificationsPane;
 	private BoxPanel eventsPanel, othersCalPanel, notificationsPanel;
 	private DayPanel mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel, sundayPanel;
 	private CalLabel dateLbl, weekNumberLbl, mondayLbl, tuesdayLbl, wednesdayLbl, thursdayLbl, fridayLbl, saturdayLbl, sundayLbl;
@@ -87,10 +86,10 @@ public class CalendarWindow extends ChronosWindow {
 		tabbedPane.add(eventsPane);
 		tabbedPane.add(notificationsPane);
 		tabbedPane.setTitleAt(0, "Events");
-		tabbedPane.setTitleAt(1, "Not");
-		tabbedPane.setMaximumSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
-		tabbedPane.setMinimumSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
-		tabbedPane.setPreferredSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
+		tabbedPane.setTitleAt(1, "Invites");
+		tabbedPane.setMaximumSize(new Dimension(eventsPanelWidth+30, eventsPanelHeight));
+		tabbedPane.setMinimumSize(new Dimension(eventsPanelWidth+30, eventsPanelHeight));
+		tabbedPane.setPreferredSize(new Dimension(eventsPanelWidth+30, eventsPanelHeight));
 
 		notificationsPanel.add(new NotificationPanel(new CalEvent("Jostein", new Date(), 10, new Person("Jossi"), "hehehhehe"), this, eventsPanelWidth));
 		Border border = BorderFactory.createLineBorder(Color.white, 3);
@@ -102,26 +101,16 @@ public class CalendarWindow extends ChronosWindow {
 		othersCalPane.setColumnHeaderView(othersLbl);
 		othersCalPane.setPreferredSize(new Dimension(eventsPanelWidth, 250));
 		othersCalPane.setMinimumSize(new Dimension(eventsPanelWidth, 250));
+		othersCalPane.setMaximumSize(new Dimension(eventsPanelWidth, 250));
 		othersCalPane.setBorder(border);
 		add(othersCalPane, new GBC(i, 4));
 
 		i++;
 		i++;
 		i++;
-		
-		weekPanel = new JPanel();
-		weekPanel.setLayout(new GridBagLayout());
-		weekPanel.setPreferredSize(new Dimension(140*7-19, 500));
-		weekPanel.setMaximumSize(new Dimension(140*7-19, 500));
-		weekPanel.setMinimumSize(new Dimension(140*7-19, 500));
-		weekScrollPane = new JScrollPane(weekPanel);
-		weekScrollPane.setMinimumSize(new Dimension(140*7, 500));
-		weekScrollPane.setPreferredSize(new Dimension(140*7, 500));
-		weekScrollPane.setMaximumSize(new Dimension(140*7, 500));
-		add(weekScrollPane, new GBC(i,3).setSpan(7, 2));
 
 		mondayPanel = new DayPanel();
-		weekPanel.add(mondayPanel, new GBC(i, 3, Align.NOT_RIGHT).setSpan(1, 2));
+		add(mondayPanel, new GBC(i, 3, Align.NOT_RIGHT).setSpan(1, 2));
 		
 		mondayLbl = new CalLabel("Monday");
 		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -129,7 +118,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		tuesdayPanel = new DayPanel();
-		weekPanel.add(tuesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		add(tuesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		tuesdayLbl = new CalLabel("Tuesday");
 		add(tuesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -137,7 +126,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		wednesdayPanel = new DayPanel();
-		weekPanel.add(wednesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		add(wednesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		wednesdayLbl = new CalLabel("Wednesday");
 		add(wednesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -149,7 +138,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		thursdayPanel = new DayPanel();
-		weekPanel.add(thursdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		add(thursdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		thursdayLbl = new CalLabel("Thursday");
 		add(thursdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -160,7 +149,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		fridayPanel = new DayPanel();
-		weekPanel.add(fridayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		add(fridayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		fridayLbl = new CalLabel("Friday");
 		add(fridayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -172,7 +161,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		saturdayPanel = new DayPanel();
-		weekPanel.add(saturdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		add(saturdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		saturdayLbl = new CalLabel("Saturday");
 		add(saturdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -184,7 +173,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		sundayPanel = new DayPanel();
-		weekPanel.add(sundayPanel, new GBC(i, 3, Align.NOT_LEFT).setSpan(1, 2));
+		add(sundayPanel, new GBC(i, 3, Align.NOT_LEFT).setSpan(1, 2));
 
 		sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -208,7 +197,7 @@ public class CalendarWindow extends ChronosWindow {
 
 	public void addEvent(CalEvent event, Weekday weekday) {
 		CalEventPanel panel = new CalEventPanel(event, this);
-		eventsPanel.add(new CalEventListPanel(event, this, eventsPane.getWidth() - 19));
+		eventsPanel.add(new CalEventListPanel(event, this, eventsPanelWidth));
 		switch (weekday) {
 		case MONDAY:
 			mondayPanel.add(panel);
@@ -295,7 +284,6 @@ public class CalendarWindow extends ChronosWindow {
 				model.removeSelectedPerson(person);
 				model.update();
 			}
-
 		}
 	}
 
@@ -319,7 +307,7 @@ public class CalendarWindow extends ChronosWindow {
 	}
 
 	public void addNotification(CalEvent calEvent) {
-		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPane.getWidth() - 19));
+		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPanelWidth));
 	}
 
 	public void internalRepaint() {

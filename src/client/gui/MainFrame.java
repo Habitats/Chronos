@@ -62,7 +62,7 @@ public class MainFrame extends JFrame {
 	private ChronosWindow addParticipantWindow;
 	private ParticipantsModel addParticipantModel;
 
-	private int frameWidth = 1150;
+	private int frameWidth = 1200;
 	private int frameHeight = 620;
 	private JFrame loginFrame;
 
