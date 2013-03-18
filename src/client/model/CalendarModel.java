@@ -116,7 +116,7 @@ public class CalendarModel extends ChronosModel {
 				calendarWindow.addOtherPerson(person, false);
 			}
 		}
-		calendarWindow.internalRepaint();
+		calendarWindow.getFrame().pack();
 	}
 
 	private void getPersonEvents(Person person) {
