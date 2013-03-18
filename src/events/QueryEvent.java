@@ -18,6 +18,7 @@ public class QueryEvent extends NetworkEvent {
 
 	private QueryType queryType;
 	private Person otherPerson;
+	private CalEvent calEvent;
 
 	public QueryEvent(QueryType queryType) {
 		this(queryType, Singleton.getInstance().getSelf());
@@ -49,6 +50,11 @@ public class QueryEvent extends NetworkEvent {
 	public ArrayList<Comparable> getSortedResults() {
 		Collections.sort(results);
 		return results;
+	}
+
+	public QueryEvent addCalEvent(CalEvent calEvent) {
+		this.calEvent = calEvent;
+		return this;
 	}
 
 	public QueryType getQueryType() {
