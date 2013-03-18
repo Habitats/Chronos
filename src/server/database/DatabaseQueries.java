@@ -464,26 +464,23 @@ public class DatabaseQueries {
 
 	public ArrayList<Comparable> getAvailableRooms(CalEvent event) {
 		ArrayList<Comparable> roomList = new ArrayList<Comparable>();
-		// String query =
-		// "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms, Events WHERE Events.room_ID=Rooms.room_ID"
-		// + " AND (startTime+duration <" + event.getStart().getTime() +
-		// " OR startTime >" + (event.getStart().getTime() +
-		// event.getDuration()) + ") GROUP BY events.room_id";
 		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " + "ON Events.room=Rooms.name AND (startTime+duration<" + event.getStart().getTime() + " " + "OR startTime > " + (event.getStart().getTime() + event.getDuration()) + ");";
 		ResultSet rs;
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
+			String logg = "";
 			while (rs.next()) {
 				String name = rs.getString(1);
 				String desc = rs.getString(2);
 				int cap = rs.getInt(3);
 				roomList.add(new Room(name, cap, desc));
-				Singleton.log("Successfully retrieved all available rooms for \"" + event.getTitle() + "\"");
+				logg += " "+name;
 			}
+			Singleton.log("Successfully retrieved all available rooms: "+logg);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			Singleton.log("Error retrieving all available rooms for \"" + event.getTitle() + "\"");
+			Singleton.log("Error retrieving all available rooms");
 		}
 		return roomList;
 	}

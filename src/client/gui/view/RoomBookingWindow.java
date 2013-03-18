@@ -1,5 +1,6 @@
 package client.gui.view;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -23,7 +24,7 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 	private JList roomList;
 	private JButton bookButton, cancelButton, autobookButton;
 	private RoomBookingModel model;
-	private BoxPanel roomPanel;
+//	private BoxPanel roomPanel;
 
 	public RoomBookingWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -32,15 +33,16 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 
 		setLayout(new GridBagLayout());
 
-		roomPanel = new BoxPanel();
-//		roomList = new JList<>();
+//		roomPanel = new BoxPanel();
+		roomList = new JList<>();
 		bookButton = new JButton("Book");
 		cancelButton = new JButton("Cancel");
 		autobookButton = new JButton("Autobook");
 
-		roomPanel.setPreferredSize(new Dimension(100,100));
-//		roomList.setPreferredSize(new Dimension(100, 100));
-//		roomList.setMinimumSize(new Dimension(100, 80));
+//		roomPanel.setPreferredSize(new Dimension(300,200));
+//		roomPanel.setMinimumSize(new Dimension(100,80));
+		roomList.setPreferredSize(new Dimension(100, 100));
+		roomList.setMinimumSize(new Dimension(100, 80));
 		bookButton.setMinimumSize(new Dimension(100, 20));
 
 		autobookButton.addActionListener(new AutoBookAction());
@@ -48,8 +50,8 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 		cancelButton.addActionListener(new CancelAction());
 
 		add(new Label("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
-		add(roomPanel, new GBC(0,1).setSpan(1, 6));
-//		add(roomList, new GBC(0, 1).setSpan(1, 6));
+//		add(roomPanel, new GBC(0,2).setSpan(2, 1));
+		add(roomList, new GBC(0, 1).setSpan(1, 6));
 		add(autobookButton, new GBC(1, 1));
 		add(bookButton, new GBC(0, 7));
 		add(cancelButton, new GBC(1, 7));
@@ -111,10 +113,11 @@ public class RoomBookingWindow extends ChronosWindow implements ActionListener {
 	
 	public RoomCheckBox addRoom(Room room) {
 		RoomCheckBox checkBox = new RoomCheckBox(room);
-		roomPanel.add(checkBox);
+//		roomList.add(checkBox);
+		roomList.add(room.getName(), checkBox);
 		return checkBox;
 	}
-	public Container getRoomPanel() {
-		return roomPanel;
+	public JList getRoomPanel() {
+		return roomList;
 	}
 }
