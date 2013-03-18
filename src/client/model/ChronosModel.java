@@ -19,7 +19,7 @@ abstract public class ChronosModel {
 	 * @param event
 	 *            the event sent to server
 	 */
-	public void fireNetworkEvent(NetworkEvent event) {
+	public final void fireNetworkEvent(NetworkEvent event) {
 		controller.sendNetworkEvent(event);
 	}
 

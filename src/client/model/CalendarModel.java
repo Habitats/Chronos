@@ -64,7 +64,6 @@ public class CalendarModel extends ChronosModel {
 	 */
 
 	public void addEvents(QueryEvent queryEvent) {
-		@SuppressWarnings("unchecked")
 		ArrayList<CalEvent> calEvents = (ArrayList<CalEvent>) queryEvent.getResults();
 		Person person = queryEvent.getPerson();
 		String username = person.getUsername();

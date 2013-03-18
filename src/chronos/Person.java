@@ -58,7 +58,7 @@ public class Person implements Serializable, Comparable<Person> {
 
 	@Override
 	public String toString() {
-		return String.format("Username: %s - Name: %s", username, name);
+		return String.format("U: %s - N: %s", username, name);
 	}
 
 	@Override

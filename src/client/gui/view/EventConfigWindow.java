@@ -6,8 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -16,12 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
+import chronos.Person;
 import client.gui.GBC;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
 
-public class EventConfigWindow extends ChronosWindow implements ActionListener {
+public class EventConfigWindow extends ChronosWindow {
 
 	private String[] startTimeArray = { "00:00", "01:00", "02:00", "03:00", "04:00" };
 	private Integer[] durationArray = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
@@ -29,7 +32,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 	protected JTextField eventNameField, dateField, roomNumberField;
 	protected JComboBox startTime, duration;
 	protected JTextArea eventDescriptionArea;
-	protected JList participantList;
+	protected JList<Person> participantList;
 	protected JCheckBox alert;
 	protected JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
 
@@ -48,9 +51,12 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		startTime = new JComboBox(startTimeArray);
 		duration = new JComboBox(durationArray);
 		eventDescriptionArea = new JTextArea();
-		participantList = new JList<>();
-		participantList.setEnabled(false);
+
+		participantList = new JList<Person>();
+		participantList.setEnabled(true);
+
 		alert = new JCheckBox();
+
 		roomNumberField = new JTextField("");
 		roomNumberField.setEditable(false);
 
@@ -70,7 +76,7 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		dateField.setColumns(8);
 		dateField.setBorder(border);
 		roomNumberField.setColumns(5);
-		
+
 		eventDescriptionArea.setPreferredSize(new Dimension(100, 100));
 		eventDescriptionArea.setBorder(border);
 		participantList.setPreferredSize(new Dimension(100, 100));
@@ -121,6 +127,14 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		this.model.setView(this);
 	}
 
+	public void setParticipants(ArrayList<Person> participants) {
+		DefaultListModel<Person> model = new DefaultListModel<Person>();
+		participantList.setModel(model);
+		for (Person person : participants) {
+			model.addElement(person);
+		}
+	}
+
 	public EventConfigModel getModel() {
 		return model;
 	}
@@ -130,7 +144,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 		}
-
 	}
 
 	private class DurationListener implements ActionListener {
@@ -194,10 +207,6 @@ public class EventConfigWindow extends ChronosWindow implements ActionListener {
 			model.newCalEvent();
 			setVisible(false);
 		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
 	}
 
 	/**
