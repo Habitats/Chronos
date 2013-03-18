@@ -47,6 +47,7 @@ public class CalEventPanel extends JPanel {
 
 	private class CalPanelMouseAdapter extends MouseAdapter {
 		@Override
+		
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
 			((EventConfigWindow) view.getFrame().getEventConfigWindow()).getModel().setCalEvent(calEvent);
