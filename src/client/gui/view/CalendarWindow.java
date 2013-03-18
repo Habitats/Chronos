@@ -85,6 +85,7 @@ public class CalendarWindow extends ChronosWindow {
 		tabbedPane.setTitleAt(1, "Not");
 		tabbedPane.setMaximumSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
 		tabbedPane.setMinimumSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
+		tabbedPane.setPreferredSize(new Dimension(eventsPanelWidth, eventsPanelHeight));
 		
 		notificationsPanel.add(new NotificationPanel(new CalEvent("Jostein", new Date(), 10, new Person("Jossi"), "hehehhehe"),this, eventsPanelWidth));
 		Border border = BorderFactory.createLineBorder(Color.white, 3);
