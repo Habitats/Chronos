@@ -54,4 +54,6 @@ public interface DatabaseControllerInterface {
 	 */
 	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event);
 
+	
+	public QueryEvent searchForUser(QueryEvent qe, String searchString);
 }
