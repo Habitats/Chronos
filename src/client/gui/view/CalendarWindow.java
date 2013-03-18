@@ -13,6 +13,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -42,8 +43,9 @@ public class CalendarWindow extends ChronosWindow {
 
 	private CalendarModel model;
 	private JButton newEventButton;
+	private JPanel weekPanel;
 	private ChangeWeekButton prevButton, nextButton;
-	private JScrollPane eventsPane, othersCalPane, notificationsPane;
+	private JScrollPane eventsPane, othersCalPane, notificationsPane, weekScrollPane;
 	private BoxPanel eventsPanel, othersCalPanel, notificationsPanel;
 	private DayPanel mondayPanel, tuesdayPanel, wednesdayPanel, thursdayPanel, fridayPanel, saturdayPanel, sundayPanel;
 	private CalLabel dateLbl, weekNumberLbl, mondayLbl, tuesdayLbl, wednesdayLbl, thursdayLbl, fridayLbl, saturdayLbl, sundayLbl;
@@ -106,9 +108,16 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 		i++;
 		i++;
-
+		
+		weekPanel = new JPanel();
 		mondayPanel = new DayPanel();
-		add(mondayPanel, new GBC(i, 3, Align.NOT_RIGHT).setSpan(1, 2));
+		weekPanel.setLayout(new GridBagLayout());
+		weekPanel.add(mondayPanel, new GBC(i, 3, Align.NOT_RIGHT).setSpan(1, 2));
+		weekScrollPane = new JScrollPane(weekPanel);
+		weekScrollPane.setMinimumSize(new Dimension(140*7+19, 500));
+		weekScrollPane.setPreferredSize(new Dimension(140*7+19, 500));
+		weekScrollPane.setMaximumSize(new Dimension(140*7+19, 500));
+		add(weekScrollPane, new GBC(i,3).setSpan(7, 2));
 
 		mondayLbl = new CalLabel("Monday");
 		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -116,7 +125,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		tuesdayPanel = new DayPanel();
-		add(tuesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		weekPanel.add(tuesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		tuesdayLbl = new CalLabel("Tuesday");
 		add(tuesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -124,7 +133,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		wednesdayPanel = new DayPanel();
-		add(wednesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		weekPanel.add(wednesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		wednesdayLbl = new CalLabel("Wednesday");
 		add(wednesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -136,7 +145,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		thursdayPanel = new DayPanel();
-		add(thursdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		weekPanel.add(thursdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		thursdayLbl = new CalLabel("Thursday");
 		add(thursdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -147,7 +156,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		fridayPanel = new DayPanel();
-		add(fridayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		weekPanel.add(fridayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		fridayLbl = new CalLabel("Friday");
 		add(fridayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -159,7 +168,7 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		saturdayPanel = new DayPanel();
-		add(saturdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
+		weekPanel.add(saturdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
 
 		saturdayLbl = new CalLabel("Saturday");
 		add(saturdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
@@ -171,11 +180,12 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 
 		sundayPanel = new DayPanel();
-		add(sundayPanel, new GBC(i, 3, Align.NOT_LEFT).setSpan(1, 2));
+		weekPanel.add(sundayPanel, new GBC(i, 3, Align.NOT_LEFT).setSpan(1, 2));
 
 		sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
-
+		
+		
 		updateLabels();
 	}
 
@@ -185,8 +195,8 @@ public class CalendarWindow extends ChronosWindow {
 		this.model.setView(this);
 	}
 
-	public void addOtherPerson(Person person) {
-		PersonCheckBox box = new PersonCheckBox(person);
+	public void addOtherPerson(Person person, boolean isSelected) {
+		PersonCheckBox box = new PersonCheckBox(person, isSelected);
 		box.addItemListener(new CheckBoxListener());
 		othersCalPanel.add(box);
 		repaint();
@@ -311,5 +321,10 @@ public class CalendarWindow extends ChronosWindow {
 	public void internalRepaint() {
 		repaint();
 
+	}
+
+	public void removePersonCheckBoxes() {
+		othersCalPanel.removeAll();
+		repaint();
 	}
 }

@@ -32,14 +32,14 @@ public class CalendarModel extends ChronosModel {
 
 	private CalendarWindow calendarWindow;
 	private HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
-	private HashMap<String, Person> persons;
+	private HashMap<String, Person> selectedPersons;
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
 
 	public CalendarModel(ClientController controller) {
 		super(controller, ChronosType.CALENDAR);
 		selectedPersonsEvents = new HashMap<String, ArrayList<CalEvent>>();
-		persons = new HashMap<String, Person>();
+		selectedPersons = new HashMap<String, Person>();
 		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 		currentDisplayedWeek = DateManagement.getWeek(currentDisplayedDate);
 	}
@@ -68,7 +68,7 @@ public class CalendarModel extends ChronosModel {
 		Person person = queryEvent.getPerson();
 		String username = person.getUsername();
 		selectedPersonsEvents.put(username, calEvents);
-		persons.put(username, person);
+		selectedPersons.put(username, person);
 		update();
 	}
 
@@ -106,10 +106,15 @@ public class CalendarModel extends ChronosModel {
 		return false;
 	}
 
-	public void addOtherPersons(QueryEvent queryEvent) {
+	private void addOtherPersons(QueryEvent queryEvent) {
 		ArrayList<Person> persons = (ArrayList<Person>) queryEvent.getResults();
+		calendarWindow.removePersonCheckBoxes();
 		for (Person person : persons) {
-			calendarWindow.addOtherPerson(person);
+			if(selectedPersons.containsKey(person.getUsername())) {
+				calendarWindow.addOtherPerson(person, true);
+			} else {
+				calendarWindow.addOtherPerson(person, false);
+			}
 		}
 		calendarWindow.internalRepaint();
 	}
@@ -125,7 +130,7 @@ public class CalendarModel extends ChronosModel {
 
 	public void removeSelectedPerson(Person person) {
 		selectedPersonsEvents.remove(person.getUsername());
-		persons.remove(person.getUsername());
+		selectedPersons.remove(person.getUsername());
 	}
 
 	public void update() {
