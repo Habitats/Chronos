@@ -376,7 +376,7 @@ public class DatabaseQueries {
 	 * @param event
 	 */
 	public void updateCalEvent(CalEvent event) {
-		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?, room=? WHERE event_ID=?;";
+		String insertQuery = "UPDATE Events SET title=?, startTime=?, duration=?, description=?, room=? WHERE event_ID="+event.getTimestamp()+";";
 		PreparedStatement ps;
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
@@ -386,8 +386,9 @@ public class DatabaseQueries {
 				ps.setString(3, "" + event.getDuration());
 				ps.setString(4, event.getDescription());
 				if (event.getRoom() != null)
-					ps.setString(5, processString(event.getRoom().getName()));
-				ps.setString(6, "" + event.getTimestamp());
+					ps.setString(5, event.getRoom().getName());
+				else
+					ps.setString(5, null);
 				ps.addBatch();
 				Singleton.log("successfully updated: " + event.getTitle() + " with fields " + event.getStart().getTime() + " and " + event.getDuration() + " and " + event.getDescription());
 			} catch (SQLException e) {
