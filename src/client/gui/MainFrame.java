@@ -69,7 +69,7 @@ public class MainFrame extends JFrame {
 	public MainFrame(ClientController controller) {
 		this.controller = controller;
 		setTitle(Singleton.APP_NAME);
-		try {
+/*		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class MainFrame extends JFrame {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-
+*/
 		panels = new ArrayList<ChronosWindow>();
 
 		calendarModel = new CalendarModel(controller);
