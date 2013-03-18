@@ -111,6 +111,7 @@ public class CalendarModel extends ChronosModel {
 		for (Person person : persons) {
 			calendarWindow.addOtherPerson(person);
 		}
+		calendarWindow.internalRepaint();
 	}
 
 	private void getPersonEvents(Person person) {
