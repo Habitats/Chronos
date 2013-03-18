@@ -17,12 +17,11 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 
 	private HashMap<String, Person> participants;
 
-	private String Title;
 	private Date start;
 	private int duration;
 	private CalEventType type;
 	private final Person creator;
-	private final String title;
+	private String title; //final?
 	private String description;
 	private final long timestampPrimaryKey;
 	private Room room;
@@ -100,7 +99,7 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	}
 
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	public Room getRoom() {

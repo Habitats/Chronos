@@ -407,10 +407,10 @@ public class DatabaseQueries {
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
 			try {
-				ps.setString(1, processString(event.getTitle()));
-				ps.setString(2, "" + event.getStart());
-				ps.setString(3, "" + event.getDuration());
-				ps.setString(4, processString(event.getDescription()));
+				ps.setString(1, event.getTitle());
+				ps.setLong(2, event.getStart().getTime());
+				ps.setInt(3, event.getDuration());
+				ps.setString(4, event.getDescription());
 				if (event.getRoom() != null)
 					ps.setString(5, event.getRoom().getName());
 				else
