@@ -9,6 +9,7 @@ import events.AuthEvent;
 import events.CalEvent;
 import events.NetworkEvent;
 import events.QueryEvent;
+import events.QueryEvent.QueryType;
 import server.database.DatabaseController;
 import server.networking.ClientConnection;
 import server.networking.Server;
@@ -30,7 +31,7 @@ public class ServerController implements Runnable {
 	 * serverConnection
 	 */
 	public void evaluateNetworkEvent(NetworkEvent event) {
-		Singleton.log("Server evaluating: " + event.toString());
+		// Singleton.log("Server evaluating: " + event.toString());
 
 		switch (event.getType()) {
 		case LOGIN:
@@ -56,7 +57,7 @@ public class ServerController implements Runnable {
 	 * Further evaluation of calendar events
 	 */
 	private void evaluateCalEvent(CalEvent event) {
-		Singleton.log("Evaluating calEvent...");
+		// Singleton.log("Evaluating calEvent...");
 		switch (event.getState()) {
 		case DELETE:
 			if (event.getSender().getUsername().toLowerCase().equals(event.getCreator().getUsername().toLowerCase()))
@@ -77,10 +78,9 @@ public class ServerController implements Runnable {
 	}
 
 	private void evaluateQueryEvent(QueryEvent event) {
-		Singleton.log("Evaluating queryEvent...");
 		switch (event.getQueryType()) {
 		case CALEVENTS:
-			event = dbController.getCalEvents(event.getPerson());
+			event = dbController.getCalEvents(event.getPerson(), event);
 			echoNetworkEventToSender(event);
 			break;
 		case PERSONS:
@@ -104,7 +104,8 @@ public class ServerController implements Runnable {
 	private void sendUpdateToAllParticipants(HashMap<String, Person> participants) {
 		for (String username : participants.keySet()) {
 			Person person = participants.get(username);
-			QueryEvent event = dbController.getCalEvents(person);
+			QueryEvent event = new QueryEvent(QueryType.CALEVENTS);
+			event = dbController.getCalEvents(person, event);
 			sendSingleNetworkEvent(event, person);
 		}
 	}
@@ -122,7 +123,8 @@ public class ServerController implements Runnable {
 	private void sendSingleNetworkEvent(NetworkEvent event, Person person) {
 		try {
 			for (ClientConnection clientConnection : server.getClientConnections()) {
-				Singleton.log("Echoing event: " + event + " - Recepient: " + person.getUsername());
+				// Singleton.log("Echoing event: " + event + " - Recepient: " +
+				// person.getUsername());
 				if (clientConnection.getPerson().getUsername().toLowerCase().equals(person.getUsername().toLowerCase())) {
 					clientConnection.getOut().writeObject(event);
 				}

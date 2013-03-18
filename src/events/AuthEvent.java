@@ -11,10 +11,10 @@ public class AuthEvent extends NetworkEvent {
 	private final String password;
 	private boolean accessGranted = false;
 
-	public AuthEvent(EventType type, Person person, String password) {
+	public AuthEvent(EventType type, Person sender, String password) {
 		super(type);
-		super.person = person;
-		this.username = person.getUsername();
+		super.sender = sender;
+		this.username = sender.getUsername();
 		this.password = password;
 	}
 
@@ -40,10 +40,10 @@ public class AuthEvent extends NetworkEvent {
 	}
 
 	public Person getPerson() {
-		return person;
+		return sender;
 	}
 
 	public void setSender(Person person) {
-		this.person = person;
+		this.sender = person;
 	}
 }

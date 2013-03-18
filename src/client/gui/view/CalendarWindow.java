@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import chronos.DateManagement;
 import chronos.Person;
@@ -108,21 +110,21 @@ public class CalendarWindow extends ChronosWindow {
 		i++;
 		i++;
 		i++;
-		
+
 		weekPanel = new JPanel();
 		weekPanel.setLayout(new GridBagLayout());
-		weekPanel.setPreferredSize(new Dimension(140*7-19, 500));
-		weekPanel.setMaximumSize(new Dimension(140*7-19, 500));
-		weekPanel.setMinimumSize(new Dimension(140*7-19, 500));
+		weekPanel.setPreferredSize(new Dimension(140 * 7 - 19, 500));
+		weekPanel.setMaximumSize(new Dimension(140 * 7 - 19, 500));
+		weekPanel.setMinimumSize(new Dimension(140 * 7 - 19, 500));
 		weekScrollPane = new JScrollPane(weekPanel);
-		weekScrollPane.setMinimumSize(new Dimension(140*7, 500));
-		weekScrollPane.setPreferredSize(new Dimension(140*7, 500));
-		weekScrollPane.setMaximumSize(new Dimension(140*7, 500));
-		add(weekScrollPane, new GBC(i,3).setSpan(7, 2));
+		weekScrollPane.setMinimumSize(new Dimension(140 * 7, 500));
+		weekScrollPane.setPreferredSize(new Dimension(140 * 7, 500));
+		weekScrollPane.setMaximumSize(new Dimension(140 * 7, 500));
+		add(weekScrollPane, new GBC(i, 3).setSpan(7, 2));
 
 		mondayPanel = new DayPanel();
 		weekPanel.add(mondayPanel, new GBC(i, 3, Align.NOT_RIGHT).setSpan(1, 2));
-		
+
 		mondayLbl = new CalLabel("Monday");
 		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
 
@@ -188,8 +190,7 @@ public class CalendarWindow extends ChronosWindow {
 
 		sundayLbl = new CalLabel("Sunday");
 		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
-		
-		
+
 		updateLabels();
 	}
 
@@ -201,7 +202,7 @@ public class CalendarWindow extends ChronosWindow {
 
 	public void addOtherPerson(Person person, boolean isSelected) {
 		PersonCheckBox box = new PersonCheckBox(person, isSelected);
-		box.addItemListener(new CheckBoxListener());
+		box.addActionListener(new CheckBoxListener());
 		othersCalPanel.add(box);
 		repaint();
 	}
@@ -284,14 +285,20 @@ public class CalendarWindow extends ChronosWindow {
 		}
 	}
 
-	private class CheckBoxListener implements ItemListener {
+	private class CheckBoxListener implements ActionListener {
+
+		public void itemStateChanged(ItemEvent e) {
+
+		}
 
 		@Override
-		public void itemStateChanged(ItemEvent e) {
-			Person person = ((PersonCheckBox) e.getItemSelectable()).getPerson();
-			if (e.getStateChange() == ItemEvent.SELECTED) {
+		public void actionPerformed(ActionEvent e) {
+			PersonCheckBox checkBox = (PersonCheckBox) e.getSource();
+			Person person = checkBox.getPerson();
+			System.out.println("Clicked: " + checkBox.getPerson());
+			if (checkBox.isSelected()) {
 				model.addSelectedPerson(person);
-			} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+			} else {
 				model.removeSelectedPerson(person);
 				model.update();
 			}

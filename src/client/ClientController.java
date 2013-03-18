@@ -64,7 +64,6 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	 * model
 	 */
 	private void evaluateQueryEvent(QueryEvent event) {
-		Singleton.log("Evaluating queryEvent...");
 		switch (event.getQueryType()) {
 		case CALEVENTS:
 			models.get(ChronosType.CALENDAR).receiveNetworkEvent(event);
@@ -84,7 +83,6 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	 */
 	@Override
 	public void sendNetworkEvent(NetworkEvent event) {
-		Singleton.log("sending networkEvent to server");
 
 		// Send to server
 		if (Singleton.getInstance().networkEnabled())
