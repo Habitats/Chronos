@@ -18,14 +18,14 @@ public class Server implements Runnable {
 	private ServerController sController;
 	private int port;
 	private boolean listening;
-	private List<ClientConnection> clientConnection;
+	private List<ClientConnection> clientConnections;
 
 	public Server(int port, ServerController sController) {
 		this.port = port;
 		this.sController = sController;
 		listening = true;
 
-		clientConnection = Collections.synchronizedList(new ArrayList<ClientConnection>());
+		clientConnections = Collections.synchronizedList(new ArrayList<ClientConnection>());
 	}
 
 	private ServerSocket setUpServer(int port) {
@@ -34,7 +34,7 @@ public class Server implements Runnable {
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Singleton.log("Server already running! Skipping...");
 		}
 		return serverSocket;
 	}
@@ -75,7 +75,7 @@ public class Server implements Runnable {
 	}
 
 	public List<ClientConnection> getClientConnections() {
-		return clientConnection;
+		return clientConnections;
 
 	}
 

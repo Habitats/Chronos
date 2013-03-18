@@ -104,8 +104,7 @@ public class CalendarModel extends ChronosModel {
 		Person participant = participants.get(username);
 		if (participant.getStatus() == Status.ACCEPTED)
 			return true;
-		else
-			return false;
+		return false;
 	}
 
 	public void addOtherPersons(QueryEvent queryEvent) {

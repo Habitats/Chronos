@@ -52,7 +52,7 @@ public class Client implements Runnable {
 				out.reset();
 			}
 		} catch (IOException | ClassNotFoundException e) {
-			Singleton.log("Lost connection. Exiting...");
+			Singleton.log("Lost connection!");
 			kill();
 		}
 	}
@@ -77,6 +77,7 @@ public class Client implements Runnable {
 		} catch (IOException e) {
 			Singleton.log("Couldn't close socket...");
 		} finally {
+			Singleton.log("Exiting...");
 			System.exit(0);
 		}
 	}

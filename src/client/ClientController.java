@@ -89,21 +89,6 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		// Send to server
 		if (Singleton.getInstance().networkEnabled())
 			client.sendNetworkEvent(event);
-		// } else {
-		//
-		// // simulate authevent
-		// if (event.getType() == EventType.LOGIN) {
-		// ((AuthEvent) event).setAccessGranted(true);
-		// evaluateNetworkEvent(event);
-		// } else {
-		// // simulate networkEvent
-		// ArrayList<Comparable> results = new ArrayList<Comparable>();
-		// results.add((CalEvent) event);
-		// QueryEvent queryEvent = new
-		// QueryEvent(QueryType.CALEVENT_OLD).setResults(results);
-		// models.get(ChronosType.CALENDAR).receiveNetworkEvent(queryEvent);
-		// }
-		// }
 
 	}
 
