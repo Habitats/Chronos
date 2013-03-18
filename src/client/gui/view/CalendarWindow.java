@@ -185,6 +185,7 @@ public class CalendarWindow extends ChronosWindow {
 		PersonCheckBox box = new PersonCheckBox(person);
 		box.addItemListener(new CheckBoxListener());
 		othersCalPanel.add(box);
+		repaint();
 	}
 
 	public void addEvent(CalEvent event, Weekday weekday) {
@@ -217,6 +218,7 @@ public class CalendarWindow extends ChronosWindow {
 		}
 
 		getFrame().pack();
+		repaint();
 	}
 
 	public void removeEvents() {
@@ -251,6 +253,7 @@ public class CalendarWindow extends ChronosWindow {
 		currentDate = DateManagement.getNextDay(currentDate);
 		sundayLbl.setText("Sunday " + DateManagement.getFormattedSimple(currentDate));
 		currentDate = DateManagement.getNextDay(currentDate);
+		repaint();
 
 	}
 
@@ -299,5 +302,10 @@ public class CalendarWindow extends ChronosWindow {
 
 	public void addNotification(CalEvent calEvent) {
 		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPanelWidth));
+	}
+
+	public void internalRepaint() {
+		repaint();
+		
 	}
 }
