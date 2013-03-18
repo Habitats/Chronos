@@ -13,6 +13,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -190,7 +191,7 @@ public class CalendarWindow extends ChronosWindow {
 
 	public void addEvent(CalEvent event, Weekday weekday) {
 		CalEventPanel panel = new CalEventPanel(event, this);
-		eventsPanel.add(new CalEventListPanel(event, this, eventsPanelWidth));
+		eventsPanel.add(new CalEventListPanel(event, this, eventsPane.getWidth()-19));
 		switch (weekday) {
 		case MONDAY:
 			mondayPanel.add(panel);
@@ -299,6 +300,6 @@ public class CalendarWindow extends ChronosWindow {
 	}
 
 	public void addNotification(CalEvent calEvent) {
-		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPanelWidth));
+		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPane.getWidth()-19));
 	}
 }

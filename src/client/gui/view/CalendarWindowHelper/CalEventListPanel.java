@@ -27,8 +27,8 @@ public class CalEventListPanel extends JLabel {
 		setHorizontalAlignment(SwingConstants.LEFT);
 		setOpaque(true);
 
-		setPreferredSize(new Dimension(width, 0));
-		setMinimumSize(new Dimension(width, 0));
+		setPreferredSize(new Dimension(width, 19));
+		setMinimumSize(new Dimension(width, 19));
 		setMaximumSize(new Dimension(width, 19));
 
 		setBackground(Color.white);
