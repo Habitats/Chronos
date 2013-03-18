@@ -36,6 +36,7 @@ public class CalendarModel extends ChronosModel {
 	private HashMap<String, Person> selectedPersons;
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
+	private int personColorNumber;
 
 	public CalendarModel(ClientController controller) {
 		super(controller, ChronosType.CALENDAR);
@@ -43,6 +44,7 @@ public class CalendarModel extends ChronosModel {
 		selectedPersons = new HashMap<String, Person>();
 		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 		currentDisplayedWeek = DateManagement.getWeek(currentDisplayedDate);
+		personColorNumber = 0;
 	}
 
 	public String getCurrentDisplayedDateIntervall() {
@@ -75,15 +77,16 @@ public class CalendarModel extends ChronosModel {
 
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents, String username) {
 		for (CalEvent calEvent : calEvents) {
+			
 			if (personIsAttending(calEvent, username)) {
 				Date startDate = calEvent.getStart();
 				int eventWeek = DateManagement.getWeek(startDate);
 				int eventYear = DateManagement.getYear(startDate);
 				int currentDisplayedYear = DateManagement.getYear(currentDisplayedDate);
 				if (currentDisplayedWeek == eventWeek && eventYear == currentDisplayedYear) {
-					calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate));
+					calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate), personColorNumber);
 				} else {
-					calendarWindow.addEvent(calEvent, Weekday.NONE);
+					calendarWindow.addEvent(calEvent, Weekday.NONE, personColorNumber);
 				}
 			} else if (Singleton.getInstance().getSelf().getUsername().equals(username) && statusIsWaiting(calEvent, username)) {
 				calendarWindow.addNotification(calEvent);
@@ -147,9 +150,10 @@ public class CalendarModel extends ChronosModel {
 	public void update() {
 		calendarWindow.removeEvents();
 		calendarWindow.updateLabels();
+		personColorNumber = 0;
 		for (String username : selectedPersonsEvents.keySet()) {
-			System.out.println(username);
 			addEventsArrayList(selectedPersonsEvents.get(username), username);
+			personColorNumber++;
 		}
 	}
 
