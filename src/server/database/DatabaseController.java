@@ -33,11 +33,6 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public QueryEvent getAvailableRooms(QueryEvent event) {
-		return null;
-	}
-
-	@Override
 	public QueryEvent getUsers(QueryEvent event) {
 		return event.setResults(dbQueries.getUsers());
 	}
@@ -70,8 +65,8 @@ public class DatabaseController implements DatabaseControllerInterface {
 	}
 
 	@Override
-	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event) {
-		return qe.setResults(dbQueries.getAvailableRooms(event));
+	public QueryEvent getAvailableRooms(QueryEvent qe) {
+		return qe.setResults(dbQueries.getAvailableRooms(qe.getCalEvent()));
 	}
 
 	@Override

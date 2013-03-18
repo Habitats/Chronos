@@ -6,10 +6,6 @@ import events.CalEvent;
 import events.QueryEvent;
 
 public interface DatabaseControllerInterface {
-	/**
-	 * Returns a query event with an array of all available rooms in the DB
-	 */
-	public QueryEvent getAvailableRooms(QueryEvent event);
 
 	/**
 	 * Returns a query event with an array of all users in the DB
@@ -52,7 +48,7 @@ public interface DatabaseControllerInterface {
 	/**
 	 * Get all available rooms in the time interval of the event
 	 */
-	public QueryEvent getAvailableRooms(QueryEvent qe, CalEvent event);
+	public QueryEvent getAvailableRooms(QueryEvent qe);
 
 	public QueryEvent searchForUser(QueryEvent qe, String searchString);
 }

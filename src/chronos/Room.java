@@ -1,7 +1,9 @@
 package chronos;
 
-public class Room implements Comparable<Room> {
-	private String name;
+import java.io.Serializable;
+
+public class Room implements Serializable, Comparable<Room> {
+	String name;
 	private String description;
 	private int capacity;
 

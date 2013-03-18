@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Properties;
 
 import chronos.Person;
+import chronos.Person.Status;
+import chronos.Room;
 import chronos.Singleton;
 import events.CalEvent;
 
@@ -101,7 +103,16 @@ public class DatabaseTest {
 		/**
 		 * Update Event
 		 */
-
+//		Person p = (Person)queries.getUsers().get(0);
+//		p.setStatus(Status.ACCEPTED);
+//		CalEvent evt = new CalEvent("fuck",new Date(2013, 4, 3), 99999, p, "kom igjen");
+//		queries.addEvent(evt);
+//		
+//		
+//		evt.setTitle("unfuck");
+//		evt.setDescription("UpdateCalEvent funker");
+//		queries.updateCalEvent(evt);
+		
 		/**
 		 * Get available rooms
 		 */
@@ -127,9 +138,9 @@ public class DatabaseTest {
 		/**
 		 * Search for users
 		 */
-		ArrayList<Comparable> res = queries.searchUsers("boy");
-		for (Comparable<Person> p : res) {
-			System.out.println(" " + p.toString());
-		}
+//		ArrayList<Comparable> res = queries.searchUsers("boy");
+//		for( Comparable<Person> per : res) {
+//			System.out.println(" "+p.toString());
+//		}	
 	}
 }

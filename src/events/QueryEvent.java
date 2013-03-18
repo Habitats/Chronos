@@ -61,6 +61,10 @@ public class QueryEvent extends NetworkEvent {
 		return queryType;
 	}
 
+	public CalEvent getCalEvent() {
+		return calEvent;
+	}
+	
 	@Override
 	public String toString() {
 		return "[QueryEvern] ~";
