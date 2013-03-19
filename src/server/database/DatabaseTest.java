@@ -114,6 +114,7 @@ public class DatabaseTest {
 //		evt.setDescription("Hallvard er best");
 //		evt.setTitle("WATAAAAAAPPPP");
 //		queries.updateCalEvent(evt);
+		queries.deleteAllParticipansByEventId(1363618018149L);
 
 		/**
 		 * Get available rooms

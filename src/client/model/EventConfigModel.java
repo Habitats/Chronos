@@ -27,6 +27,7 @@ public class EventConfigModel extends ChronosModel {
 	private String eventName;
 	private Date startDate;
 	private int duration;
+	private Person creator;
 
 	private String startTime;
 
@@ -93,6 +94,7 @@ public class EventConfigModel extends ChronosModel {
 		setFormattedStartDate(DateManagement.getFormattedDate(event.getStart()));
 		setStartTime(DateManagement.getTimeOfDay(event.getStart()));
 		setParticipants(event.getParticipants());
+		setCreator(event.getCreator());
 	}
 
 	private void updateViews() {
@@ -107,6 +109,7 @@ public class EventConfigModel extends ChronosModel {
 			view.setParticipants(getParticipants());
 			view.getStartDateField().setText(getFormattedStartDate());
 			view.getDuration().setSelectedItem(getDuration());
+			view.getCreatorField().setText(getCreator().toString());
 		}
 	}
 
@@ -137,7 +140,7 @@ public class EventConfigModel extends ChronosModel {
 		if (view.getViewType() == ViewType.UPDATE) {
 			event.update(title, startDate, duration, description).setParticipants(getParticipants());
 		} else
-			event = new CalEvent(title, startDate, duration, creator, description).setParticipants(getParticipants());
+			event = new CalEvent(title, startDate, duration, creator, description).addParticipants(getParticipants());
 		if (validateInput(view)) {
 			fireNetworkEvent(event);
 			view.setVisible(false);
@@ -245,5 +248,13 @@ public class EventConfigModel extends ChronosModel {
 
 	public HashMap<String, Person> getParticipants() {
 		return participants;
+	}
+
+	public Person getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Person creator) {
+		this.creator = creator;
 	}
 }

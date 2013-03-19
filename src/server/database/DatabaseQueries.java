@@ -317,32 +317,43 @@ public class DatabaseQueries {
 	 * @param evt
 	 */
 	private void updateParticipants(CalEvent evt) {
-		String insertQuery = "UPDATE Participants SET alarm=?, status=? WHERE username=? AND event_ID=?;";
-		PreparedStatement ps;
-		String eventID = "" + evt.getTimestamp();
-		try {
-			ps = db.makeBatchUpdate(insertQuery);
-			for (Person p : evt.getParticipants().values()) {
-				try {
-					ps.setString(1, null);
-					ps.setString(2, "" + p.getStatus().ordinal());
-					ps.setString(3, p.getUsername());
-					ps.setString(4, eventID);
-					ps.addBatch();
-					Singleton.log("successfully updated participant \"" + p.getUsername() + "\" to " + p.getStatus()); // TODO
-																														// alarm?
-				} catch (SQLException e) {
-					Singleton.log("error updating " + p.getUsername());
-					e.printStackTrace();
-				}
-			}
-			ps.executeBatch();
-			ps.close();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+		deleteAllParticipansByEventId(evt.getTimestamp());
+		addParticipants(evt);
+//		String insertQuery = "UPDATE Participants SET alarm=?, status=? WHERE username=? AND event_ID=?;";
+//		PreparedStatement ps;
+//		String eventID = "" + evt.getTimestamp();
+//		try {
+//			ps = db.makeBatchUpdate(insertQuery);
+//			for (Person p : evt.getParticipants().values()) {
+//				try {
+//					ps.setString(1, null);
+//					ps.setString(2, "" + p.getStatus().ordinal());
+//					ps.setString(3, p.getUsername());
+//					ps.setString(4, eventID);
+//					ps.addBatch();
+//					Singleton.log("successfully updated participant \"" + p.getUsername() + "\" to " + p.getStatus()); // TODO
+//																														// alarm?
+//				} catch (SQLException e) {
+//					Singleton.log("error updating " + p.getUsername());
+//					e.printStackTrace();
+//				}
+//			}
+//			ps.executeBatch();
+//			ps.close();
+//		} catch (SQLException e1) {
+//			e1.printStackTrace();
+//		}
 	}
 
+	public void deleteAllParticipansByEventId(long eventId) {
+		try {
+			db.execute(String.format("DELETE FROM participants WHERE event_id = %s", "" + eventId));
+			Singleton.log("successfully deleted all participants from " + eventId);
+		} catch (SQLException e) {
+			Singleton.log("error deleting all participants from" + eventId);
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Returns an ArrayList of all events the person is a participant of.
 	 * 

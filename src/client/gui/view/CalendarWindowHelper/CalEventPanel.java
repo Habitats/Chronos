@@ -25,10 +25,10 @@ public class CalEventPanel extends JPanel {
 	private CalendarWindow view;
 	private Color color;
 
-	public CalEventPanel(CalEvent event, CalendarWindow view, int personColorNumber) {
+	public CalEventPanel(CalEvent event, CalendarWindow view, Color personColor) {
 		super();
 		setLayout(new GridBagLayout());
-		color = Color.getHSBColor((float) personColorNumber / 10, 1, 1);
+		color = personColor;
 		setBackground(color);
 		setPreferredSize(new Dimension(130, 50));
 		setMinimumSize(new Dimension(130, 50));
@@ -62,7 +62,7 @@ public class CalEventPanel extends JPanel {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			super.mouseEntered(e);
-			setBackground(Color.pink);
+			setBackground(Singleton.HOVER_COLOR);
 
 		}
 

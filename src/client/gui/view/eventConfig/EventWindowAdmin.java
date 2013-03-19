@@ -24,20 +24,20 @@ public class EventWindowAdmin extends EventWindow {
 		super(model, frame, viewType);
 		view = this;
 
-		addParticipantButton = new EditConfigButton("Add participant", getBigButtonDim());
-		deleteParticipantButton = new EditConfigButton("Delete participant", getBigButtonDim());
+		addParticipantButton = new EditConfigButton("Add participant");
+		deleteParticipantButton = new EditConfigButton("Delete participant");
 
-		bookRoomButton = new EditConfigButton("Book room", getBigButtonDim());
+		bookRoomButton = new EditConfigButton("Book room");
 		bookRoomButton.addActionListener(new BookRoomAction());
-		deleteButton = new EditConfigButton("Delete", getBottomButtonDim());
+		deleteButton = new EditConfigButton("Delete");
 		addParticipantButton.addActionListener(new AddParticipantAction());
 		deleteParticipantButton.addActionListener(new DeleteParticipantAction());
 		deleteButton.addActionListener(new DeleteAction());
 
-		add(bookRoomButton, new GBC(3, 4).setSpan(2, 1).setWeight(0, 0));
-		add(addParticipantButton, new GBC(3, 5).setSpan(2, 1).setWeight(0, 0));
+		add(addParticipantButton, new GBC(4, 6).setSpan(2, 1).setWeight(0, 0));
+		add(bookRoomButton, new GBC(4, 7).setSpan(2, 1).setWeight(0, 0));
 
-		add(deleteButton, new GBC(1, 7));
+		add(deleteButton, new GBC(0, 9).setSpan(2, 1));
 	}
 
 	private class BookRoomAction implements ActionListener {
