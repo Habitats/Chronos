@@ -36,6 +36,7 @@ public class RoomBookingWindow extends ChronosWindow {
 		// roomPanel = new BoxPanel();
 		roomList = new JList<Room>();
 		roomList.setModel(new DefaultListModel<Room>());
+		roomList.setVisible(true);
 		
 		bookButton = new JButton("Book");
 		cancelButton = new JButton("Cancel");
