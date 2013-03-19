@@ -37,7 +37,6 @@ public class CalendarModel extends ChronosModel {
 	private HashMap<String, Person> selectedPersons;
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
-	private int personColorNumber;
 	private HashMap<String, Color> personColors;
 
 	public CalendarModel(ClientController controller) {
@@ -46,7 +45,6 @@ public class CalendarModel extends ChronosModel {
 		selectedPersons = new HashMap<String, Person>();
 		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 		currentDisplayedWeek = DateManagement.getWeek(currentDisplayedDate);
-		personColorNumber = 0;
 		personColors = new HashMap<String, Color>();
 	}
 
