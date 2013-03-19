@@ -82,12 +82,11 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	 * sends network event TO server
 	 */
 	@Override
-	public void sendNetworkEvent(NetworkEvent event) {
+	public synchronized void sendNetworkEvent(NetworkEvent event) {
 
 		// Send to server
 		if (Singleton.getInstance().networkEnabled())
 			client.sendNetworkEvent(event);
-
 	}
 
 	@Override
