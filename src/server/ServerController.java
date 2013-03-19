@@ -118,7 +118,7 @@ public class ServerController implements Runnable {
 	private void sendSingleNetworkEvent(NetworkEvent event, Person person) {
 		try {
 			for (ClientConnection clientConnection : server.getClientConnections()) {
-				if (clientConnection.getPerson().getUsername().toLowerCase().equals(person.getUsername().toLowerCase())) {
+				if (clientConnection.getPerson() != null && clientConnection.getPerson().getUsername().toLowerCase().equals(person.getUsername().toLowerCase())) {
 					clientConnection.getOut().writeObject(event);
 				}
 			}
