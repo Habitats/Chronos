@@ -7,6 +7,7 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 
@@ -18,10 +19,9 @@ import client.model.ChronosModel;
 import client.model.RoomBookingModel;
 
 public class RoomBookingWindow extends ChronosWindow {
-	private JList roomList;
+	private JList<Room> roomList;
 	private JButton bookButton, cancelButton, autobookButton;
 	private RoomBookingModel model;
-
 	// private BoxPanel roomPanel;
 
 	public RoomBookingWindow(ChronosModel model, MainFrame frame) {
@@ -30,9 +30,14 @@ public class RoomBookingWindow extends ChronosWindow {
 		setVisible(false);
 
 		setLayout(new GridBagLayout());
+		
+		
 
 		// roomPanel = new BoxPanel();
-		roomList = new JList<>();
+		roomList = new JList<Room>();
+		roomList.setModel(new DefaultListModel<Room>());
+		roomList.setVisible(true);
+		
 		bookButton = new JButton("Book");
 		cancelButton = new JButton("Cancel");
 		autobookButton = new JButton("Autobook");
@@ -103,14 +108,16 @@ public class RoomBookingWindow extends ChronosWindow {
 			model.getRooms();
 	}
 
-	public RoomCheckBox addRoom(Room room) {
-		RoomCheckBox checkBox = new RoomCheckBox(room);
-		// roomList.add(checkBox);
-		roomList.add(room.getName(), checkBox);
-		return checkBox;
+	public Room addRoom(Room room) {
+		((DefaultListModel<Room>)(roomList.getModel())).addElement(room);
+		roomList.setSelectedIndex(roomList.getLastVisibleIndex());
+//		RoomCheckBox checkBox = new RoomCheckBox(room);
+//		roomList.add(checkBox);
+//		roomList.add(room.getName(), room);
+		return room;
 	}
-
-	public JList getRoomPanel() {
+	
+	public JList<Room> getRoomPanel() {
 		return roomList;
 	}
 }

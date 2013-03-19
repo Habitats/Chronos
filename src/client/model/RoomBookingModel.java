@@ -15,9 +15,9 @@ import events.QueryEvent;
 import events.QueryEvent.QueryType;
 
 public class RoomBookingModel extends ChronosModel {
-	private String roomNumber;
+	private String roomName;
 	private RoomBookingWindow view;
-	private ArrayList<RoomCheckBox> rooms;
+	private ArrayList<Room> rooms;
 
 	public void recieveNetworkEvent(NetworkEvent event) {
 		addRooms((QueryEvent) event);
@@ -25,6 +25,7 @@ public class RoomBookingModel extends ChronosModel {
 
 	private void addRooms(QueryEvent event) {
 		for (Room room : (ArrayList<Room>) event.getResults()) {
+			System.out.println(room.toString());
 			rooms.add(view.addRoom(room));
 		}
 		view.getFrame().pack();
@@ -32,29 +33,31 @@ public class RoomBookingModel extends ChronosModel {
 
 	public RoomBookingModel(ClientController controller) {
 		super(controller, ChronosType.ROOM_BOOK);
+		rooms = new ArrayList<Room>();
 		// TODO Auto-generated constructor stub
 	}
-
-	// public String getRoomNumber() {
-	// return roomNumber;
-	// }
 
 	public void getRooms() {
 		fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", new Date(), 1829, new Person("penis"), "")));
 	}
 
-	// public void setRoomNumber(String roomNumber) {
-	// this.roomNumber = roomNumber;
-	// }
-
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
-		// TODO Auto-generated method stub
+		addRooms((QueryEvent) event);
 	}
 
 	@Override
 	public void setView(ChronosWindow view) {
 		this.view = (RoomBookingWindow) view;
+	}
+
+	
+	public String getRoomName() {
+		return roomName;
+	}
+
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
 	}
 
 }
