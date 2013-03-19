@@ -48,12 +48,16 @@ public class Client implements Runnable {
 			NetworkEvent event;
 			Singleton.log("Initiating streams...");
 			while ((event = (NetworkEvent) in.readObject()) != null) {
-				// Singleton.log("Client received: " + event.toString());
-				getClientController().evaluateNetworkEvent(event);
-				out.reset();
+				synchronized (event) {
+					// Singleton.log("Client received: " + event.toString());
+					getClientController().evaluateNetworkEvent(event);
+					out.reset();
+				}
 			}
+
 		} catch (IOException | ClassNotFoundException e) {
 			Singleton.log("Lost connection!");
+			e.printStackTrace();
 			kill();
 		}
 	}

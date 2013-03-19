@@ -32,6 +32,7 @@ public class Chronos {
 		if (Singleton.getInstance().networkEnabled())
 //			startServer();
 		startClient();
+//		stressTestNetwork();
 
 	}
 
