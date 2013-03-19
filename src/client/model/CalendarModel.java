@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.print.attribute.standard.PresentationDirection;
+
 import chronos.DateManagement;
 import chronos.Person;
 import chronos.Person.Status;
@@ -30,7 +32,7 @@ public class CalendarModel extends ChronosModel {
 			return null;
 		}
 	}
-
+	private HashMap<String, Boolean> prePersonIsSelected;
 	private CalendarWindow calendarWindow;
 	private HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
 
@@ -46,6 +48,9 @@ public class CalendarModel extends ChronosModel {
 		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 		currentDisplayedWeek = DateManagement.getWeek(currentDisplayedDate);
 		personColors = new HashMap<String, Color>();
+		
+//		Hash for debugging, may not be needed
+		prePersonIsSelected = new HashMap<String, Boolean>();
 	}
 
 	public String getCurrentDisplayedDateIntervall() {
@@ -150,13 +155,16 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	public void addSelectedPerson(Person person) {
+		prePersonIsSelected.put(person.getUsername(), true);
 		getPersonEvents(person);
+		
 	}
 
 	public void removeSelectedPerson(Person person) {
 		selectedPersonsEvents.remove(person.getUsername());
 		selectedPersons.remove(person.getUsername());
 //		personColors.remove(person.getUsername());
+		prePersonIsSelected.remove(person.getUsername());
 	}
 
 	public void update() {
@@ -217,5 +225,19 @@ public class CalendarModel extends ChronosModel {
 	@Override
 	public void setView(ChronosWindow calendarWindow) {
 		this.calendarWindow = (CalendarWindow) calendarWindow;
+	}
+	class AlarmThread implements Runnable {
+
+		@Override
+		public void run() {
+			Person self = Singleton.getInstance().getSelf();
+			ArrayList<CalEvent> calEvents = selectedPersonsEvents.get(self.getUsername());
+			for (CalEvent calEvent : calEvents) {
+				if(calEvent.getAlert() && DateManagement.isLessThanFifteenMinFromNow(calEvent.getStart())){
+					calendarWindow.alarm(calEvent);
+					calEvent.getAlert();	
+				}
+			}
+		}
 	}
 }

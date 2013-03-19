@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -332,5 +333,10 @@ public class CalendarWindow extends ChronosWindow {
 	public void removePersonCheckBoxes() {
 		othersCalPanel.removeAll();
 		repaint();
+	}
+
+	public synchronized void alarm(CalEvent calEvent) {
+		JOptionPane.showMessageDialog(null, "Less than 15 minutes until " + calEvent.getTitle() + "starts" , "Reminder", JOptionPane.WARNING_MESSAGE);
+		
 	}
 }
