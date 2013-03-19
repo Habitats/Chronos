@@ -15,9 +15,9 @@ import events.QueryEvent;
 import events.QueryEvent.QueryType;
 
 public class RoomBookingModel extends ChronosModel {
-	private String roomNumber;
+//	private String roomNumber;
 	private RoomBookingWindow view;
-	private ArrayList<RoomCheckBox> rooms;
+	private ArrayList<Room> rooms;
 
 	public void recieveNetworkEvent(NetworkEvent event) {
 		addRooms((QueryEvent) event);
