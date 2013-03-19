@@ -30,7 +30,7 @@ public class ServerController implements Runnable {
 	 * Evaluates incoming event from client OR on disconnect from
 	 * serverConnection
 	 */
-	public void evaluateNetworkEvent(NetworkEvent event) {
+	public synchronized void evaluateNetworkEvent(NetworkEvent event) {
 
 		switch (event.getType()) {
 		case LOGIN:
