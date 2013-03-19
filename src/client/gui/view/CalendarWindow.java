@@ -184,6 +184,13 @@ public class CalendarWindow extends ChronosWindow {
 		othersCalPanel.add(box);
 		repaint();
 	}
+	
+	/**
+	 * Adds one event
+	 * @param event
+	 * @param weekday
+	 * @param personColor
+	 */
 
 	public void addEvent(CalEvent event, Weekday weekday, Color personColor) {
 		CalEventPanel panel = new CalEventPanel(event, this, personColor);
@@ -217,7 +224,7 @@ public class CalendarWindow extends ChronosWindow {
 		getFrame().pack();
 		repaint();
 	}
-
+	
 	public void removeEvents() {
 		mondayPanel.removeAll();
 		tuesdayPanel.removeAll();
@@ -276,10 +283,6 @@ public class CalendarWindow extends ChronosWindow {
 
 	private class CheckBoxListener implements ActionListener {
 
-		public void itemStateChanged(ItemEvent e) {
-
-		}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			PersonCheckBox checkBox = (PersonCheckBox) e.getSource();
@@ -325,10 +328,11 @@ public class CalendarWindow extends ChronosWindow {
 		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPanelWidth));
 		notifications++;
 	}
-
+	/**
+	 * bare tull
+	 */
 	public void internalRepaint() {
 		repaint();
-
 	}
 
 	public void removePersonCheckBoxes() {
