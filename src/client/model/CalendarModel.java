@@ -91,6 +91,9 @@ public class CalendarModel extends ChronosModel {
 				calendarWindow.addNotification(calEvent);
 		}
 		calendarWindow.getTabbedPane().setTitleAt(1, "Invites (" + calendarWindow.getNotifications() + ")");
+		calendarWindow.revalidate();
+		calendarWindow.getFrame().validate();
+		calendarWindow.getFrame().repaint();
 	}
 
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents, String username, Color personColor) {
@@ -146,7 +149,9 @@ public class CalendarModel extends ChronosModel {
 				calendarWindow.addOtherPerson(person, false);
 			}
 		}
-		calendarWindow.getFrame().pack();
+		calendarWindow.revalidate();
+		calendarWindow.getFrame().validate();
+		calendarWindow.getFrame().repaint();
 	}
 
 	private void getPersonEvents(Person person) {
