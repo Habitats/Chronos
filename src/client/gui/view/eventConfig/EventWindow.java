@@ -1,12 +1,15 @@
 package client.gui.view.eventConfig;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -15,10 +18,16 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JScrollBar;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.ListCellRenderer;
+import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerModel;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.JTextComponent;
 
 import chronos.Person;
@@ -44,18 +53,15 @@ abstract public class EventWindow extends ChronosWindow {
 	protected JCheckBox alert;
 	protected JButton deleteButton;
 	protected JButton applyButton;
-	protected JComboBox startTime, duration;
+	protected JComboBox<Integer> duration;
 	protected JTextArea eventDescriptionArea;
 	protected JTextField dateField;
+	protected JSpinner startTime;
 
-	private JButton editButton;
 	private JButton cancelButton;
-	private JTextField startTimeField;
 	private JTextField roomNumberField;
 	private JList<Person> participantList;
 
-	private Dimension bottomButtonDim = new Dimension(80, 20);
-	private Dimension bigButtonDim = new Dimension(170, 20);
 	protected EventConfigModel model;
 	private EventWindow view;
 	private ViewType type;
@@ -83,11 +89,13 @@ abstract public class EventWindow extends ChronosWindow {
 		// work properly
 		view = this;
 
+		startTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(startTime, "HH:mm:ss");
+		startTime.setEditor(timeEditor);
+
 		setLayout(new GridBagLayout());
 		eventNameField = new JTextField();
 		dateField = new JTextField();
-		startTimeField = new JTextField();
-		startTime = new JComboBox(startTimeArray);
 		duration = new JComboBox(durationArray);
 		creatorField = new JLabel();
 		eventDescriptionArea = new JTextArea();
@@ -100,7 +108,6 @@ abstract public class EventWindow extends ChronosWindow {
 		roomNumberField = new JTextField("");
 		roomNumberField.setEditable(false);
 
-		// editButton = new EditConfigButton("Edit", bottomButtonDim);
 		applyButton = new EditConfigButton("Apply");
 		cancelButton = new EditConfigButton("Cancel");
 
@@ -116,10 +123,8 @@ abstract public class EventWindow extends ChronosWindow {
 		eventDescriptionArea.setBorder(border);
 		participantList.setPreferredSize(new Dimension(100, 100));
 
-		startTime.addActionListener(new StartTimeListener());
 		duration.addActionListener(new DurationListener());
 
-		// editButton.addActionListener(new EditAction());
 		applyButton.addActionListener(new ApplyAction());
 		cancelButton.addActionListener(new CancelAction());
 
@@ -157,7 +162,6 @@ abstract public class EventWindow extends ChronosWindow {
 		add(creator, new GBC(4, 5));
 		add(creatorField, new GBC(5, 5));
 
-		// add(editButton, new GBC(0, 7));
 		add(applyButton, new GBC(4, 9).setWeight(0.5, 0));
 		add(cancelButton, new GBC(5, 9).setWeight(0.5, 0));
 
@@ -168,16 +172,15 @@ abstract public class EventWindow extends ChronosWindow {
 	public void setParticipants(HashMap<String, Person> participants) {
 		DefaultListModel<Person> defaultModel = new DefaultListModel<Person>();
 		participantList.setModel(defaultModel);
+		participantList.setCellRenderer(new PersonRenderer());
+
 		for (Person person : participants.values()) {
 			defaultModel.addElement(person);
 		}
 
 		getModel().setParticipants(participants);
 	}
-/*	public void setRoom(Room room) {
-		roomNumberField.setText(room.getName());
-	}
-*/
+
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (EventConfigModel) model;
@@ -186,6 +189,26 @@ abstract public class EventWindow extends ChronosWindow {
 
 	public EventConfigModel getModel() {
 		return model;
+	}
+
+	private class PersonRenderer extends JLabel implements ListCellRenderer<Person> {
+
+		@Override
+		public Component getListCellRendererComponent(JList<? extends Person> list, Person person, int index, boolean isSelected, boolean cellHasFocus) {
+			setText(person.toString());
+			switch (person.getStatus()) {
+			case ACCEPTED:
+				setForeground(Color.green);
+				// setIcon(new ImageI)
+				break;
+			case DECLINED:
+				setForeground(Color.red);
+				break;
+			case WAITING:
+				setForeground(Color.blue);
+			}
+			return this;
+		}
 	}
 
 	private class StartTimeListener implements ActionListener {
@@ -227,6 +250,9 @@ abstract public class EventWindow extends ChronosWindow {
 	public JTextField getStartDateField() {
 		return dateField;
 	}
+	public JSpinner getStartTime() {
+		return startTime;
+	}
 
 	public JTextField getRoomNumberField() {
 		return roomNumberField;
@@ -248,13 +274,6 @@ abstract public class EventWindow extends ChronosWindow {
 		return duration;
 	}
 
-	public JComboBox getStartTime() {
-		return startTime;
-	}
-
-	public JTextComponent getStartTimeField() {
-		return startTimeField;
-	}
 
 	public JLabel getCreatorField() {
 		return creatorField;

@@ -42,7 +42,7 @@ public class CalEventPanel extends JPanel {
 		title.setMaximumSize(new Dimension(130, 20));
 		add(title, new GBC(0, 0, Align.FULL_WIDTH).setWeight(1, 0));
 
-		JLabel startDate = new JLabel(DateManagement.getFormattedDate(event.getStart()) + " - 13:37");
+		JLabel startDate = new JLabel(DateManagement.getFormattedDate(event.getStart()) + " - " + event.getCreator().getUsername());
 		add(startDate, new GBC(0, 1, Align.FULL_WIDTH_BOTTOM).setWeight(1, 0));
 
 		this.calEvent = event;

@@ -173,7 +173,6 @@ public class CalendarModel extends ChronosModel {
 	public void removeSelectedPerson(Person person) {
 		selectedPersonsEvents.remove(person.getUsername());
 		selectedPersons.remove(person.getUsername());
-		// personColors.remove(person.getUsername());
 		prePersonIsSelected.remove(person.getUsername());
 	}
 

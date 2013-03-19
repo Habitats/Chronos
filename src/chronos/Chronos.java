@@ -78,6 +78,6 @@ public class Chronos {
 
 		ClientController clientController = new ClientController(event);
 		Thread clientControllerThread = new Thread(clientController);
-		clientControllerThread.run();
+		clientControllerThread.start();
 	}
 }

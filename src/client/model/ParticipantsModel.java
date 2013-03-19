@@ -31,9 +31,11 @@ public class ParticipantsModel extends ChronosModel {
 
 	private void addUsers(QueryEvent event) {
 		view.getUsersPanel().removeAll();
+		HashMap<String, Person> participants = view.getFrame().getEventModel().getParticipants();
 		users.clear();
+		// adds all users to a list, and checks those who are already participating
 		for (Person person : (ArrayList<Person>) event.getResults()) {
-			users.put(person, view.addUser(person));
+			users.put(person, view.addUser(person).select(participants.get(person.getUsername()) != null));
 		}
 		view.getFrame().pack();
 	}

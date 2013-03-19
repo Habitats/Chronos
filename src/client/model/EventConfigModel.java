@@ -26,19 +26,16 @@ public class EventConfigModel extends ChronosModel {
 	private String eventDescription;
 	private String eventName;
 	private Date startDate;
-	private int duration;
-	private Person creator;
+	private Date startTime;
 
-	private String startTime;
+	private int duration;
+	private String formattedStartDate;
+	private Person creator;
 
 	private CalEvent event;
 
 	private HashMap<String, Person> participants;
 	private HashMap<ViewType, EventWindow> eventViews;
-
-	private String description;
-
-	private String formattedStartDate;
 
 	private boolean alert;
 
@@ -53,17 +50,9 @@ public class EventConfigModel extends ChronosModel {
 		String eventName = view.getEventNameField().getText();
 		String eventDescription = view.getEventDescriptionArea().getText();
 		Date startDate = DateManagement.getDateFromString(view.getStartDateField().getText());
-		// startTime =
-		// DateManagement.getDateFromString(view.getStartTimeArray().getText());
 		Room room = null;
 		try {
 			room = new Room(null, Integer.parseInt(view.getRoomNumberField().getText()), null);
-		} catch (Exception e) {
-		}
-		int duration = -1;
-		try {
-			// duration = Integer.parseInt(view.getDurationField().getText());
-			duration = 10;
 		} catch (Exception e) {
 		}
 
@@ -76,23 +65,23 @@ public class EventConfigModel extends ChronosModel {
 
 	public void setDefaultModel() {
 		setEventName("Event name");
-		setDescription("Description");
+		setEventDescription("Description");
 		setFormattedStartDate(DateManagement.getFormattedDate(new Date()));
 		setAlert(false);
 		setDuration(1);
-		setStartTime("12:00");
+		setStartTime(new Date());
 		setParticipants(new HashMap<String, Person>());
 	}
 
 	public void setCalEvent(CalEvent event) {
 		this.event = event;
 		setEventName(event.getTitle());
-		setDescription(event.getDescription());
+		setEventDescription(event.getDescription());
 		setStartDate(event.getStart());
 		setAlert(event.getAlert());
 		setDuration(event.getDuration());
 		setFormattedStartDate(DateManagement.getFormattedDate(event.getStart()));
-		setStartTime(DateManagement.getTimeOfDay(event.getStart()));
+		setStartTime(event.getStart());
 		setParticipants(event.getParticipants());
 		setCreator(event.getCreator());
 	}
@@ -104,9 +93,8 @@ public class EventConfigModel extends ChronosModel {
 			view.getEventDescriptionArea().setText(getEventDescription());
 			view.getEventDescriptionArea().setBackground(Singleton.BACKGROUND);
 			view.getStartDateField().setBackground(Singleton.BACKGROUND);
-			view.getStartTimeField().setText(getStartTime());
-			view.getStartTimeField().setBackground(Singleton.BACKGROUND);
 			view.setParticipants(getParticipants());
+			view.getStartTime().setValue(getStartTime());
 			view.getStartDateField().setText(getFormattedStartDate());
 			view.getDuration().setSelectedItem(getDuration());
 			view.getRoomNumberField().setText(getRoom() == null ? "" : getRoom().getName());
@@ -120,19 +108,19 @@ public class EventConfigModel extends ChronosModel {
 			view.setParticipants(getParticipants());
 		}
 	}
-	
+
 	public void updateRoom() {
-		for(EventWindow view : eventViews.values())
+		for (EventWindow view : eventViews.values())
 			view.getRoomNumberField().setText(getRoom() == null ? "" : getRoom().getName());
 	}
 
 	public void updateModel(EventWindow view) {
 		setEventName(event.getTitle());
-		setDescription(event.getDescription());
+		setEventDescription(event.getDescription());
 		setStartDate(event.getStart());
 		setAlert(event.getAlert());
 		setDuration(event.getDuration());
-		setStartTime(DateManagement.getTimeOfDay(event.getStart()));
+		setStartTime(event.getStart());
 		setParticipants(event.getParticipants());
 	}
 
@@ -206,10 +194,6 @@ public class EventConfigModel extends ChronosModel {
 		this.startDate = startDate;
 	}
 
-	private void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getEventName() {
 		return eventName;
 	}
@@ -226,11 +210,11 @@ public class EventConfigModel extends ChronosModel {
 		this.eventDescription = eventDescription;
 	}
 
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String string) {
+	public void setStartTime(Date string) {
 		this.startTime = string;
 	}
 
@@ -266,7 +250,6 @@ public class EventConfigModel extends ChronosModel {
 		this.creator = creator;
 	}
 
-	
 	public Room getRoom() {
 		return room;
 	}

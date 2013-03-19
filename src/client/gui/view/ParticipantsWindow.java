@@ -77,8 +77,9 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 	@Override
 	public void setVisible(boolean aFlag) {
 		super.setVisible(aFlag);
-		if (aFlag)
+		if (aFlag){
 			model.getUsers();
+		}
 	}
 
 	@Override
