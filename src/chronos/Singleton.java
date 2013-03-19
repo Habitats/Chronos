@@ -17,6 +17,7 @@ public class Singleton {
 	public final static Color[] COLORARRAY = {new Color(0xFAFA9E), 
 						new Color(0xCCFF99), new Color(0x66FFB3), new Color(0x99FFFF), 
 						new Color(0x99DDFF), new Color(0xCCCCFF), new Color(0xFF99FF)};
+	public final static Color HOVER_COLOR = Color.pink;
 	
 
 	/**
