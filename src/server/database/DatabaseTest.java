@@ -98,20 +98,19 @@ public class DatabaseTest {
 
 		// System.out.println(queries.getUsers().get(0));
 		// System.out.println(queries.getParticipantsByEventId(1363184812475L));
-		System.out.println(((CalEvent) queries.getEventsByParticipant((Person) queries.getUsers().get(0)).get(0)).getTitle());
+//		System.out.println(((CalEvent) queries.getEventsByParticipant((Person) queries.getUsers().get(0)).get(0)).getTitle());
 
 		/**
 		 * Update Event
 		 */
-//		Person p = (Person)queries.getUsers().get(0);
-//		p.setStatus(Status.ACCEPTED);
-//		CalEvent evt = new CalEvent("fuck",new Date(2013, 4, 3), 99999, p, "kom igjen");
-//		queries.addEvent(evt);
-//		
-//		
-//		evt.setTitle("unfuck");
-//		evt.setDescription("UpdateCalEvent funker");
-//		queries.updateCalEvent(evt);
+		Person p = (Person)queries.getUsers().get(0);
+		p.setStatus(Status.ACCEPTED);
+		CalEvent evt = new CalEvent("fuck",new Date(2013, 4, 3), 99999, p, "kom igjen");
+		queries.addEvent(evt);
+		
+		
+		evt.setDescription("Hallvard er best");
+		queries.updateCalEvent(evt);
 		
 		/**
 		 * Get available rooms
