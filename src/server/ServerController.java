@@ -99,7 +99,7 @@ public class ServerController implements Runnable {
 	private void sendUpdateToAllParticipants(HashMap<String, Person> participants) {
 		for (String username : participants.keySet()) {
 			Person person = participants.get(username);
-			QueryEvent event = new QueryEvent(QueryType.CALEVENTS);
+			QueryEvent event = new QueryEvent(QueryType.CALEVENTS, person);
 			event = dbController.getCalEvents(person, event);
 			sendSingleNetworkEvent(event, person);
 		}

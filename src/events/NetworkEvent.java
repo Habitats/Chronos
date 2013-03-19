@@ -34,7 +34,7 @@ abstract public class NetworkEvent implements Serializable {
 		return sender;
 	}
 
-	private void setSender(Person person) {
+	public void setSender(Person person) {
 		this.sender = person;
 	}
 

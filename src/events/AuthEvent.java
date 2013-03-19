@@ -42,8 +42,4 @@ public class AuthEvent extends NetworkEvent {
 	public Person getPerson() {
 		return sender;
 	}
-
-	public void setSender(Person person) {
-		this.sender = person;
-	}
 }

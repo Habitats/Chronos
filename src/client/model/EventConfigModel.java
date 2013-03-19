@@ -172,6 +172,7 @@ public class EventConfigModel extends ChronosModel {
 
 	public void removeEvent(EventWindow view) {
 		event.setState(CalEventType.DELETE);
+		event.setSender(Singleton.getInstance().getSelf());
 		view.setVisible(false);
 		fireNetworkEvent(event);
 	}

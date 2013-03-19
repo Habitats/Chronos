@@ -229,6 +229,7 @@ public class CalendarWindow extends ChronosWindow {
 		// updateUI();
 		repaint();
 	}
+
 	public void removeNotifications() {
 		notificationsPanel.removeAll();
 	}
