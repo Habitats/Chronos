@@ -62,7 +62,7 @@ public class CalEventPanel extends JPanel {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			super.mouseEntered(e);
-			setBackground(Color.pink);
+			setBackground(Singleton.HOVER_COLOR);
 
 		}
 
