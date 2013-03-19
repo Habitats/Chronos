@@ -23,6 +23,14 @@ public class DateManagement {
 	public static String getFormattedSimple(Date start) {
 		return new SimpleDateFormat("dd.MM").format(start);
 	}
+	
+	public synchronized static boolean isLessThanFifteenMinFromNow(Date date) {
+		long now = new Date().getTime();
+		long input = date.getTime();
+		if( (input-now) < 1000*60*15 && input>=now)
+			return true;
+		return false;
+	}
 
 	public static String getFormattedDateIntervall(Date start) {
 		String returnString = "";
