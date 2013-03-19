@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import chronos.Singleton;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
@@ -54,6 +56,7 @@ public class LoginWindow extends ChronosWindow {
 
 		usernameField.addKeyListener(new LoginListener());
 		passwordField.addKeyListener(new LoginListener());
+
 	}
 
 	private class LoginListener extends KeyAdapter {

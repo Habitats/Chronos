@@ -22,6 +22,7 @@ import javax.swing.border.Border;
 import javax.swing.text.JTextComponent;
 
 import chronos.Person;
+import chronos.Room;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
@@ -173,7 +174,10 @@ abstract public class EventWindow extends ChronosWindow {
 
 		getModel().setParticipants(participants);
 	}
-
+/*	public void setRoom(Room room) {
+		roomNumberField.setText(room.getName());
+	}
+*/
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (EventConfigModel) model;

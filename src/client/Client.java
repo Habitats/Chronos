@@ -42,7 +42,8 @@ public class Client implements Runnable {
 			in = new ObjectInputStream(socket.getInputStream());
 
 			// sends auth event to server on connect
-			// clientController.sendAuthEvent();
+			if (!Singleton.getInstance().loginEnabled())
+				clientController.sendAuthEvent();
 
 			NetworkEvent event;
 			Singleton.log("Initiating streams...");
@@ -90,7 +91,7 @@ public class Client implements Runnable {
 		return out;
 	}
 
-	public void sendNetworkEvent(NetworkEvent event) {
+	public synchronized void sendNetworkEvent(NetworkEvent event) {
 		try {
 			// Singleton.log("Client sending: " + event);
 			out.writeObject(event);
