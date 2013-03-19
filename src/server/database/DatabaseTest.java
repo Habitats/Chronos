@@ -7,6 +7,7 @@ import chronos.Person;
 import chronos.Person.Status;
 import chronos.Singleton;
 import events.CalEvent;
+import events.CalEvent.CalEventType;
 
 public class DatabaseTest {
 
@@ -59,13 +60,13 @@ public class DatabaseTest {
 		// evt.addParticipant(queries.getUsers().get(2));
 		// queries.addEvent(evt);
 		//
-		// CalEvent evt2 = new CalEvent("testevent4",new Date(2013, 4, 3),
-		// 2829000,
-		// (Person)queries.getUsers().get(1), "Dette er en test event");
-		// evt2.addParticipant((Person)queries.getUsers().get(0));
-		// evt2.addParticipant((Person)queries.getUsers().get(2));
-		// evt2.addParticipant((Person)queries.getUsers().get(3));
-		// queries.addEvent(evt2);
+//		 CalEvent evt2 = new CalEvent("testevent4",new Date(2013, 4, 3),
+//		 2829000,
+//		 (Person)queries.getUsers().get(1), "Dette er en test event", 1363611650384L);
+//		 evt2.getCreator().setStatus(2);
+//		 queries.addEvent(evt2);
+		//System.out.println(queries.makePrimaryUnique(1363611650384L, 0));
+		
 
 		/**
 		 * GetUsers
@@ -103,16 +104,16 @@ public class DatabaseTest {
 		/**
 		 * Update Event
 		 */
-		Person p = (Person) queries.getUsers().get(0);
-		p.setStatus(Status.ACCEPTED);
-		CalEvent evt = new CalEvent("fuck", new Date(2013, 4, 3), 99999, p, "kom igjen");
+//		Person p = (Person) queries.getUsers().get(0);
+//		p.setStatus(Status.ACCEPTED);
+//		CalEvent evt = new CalEvent("fuck", new Date(2013, 4, 3), 99999, p, "kom igjen");
 		// CalEvent evt = new CalEvent("fuck",new Date() , 99999, p,
 		// "kom igjen");
-		queries.addEvent(evt);
-
-		evt.setDescription("Hallvard er best");
-		evt.setTitle("WATAAAAAAPPPP");
-		queries.updateCalEvent(evt);
+//		queries.addEvent(evt);
+//
+//		evt.setDescription("Hallvard er best");
+//		evt.setTitle("WATAAAAAAPPPP");
+//		queries.updateCalEvent(evt);
 
 		/**
 		 * Get available rooms
