@@ -35,8 +35,8 @@ public class EventWindowInvite extends EventWindow {
 		duration.setEnabled(false);
 		startTime.setEnabled(false);
 
-		add(acceptButton, new GBC(0, 7).setSpan(2, 1));
-		add(declineButton, new GBC(2, 7, Align.RIGHT_BOTTOM));
+		add(acceptButton, new GBC(0, 9).setSpan(2, 1));
+		add(declineButton, new GBC(2, 9, Align.RIGHT_BOTTOM).setSpan(2, 1));
 	}
 
 	private class acceptAction implements ActionListener {
