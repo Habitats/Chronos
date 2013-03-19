@@ -2,8 +2,11 @@ package client.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.print.attribute.standard.PresentationDirection;
 
@@ -32,9 +35,10 @@ public class CalendarModel extends ChronosModel {
 			return null;
 		}
 	}
+
 	private HashMap<String, Boolean> prePersonIsSelected;
 	private CalendarWindow calendarWindow;
-	private HashMap<String, ArrayList<CalEvent>> selectedPersonsEvents;
+	private Map<String, ArrayList<CalEvent>> selectedPersonsEvents;
 
 	private HashMap<String, Person> selectedPersons;
 	private int currentDisplayedWeek;
@@ -43,13 +47,13 @@ public class CalendarModel extends ChronosModel {
 
 	public CalendarModel(ClientController controller) {
 		super(controller, ChronosType.CALENDAR);
-		selectedPersonsEvents = new HashMap<String, ArrayList<CalEvent>>();
+		selectedPersonsEvents = Collections.synchronizedMap(new HashMap<String, ArrayList<CalEvent>>());
 		selectedPersons = new HashMap<String, Person>();
 		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 		currentDisplayedWeek = DateManagement.getWeek(currentDisplayedDate);
 		personColors = new HashMap<String, Color>();
-		
-//		Hash for debugging, may not be needed
+
+		// Hash for debugging, may not be needed
 		prePersonIsSelected = new HashMap<String, Boolean>();
 	}
 
@@ -84,10 +88,11 @@ public class CalendarModel extends ChronosModel {
 		}
 		update();
 	}
+
 	private void addNotifications(ArrayList<CalEvent> calEvents, String username) {
 		calendarWindow.setNotifications(0);
 		for (CalEvent calEvent : calEvents) {
-			if(statusIsWaiting(calEvent, username))
+			if (statusIsWaiting(calEvent, username))
 				calendarWindow.addNotification(calEvent);
 		}
 		calendarWindow.getTabbedPane().setTitleAt(1, "Invites (" + calendarWindow.getNotifications() + ")");
@@ -109,7 +114,7 @@ public class CalendarModel extends ChronosModel {
 				} else {
 					calendarWindow.addEvent(calEvent, Weekday.NONE, personColor);
 				}
-			} 
+			}
 		}
 	}
 
@@ -162,31 +167,32 @@ public class CalendarModel extends ChronosModel {
 	public void addSelectedPerson(Person person) {
 		prePersonIsSelected.put(person.getUsername(), true);
 		getPersonEvents(person);
-		
+
 	}
 
 	public void removeSelectedPerson(Person person) {
 		selectedPersonsEvents.remove(person.getUsername());
 		selectedPersons.remove(person.getUsername());
-//		personColors.remove(person.getUsername());
+		// personColors.remove(person.getUsername());
 		prePersonIsSelected.remove(person.getUsername());
 	}
 
 	public void update() {
 		calendarWindow.removeEvents();
 		calendarWindow.updateLabels();
-		for (String username : selectedPersonsEvents.keySet()) {
-			Color color;
-			if(username.equals(Singleton.getInstance().getSelf().getUsername())) {
-				color = Singleton.SELF_COLOR;
+		synchronized (selectedPersonsEvents) {
+			for (String username : selectedPersonsEvents.keySet()) {
+				Color color;
+				if (username.equals(Singleton.getInstance().getSelf().getUsername())) {
+					color = Singleton.SELF_COLOR;
+				} else if (personColors.containsKey(username)) {
+					color = personColors.get(username);
+				} else {
+					color = Singleton.COLOR_ARRAY[personColors.size() % Singleton.COLOR_ARRAY.length];
+					personColors.put(username, color);
+				}
+				addEventsArrayList(selectedPersonsEvents.get(username), username, color);
 			}
-			else if(personColors.containsKey(username)) {
-				color = personColors.get(username);				
-			} else {
-				color = Singleton.COLOR_ARRAY[personColors.size()%Singleton.COLOR_ARRAY.length];
-				personColors.put(username, color);
-			}
-			addEventsArrayList(selectedPersonsEvents.get(username), username, color);
 		}
 	}
 
@@ -231,6 +237,7 @@ public class CalendarModel extends ChronosModel {
 	public void setView(ChronosWindow calendarWindow) {
 		this.calendarWindow = (CalendarWindow) calendarWindow;
 	}
+
 	class AlarmThread implements Runnable {
 
 		@Override
@@ -238,9 +245,9 @@ public class CalendarModel extends ChronosModel {
 			Person self = Singleton.getInstance().getSelf();
 			ArrayList<CalEvent> calEvents = selectedPersonsEvents.get(self.getUsername());
 			for (CalEvent calEvent : calEvents) {
-				if(calEvent.getAlert() && DateManagement.isLessThanFifteenMinFromNow(calEvent.getStart())){
+				if (calEvent.getAlert() && DateManagement.isLessThanFifteenMinFromNow(calEvent.getStart())) {
 					calendarWindow.alarm(calEvent);
-					calEvent.getAlert();	
+					calEvent.getAlert();
 				}
 			}
 		}

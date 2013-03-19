@@ -3,6 +3,8 @@ package chronos;
 import java.io.Serializable;
 
 public class Room implements Serializable, Comparable<Room> {
+
+	private static final long serialVersionUID = -9094136548925770674L;
 	private String name;
 	private String description;
 	private int capacity;

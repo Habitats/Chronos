@@ -41,17 +41,19 @@ public class ServerConnection implements Runnable {
 
 		try {
 			while ((event = (NetworkEvent) in.readObject()) != null) {
-				Singleton.log("Server received: " + event);
-				for (ClientConnection clientConnection : server.getClientConnections()) {
-					if (clientConnection.getClientSocket() == clientSocket) {
-						clientConnection.setPerson(event.getSender());
-						this.clientConnection = clientConnection;
-//						break;
+				synchronized (event) {
+					Singleton.log("Server received: " + event);
+					for (ClientConnection clientConnection : server.getClientConnections()) {
+						if (clientConnection.getClientSocket() == clientSocket && event.getSender() != null) {
+							clientConnection.setPerson(event.getSender());
+							this.clientConnection = clientConnection;
+							// break;
+						}
 					}
+					// forward event to serverController that handles it
+					server.getServerController().evaluateNetworkEvent(event);
+					out.reset();
 				}
-				// forward event to serverController that handles it
-				server.getServerController().evaluateNetworkEvent(event);
-				out.reset();
 			}
 		} catch (Exception e) {
 			Singleton.log("Client dropped! Cleaning up...");

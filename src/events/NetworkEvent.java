@@ -21,9 +21,9 @@ abstract public class NetworkEvent implements Serializable {
 		LOG_OUT, //
 	}
 
-	ArrayList<Comparable> results;
-	private EventType type;
+	protected ArrayList<Comparable> results;
 	protected Person sender;
+	private EventType type;
 
 	public NetworkEvent(EventType type) {
 		setSender(Singleton.getInstance().getSelf());
