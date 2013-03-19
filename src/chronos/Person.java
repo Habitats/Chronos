@@ -18,6 +18,7 @@ public class Person implements Serializable, Comparable<Person> {
 	private String name;
 	private String username;
 	private Status status;
+	private boolean alarm;
 
 	public Person(String username, String name) {
 		this.username = username;
@@ -27,6 +28,10 @@ public class Person implements Serializable, Comparable<Person> {
 	public Person(String username, String name, int ordinal) {
 		this(username, name);
 		setStatus(ordinal);
+	}
+	public Person(String username, String name, int ordinal, boolean status) {
+		this(username, name, ordinal);
+		setAlarm(status);
 	}
 
 	public Person(String username) {
@@ -65,5 +70,13 @@ public class Person implements Serializable, Comparable<Person> {
 	@Override
 	public int compareTo(Person o) {
 		return getName().compareTo(o.getName());
+	}
+
+	public boolean isAlarm() {
+		return alarm;
+	}
+
+	public void setAlarm(boolean alarm) {
+		this.alarm = alarm;
 	}
 }
