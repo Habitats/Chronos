@@ -296,7 +296,11 @@ public class DatabaseQueries {
 				try {
 					ps.setString(1, p.getUsername());
 					ps.setString(2, "" + evt.getTimestamp());
-					ps.setString(3, null);
+					if (p.isAlarm()) {
+						ps.setInt(3, 1);						
+					}else{
+						ps.setInt(3, 0);
+					}
 					ps.setString(4, "" + p.getStatus().ordinal());
 					ps.addBatch();
 					Singleton.log("successfully added participant: " + p.getUsername());
@@ -364,7 +368,8 @@ public class DatabaseQueries {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
-		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration," + "events.description, person.username, person.name, events.room " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
+		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration,"
+		+ "events.description, person.username, person.name, events.room " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
 				+ processString(per.getUsername()) + " AND person.username = events.owner ORDER BY events.startTime ASC;";
 		try {
 			rs = db.makeSingleQuery(query);
@@ -414,15 +419,18 @@ public class DatabaseQueries {
 	private HashMap<String, Person> getParticipantsByEventId(long id) {
 		HashMap<String, Person> participants = new HashMap<String, Person>();
 		ResultSet rs;
-		String query = "SELECT person.username, name, status " + "FROM person, participants " + "WHERE participants.event_ID = " + id + " AND participants.username = person.username";
+		String query = "SELECT person.username, name, alarm, status " + "FROM person, participants " + "WHERE participants.event_ID = " + id + " AND participants.username = person.username";
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
 			while (rs.next()) {
+				boolean alarm = false;
 				String username = rs.getString(1);
 				String name = rs.getString(2);
-				int status = rs.getInt(3);
-				participants.put(username, new Person(username, name, status));
+				if (rs.getInt(3) == 1)
+					alarm = true;
+				int status = rs.getInt(4);
+				participants.put(username, new Person(username, name, status, alarm));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
