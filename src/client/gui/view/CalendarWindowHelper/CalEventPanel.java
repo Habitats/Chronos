@@ -28,7 +28,7 @@ public class CalEventPanel extends JPanel {
 	public CalEventPanel(CalEvent event, CalendarWindow view, int personColorNumber) {
 		super();
 		setLayout(new GridBagLayout());
-		color = Color.getHSBColor((float) personColorNumber / 20, 1, 1);
+		color = Color.getHSBColor((float) personColorNumber / 10, 1, 1);
 		setBackground(color);
 		setPreferredSize(new Dimension(130, 50));
 		setMinimumSize(new Dimension(130, 50));
