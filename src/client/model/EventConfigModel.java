@@ -109,6 +109,7 @@ public class EventConfigModel extends ChronosModel {
 			view.setParticipants(getParticipants());
 			view.getStartDateField().setText(getFormattedStartDate());
 			view.getDuration().setSelectedItem(getDuration());
+			view.getRoomNumberField().setText(getRoom() == null ? "" : getRoom().getName());
 			if (getCreator() != null)
 				view.getCreatorField().setText(getCreator().toString());
 		}
@@ -118,6 +119,11 @@ public class EventConfigModel extends ChronosModel {
 		for (EventWindow view : eventViews.values()) {
 			view.setParticipants(getParticipants());
 		}
+	}
+	
+	public void updateRoom() {
+		for(EventWindow view : eventViews.values())
+			view.getRoomNumberField().setText(getRoom() == null ? "" : getRoom().getName());
 	}
 
 	public void updateModel(EventWindow view) {
@@ -257,5 +263,14 @@ public class EventConfigModel extends ChronosModel {
 
 	public void setCreator(Person creator) {
 		this.creator = creator;
+	}
+
+	
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 }

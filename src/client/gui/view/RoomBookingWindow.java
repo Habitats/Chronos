@@ -22,7 +22,6 @@ public class RoomBookingWindow extends ChronosWindow {
 	private JList<Room> roomList;
 	private JButton bookButton, cancelButton, autobookButton;
 	private RoomBookingModel model;
-	// private BoxPanel roomPanel;
 
 	public RoomBookingWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -30,10 +29,7 @@ public class RoomBookingWindow extends ChronosWindow {
 		setVisible(false);
 
 		setLayout(new GridBagLayout());
-		
-		
 
-		// roomPanel = new BoxPanel();
 		roomList = new JList<Room>();
 		roomList.setModel(new DefaultListModel<Room>());
 		roomList.setVisible(true);
@@ -42,8 +38,6 @@ public class RoomBookingWindow extends ChronosWindow {
 		cancelButton = new JButton("Cancel");
 		autobookButton = new JButton("Autobook");
 
-		// roomPanel.setPreferredSize(new Dimension(300,200));
-		// roomPanel.setMinimumSize(new Dimension(100,80));
 		roomList.setPreferredSize(new Dimension(100, 100));
 		roomList.setMinimumSize(new Dimension(100, 80));
 		bookButton.setMinimumSize(new Dimension(100, 20));
@@ -53,38 +47,32 @@ public class RoomBookingWindow extends ChronosWindow {
 		cancelButton.addActionListener(new CancelAction());
 
 		add(new Label("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
-		// add(roomPanel, new GBC(0,2).setSpan(2, 1));
 		add(roomList, new GBC(0, 1).setSpan(1, 6));
 		add(autobookButton, new GBC(1, 1));
 		add(bookButton, new GBC(0, 7));
 		add(cancelButton, new GBC(1, 7));
-		/*
-		 * roomList.setPreferredSize(new Dimension(100, 100));
-		 * 
-		 * autobookButton.addActionListener(new AutoBookAction());
-		 * bookButton.addActionListener(new BookAction());
-		 * cancelButton.addActionListener(new CancelAction());
-		 * 
-		 * add(new Label("Book room"), new GBC(0,
-		 * 0).setFill(GridBagConstraints.NONE)); add(roomList, new GBC(0,
-		 * 1).setSpan(1, 6)); add(autobookButton, new GBC(1, 1));
-		 * add(bookButton, new GBC(0, 7)); add(cancelButton, new GBC(1, 7));
-		 */
 	}
 
 	private class AutoBookAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// autobook room
-			getFrame().getRoomBookingWindow().setVisible(false);
+			if(roomList.getModel().getSize() != 0) {
+				roomList.setSelectedIndex(0);
+				getFrame().getEventModel().setRoom(roomList.getSelectedValue());
+				getFrame().getEventModel().updateRoom();
+				getFrame().getRoomBookingWindow().setVisible(false);
+			}
 		}
 	}
 
 	private class BookAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// save booked room
-			getFrame().getRoomBookingWindow().setVisible(false);
+			if(roomList.getModel().getSize() != 0) {
+				getFrame().getEventModel().setRoom(roomList.getSelectedValue());
+				getFrame().getEventModel().updateRoom();
+				getFrame().getRoomBookingWindow().setVisible(false);
+			}
 		}
 	}
 

@@ -24,7 +24,8 @@ public class Singleton {
 
 	private boolean logEnabled;
 	private int port = 25000;
-	private String hostname = "chronosserver.no-ip.org";
+//	private String hostname = "chronosserver.no-ip.org";
+	private String hostname = "localhost";
 	private String username;
 	private boolean networkEnabled = false;
 	private boolean loginEnabled = false;
