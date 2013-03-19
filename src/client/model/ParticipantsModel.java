@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import chronos.Person;
+import chronos.Singleton;
+import chronos.Person.Status;
 import client.ClientController;
 import client.gui.view.ParticipantsWindow;
 import client.gui.view.ChronosWindow;
-import client.gui.view.CalendarWindowHelper.PersonCheckBox;
+import client.gui.view.calendarWindowHelper.PersonCheckBox;
 import events.NetworkEvent;
 import events.QueryEvent;
 import events.QueryEvent.QueryType;
@@ -46,10 +48,10 @@ public class ParticipantsModel extends ChronosModel {
 
 	public HashMap<String, Person> getSelectedUsers() {
 		HashMap<String, Person> selectedUsers = new HashMap<String, Person>();
-		for (Person user : users.keySet()) {
+		for (Person user : users.keySet())
 			if (users.get(user).isSelected())
-				selectedUsers.put(user.getUsername(), user);
-		}
+				selectedUsers.put(user.getUsername(), user.setStatus(Status.WAITING));
+		selectedUsers.put(Singleton.getInstance().getSelf().getUsername(), Singleton.getInstance().getSelf().setStatus(Status.ACCEPTED));
 		return selectedUsers;
 	}
 }

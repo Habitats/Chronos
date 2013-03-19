@@ -8,5 +8,15 @@ public class EventWindowOther extends EventWindow {
 
 	public EventWindowOther(ChronosModel model, MainFrame frame) {
 		super(model, frame, ViewType.OTHER);
+		applyButton.setVisible(false);
+
+		eventNameField.setEnabled(false);
+		eventDescriptionArea.setEnabled(false);
+		dateField.setEnabled(false);
+		startTime.setEnabled(false);
+
+		alert.setEnabled(false);
+		duration.setEnabled(false);
+		startTime.setEnabled(false);
 	}
 }

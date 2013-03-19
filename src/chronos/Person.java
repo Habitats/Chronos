@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class Person implements Serializable, Comparable<Person> {
 	public enum Status {
-		ACCEPTED, REJECTED, WAITING,
+		ACCEPTED, DECLINED, WAITING,
 	}
 
 	private static final long serialVersionUID = -1682580791493320360L;

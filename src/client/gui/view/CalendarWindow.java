@@ -20,14 +20,14 @@ import chronos.Person;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
-import client.gui.view.CalendarWindowHelper.BoxPanel;
-import client.gui.view.CalendarWindowHelper.CalEventListPanel;
-import client.gui.view.CalendarWindowHelper.CalEventPanel;
-import client.gui.view.CalendarWindowHelper.CalLabel;
-import client.gui.view.CalendarWindowHelper.ChangeWeekButton;
-import client.gui.view.CalendarWindowHelper.DayPanel;
-import client.gui.view.CalendarWindowHelper.NotificationPanel;
-import client.gui.view.CalendarWindowHelper.PersonCheckBox;
+import client.gui.view.calendarWindowHelper.BoxPanel;
+import client.gui.view.calendarWindowHelper.CalEventListPanel;
+import client.gui.view.calendarWindowHelper.CalEventPanel;
+import client.gui.view.calendarWindowHelper.CalLabel;
+import client.gui.view.calendarWindowHelper.ChangeWeekButton;
+import client.gui.view.calendarWindowHelper.DayPanel;
+import client.gui.view.calendarWindowHelper.NotificationPanel;
+import client.gui.view.calendarWindowHelper.PersonCheckBox;
 import client.gui.view.eventConfig.EventWindow;
 import client.model.CalendarModel;
 import client.model.CalendarModel.Weekday;
@@ -47,6 +47,8 @@ public class CalendarWindow extends ChronosWindow {
 	private CalLabel dateLbl, weekNumberLbl, mondayLbl, tuesdayLbl, wednesdayLbl, thursdayLbl, fridayLbl, saturdayLbl, sundayLbl;
 	private int eventsPanelHeight = 250;
 	private int eventsPanelWidth = 140;
+	private JTabbedPane tabbedPane;
+	private int notifications;
 
 	public CalendarWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -63,9 +65,9 @@ public class CalendarWindow extends ChronosWindow {
 		add(newEventButton, new GBC(i, 0));
 		newEventButton.addActionListener(new NewEventListener());
 
-		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createEmptyBorder());
-		add(tabbedPane, new GBC(i, 3));
+		add(tabbedPane, new GBC(i, 3).setWeight(0, 0.5));
 
 		eventsPanel = new BoxPanel();
 		eventsPane = new JScrollPane(eventsPanel);
@@ -93,7 +95,7 @@ public class CalendarWindow extends ChronosWindow {
 		othersCalPane.setMinimumSize(new Dimension(eventsPanelWidth, 250));
 		othersCalPane.setMaximumSize(new Dimension(eventsPanelWidth, 250));
 		othersCalPane.setBorder(border);
-		add(othersCalPane, new GBC(i, 4));
+		add(othersCalPane, new GBC(i, 4).setWeight(0, 0.5));
 
 		i++;
 		i++;
@@ -262,6 +264,14 @@ public class CalendarWindow extends ChronosWindow {
 		}
 	}
 
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+
+	public BoxPanel getNotificationsPanel() {
+		return notificationsPanel;
+	}
+
 	private class CheckBoxListener implements ActionListener {
 
 		public void itemStateChanged(ItemEvent e) {
@@ -300,9 +310,16 @@ public class CalendarWindow extends ChronosWindow {
 			model.update();
 		}
 	}
+	public void setNotifications(int notifications) {
+		this.notifications = notifications;
+	}
+	public int getNotifications() {
+		return notifications;
+	}
 
 	public void addNotification(CalEvent calEvent) {
 		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPanelWidth));
+		notifications++;
 	}
 
 	public void internalRepaint() {

@@ -8,7 +8,7 @@ import chronos.Room;
 import client.ClientController;
 import client.gui.view.ChronosWindow;
 import client.gui.view.RoomBookingWindow;
-import client.gui.view.CalendarWindowHelper.RoomCheckBox;
+import client.gui.view.calendarWindowHelper.RoomCheckBox;
 import events.CalEvent;
 import events.NetworkEvent;
 import events.QueryEvent;

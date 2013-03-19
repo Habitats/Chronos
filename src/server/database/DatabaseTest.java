@@ -98,20 +98,24 @@ public class DatabaseTest {
 
 		// System.out.println(queries.getUsers().get(0));
 		// System.out.println(queries.getParticipantsByEventId(1363184812475L));
-//		System.out.println(((CalEvent) queries.getEventsByParticipant((Person) queries.getUsers().get(0)).get(0)).getTitle());
+		// System.out.println(((CalEvent)
+		// queries.getEventsByParticipant((Person)
+		// queries.getUsers().get(0)).get(0)).getTitle());
 
 		/**
 		 * Update Event
 		 */
-		Person p = (Person)queries.getUsers().get(0);
+		Person p = (Person) queries.getUsers().get(0);
 		p.setStatus(Status.ACCEPTED);
-		CalEvent evt = new CalEvent("fuck",new Date(2013, 4, 3), 99999, p, "kom igjen");
+		CalEvent evt = new CalEvent("fuck", new Date(2013, 4, 3), 99999, p, "kom igjen");
+		// CalEvent evt = new CalEvent("fuck",new Date() , 99999, p,
+		// "kom igjen");
 		queries.addEvent(evt);
-		
-		
+
 		evt.setDescription("Hallvard er best");
+		evt.setTitle("WATAAAAAAPPPP");
 		queries.updateCalEvent(evt);
-		
+
 		/**
 		 * Get available rooms
 		 */
@@ -137,9 +141,9 @@ public class DatabaseTest {
 		/**
 		 * Search for users
 		 */
-//		ArrayList<Comparable> res = queries.searchUsers("boy");
-//		for( Comparable<Person> per : res) {
-//			System.out.println(" "+p.toString());
-//		}	
+		// ArrayList<Comparable> res = queries.searchUsers("boy");
+		// for( Comparable<Person> per : res) {
+		// System.out.println(" "+p.toString());
+		// }
 	}
 }

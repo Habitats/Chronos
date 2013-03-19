@@ -76,8 +76,9 @@ public class CalendarModel extends ChronosModel {
 	}
 
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents, String username) {
+		calendarWindow.setNotifications(0);
 		for (CalEvent calEvent : calEvents) {
-			
+
 			if (personIsAttending(calEvent, username)) {
 				Date startDate = calEvent.getStart();
 				int eventWeek = DateManagement.getWeek(startDate);
@@ -92,6 +93,7 @@ public class CalendarModel extends ChronosModel {
 				calendarWindow.addNotification(calEvent);
 			}
 		}
+		calendarWindow.getTabbedPane().setTitleAt(1, "Invites (" + calendarWindow.getNotifications() + ")");
 	}
 
 	private boolean statusIsWaiting(CalEvent event, String username) {

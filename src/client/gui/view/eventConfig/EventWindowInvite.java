@@ -36,11 +36,11 @@ public class EventWindowInvite extends EventWindow {
 		// titleField = new JTextField();
 		// descriptionField = new JTextField();
 		applyButton.setVisible(false);
-		eventNameField.setEditable(false);
-		eventDescriptionArea.setEditable(false);
-		dateField.setEditable(false);
-		duration.setEditable(false);
-		startTime.setEditable(false);
+		eventNameField.setEnabled(false);
+		eventDescriptionArea.setEnabled(false);
+		dateField.setEnabled(false);
+		duration.setEnabled(false);
+		startTime.setEnabled(false);
 
 		add(acceptButton, new GBC(0, 7).setSpan(2, 1));
 		add(declineButton, new GBC(2, 7, Align.RIGHT_BOTTOM));
@@ -50,8 +50,9 @@ public class EventWindowInvite extends EventWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.getCalEvent().getParticipants().put(Singleton.getInstance().getSelf().getUsername(), Singleton.getInstance().getSelf().setStatus(Status.REJECTED));
+			model.getCalEvent().getParticipants().put(Singleton.getInstance().getSelf().getUsername(), Singleton.getInstance().getSelf().setStatus(Status.ACCEPTED));
 			model.fireNetworkEvent(model.getCalEvent().setState(CalEventType.UPDATE));
+			setVisible(false);
 		}
 	}
 
@@ -59,8 +60,9 @@ public class EventWindowInvite extends EventWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.getCalEvent().getParticipants().put(Singleton.getInstance().getSelf().getUsername(), Singleton.getInstance().getSelf().setStatus(Status.ACCEPTED));
+			model.getCalEvent().getParticipants().put(Singleton.getInstance().getSelf().getUsername(), Singleton.getInstance().getSelf().setStatus(Status.DECLINED));
 			model.fireNetworkEvent(model.getCalEvent().setState(CalEventType.UPDATE));
+			setVisible(false);
 		}
 	}
 }

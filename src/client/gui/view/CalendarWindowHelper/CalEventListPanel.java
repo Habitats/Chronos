@@ -1,4 +1,4 @@
-package client.gui.view.CalendarWindowHelper;
+package client.gui.view.calendarWindowHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,6 +13,7 @@ import client.gui.view.eventConfig.EventWindow;
 import client.model.EventConfigModel.ViewType;
 
 import chronos.DateManagement;
+import chronos.Singleton;
 
 import events.CalEvent;
 import events.CalEvent.CalEventType;
@@ -46,7 +47,10 @@ public class CalEventListPanel extends JLabel {
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
 			view.getFrame().getEventModel().setCalEvent(calEvent);
-			view.getFrame().getEventModel().setView(ViewType.UPDATE);
+			if (calEvent.getCreator().getUsername().toLowerCase().equals(Singleton.getInstance().getSelf().getUsername()))
+				view.getFrame().getEventModel().setView(ViewType.UPDATE);
+			else
+				view.getFrame().getEventModel().setView(ViewType.OTHER);
 		}
 
 		@Override

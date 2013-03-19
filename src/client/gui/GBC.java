@@ -29,7 +29,7 @@ public class GBC extends GridBagConstraints {
 			else if (align == Align.FULL_WIDTH)
 				setInsets(b, b, 0, b);
 			else if (align == Align.MID_BOTTOM || align == Align.LEFT_BOTTOM)
-				setInsets(b, b, 0, b);
+				setInsets(b, b, b, 0);
 			else if (align == Align.RIGHT_BOTTOM)
 				setInsets(b, b, b, b);
 			else if (align == Align.FULL_WIDTH_BOTTOM)

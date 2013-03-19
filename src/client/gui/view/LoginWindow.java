@@ -6,6 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -46,9 +50,21 @@ public class LoginWindow extends ChronosWindow {
 		add(usernameField, new GBC(0, 1, Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
 		add(new Label("Password:"), new GBC(0, 2, Align.FULL_WIDTH).setAnchor(GridBagConstraints.SOUTH));
 		add(passwordField, new GBC(0, 3, Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
-		add(statusLabel, new GBC(0, 4, Align.FULL_WIDTH));
-		add(loginButton, new GBC(0, 5, Align.LEFT_BOTTOM).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
-		add(cancelButton, new GBC(1, 5, Align.RIGHT_BOTTOM).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_END));
+		add(statusLabel, new GBC(0, 4, Align.FULL_WIDTH).setSpan(2, 1));
+		add(loginButton, new GBC(0, 5, Align.LEFT_BOTTOM).setWeight(0.5, 0));
+		add(cancelButton, new GBC(1, 5, Align.RIGHT_BOTTOM).setWeight(0.5, 0));
+
+		usernameField.addKeyListener(new LoginListener());
+		passwordField.addKeyListener(new LoginListener());
+	}
+
+	private class LoginListener extends KeyAdapter {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			super.keyPressed(e);
+			if (e.getKeyChar() == KeyEvent.VK_ENTER)
+				model.login(usernameField.getText(), passwordField.getText());
+		}
 	}
 
 	private class LoginAction implements ActionListener {

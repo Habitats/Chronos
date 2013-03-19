@@ -23,6 +23,7 @@ import javax.swing.text.JTextComponent;
 import chronos.Person;
 import client.gui.GBC;
 import client.gui.MainFrame;
+import client.gui.GBC.Align;
 import client.gui.view.ChronosWindow;
 import client.gui.view.EditConfigButton;
 import client.model.ChronosModel;
@@ -41,10 +42,9 @@ abstract public class EventWindow extends ChronosWindow {
 	protected JTextArea eventDescriptionArea;
 	protected JTextField dateField;
 	protected JTextField startTimeField;
-
-	private JTextField roomNumberField;
-	private JList<Person> participantList;
-	private JCheckBox alert;
+	protected JCheckBox alert;
+	protected JTextField roomNumberField;
+	protected JList<Person> participantList;
 
 	private Dimension bottomButtonDim = new Dimension(80, 20);
 	private Dimension bigButtonDim = new Dimension(170, 20);
@@ -113,7 +113,7 @@ abstract public class EventWindow extends ChronosWindow {
 		add(participantList, new GBC(2, 1).setSpan(1, 6).setWeight(1, 1));
 
 		add(startTime, new GBC(3, 0).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
-		add(new Label("Enable alert 15 min before"), new GBC(3, 1).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
+		add(new Label("Enable alert 15 min before"), new GBC(3, 1).setSpan(3, 1).setAnchor(GridBagConstraints.NORTH));
 
 		add(new Label("Alert:"), new GBC(3, 2));
 		add(new Label("Room no."), new GBC(3, 3).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));

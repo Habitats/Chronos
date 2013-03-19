@@ -1,4 +1,4 @@
-package client.gui.view.CalendarWindowHelper;
+package client.gui.view.calendarWindowHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;

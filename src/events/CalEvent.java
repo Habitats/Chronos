@@ -22,11 +22,11 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 
 	private HashMap<String, Person> participants;
 
-	private Date start;
+	private Date startDate;
 	private int duration;
 	private CalEventType type;
 	private final Person creator;
-	private final String title;
+	private String title;
 	private String description;
 	private final long timestampPrimaryKey;
 	private Room room;
@@ -35,16 +35,16 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 
 	private int startTime;
 
-	public CalEvent(String title, Date start, int duration, Person creator, String description) {
-		this(title, start, duration, creator, description, 0);
+	public CalEvent(String title, Date startDate, int duration, Person creator, String description) {
+		this(title, startDate, duration, creator, description, 0);
 	}
 
-	public CalEvent(String title, Date start, int duration, Person creator, String description, long timestampPrimaryKey) {
+	public CalEvent(String title, Date startDate, int duration, Person creator, String description, long timestampPrimaryKey) {
 		super(EventType.CALENDAR);
 		setState(CalEventType.NEW);
 		this.title = title;
 		this.creator = creator;
-		this.start = start;
+		this.startDate = startDate;
 		this.duration = duration;
 		participants = new HashMap<String, Person>();
 		this.description = description;
@@ -53,17 +53,18 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		addParticipant(creator);
 	}
 
-	public CalEvent addParticipant(Person... person) {
-		for (int i = 0; i < person.length; i++)
-			participants.put(person[i].getUsername(), person[i]);
+	public CalEvent update(String title, Date start, int duration, String description) {
+		this.title = title;
+		this.startDate = start;
+		this.duration = duration;
+		this.description = description;
+		setState(CalEventType.UPDATE);
 		return this;
 	}
 
-	public CalEvent addParticipant(HashMap<String, Person> participants) {
-		for (Person person : participants.values()) {
-			person.setStatus(Status.WAITING);
-			addParticipant(person);
-		}
+	public CalEvent addParticipant(Person... person) {
+		for (int i = 0; i < person.length; i++)
+			participants.put(person[i].getUsername(), person[i]);
 		return this;
 	}
 
@@ -92,7 +93,7 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	}
 
 	public Date getStart() {
-		return start;
+		return startDate;
 	}
 
 	public int getDuration() {
@@ -124,6 +125,18 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		return this;
 	}
 
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public void setStart(Date start) {
+		this.startDate = start;
+	}
+
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
+	}
+
 	/**
 	 * used as primary key in the db, HATERS GONNA' HATE
 	 */
@@ -131,8 +144,9 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		return timestampPrimaryKey;
 	}
 
-	public void setParticipants(HashMap<String, Person> participants) {
+	public CalEvent setParticipants(HashMap<String, Person> participants) {
 		this.participants = participants;
+		return this;
 	}
 
 	public void setAlert(boolean alert) {
@@ -145,7 +159,7 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 
 	@Override
 	public int compareTo(CalEvent otherEvent) {
-		return (int) ((start.getTime() - otherEvent.getStart().getTime()) / 1000);
+		return (int) ((startDate.getTime() - otherEvent.getStart().getTime()) / 1000);
 	}
 
 	public CalEvent setState(ViewType viewType) {
@@ -154,5 +168,9 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		else if (viewType == viewType.NEW)
 			setState(CalEventType.NEW);
 		return this;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }

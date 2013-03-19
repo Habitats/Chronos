@@ -1,5 +1,7 @@
 package chronos;
 
+import java.awt.Color;
+
 /**
  * Global variables are stored here
  * http://en.wikipedia.org/wiki/Singleton_pattern
@@ -9,6 +11,9 @@ public class Singleton {
 	 * Other constants
 	 */
 	public final static String APP_NAME = "Chronos - FUCK YEAH";
+	public final static Color LIGHT_RED = new Color(0xFF8F95);
+	public final static Color LIGHT_GREEN = new Color(0xCBFF7C);
+	public final static Color BACKGROUND = new Color(0xFFFFFF);
 
 	/**
 	 * Singleton variables

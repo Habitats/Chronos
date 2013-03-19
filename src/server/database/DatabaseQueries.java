@@ -192,6 +192,7 @@ public class DatabaseQueries {
 		}
 		return null;
 	}
+
 	/**
 	 * Returns an ArrayList of chronos.Person
 	 * 
@@ -315,6 +316,8 @@ public class DatabaseQueries {
 					e.printStackTrace();
 				}
 			}
+			ps.executeBatch();
+			ps.close();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -423,6 +426,7 @@ public class DatabaseQueries {
 			}
 			ps.executeBatch();
 			ps.close();
+			updateParticipants(event);
 		} catch (SQLException e) {
 			Singleton.log("error executing: " + event.getTitle() + " with fields " + event.getStart().getTime() + " and " + event.getDuration() + " and " + event.getDescription());
 			e.printStackTrace();
@@ -475,9 +479,9 @@ public class DatabaseQueries {
 				String desc = rs.getString(2);
 				int cap = rs.getInt(3);
 				roomList.add(new Room(name, cap, desc));
-				logg += " "+name;
+				logg += " " + name;
 			}
-			Singleton.log("Successfully retrieved all available rooms: "+logg);
+			Singleton.log("Successfully retrieved all available rooms: " + logg);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Singleton.log("Error retrieving all available rooms");

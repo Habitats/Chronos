@@ -15,8 +15,8 @@ import javax.swing.JList;
 import chronos.Room;
 import client.gui.GBC;
 import client.gui.MainFrame;
-import client.gui.view.CalendarWindowHelper.BoxPanel;
-import client.gui.view.CalendarWindowHelper.RoomCheckBox;
+import client.gui.view.calendarWindowHelper.BoxPanel;
+import client.gui.view.calendarWindowHelper.RoomCheckBox;
 import client.model.ChronosModel;
 import client.model.RoomBookingModel;
 

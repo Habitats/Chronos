@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import chronos.Person;
 import client.gui.GBC;
 import client.gui.MainFrame;
-import client.gui.view.CalendarWindowHelper.BoxPanel;
-import client.gui.view.CalendarWindowHelper.PersonCheckBox;
+import client.gui.view.calendarWindowHelper.BoxPanel;
+import client.gui.view.calendarWindowHelper.PersonCheckBox;
 import client.gui.view.eventConfig.EventWindowAdmin;
 import client.model.ParticipantsModel;
 import client.model.ChronosModel;
@@ -66,7 +66,7 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getFrame().getEventModel().setParticipants(model.getSelectedUsers());
-			getFrame().getEventModel().updateViews();
+			getFrame().getEventModel().updatePerticipants();
 			setVisible(false);
 		}
 	}

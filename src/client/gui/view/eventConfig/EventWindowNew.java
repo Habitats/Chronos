@@ -8,6 +8,6 @@ public class EventWindowNew extends EventWindowAdmin {
 
 	public EventWindowNew(ChronosModel model, MainFrame frame) {
 		super(model, frame, ViewType.NEW);
-		applyButton.setText("NEW");
+		applyButton.setText("New");
 	}
 }
