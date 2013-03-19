@@ -1,5 +1,6 @@
 package client.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ public class CalendarModel extends ChronosModel {
 	private int currentDisplayedWeek;
 	private Date currentDisplayedDate;
 	private int personColorNumber;
+	private HashMap<String, Color> personColors;
 
 	public CalendarModel(ClientController controller) {
 		super(controller, ChronosType.CALENDAR);
@@ -45,6 +47,7 @@ public class CalendarModel extends ChronosModel {
 		currentDisplayedDate = DateManagement.getMondayOfWeek(new Date());
 		currentDisplayedWeek = DateManagement.getWeek(currentDisplayedDate);
 		personColorNumber = 0;
+		personColors = new HashMap<String, Color>();
 	}
 
 	public String getCurrentDisplayedDateIntervall() {
@@ -75,7 +78,7 @@ public class CalendarModel extends ChronosModel {
 		update();
 	}
 
-	private void addEventsArrayList(ArrayList<CalEvent> calEvents, String username) {
+	private void addEventsArrayList(ArrayList<CalEvent> calEvents, String username, Color personColor) {
 		calendarWindow.setNotifications(0);
 		for (CalEvent calEvent : calEvents) {
 
@@ -85,9 +88,9 @@ public class CalendarModel extends ChronosModel {
 				int eventYear = DateManagement.getYear(startDate);
 				int currentDisplayedYear = DateManagement.getYear(currentDisplayedDate);
 				if (currentDisplayedWeek == eventWeek && eventYear == currentDisplayedYear) {
-					calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate), personColorNumber);
+					calendarWindow.addEvent(calEvent, DateManagement.getWeekday(startDate), personColor);
 				} else {
-					calendarWindow.addEvent(calEvent, Weekday.NONE, personColorNumber);
+					calendarWindow.addEvent(calEvent, Weekday.NONE, personColor);
 				}
 			} else if (Singleton.getInstance().getSelf().getUsername().equals(username) && statusIsWaiting(calEvent, username)) {
 				calendarWindow.addNotification(calEvent);
@@ -147,15 +150,20 @@ public class CalendarModel extends ChronosModel {
 	public void removeSelectedPerson(Person person) {
 		selectedPersonsEvents.remove(person.getUsername());
 		selectedPersons.remove(person.getUsername());
+		personColors.remove(person.getUsername());
 	}
 
 	public void update() {
 		calendarWindow.removeEvents();
 		calendarWindow.updateLabels();
-		personColorNumber = 0;
 		for (String username : selectedPersonsEvents.keySet()) {
-			addEventsArrayList(selectedPersonsEvents.get(username), username);
-			personColorNumber++;
+			if(personColors.containsKey(username)) {
+				addEventsArrayList(selectedPersonsEvents.get(username), username, personColors.get(username));				
+			} else {
+				Color color = Singleton.COLORARRAY[personColors.size()%Singleton.COLORARRAY.length];
+				addEventsArrayList(selectedPersonsEvents.get(username), username, color);
+				personColors.put(username, color);
+			}
 		}
 	}
 
