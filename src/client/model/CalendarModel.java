@@ -73,11 +73,22 @@ public class CalendarModel extends ChronosModel {
 		String username = person.getUsername();
 		selectedPersonsEvents.put(username, calEvents);
 		selectedPersons.put(username, person);
+		if (Singleton.getInstance().getSelf().getUsername().equals(username)) {
+			calendarWindow.removeNotifications();
+			addNotifications(calEvents, username);
+		}
 		update();
+	}
+	private void addNotifications(ArrayList<CalEvent> calEvents, String username) {
+		calendarWindow.setNotifications(0);
+		for (CalEvent calEvent : calEvents) {
+			if(statusIsWaiting(calEvent, username))
+				calendarWindow.addNotification(calEvent);
+		}
+		calendarWindow.getTabbedPane().setTitleAt(1, "Invites (" + calendarWindow.getNotifications() + ")");
 	}
 
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents, String username, Color personColor) {
-		calendarWindow.setNotifications(0);
 		for (CalEvent calEvent : calEvents) {
 
 			if (personIsAttending(calEvent, username)) {
@@ -90,11 +101,8 @@ public class CalendarModel extends ChronosModel {
 				} else {
 					calendarWindow.addEvent(calEvent, Weekday.NONE, personColor);
 				}
-			} else if (Singleton.getInstance().getSelf().getUsername().equals(username) && statusIsWaiting(calEvent, username)) {
-				calendarWindow.addNotification(calEvent);
-			}
+			} 
 		}
-		calendarWindow.getTabbedPane().setTitleAt(1, "Invites (" + calendarWindow.getNotifications() + ")");
 	}
 
 	private boolean statusIsWaiting(CalEvent event, String username) {
