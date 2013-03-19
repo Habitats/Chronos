@@ -36,6 +36,6 @@ public class Room implements Serializable, Comparable<Room> {
 
 	@Override
 	public String toString() {
-		return ("Room " + this.name + " with capacity " + this.capacity);
+		return (this.name);
 	}
 }

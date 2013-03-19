@@ -33,6 +33,7 @@ public class RoomBookingModel extends ChronosModel {
 
 	public RoomBookingModel(ClientController controller) {
 		super(controller, ChronosType.ROOM_BOOK);
+		rooms = new ArrayList<Room>();
 		// TODO Auto-generated constructor stub
 	}
 
