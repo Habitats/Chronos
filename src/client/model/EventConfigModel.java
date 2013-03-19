@@ -109,7 +109,8 @@ public class EventConfigModel extends ChronosModel {
 			view.setParticipants(getParticipants());
 			view.getStartDateField().setText(getFormattedStartDate());
 			view.getDuration().setSelectedItem(getDuration());
-			view.getCreatorField().setText(getCreator().toString());
+			if (getCreator() != null)
+				view.getCreatorField().setText(getCreator().toString());
 		}
 	}
 
