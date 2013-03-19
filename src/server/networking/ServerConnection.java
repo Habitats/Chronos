@@ -41,15 +41,12 @@ public class ServerConnection implements Runnable {
 		try {
 			while ((event = (NetworkEvent) in.readObject()) != null) {
 				Singleton.log("Server received: " + event);
-				List<ClientConnection> clientConnections = server.getClientConnections();
-				synchronized (clientConnections) {
-					for (ClientConnection clientConnection : clientConnections) {
-						if (clientConnection.getClientSocket() == clientSocket && clientConnection.getPerson() == null) {
-							clientConnection.setPerson(event.getSender());
-							this.clientConnection = clientConnection;
+				for (ClientConnection clientConnection : server.getClientConnections()) {
+					if (clientConnection.getClientSocket() == clientSocket ) {
+						clientConnection.setPerson(event.getSender());
+						this.clientConnection = clientConnection;
 
-							break;
-						}
+						break;
 					}
 				}
 				// forward event to serverController that handles it
