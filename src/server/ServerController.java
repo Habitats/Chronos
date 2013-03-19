@@ -31,7 +31,6 @@ public class ServerController implements Runnable {
 	 * serverConnection
 	 */
 	public void evaluateNetworkEvent(NetworkEvent event) {
-		// Singleton.log("Server evaluating: " + event.toString());
 
 		switch (event.getType()) {
 		case LOGIN:
@@ -47,9 +46,7 @@ public class ServerController implements Runnable {
 		case QUERY:
 			evaluateQueryEvent((QueryEvent) event);
 			break;
-		// case TEST:
-		// echoNetworkEventToSender(event);
-		// break;
+
 		}
 	}
 
@@ -57,7 +54,6 @@ public class ServerController implements Runnable {
 	 * Further evaluation of calendar events
 	 */
 	private void evaluateCalEvent(CalEvent event) {
-		// Singleton.log("Evaluating calEvent...");
 		switch (event.getState()) {
 		case DELETE:
 			if (event.getSender().getUsername().toLowerCase().equals(event.getCreator().getUsername().toLowerCase()))
@@ -67,7 +63,6 @@ public class ServerController implements Runnable {
 			}
 			break;
 		case NEW:
-			// addCalEventForParticipants(event);
 			dbController.addCalEvent(event);
 			break;
 		case UPDATE:
@@ -123,8 +118,6 @@ public class ServerController implements Runnable {
 	private void sendSingleNetworkEvent(NetworkEvent event, Person person) {
 		try {
 			for (ClientConnection clientConnection : server.getClientConnections()) {
-				// Singleton.log("Echoing event: " + event + " - Recepient: " +
-				// person.getUsername());
 				if (clientConnection.getPerson().getUsername().toLowerCase().equals(person.getUsername().toLowerCase())) {
 					clientConnection.getOut().writeObject(event);
 				}

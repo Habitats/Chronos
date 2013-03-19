@@ -1,7 +1,5 @@
 package client.gui.view;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,7 +13,6 @@ import javax.swing.JList;
 import chronos.Room;
 import client.gui.GBC;
 import client.gui.MainFrame;
-import client.gui.view.calendarWindowHelper.BoxPanel;
 import client.gui.view.calendarWindowHelper.RoomCheckBox;
 import client.model.ChronosModel;
 import client.model.RoomBookingModel;
@@ -24,7 +21,8 @@ public class RoomBookingWindow extends ChronosWindow {
 	private JList roomList;
 	private JButton bookButton, cancelButton, autobookButton;
 	private RoomBookingModel model;
-//	private BoxPanel roomPanel;
+
+	// private BoxPanel roomPanel;
 
 	public RoomBookingWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -33,14 +31,14 @@ public class RoomBookingWindow extends ChronosWindow {
 
 		setLayout(new GridBagLayout());
 
-//		roomPanel = new BoxPanel();
+		// roomPanel = new BoxPanel();
 		roomList = new JList<>();
 		bookButton = new JButton("Book");
 		cancelButton = new JButton("Cancel");
 		autobookButton = new JButton("Autobook");
 
-//		roomPanel.setPreferredSize(new Dimension(300,200));
-//		roomPanel.setMinimumSize(new Dimension(100,80));
+		// roomPanel.setPreferredSize(new Dimension(300,200));
+		// roomPanel.setMinimumSize(new Dimension(100,80));
 		roomList.setPreferredSize(new Dimension(100, 100));
 		roomList.setMinimumSize(new Dimension(100, 80));
 		bookButton.setMinimumSize(new Dimension(100, 20));
@@ -50,24 +48,23 @@ public class RoomBookingWindow extends ChronosWindow {
 		cancelButton.addActionListener(new CancelAction());
 
 		add(new Label("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
-//		add(roomPanel, new GBC(0,2).setSpan(2, 1));
+		// add(roomPanel, new GBC(0,2).setSpan(2, 1));
 		add(roomList, new GBC(0, 1).setSpan(1, 6));
 		add(autobookButton, new GBC(1, 1));
 		add(bookButton, new GBC(0, 7));
 		add(cancelButton, new GBC(1, 7));
-/*
-		roomList.setPreferredSize(new Dimension(100, 100));
-
-		autobookButton.addActionListener(new AutoBookAction());
-		bookButton.addActionListener(new BookAction());
-		cancelButton.addActionListener(new CancelAction());
-
-		add(new Label("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE));
-		add(roomList, new GBC(0, 1).setSpan(1, 6));
-		add(autobookButton, new GBC(1, 1));
-		add(bookButton, new GBC(0, 7));
-		add(cancelButton, new GBC(1, 7));
-*/
+		/*
+		 * roomList.setPreferredSize(new Dimension(100, 100));
+		 * 
+		 * autobookButton.addActionListener(new AutoBookAction());
+		 * bookButton.addActionListener(new BookAction());
+		 * cancelButton.addActionListener(new CancelAction());
+		 * 
+		 * add(new Label("Book room"), new GBC(0,
+		 * 0).setFill(GridBagConstraints.NONE)); add(roomList, new GBC(0,
+		 * 1).setSpan(1, 6)); add(autobookButton, new GBC(1, 1));
+		 * add(bookButton, new GBC(0, 7)); add(cancelButton, new GBC(1, 7));
+		 */
 	}
 
 	private class AutoBookAction implements ActionListener {
@@ -93,25 +90,26 @@ public class RoomBookingWindow extends ChronosWindow {
 		}
 	}
 
-
 	@Override
 	public void setModel(ChronosModel model) {
 		this.model = (RoomBookingModel) model;
 		this.model.setView(this);
 	}
+
 	@Override
 	public void setVisible(boolean aFlag) {
 		super.setVisible(aFlag);
-		if(aFlag)
+		if (aFlag)
 			model.getRooms();
 	}
-	
+
 	public RoomCheckBox addRoom(Room room) {
 		RoomCheckBox checkBox = new RoomCheckBox(room);
-//		roomList.add(checkBox);
+		// roomList.add(checkBox);
 		roomList.add(room.getName(), checkBox);
 		return checkBox;
 	}
+
 	public JList getRoomPanel() {
 		return roomList;
 	}

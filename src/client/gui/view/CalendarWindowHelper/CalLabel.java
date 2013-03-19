@@ -9,10 +9,6 @@ public class CalLabel extends JLabel {
 
 		super(text);
 		this.setHorizontalAlignment(SwingConstants.CENTER);
-		// setMinimumSize(new Dimension(140,20));
-		// setPreferredSize(new Dimension(140,20));
-		// setMaximumSize(new Dimension(140,20));
 
 	}
-
 }

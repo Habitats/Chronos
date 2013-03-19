@@ -296,7 +296,7 @@ public class DatabaseQueries {
 	 * 
 	 * @param evt
 	 */
-	public void updateParticipants(CalEvent evt) {
+	private void updateParticipants(CalEvent evt) {
 		String insertQuery = "UPDATE Participants SET alarm=?, status=? WHERE username=? AND event_ID=?;";
 		PreparedStatement ps;
 		String eventID = "" + evt.getTimestamp();

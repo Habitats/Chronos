@@ -1,24 +1,17 @@
 package client.gui.view.eventConfig;
 
-import java.awt.GridBagLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JButton;
-import javax.swing.JTextField;
-
 import chronos.Singleton;
 import chronos.Person.Status;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
-import client.gui.view.ChronosWindow;
 import client.model.ChronosModel;
-import client.model.EventConfigModel;
 import client.model.EventConfigModel.ViewType;
-import client.model.InvitationModel;
 import events.CalEvent.CalEventType;
 
 public class EventWindowInvite extends EventWindow {

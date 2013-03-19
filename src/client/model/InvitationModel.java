@@ -40,9 +40,9 @@ public class InvitationModel extends ChronosModel {
 	}
 
 	public void setCalEvent(CalEvent calEvent) {
-//		view.setEventName(calEvent.getTitle());
-//		view.setEventDesctiption(calEvent.getDescription());
-//		view.setStart(calEvent.getStart());
-//		view.setSender(calEvent.getSender());
+		// view.setEventName(calEvent.getTitle());
+		// view.setEventDesctiption(calEvent.getDescription());
+		// view.setStart(calEvent.getStart());
+		// view.setSender(calEvent.getSender());
 	};
 }

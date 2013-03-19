@@ -12,14 +12,12 @@ import javax.swing.JPanel;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.view.CalendarWindow;
-import client.gui.view.eventConfig.EventWindow;
 import client.model.EventConfigModel.ViewType;
 
 import chronos.DateManagement;
 import chronos.Singleton;
 
 import events.CalEvent;
-import events.CalEvent.CalEventType;
 
 public class CalEventPanel extends JPanel {
 
@@ -48,14 +46,6 @@ public class CalEventPanel extends JPanel {
 		this.calEvent = event;
 		this.view = view;
 	}
-
-	// Method for creating n differen colors
-	// public Color[] createColors(int n) {
-	// Color[] cols = new Color[n];
-	// for (int i = 0; i < n; i++)
-	// cols[i] = Color.getHSBColor((float) i / n, 1, 1);
-	// return cols;
-	// }
 
 	private class CalPanelMouseAdapter extends MouseAdapter {
 		@Override

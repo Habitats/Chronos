@@ -1,14 +1,11 @@
 package client.gui.view;
 
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import chronos.Person;
@@ -16,7 +13,6 @@ import client.gui.GBC;
 import client.gui.MainFrame;
 import client.gui.view.calendarWindowHelper.BoxPanel;
 import client.gui.view.calendarWindowHelper.PersonCheckBox;
-import client.gui.view.eventConfig.EventWindowAdmin;
 import client.model.ParticipantsModel;
 import client.model.ChronosModel;
 

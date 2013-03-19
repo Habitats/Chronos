@@ -1,14 +1,11 @@
 package events;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 import client.model.EventConfigModel.ViewType;
 
 import chronos.Person;
-import chronos.Singleton;
-import chronos.Person.Status;
 import chronos.Room;
 
 /**
@@ -165,7 +162,7 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	public CalEvent setState(ViewType viewType) {
 		if (viewType == ViewType.UPDATE)
 			setState(CalEventType.UPDATE);
-		else if (viewType == viewType.NEW)
+		else if (viewType == ViewType.NEW)
 			setState(CalEventType.NEW);
 		return this;
 	}

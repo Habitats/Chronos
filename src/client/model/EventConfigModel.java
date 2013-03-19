@@ -1,8 +1,5 @@
 package client.model;
 
-import java.awt.Color;
-import java.io.ObjectInputStream.GetField;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -98,7 +95,7 @@ public class EventConfigModel extends ChronosModel {
 		setParticipants(event.getParticipants());
 	}
 
-	public void updateViews() {
+	private void updateViews() {
 		for (EventWindow view : eventViews.values()) {
 			view.getEventNameField().setText(getEventName());
 			view.getEventNameField().setBackground(Singleton.BACKGROUND);

@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -23,13 +22,11 @@ import javax.swing.text.JTextComponent;
 import chronos.Person;
 import client.gui.GBC;
 import client.gui.MainFrame;
-import client.gui.GBC.Align;
 import client.gui.view.ChronosWindow;
 import client.gui.view.EditConfigButton;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
 import client.model.EventConfigModel.ViewType;
-import events.CalEvent.CalEventType;
 
 abstract public class EventWindow extends ChronosWindow {
 
@@ -37,14 +34,21 @@ abstract public class EventWindow extends ChronosWindow {
 	private Integer[] durationArray = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
 	protected JTextField eventNameField;
-	protected JButton addParticipantButton, deleteParticipantButton, bookRoomButton, editButton, deleteButton, applyButton, cancelButton;
+	protected JButton addParticipantButton;
+	protected JButton deleteParticipantButton;
+	protected JButton bookRoomButton;
+	protected JCheckBox alert;
+	protected JButton deleteButton;
+	protected JButton applyButton;
 	protected JComboBox startTime, duration;
 	protected JTextArea eventDescriptionArea;
 	protected JTextField dateField;
-	protected JTextField startTimeField;
-	protected JCheckBox alert;
-	protected JTextField roomNumberField;
-	protected JList<Person> participantList;
+
+	private JButton editButton;
+	private JButton cancelButton;
+	private JTextField startTimeField;
+	private JTextField roomNumberField;
+	private JList<Person> participantList;
 
 	private Dimension bottomButtonDim = new Dimension(80, 20);
 	private Dimension bigButtonDim = new Dimension(170, 20);

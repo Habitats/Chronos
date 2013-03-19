@@ -10,7 +10,6 @@ import javax.swing.SwingConstants;
 
 import chronos.DateManagement;
 import client.gui.view.CalendarWindow;
-import client.gui.view.eventConfig.EventWindowInvite;
 import client.model.EventConfigModel.ViewType;
 import events.CalEvent;
 

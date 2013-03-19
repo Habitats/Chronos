@@ -3,7 +3,7 @@ package chronos;
 import java.io.Serializable;
 
 public class Room implements Serializable, Comparable<Room> {
-	String name;
+	private String name;
 	private String description;
 	private int capacity;
 

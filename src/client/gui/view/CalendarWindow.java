@@ -28,13 +28,11 @@ import client.gui.view.calendarWindowHelper.ChangeWeekButton;
 import client.gui.view.calendarWindowHelper.DayPanel;
 import client.gui.view.calendarWindowHelper.NotificationPanel;
 import client.gui.view.calendarWindowHelper.PersonCheckBox;
-import client.gui.view.eventConfig.EventWindow;
 import client.model.CalendarModel;
 import client.model.CalendarModel.Weekday;
 import client.model.EventConfigModel.ViewType;
 import client.model.ChronosModel;
 import events.CalEvent;
-import events.CalEvent.CalEventType;
 
 public class CalendarWindow extends ChronosWindow {
 
@@ -310,9 +308,11 @@ public class CalendarWindow extends ChronosWindow {
 			model.update();
 		}
 	}
+
 	public void setNotifications(int notifications) {
 		this.notifications = notifications;
 	}
+
 	public int getNotifications() {
 		return notifications;
 	}

@@ -1,7 +1,6 @@
 package client.gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.util.ArrayList;
@@ -19,19 +18,16 @@ import client.gui.view.CalendarWindow;
 import client.gui.view.ChronosWindow;
 import client.gui.view.LoginWindow;
 import client.gui.view.RoomBookingWindow;
-import client.gui.view.eventConfig.EventWindow;
 import client.gui.view.eventConfig.EventWindowAdmin;
 import client.gui.view.eventConfig.EventWindowInvite;
 import client.gui.view.eventConfig.EventWindowNew;
 import client.gui.view.eventConfig.EventWindowOther;
 import client.gui.view.eventConfig.EventWindowParticipant;
 import client.gui.view.eventConfig.EventWindowUpdate;
-import client.model.InvitationModel;
 import client.model.ParticipantsModel;
 import client.model.CalendarModel;
 import client.model.ChronosModel;
 import client.model.EventConfigModel;
-import client.model.InvitationModel;
 import client.model.LoginModel;
 import client.model.RoomBookingModel;
 import events.QueryEvent;
@@ -106,15 +102,6 @@ public class MainFrame extends JFrame {
 		addParticipantModel = new ParticipantsModel(controller);
 		addParticipantWindow = new ParticipantsWindow(addParticipantModel, this);
 
-		// Timer t = new Timer(10, new ActionListener() {
-		//
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// repaint();
-		//
-		// }
-		// });
-		// t.start();
 	}
 
 	private JLayeredPane buildLayeredPane() {

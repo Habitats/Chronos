@@ -9,14 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import client.gui.view.CalendarWindow;
-import client.gui.view.eventConfig.EventWindow;
 import client.model.EventConfigModel.ViewType;
 
 import chronos.DateManagement;
 import chronos.Singleton;
 
 import events.CalEvent;
-import events.CalEvent.CalEventType;
 
 public class CalEventListPanel extends JLabel {
 

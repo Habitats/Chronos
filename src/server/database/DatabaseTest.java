@@ -1,12 +1,10 @@
 package server.database;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
 import chronos.Person;
 import chronos.Person.Status;
-import chronos.Room;
 import chronos.Singleton;
 import events.CalEvent;
 
