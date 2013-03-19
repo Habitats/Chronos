@@ -228,7 +228,7 @@ public class DatabaseQueries {
 		try {
 			ps = db.makeBatchUpdate(insertQuery);
 			try {
-				ps.setLong(1, evt.getTimestamp());
+				ps.setLong(1, makePrimaryUnique(evt.getTimestamp(), 0));
 				ps.setString(2, evt.getTitle());
 				ps.setLong(3, evt.getStart().getTime());
 				ps.setInt(4, evt.getDuration());
@@ -252,7 +252,6 @@ public class DatabaseQueries {
 			addedAvtale = false;
 			e.printStackTrace();
 		}
-
 		/**
 		 * If the apointment is added sucessfully to the database, the
 		 * participants are added and connected.
@@ -260,6 +259,27 @@ public class DatabaseQueries {
 		if (addedAvtale) {
 			addParticipants(evt);
 		}
+	}
+	/**
+	 * insures unique primary key upon addEvent()
+	 * @param timestamp
+	 * @param i
+	 * @return
+	 */
+	private long makePrimaryUnique(long timestamp, int i) {
+		ResultSet rs;
+		
+		String query = "SELECT title FROM chronos.events WHERE event_ID = "+ (timestamp + i);
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			if (rs.next()) {
+				return makePrimaryUnique(timestamp, ++i);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return (long)timestamp+i;
 	}
 
 	/**
