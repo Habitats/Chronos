@@ -148,20 +148,24 @@ public class CalendarModel extends ChronosModel {
 	public void removeSelectedPerson(Person person) {
 		selectedPersonsEvents.remove(person.getUsername());
 		selectedPersons.remove(person.getUsername());
-		personColors.remove(person.getUsername());
+//		personColors.remove(person.getUsername());
 	}
 
 	public void update() {
 		calendarWindow.removeEvents();
 		calendarWindow.updateLabels();
 		for (String username : selectedPersonsEvents.keySet()) {
-			if(personColors.containsKey(username)) {
-				addEventsArrayList(selectedPersonsEvents.get(username), username, personColors.get(username));				
+			Color color;
+			if(username.equals(Singleton.getInstance().getSelf().getUsername())) {
+				color = Singleton.SELF_COLOR;
+			}
+			else if(personColors.containsKey(username)) {
+				color = personColors.get(username);				
 			} else {
-				Color color = Singleton.COLORARRAY[personColors.size()%Singleton.COLORARRAY.length];
-				addEventsArrayList(selectedPersonsEvents.get(username), username, color);
+				color = Singleton.COLOR_ARRAY[personColors.size()%Singleton.COLOR_ARRAY.length];
 				personColors.put(username, color);
 			}
+			addEventsArrayList(selectedPersonsEvents.get(username), username, color);
 		}
 	}
 
