@@ -31,6 +31,7 @@ public class ParticipantsModel extends ChronosModel {
 
 	private void addUsers(QueryEvent event) {
 		view.getUsersPanel().removeAll();
+		users.clear();
 		for (Person person : (ArrayList<Person>) event.getResults()) {
 			users.put(person, view.addUser(person));
 		}

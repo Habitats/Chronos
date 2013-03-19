@@ -1,5 +1,6 @@
 package client.gui.view.eventConfig;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -21,6 +23,7 @@ import javax.swing.text.JTextComponent;
 
 import chronos.Person;
 import client.gui.GBC;
+import client.gui.GBC.Align;
 import client.gui.MainFrame;
 import client.gui.view.ChronosWindow;
 import client.gui.view.EditConfigButton;
@@ -55,6 +58,14 @@ abstract public class EventWindow extends ChronosWindow {
 	protected EventConfigModel model;
 	private EventWindow view;
 	private ViewType type;
+	private JLabel participantsLbl;
+	private JLabel creator;
+	private JLabel descriptionLbl;
+	private JLabel nameLbl;
+	private JLabel durationLbl;
+	private JLabel startDateLbl;
+	private JLabel startTimeLbl;
+	private JLabel creatorField;
 
 	public EventWindow(ChronosModel model, MainFrame frame, ViewType type) {
 		super(model, frame);
@@ -77,6 +88,7 @@ abstract public class EventWindow extends ChronosWindow {
 		startTimeField = new JTextField();
 		startTime = new JComboBox(startTimeArray);
 		duration = new JComboBox(durationArray);
+		creatorField = new JLabel();
 		eventDescriptionArea = new JTextArea();
 
 		participantList = new JList<Person>();
@@ -88,8 +100,8 @@ abstract public class EventWindow extends ChronosWindow {
 		roomNumberField.setEditable(false);
 
 		// editButton = new EditConfigButton("Edit", bottomButtonDim);
-		applyButton = new EditConfigButton("Apply", getBottomButtonDim());
-		cancelButton = new EditConfigButton("Cancel", getBottomButtonDim());
+		applyButton = new EditConfigButton("Apply");
+		cancelButton = new EditConfigButton("Cancel");
 
 		eventNameField.setColumns(15);
 		Border border = BorderFactory.createEmptyBorder(0, 3, 0, 3);
@@ -110,25 +122,43 @@ abstract public class EventWindow extends ChronosWindow {
 		applyButton.addActionListener(new ApplyAction());
 		cancelButton.addActionListener(new CancelAction());
 
-		add(eventNameField, new GBC(0, 0).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 1));
-		add(eventDescriptionArea, new GBC(0, 1).setAnchor(GridBagConstraints.FIRST_LINE_START).setSpan(2, 6).setWeight(1, 1));
+		nameLbl = new JLabel("Name");
+		descriptionLbl = new JLabel("Description");
+		creator = new JLabel("Creator");
+		participantsLbl = new JLabel("Participants");
+		durationLbl = new JLabel("Duration (hours)");
+		startDateLbl = new JLabel("Date");
+		startTimeLbl = new JLabel("Time");
 
-		add(dateField, new GBC(2, 0).setAnchor(GridBagConstraints.FIRST_LINE_START));
-		add(participantList, new GBC(2, 1).setSpan(1, 6).setWeight(1, 1));
+		int i = 0;
+		add(nameLbl, new GBC(0, 0, Align.NOT_BOTTOM));
+		add(startDateLbl, new GBC(2, 0, Align.NOT_BOTTOM));
+		add(startTimeLbl, new GBC(4, 0, Align.NOT_BOTTOM));
+		add(durationLbl, new GBC(5, 0, Align.NOT_BOTTOM));
 
-		add(startTime, new GBC(3, 0).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
-		add(new Label("Enable alert 15 min before"), new GBC(3, 1).setSpan(3, 1).setAnchor(GridBagConstraints.NORTH));
+		add(eventNameField, new GBC(0, 1, Align.NOT_BOTTOM).setSpan(2, 1));
+		add(dateField, new GBC(2, 1, Align.NOT_BOTTOM).setSpan(2, 1));
+		add(startTime, new GBC(4, 1, Align.NOT_BOTTOM));
+		add(duration, new GBC(5, 1, Align.NOT_BOTTOM));
 
-		add(new Label("Alert:"), new GBC(3, 2));
-		add(new Label("Room no."), new GBC(3, 3).setAnchor(GridBagConstraints.FIRST_LINE_START).setFill(GridBagConstraints.NONE));
+		add(descriptionLbl, new GBC(0, 2, Align.NOT_BOTTOM));
+		add(participantsLbl, new GBC(2, 2, Align.NOT_BOTTOM));
+		add(new Label("Enable alert 15 min before"), new GBC(4, 2, Align.NOT_BOTTOM).setSpan(2, 1));
+
+		add(eventDescriptionArea, new GBC(0, 3).setSpan(2, 6).setWeight(1, 1));
+		add(participantList, new GBC(2, 3).setSpan(2, 6).setWeight(1, 1));
+
+		add(new Label("Alert:"), new GBC(4, 3));
+		add(alert, new GBC(5, 3));
+		add(new Label("Room no."), new GBC(4, 4));
+		add(roomNumberField, new GBC(5, 4));
+
+		add(creator, new GBC(4, 5));
+		add(creatorField, new GBC(5, 5));
 
 		// add(editButton, new GBC(0, 7));
-		add(applyButton, new GBC(3, 7).setWeight(0.5, 0));
-		add(cancelButton, new GBC(4, 7).setWeight(0.5, 0));
-
-		add(duration, new GBC(4, 0));
-		add(alert, new GBC(4, 2));
-		add(roomNumberField, new GBC(4, 3));
+		add(applyButton, new GBC(4, 9).setWeight(0.5, 0));
+		add(cancelButton, new GBC(5, 9).setWeight(0.5, 0));
 
 		// sets the default model (IE. empty)
 		this.model.setDefaultModel();
@@ -218,24 +248,12 @@ abstract public class EventWindow extends ChronosWindow {
 		return startTime;
 	}
 
-	public Dimension getBigButtonDim() {
-		return bigButtonDim;
-	}
-
-	public void setBigButtonDim(Dimension bigButtonDim) {
-		this.bigButtonDim = bigButtonDim;
-	}
-
-	public Dimension getBottomButtonDim() {
-		return bottomButtonDim;
-	}
-
-	public void setBottomButtonDim(Dimension bottomButtonDim) {
-		this.bottomButtonDim = bottomButtonDim;
-	}
-
 	public JTextComponent getStartTimeField() {
 		return startTimeField;
+	}
+
+	public JLabel getCreatorField() {
+		return creatorField;
 	}
 
 	public ViewType getViewType() {

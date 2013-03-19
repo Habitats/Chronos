@@ -65,6 +65,12 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		return this;
 	}
 
+	public CalEvent addParticipants(HashMap<String, Person> participants) {
+		for (Person person : participants.values())
+			addParticipant(person);
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		String people = null;
