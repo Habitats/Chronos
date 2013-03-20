@@ -74,14 +74,23 @@ public class RoomBookingModel extends ChronosModel {
 			participants = 1;
 		}
 
-		// Ghetto, finner bare beste rommet som er stort nok. TODO
+		// a little ghetto i knowz.
 		Room best = rooms.get(0);
 		double bestDiv = rooms.get(0).getCapacity() / participants;
+		boolean storNok = (bestDiv > 1 ? true : false);
 		for (Room r : rooms) {
+
+			double div = r.getCapacity() / participants;
 			if (r.getCapacity() >= participants) {
-				double div = r.getCapacity() / participants;
+				storNok = true;
 				if (div < bestDiv)
+					bestDiv = div;
+				best = r;
+			} else {
+				if (!storNok && div > bestDiv) {
+					bestDiv = div;
 					best = r;
+				}
 			}
 		}
 		return best;

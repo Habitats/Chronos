@@ -1,4 +1,4 @@
-- alert blir ikke satt når du oppretter en event, kunn når oppdaterer den.
+- alert blir ikke satt når du oppretter en event, kunn når oppdaterer den.		FIXED
 - participants kan endre dato duration på events.
 - ingen linebreak på description
 - events blir skjøvet ut av skjærmen hvis det blir for mange
