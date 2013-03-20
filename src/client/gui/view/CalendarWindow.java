@@ -60,6 +60,7 @@ public class CalendarWindow extends ChronosWindow {
 
 		int i = 0;
 
+		setBorder(BorderFactory.createEmptyBorder());
 		newEventButton = new JButton("New event");
 		newEventButton.setPreferredSize(new Dimension(140, 25));
 		newEventButton.setMinimumSize(new Dimension(140, 25));

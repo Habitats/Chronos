@@ -45,7 +45,7 @@ public class RoomBookingModel extends ChronosModel {
 	}
 
 	public void getRooms() {
-		fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", view.getFrame().getEventModel().getStartDate(), view.getFrame().getEventModel().getDuration(), new Person("penis"), "")));
+		fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", new Date() /*view.getFrame().getEventModel().getStartDate()*/, 1829 /*view.getFrame().getEventModel().getDuration()*/, new Person("penis"), "")));
 	}
 
 	@Override
