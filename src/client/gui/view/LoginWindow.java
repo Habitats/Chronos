@@ -22,7 +22,6 @@ public class LoginWindow extends ChronosWindow {
 	private LoginModel model;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-	String username, password;
 	private JButton loginButton, cancelButton;
 	private JLabel statusLabel;
 

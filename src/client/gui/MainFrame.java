@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Label;
-import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
@@ -43,7 +41,6 @@ import events.QueryEvent.QueryType;
  */
 public class MainFrame extends JFrame {
 
-	private ArrayList<ChronosWindow> panels;
 	private final ClientController controller;
 
 	private ChronosWindow calendarWindow;
@@ -53,7 +50,6 @@ public class MainFrame extends JFrame {
 	private ChronosWindow loginWindow;
 
 	private ChronosWindow invitationWindow;
-	private ChronosModel invitationModel;
 
 	private ChronosWindow eventWindowAdmin;
 	private ChronosWindow eventWindowInvite;
@@ -82,8 +78,6 @@ public class MainFrame extends JFrame {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-
-		panels = new ArrayList<ChronosWindow>();
 
 		calendarModel = new CalendarModel(controller);
 		calendarWindow = new CalendarWindow(calendarModel, this);

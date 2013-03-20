@@ -1,20 +1,14 @@
 package client;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Scanner;
-
-import chronos.Person;
 import chronos.Singleton;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 import client.model.ChronosModel.ChronosType;
 import client.model.LoginModel;
 import events.AuthEvent;
-import events.CalEvent;
 import events.NetworkEvent;
 import events.QueryEvent;
-import events.TestEvent;
 
 /**
  * Handles the communication between GUI, models and server
@@ -22,7 +16,6 @@ import events.TestEvent;
 public class ClientController implements Runnable, ClientControllerInterface {
 
 	private Client client;
-	private boolean loggedIn;
 	private MainFrame mainFrame;
 	private HashMap<ChronosType, ChronosModel> models;
 	private AuthEvent authEvent;
@@ -51,7 +44,6 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		case LOGIN:
 			if (((AuthEvent) event).getAccessGranted()) {
 				Singleton.getInstance().setSelf(((AuthEvent) event).getPerson());
-				loggedIn = true;
 				mainFrame.buildGui();
 			} else
 				((LoginModel) models.get(ChronosType.LOGIN)).setDenied();
@@ -99,21 +91,6 @@ public class ClientController implements Runnable, ClientControllerInterface {
 		Thread clientThread = new Thread(client);
 		if (Singleton.getInstance().networkEnabled())
 			clientThread.start();
-	}
-
-	private void sendTestEvent() {
-		Scanner sc = new Scanner(System.in);
-		Singleton.log("Entering test event loop. Write messages to test the server connection:");
-		String msg = sc.nextLine();
-		client.sendNetworkEvent(new TestEvent(msg, Singleton.getInstance().getSelf()));
-	}
-
-	private void sendCalEvent() {
-		Date date = new Date();
-		Person bob = new Person("bob");
-		Person carl = new Person("carl");
-		Person lisa = new Person("lisa");
-		CalEvent calEvent = new CalEvent("test", date, 5, Singleton.getInstance().getSelf(), null).addParticipant(bob, carl, lisa);
 	}
 
 	/**

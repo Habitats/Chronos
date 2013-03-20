@@ -2,9 +2,6 @@ package client.gui.view.eventConfig;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JList;
-
-import chronos.Person;
 import client.gui.GBC;
 import client.gui.MainFrame;
 import client.gui.view.EditConfigButton;
@@ -13,7 +10,6 @@ import client.model.EventConfigModel.ViewType;
 
 public class EventWindowAdmin extends EventWindow {
 
-	private JList<Person> participantList;
 	private EventWindow view;
 
 	public EventWindowAdmin(ChronosModel model, MainFrame frame) {

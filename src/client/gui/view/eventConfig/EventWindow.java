@@ -33,12 +33,8 @@ import client.model.EventConfigModel.ViewType;
 
 abstract public class EventWindow extends ChronosWindow {
 
-	private String[] startTimeArray = { "00:00", "01:00", "02:00", "03:00", "04:00" };
-	private Integer[] durationArray = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-
 	protected JTextField eventNameField;
 	protected JButton addParticipantButton;
-	protected JButton deleteParticipantButton;
 	protected JButton bookRoomButton;
 	protected JCheckBox alert;
 	protected JButton deleteButton;
@@ -48,6 +44,7 @@ abstract public class EventWindow extends ChronosWindow {
 	protected JSpinner startTime;
 	protected JSpinner startDate;
 
+	private Integer[] durationArray = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 	private JButton cancelButton;
 	private JTextField roomNumberField;
 	private JList<Person> participantList;
@@ -56,7 +53,6 @@ abstract public class EventWindow extends ChronosWindow {
 	private EventWindow view;
 	private ViewType type;
 	private JLabel participantsLbl;
-	private JLabel creator;
 	private JLabel descriptionLbl;
 	private JLabel nameLbl;
 	private JLabel durationLbl;
@@ -89,7 +85,6 @@ abstract public class EventWindow extends ChronosWindow {
 
 		setLayout(new GridBagLayout());
 		eventNameField = new JTextField();
-		duration = new JComboBox(durationArray);
 		creatorField = new JLabel();
 		eventDescriptionArea = new JTextPane();
 
@@ -114,6 +109,7 @@ abstract public class EventWindow extends ChronosWindow {
 		eventDescriptionArea.setBorder(border);
 		participantList.setPreferredSize(new Dimension(100, 100));
 
+		duration = new JComboBox<Integer>(durationArray);
 		duration.addActionListener(new DurationListener());
 
 		applyButton.addActionListener(new ApplyAction());
@@ -126,7 +122,6 @@ abstract public class EventWindow extends ChronosWindow {
 		startDateLbl = new JLabel("Date");
 		startTimeLbl = new JLabel("Time");
 
-		int i = 0;
 		add(nameLbl, new GBC(0, 0, Align.NOT_BOTTOM));
 		add(startDateLbl, new GBC(2, 0, Align.NOT_BOTTOM));
 		add(startTimeLbl, new GBC(4, 0, Align.NOT_BOTTOM));
@@ -210,13 +205,6 @@ abstract public class EventWindow extends ChronosWindow {
 		}
 	}
 
-	private class StartTimeListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-
 	private class DurationListener implements ActionListener {
 
 		@Override
@@ -262,7 +250,7 @@ abstract public class EventWindow extends ChronosWindow {
 		return eventDescriptionArea;
 	}
 
-	public JList getParticipantList() {
+	public JList<Person> getParticipantList() {
 		return participantList;
 	}
 
@@ -270,7 +258,7 @@ abstract public class EventWindow extends ChronosWindow {
 		return alert;
 	}
 
-	public JComboBox getDuration() {
+	public JComboBox<Integer> getDuration() {
 		return duration;
 	}
 

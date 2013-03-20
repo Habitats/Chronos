@@ -2,8 +2,6 @@ package client.gui.view.eventConfig;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
-
 import javax.swing.JButton;
 import chronos.Singleton;
 import chronos.Person.Status;
@@ -16,7 +14,6 @@ import events.CalEvent.CalEventType;
 
 public class EventWindowInvite extends EventWindow {
 	private JButton acceptButton, declineButton;
-	private Date eventDate;
 
 	public EventWindowInvite(ChronosModel model, MainFrame frame) {
 		super(model, frame, ViewType.INVITE);

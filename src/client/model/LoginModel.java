@@ -8,8 +8,6 @@ import events.AuthEvent;
 import events.NetworkEvent.EventType;
 
 public class LoginModel extends ChronosModel {
-	private String username;
-	private String password;
 	private LoginWindow view;
 
 	public LoginModel(ClientController controller) {

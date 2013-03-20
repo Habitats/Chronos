@@ -45,11 +45,6 @@ public class EventConfigModel extends ChronosModel {
 	private boolean validateInput(EventWindow view) {
 		String eventName = view.getEventNameField().getText();
 		String eventDescription = view.getEventDescriptionArea().getText();
-		Room room = null;
-		try {
-			room = new Room(null, Integer.parseInt(view.getRoomNumberField().getText()), null);
-		} catch (Exception e) {
-		}
 
 		view.getEventNameField().setBackground(eventName == null ? Singleton.RED : Singleton.GREEN);
 		view.getEventDescriptionArea().setBackground(eventDescription == null ? Singleton.RED : Singleton.GREEN);

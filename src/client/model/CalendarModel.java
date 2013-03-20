@@ -73,8 +73,6 @@ public class CalendarModel extends ChronosModel {
 	 * method that adds events for a specified person to the
 	 * selectedPersonEvents-hash, the person lies in the QueryEvent, and adds
 	 * notifications if person equals self
-	 * 
-	 * @param queryEvent
 	 */
 
 	private void addEvents(QueryEvent queryEvent) {
@@ -92,9 +90,6 @@ public class CalendarModel extends ChronosModel {
 
 	/**
 	 * Adds notifications where username equals WAITING
-	 * 
-	 * @param calEvents
-	 * @param username
 	 */
 
 	private void addNotifications(ArrayList<CalEvent> calEvents, String username) {
@@ -114,10 +109,6 @@ public class CalendarModel extends ChronosModel {
 	 * them in view. Checks if event is in currentWeek, if so sends the weekday
 	 * it should be in. If not then weekday equals NONE and gets added to
 	 * eventsList in view.
-	 * 
-	 * @param calEvents
-	 * @param username
-	 * @param personColor
 	 */
 
 	private void addEventsArrayList(ArrayList<CalEvent> calEvents, String username, Color personColor) {
@@ -140,50 +131,26 @@ public class CalendarModel extends ChronosModel {
 	/**
 	 * Checks if status for person(username) equals waiting in the specified
 	 * event
-	 * 
-	 * @param event
-	 * @param username
-	 * @return
 	 */
 
 	private boolean statusIsWaiting(CalEvent event, String username) {
 		HashMap<String, Person> participants = event.getParticipants();
 		Person participant = participants.get(username);
-		try {
-			if (participant.getStatus() == Status.WAITING)
-				return true;
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return false;
+		return (participant.getStatus() == Status.WAITING);
 	}
 
 	/**
 	 * checks if person has accepted the event
-	 * 
-	 * @param event
-	 * @param username
-	 * @return
 	 */
 
 	private boolean personIsAttending(CalEvent event, String username) {
 		HashMap<String, Person> participants = event.getParticipants();
 		Person participant = participants.get(username);
-		try {
-			if (participant.getStatus() == Status.ACCEPTED)
-				return true;
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return false;
+		return (participant.getStatus() == Status.ACCEPTED);
 	}
 
 	/**
 	 * Makes calendarWindow add personCheckBoxes
-	 * 
-	 * @param queryEvent
 	 */
 
 	private void addOtherPersons(QueryEvent queryEvent) {
@@ -203,8 +170,6 @@ public class CalendarModel extends ChronosModel {
 
 	/**
 	 * Sends a queryEvent to get the persons calEvents
-	 * 
-	 * @param person
 	 */
 
 	private void getPersonEvents(Person person) {
@@ -215,8 +180,6 @@ public class CalendarModel extends ChronosModel {
 	/**
 	 * Gets called from calendarWindow. Ignore the first line with
 	 * prePersonIsSelected, just some extra work.
-	 * 
-	 * @param person
 	 */
 
 	public void addSelectedPerson(Person person) {
@@ -227,8 +190,6 @@ public class CalendarModel extends ChronosModel {
 
 	/**
 	 * removes person
-	 * 
-	 * @param person
 	 */
 
 	public void removeSelectedPerson(Person person) {
@@ -313,9 +274,6 @@ public class CalendarModel extends ChronosModel {
 
 	/**
 	 * Thread somethingsomething alarm?
-	 * 
-	 * @author Jostein
-	 * 
 	 */
 	private class AlarmThread implements Runnable {
 

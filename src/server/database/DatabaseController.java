@@ -71,8 +71,4 @@ public class DatabaseController implements DatabaseControllerInterface {
 		return qe.setResults(dbQueries.getAvailableRooms(qe.getCalEvent()));
 	}
 
-	@Override
-	public QueryEvent searchForUser(QueryEvent qe, String searchString) {
-		return qe.setResults(dbQueries.searchUsers(searchString));
-	}
 }

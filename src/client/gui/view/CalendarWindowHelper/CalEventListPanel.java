@@ -18,6 +18,7 @@ import chronos.Singleton;
 import events.CalEvent;
 
 public class CalEventListPanel extends JLabel {
+	private static final long serialVersionUID = 8279384171642134888L;
 
 	private CalEvent calEvent;
 	private CalendarWindow view;

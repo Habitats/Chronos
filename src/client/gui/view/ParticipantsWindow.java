@@ -16,7 +16,7 @@ import client.gui.view.calendarWindowHelper.PersonCheckBox;
 import client.model.ParticipantsModel;
 import client.model.ChronosModel;
 
-public class ParticipantsWindow extends ChronosWindow implements ActionListener {
+public class ParticipantsWindow extends ChronosWindow {
 	private JTextField userSearchField;
 	private JButton searchButton, applyButton, cancelButton;
 	private ParticipantsModel model;
@@ -30,12 +30,10 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 		setLayout(new GridBagLayout());
 
 		userSearchField = new JTextField();
-		// userList = new JList<Person>();
 		searchButton = new JButton("Search");
 		applyButton = new JButton("Add");
 		cancelButton = new JButton("Cancel");
 
-		// userList.setMinimumSize(new Dimension(80, 100));
 		userSearchField.addActionListener(new SearchAction());
 		searchButton.addActionListener(new SearchAction());
 		applyButton.addActionListener(new ApplyAction());
@@ -49,7 +47,6 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 		add(applyButton, new GBC(0, 3).setWeight(0.5, 0));
 		add(cancelButton, new GBC(1, 3).setWeight(0.5, 0));
 
-		// TODO Auto-generated constructor stub
 	}
 
 	private class SearchAction implements ActionListener {
@@ -81,11 +78,6 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 		if (aFlag) {
 			model.getUsers();
 		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

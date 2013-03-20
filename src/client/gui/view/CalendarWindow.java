@@ -325,13 +325,6 @@ public class CalendarWindow extends ChronosWindow {
 		notifications++;
 	}
 
-	/**
-	 * bare tull
-	 */
-	public void internalRepaint() {
-		repaint();
-	}
-
 	public void removePersonCheckBoxes() {
 		othersCalPanel.removeAll();
 		repaint();

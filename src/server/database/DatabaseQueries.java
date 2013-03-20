@@ -207,7 +207,6 @@ public class DatabaseQueries {
 			while (rs.next()) {
 				String username = rs.getString(1);
 				String name = rs.getString(2);
-				long lastLoggedIn = rs.getLong(3);
 				users.add(new Person(username, name));
 			}
 		} catch (SQLException e) {
@@ -371,7 +370,6 @@ public class DatabaseQueries {
 	public ArrayList<Comparable> getEventsByParticipant(Person per) {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
-		String param;
 		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration," + "events.description, person.username, person.name, events.room " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
 				+ processString(per.getUsername()) + " AND person.username = events.owner ORDER BY events.startTime ASC;";
 		try {

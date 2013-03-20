@@ -9,7 +9,7 @@ import client.gui.MainFrame;
 import client.model.ChronosModel;
 
 abstract public class ChronosWindow extends JPanel {
-
+	protected static final long serialVersionUID = 8066589043144643860L;
 	private final MainFrame frame;
 
 	abstract public void setModel(ChronosModel model);
