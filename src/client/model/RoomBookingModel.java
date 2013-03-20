@@ -1,13 +1,18 @@
 package client.model;
 
 import java.awt.Component;
+import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.SwingUtilities;
 
 import chronos.Person;
 import chronos.Room;
+import chronos.Singleton;
 import client.ClientController;
 import client.gui.view.ChronosWindow;
 import client.gui.view.RoomBookingWindow;
@@ -20,28 +25,36 @@ import events.QueryEvent.QueryType;
 public class RoomBookingModel extends ChronosModel {
 	private String roomName;
 	private RoomBookingWindow view;
-	private ArrayList<Room> rooms;
+	private List<Room> rooms;
 
 	public void recieveNetworkEvent(NetworkEvent event) {
 		addRooms((QueryEvent) event);
 	}
 
-	private void addRooms(QueryEvent event) {
-		for (int i = 0; i < view.getRoomPanel().getModel().getSize();) {
-			((DefaultListModel<Room>) view.getRoomPanel().getModel()).remove(0);
+	private synchronized void addRooms(QueryEvent event) {
+		// you know what? fuck swing and fuck concurrency
+		synchronized (view.getRoomPanel().getModel()) {
+			for (int i = 0; i < view.getRoomPanel().getModel().getSize();)
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							((DefaultListModel<Room>) view.getRoomPanel().getModel()).remove(0);
+						} catch (Exception e) {
+						}
+					}
+				});
 		}
 
-		for (Room room : (ArrayList<Room>) event.getResults()) {
-			System.out.println(room.toString());
+		for (Room room : (ArrayList<Room>) event.getResults())
 			rooms.add(view.addRoom(room));
-		}
+
 		view.getFrame().revalidate();
 	}
 
 	public RoomBookingModel(ClientController controller) {
 		super(controller, ChronosType.ROOM_BOOK);
-		rooms = new ArrayList<Room>();
-		// TODO Auto-generated constructor stub
+		rooms = Collections.synchronizedList(new ArrayList<Room>());
 	}
 
 	public void getRooms() {

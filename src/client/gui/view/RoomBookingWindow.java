@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 
 import chronos.Room;
 import client.gui.GBC;
@@ -40,10 +42,10 @@ public class RoomBookingWindow extends ChronosWindow {
 		cancelButton = new JButton("Cancel");
 		autobookButton = new JButton("Autobook");
 
-//		roomList.setPreferredSize(new Dimension(250, 150));
-//		roomList.setMinimumSize(new Dimension(100, 80));
+		// roomList.setPreferredSize(new Dimension(250, 150));
+		// roomList.setMinimumSize(new Dimension(100, 80));
 
-// 		roomList.setPreferredSize(new Dimension(100, 100));
+		// roomList.setPreferredSize(new Dimension(100, 100));
 		// roomList.setMinimumSize(new Dimension(100, 80));
 		bookButton.setMinimumSize(new Dimension(100, 20));
 
@@ -54,8 +56,8 @@ public class RoomBookingWindow extends ChronosWindow {
 		JScrollPane roomListScroll = new JScrollPane(roomList);
 		roomListScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		roomListScroll.setPreferredSize(new Dimension(150, 100));
-		roomListScroll.setMinimumSize(new Dimension(150,80));
-		
+		roomListScroll.setMinimumSize(new Dimension(150, 80));
+
 		add(new JLabel("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setInsets(5, 40, 0, 40));
 		add(roomListScroll, new GBC(0, 1).setSpan(1, 6).setWeight(1, 1).setInsets(5, 40, 5, 5));
 		add(autobookButton, new GBC(1, 1).setInsets(5, 5, 5, 40));
@@ -109,12 +111,14 @@ public class RoomBookingWindow extends ChronosWindow {
 			model.getRooms();
 	}
 
-	public Room addRoom(Room room) {
-		((DefaultListModel<Room>) (roomList.getModel())).addElement(room);
-		roomList.setSelectedIndex(roomList.getLastVisibleIndex());
-		// RoomCheckBox checkBox = new RoomCheckBox(room);
-		// roomList.add(checkBox);
-		// roomList.add(room.getName(), room);
+	public Room addRoom(final Room room) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				((DefaultListModel<Room>) (roomList.getModel())).addElement(room);
+				roomList.setSelectedIndex(roomList.getLastVisibleIndex());
+			}
+		});
 		return room;
 	}
 
