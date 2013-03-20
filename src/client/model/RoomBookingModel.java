@@ -25,6 +25,7 @@ public class RoomBookingModel extends ChronosModel {
 
 	private void addRooms(QueryEvent event) {
 		view.getRoomPanel().removeAll();
+		
 		for (Room room : (ArrayList<Room>) event.getResults()) {
 			System.out.println(room.toString());
 			rooms.add(view.addRoom(room));
