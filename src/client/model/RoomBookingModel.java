@@ -45,7 +45,12 @@ public class RoomBookingModel extends ChronosModel {
 	}
 
 	public void getRooms() {
-		fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", new Date() /*view.getFrame().getEventModel().getStartDate()*/, 1829 /*view.getFrame().getEventModel().getDuration()*/, new Person("penis"), "")));
+		try {
+			fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", view.getFrame().getEventModel().getStartDate(), view.getFrame().getEventModel().getDuration(), new Person("penis"), "")));
+		}catch (Exception e) { //Unødvendig? fikk bare Nullpointer første gang jeg prøvde... Så la det inn for sikkerhets skyld.
+			fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", new Date(), 3600000, new Person("ghetto"), "")));
+			e.printStackTrace();
+		}		
 	}
 
 	@Override
