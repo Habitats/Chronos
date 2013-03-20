@@ -70,8 +70,8 @@ public class MainFrame extends JFrame {
 	private ChronosWindow addParticipantWindow;
 	private ChronosModel addParticipantModel;
 
-	private int frameWidth = 1200;
-	private int frameHeight = 620;
+	private int frameWidth = 1202;
+	private int frameHeight = 622;
 	private JFrame loginFrame;
 
 	public MainFrame(ClientController controller) {
