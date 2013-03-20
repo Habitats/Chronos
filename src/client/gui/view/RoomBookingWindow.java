@@ -40,7 +40,7 @@ public class RoomBookingWindow extends ChronosWindow {
 		autobookButton = new JButton("Autobook");
 
 		roomList.setPreferredSize(new Dimension(100, 100));
-		roomList.setMinimumSize(new Dimension(100, 80));
+//		roomList.setMinimumSize(new Dimension(100, 80));
 		bookButton.setMinimumSize(new Dimension(100, 20));
 
 		autobookButton.addActionListener(new AutoBookAction());
