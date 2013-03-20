@@ -11,11 +11,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import chronos.Room;
 import client.gui.GBC;
 import client.gui.MainFrame;
-import client.gui.view.calendarWindowHelper.RoomCheckBox;
 import client.model.ChronosModel;
 import client.model.RoomBookingModel;
 
@@ -39,7 +40,7 @@ public class RoomBookingWindow extends ChronosWindow {
 		cancelButton = new JButton("Cancel");
 		autobookButton = new JButton("Autobook");
 
-		roomList.setPreferredSize(new Dimension(100, 100));
+//		roomList.setPreferredSize(new Dimension(250, 150));
 //		roomList.setMinimumSize(new Dimension(100, 80));
 		bookButton.setMinimumSize(new Dimension(100, 20));
 
@@ -47,8 +48,13 @@ public class RoomBookingWindow extends ChronosWindow {
 		bookButton.addActionListener(new BookAction());
 		cancelButton.addActionListener(new CancelAction());
 
+		JScrollPane roomListScroll = new JScrollPane(roomList);
+		roomListScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		roomListScroll.setPreferredSize(new Dimension(150, 100));
+		roomListScroll.setMinimumSize(new Dimension(150,80));
+		
 		add(new JLabel("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
-		add(roomList, new GBC(0, 1).setSpan(1, 6));
+		add(roomListScroll, new GBC(0, 1).setSpan(1, 6));
 		add(autobookButton, new GBC(1, 1));
 		add(bookButton, new GBC(0, 7));
 		add(cancelButton, new GBC(1, 7));
