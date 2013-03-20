@@ -56,7 +56,7 @@ public class RoomBookingWindow extends ChronosWindow {
 		roomListScroll.setPreferredSize(new Dimension(150, 100));
 		roomListScroll.setMinimumSize(new Dimension(150,80));
 		
-		add(new JLabel("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setInsets(5, 40, 5, 40));
+		add(new JLabel("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START).setInsets(5, 40, 0, 40));
 		add(roomListScroll, new GBC(0, 1).setSpan(1, 6).setWeight(1, 1).setInsets(5, 40, 5, 5));
 		add(autobookButton, new GBC(1, 1).setInsets(5, 5, 5, 40));
 		add(bookButton, new GBC(0, 7).setInsets(5, 40, 5, 5));
