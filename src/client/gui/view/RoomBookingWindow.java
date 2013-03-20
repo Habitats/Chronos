@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 
 import chronos.Room;
@@ -33,7 +34,7 @@ public class RoomBookingWindow extends ChronosWindow {
 		roomList = new JList<Room>();
 		roomList.setModel(new DefaultListModel<Room>());
 		roomList.setVisible(true);
-		
+
 		bookButton = new JButton("Book");
 		cancelButton = new JButton("Cancel");
 		autobookButton = new JButton("Autobook");
@@ -46,7 +47,7 @@ public class RoomBookingWindow extends ChronosWindow {
 		bookButton.addActionListener(new BookAction());
 		cancelButton.addActionListener(new CancelAction());
 
-		add(new Label("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
+		add(new JLabel("Book room"), new GBC(0, 0).setFill(GridBagConstraints.NONE).setAnchor(GridBagConstraints.FIRST_LINE_START));
 		add(roomList, new GBC(0, 1).setSpan(1, 6));
 		add(autobookButton, new GBC(1, 1));
 		add(bookButton, new GBC(0, 7));
@@ -56,7 +57,7 @@ public class RoomBookingWindow extends ChronosWindow {
 	private class AutoBookAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(roomList.getModel().getSize() != 0) {
+			if (roomList.getModel().getSize() != 0) {
 				roomList.setSelectedIndex(0);
 				getFrame().getEventModel().setRoom(roomList.getSelectedValue());
 				getFrame().getEventModel().updateRoom();
@@ -68,7 +69,7 @@ public class RoomBookingWindow extends ChronosWindow {
 	private class BookAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(roomList.getModel().getSize() != 0) {
+			if (roomList.getModel().getSize() != 0) {
 				getFrame().getEventModel().setRoom(roomList.getSelectedValue());
 				getFrame().getEventModel().updateRoom();
 				getFrame().getRoomBookingWindow().setVisible(false);
@@ -97,14 +98,14 @@ public class RoomBookingWindow extends ChronosWindow {
 	}
 
 	public Room addRoom(Room room) {
-		((DefaultListModel<Room>)(roomList.getModel())).addElement(room);
+		((DefaultListModel<Room>) (roomList.getModel())).addElement(room);
 		roomList.setSelectedIndex(roomList.getLastVisibleIndex());
-//		RoomCheckBox checkBox = new RoomCheckBox(room);
-//		roomList.add(checkBox);
-//		roomList.add(room.getName(), room);
+		// RoomCheckBox checkBox = new RoomCheckBox(room);
+		// roomList.add(checkBox);
+		// roomList.add(room.getName(), room);
 		return room;
 	}
-	
+
 	public JList<Room> getRoomPanel() {
 		return roomList;
 	}

@@ -1,6 +1,8 @@
 package chronos;
 
 import client.ClientController;
+import events.AuthEvent;
+import events.NetworkEvent.EventType;
 import server.ServerController;
 
 /**
@@ -24,13 +26,20 @@ public class Chronos {
 				startClient();
 
 		Singleton.getInstance().enableLog();
-		Singleton.getInstance().enableLogin();
+		 Singleton.getInstance().enableLogin();
 		Singleton.getInstance().enableNetwork();
 
 		if (Singleton.getInstance().networkEnabled())
 			startServer();
-
 		startClient();
+//		stressTestNetwork();
+
+	}
+
+	private void startClient() {
+		ClientController clientController = new ClientController();
+		Thread clientControllerThread = new Thread(clientController);
+		clientControllerThread.run();
 	}
 
 	private void startServer() {
@@ -38,8 +47,21 @@ public class Chronos {
 		serverController.run();
 	}
 
-	private void startClient() {
-		ClientController clientController = new ClientController();
-		clientController.run();
+	/**
+	 * used primarily for debugging
+	 */
+	private void stressTestNetwork() {
+		startClient(new AuthEvent(EventType.LOGIN, new Person("kyra"), "derp"));
+		startClient(new AuthEvent(EventType.LOGIN, new Person("pat"), "derp"));
+		startClient(new AuthEvent(EventType.LOGIN, new Person("boytoy"), "derp"));
+		startClient(new AuthEvent(EventType.LOGIN, new Person("root"), ""));
+
+	}
+
+	private void startClient(AuthEvent event) {
+
+		ClientController clientController = new ClientController(event);
+		Thread clientControllerThread = new Thread(clientController);
+		clientControllerThread.start();
 	}
 }

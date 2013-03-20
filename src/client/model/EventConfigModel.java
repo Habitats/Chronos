@@ -23,24 +23,17 @@ public class EventConfigModel extends ChronosModel {
 	 * Input variables from view
 	 */
 	private Room room;
-	private String eventDescription;
-	private String eventName;
-	private Date startDate;
+	private boolean alert;
 	private int duration;
+	private Date startDate;
+	private String description;
+	private String title;
 	private Person creator;
-
-	private String startTime;
 
 	private CalEvent event;
 
 	private HashMap<String, Person> participants;
 	private HashMap<ViewType, EventWindow> eventViews;
-
-	private String description;
-
-	private String formattedStartDate;
-
-	private boolean alert;
 
 	public EventConfigModel(ClientController controller) {
 		super(controller, ChronosType.EVENT_CONFIG);
@@ -52,64 +45,53 @@ public class EventConfigModel extends ChronosModel {
 	private boolean validateInput(EventWindow view) {
 		String eventName = view.getEventNameField().getText();
 		String eventDescription = view.getEventDescriptionArea().getText();
-		Date startDate = DateManagement.getDateFromString(view.getStartDateField().getText());
-		// startTime =
-		// DateManagement.getDateFromString(view.getStartTimeArray().getText());
 		Room room = null;
 		try {
 			room = new Room(null, Integer.parseInt(view.getRoomNumberField().getText()), null);
 		} catch (Exception e) {
 		}
-		int duration = -1;
-		try {
-			// duration = Integer.parseInt(view.getDurationField().getText());
-			duration = 10;
-		} catch (Exception e) {
-		}
 
-		view.getEventNameField().setBackground(eventName == null ? Singleton.LIGHT_RED : Singleton.LIGHT_GREEN);
-		view.getEventDescriptionArea().setBackground(eventDescription == null ? Singleton.LIGHT_RED : Singleton.LIGHT_GREEN);
-		view.getStartDateField().setBackground(startDate == null ? Singleton.LIGHT_RED : Singleton.LIGHT_GREEN);
+		view.getEventNameField().setBackground(eventName == null ? Singleton.RED : Singleton.GREEN);
+		view.getEventDescriptionArea().setBackground(eventDescription == null ? Singleton.RED : Singleton.GREEN);
 
-		return eventName != null && eventDescription != null && startDate != null && duration != -1;
+		return eventName != null && eventDescription != null;
 	}
 
 	public void setDefaultModel() {
-		setEventName("Event name");
+		setTitle("Event name");
 		setDescription("Description");
-		setFormattedStartDate(DateManagement.getFormattedDate(new Date()));
 		setAlert(false);
 		setDuration(1);
-		setStartTime("12:00");
+		setStartDate(new Date());
 		setParticipants(new HashMap<String, Person>());
 	}
 
 	public void setCalEvent(CalEvent event) {
 		this.event = event;
-		setEventName(event.getTitle());
+		setTitle(event.getTitle());
 		setDescription(event.getDescription());
-		setStartDate(event.getStart());
-		setAlert(event.getAlert());
+		try {
+			setAlert(event.getParticipants().get(Singleton.getInstance().getSelf().getUsername()).getAlert());
+		} catch (Exception e) {
+		}
 		setDuration(event.getDuration());
-		setFormattedStartDate(DateManagement.getFormattedDate(event.getStart()));
-		setStartTime(DateManagement.getTimeOfDay(event.getStart()));
+		setStartDate(event.getStart());
 		setParticipants(event.getParticipants());
 		setCreator(event.getCreator());
 	}
 
 	private void updateViews() {
 		for (EventWindow view : eventViews.values()) {
-			view.getEventNameField().setText(getEventName());
+			view.getEventNameField().setText(getTitle());
 			view.getEventNameField().setBackground(Singleton.BACKGROUND);
-			view.getEventDescriptionArea().setText(getEventDescription());
+			view.getEventDescriptionArea().setText(getDescription());
 			view.getEventDescriptionArea().setBackground(Singleton.BACKGROUND);
-			view.getStartDateField().setBackground(Singleton.BACKGROUND);
-			view.getStartTimeField().setText(getStartTime());
-			view.getStartTimeField().setBackground(Singleton.BACKGROUND);
 			view.setParticipants(getParticipants());
-			view.getStartDateField().setText(getFormattedStartDate());
+			view.getStartTime().setValue(getStartDate());
+			view.getStartDate().setValue(DateManagement.stripClock(getStartDate()));
 			view.getDuration().setSelectedItem(getDuration());
 			view.getRoomNumberField().setText(getRoom() == null ? "" : getRoom().getName());
+			view.getAlert().setSelected(getAlert());
 			if (getCreator() != null)
 				view.getCreatorField().setText(getCreator().toString());
 		}
@@ -120,31 +102,36 @@ public class EventConfigModel extends ChronosModel {
 			view.setParticipants(getParticipants());
 		}
 	}
-	
+
 	public void updateRoom() {
-		for(EventWindow view : eventViews.values())
+		for (EventWindow view : eventViews.values())
 			view.getRoomNumberField().setText(getRoom() == null ? "" : getRoom().getName());
 	}
 
 	public void updateModel(EventWindow view) {
-		setEventName(event.getTitle());
+		setTitle(event.getTitle());
 		setDescription(event.getDescription());
-		setStartDate(event.getStart());
-		setAlert(event.getAlert());
+		setAlert(event.getParticipants().get(Singleton.getInstance().getSelf().getUsername()).getAlert());
 		setDuration(event.getDuration());
-		setStartTime(DateManagement.getTimeOfDay(event.getStart()));
+		setStartDate(event.getStart());
 		setParticipants(event.getParticipants());
 	}
 
 	public void newCalEvent(EventWindow view) {
-		Person creator = Singleton.getInstance().getSelf();
-		String title = view.getEventNameField().getText();
-		String description = view.getEventDescriptionArea().getText();
-		Date startDate = DateManagement.getDateFromString(view.getStartDateField().getText());
-		int duration = (int) view.getDuration().getSelectedItem();
-
+		creator = Singleton.getInstance().getSelf();
 		creator.setStatus(Person.Status.ACCEPTED);
-		if (view.getViewType() == ViewType.UPDATE) {
+		title = view.getEventNameField().getText();
+		description = view.getEventDescriptionArea().getText();
+		duration = (int) view.getDuration().getSelectedItem();
+
+		Date date = (Date) view.getStartDate().getValue();
+		Date time = (Date) view.getStartTime().getValue();
+		long clock = DateManagement.getClockInSeconds(time);
+		event.getParticipants().get(Singleton.getInstance().getSelf().getUsername()).setAlert(view.getAlert().isSelected());
+
+		startDate = new Date(date.getTime() + clock);
+
+		if (view.getViewType() == ViewType.UPDATE || view.getViewType() == ViewType.PARTICIPANT) {
 			event.update(title, startDate, duration, description).setParticipants(getParticipants());
 		} else
 			event = new CalEvent(title, startDate, duration, creator, description).addParticipants(getParticipants());
@@ -152,10 +139,6 @@ public class EventConfigModel extends ChronosModel {
 			fireNetworkEvent(event);
 			view.setVisible(false);
 		}
-	}
-
-	private Date getStartDate() {
-		return DateManagement.getDateFromString(getFormattedStartDate());
 	}
 
 	@Override
@@ -166,12 +149,9 @@ public class EventConfigModel extends ChronosModel {
 		eventViews.put(type, (EventWindow) view);
 	}
 
-	public String getFormattedStartDate() {
-		return formattedStartDate;
-	}
-
 	public void removeEvent(EventWindow view) {
 		event.setState(CalEventType.DELETE);
+		event.setSender(Singleton.getInstance().getSelf());
 		view.setVisible(false);
 		fireNetworkEvent(event);
 	}
@@ -197,40 +177,16 @@ public class EventConfigModel extends ChronosModel {
 		this.alert = alert;
 	}
 
-	public void setFormattedStartDate(String formattedStartDate) {
-		this.formattedStartDate = formattedStartDate;
+	public boolean getAlert() {
+		return alert;
 	}
 
-	private void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	private void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getEventName() {
-		return eventName;
-	}
-
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
-	}
-
-	public String getEventDescription() {
-		return eventDescription;
-	}
-
-	public void setEventDescription(String eventDescription) {
-		this.eventDescription = eventDescription;
-	}
-
-	public String getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(String string) {
-		this.startTime = string;
+	public void setDescription(String eventDescription) {
+		this.description = eventDescription;
 	}
 
 	public int getDuration() {
@@ -249,8 +205,20 @@ public class EventConfigModel extends ChronosModel {
 		return eventViews;
 	}
 
-	@Override
-	public void setView(ChronosWindow view) {
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getTitle() {
+		return title;
 	}
 
 	public HashMap<String, Person> getParticipants() {
@@ -265,12 +233,15 @@ public class EventConfigModel extends ChronosModel {
 		this.creator = creator;
 	}
 
-	
 	public Room getRoom() {
 		return room;
 	}
 
 	public void setRoom(Room room) {
 		this.room = room;
+	}
+
+	@Override
+	public void setView(ChronosWindow view) {
 	}
 }

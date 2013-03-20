@@ -12,7 +12,7 @@ public class EventWindowOther extends EventWindow {
 
 		eventNameField.setEnabled(false);
 		eventDescriptionArea.setEnabled(false);
-		dateField.setEnabled(false);
+		startDate.setEnabled(false);
 		startTime.setEnabled(false);
 
 		alert.setEnabled(false);

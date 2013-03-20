@@ -25,24 +25,27 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	private boolean loggedIn;
 	private MainFrame mainFrame;
 	private HashMap<ChronosType, ChronosModel> models;
+	private AuthEvent authEvent;
 
 	public ClientController() {
 		models = new HashMap<ChronosType, ChronosModel>();
 		mainFrame = new MainFrame(this);
-		if (Singleton.getInstance().loginEnabled()) {
-			mainFrame.loginPrompt();
-		} else
-			mainFrame.buildGui();
+		mainFrame.loginPrompt();
 
 		client = new Client(Singleton.getInstance().getPort(), Singleton.getInstance().getHostname(), this);
+	}
 
-		Singleton.getInstance().setUsersname(Integer.toString((int) (Math.random() * 1000000)));
+	public ClientController(AuthEvent event) {
+		models = new HashMap<ChronosType, ChronosModel>();
+		mainFrame = new MainFrame(this);
+		setAuthEvent(event);
+		client = new Client(Singleton.getInstance().getPort(), Singleton.getInstance().getHostname(), this);
 	}
 
 	/**
 	 * takes networkEvent FROM server, and evalutes it
 	 */
-	public void evaluateNetworkEvent(NetworkEvent event) {
+	public synchronized void evaluateNetworkEvent(NetworkEvent event) {
 		Singleton.log("Client evaluating: " + event);
 		switch (event.getType()) {
 		case LOGIN:
@@ -69,8 +72,10 @@ public class ClientController implements Runnable, ClientControllerInterface {
 			models.get(ChronosType.CALENDAR).receiveNetworkEvent(event);
 			break;
 		case PERSONS:
-			models.get(ChronosType.USER_LIST).receiveNetworkEvent(event);
 			models.get(ChronosType.CALENDAR).receiveNetworkEvent(event);
+			break;
+		case PARTICIPANTS:
+			models.get(ChronosType.USER_LIST).receiveNetworkEvent(event);
 			break;
 		case ROOMS:
 			models.get(ChronosType.ROOM_BOOK).receiveNetworkEvent(event);
@@ -116,5 +121,20 @@ public class ClientController implements Runnable, ClientControllerInterface {
 	 */
 	public void addModel(ChronosModel chronosModel) {
 		models.put(chronosModel.getType(), chronosModel);
+	}
+
+	/**
+	 * used primarily for debugging
+	 */
+	private void setAuthEvent(AuthEvent authEvent) {
+		this.authEvent = authEvent;
+	}
+
+	public AuthEvent getAuthEvent() {
+		return authEvent;
+	}
+
+	public void sendAuthEvent() {
+		sendNetworkEvent(authEvent);
 	}
 }

@@ -11,12 +11,15 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import chronos.DateManagement;
 import chronos.Person;
+import chronos.Singleton;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
@@ -81,7 +84,6 @@ public class CalendarWindow extends ChronosWindow {
 		tabbedPane.setMinimumSize(new Dimension(eventsPanelWidth + 30, eventsPanelHeight));
 		tabbedPane.setPreferredSize(new Dimension(eventsPanelWidth + 30, eventsPanelHeight));
 
-		notificationsPanel.add(new NotificationPanel(new CalEvent("Jostein", new Date(), 10, new Person("Jossi"), "hehehhehe"), this, eventsPanelWidth));
 		Border border = BorderFactory.createLineBorder(Color.white, 3);
 		othersCalPanel = new BoxPanel();
 
@@ -184,9 +186,13 @@ public class CalendarWindow extends ChronosWindow {
 		repaint();
 	}
 
+	/**
+	 * Adds one event
+	 */
+
 	public void addEvent(CalEvent event, Weekday weekday, Color personColor) {
-		CalEventPanel panel = new CalEventPanel(event, this, personColor);
-		eventsPanel.add(new CalEventListPanel(event, this, eventsPanelWidth));
+		CalEventPanel panel = new CalEventPanel(event, this, personColor, model);
+		eventsPanel.add(new CalEventListPanel(event, this, eventsPanelWidth, model));
 		switch (weekday) {
 		case MONDAY:
 			mondayPanel.add(panel);
@@ -213,7 +219,7 @@ public class CalendarWindow extends ChronosWindow {
 			break;
 		}
 
-		getFrame().pack();
+		getFrame().revalidate();
 		repaint();
 	}
 
@@ -226,9 +232,12 @@ public class CalendarWindow extends ChronosWindow {
 		saturdayPanel.removeAll();
 		sundayPanel.removeAll();
 		eventsPanel.removeAll();
-		notificationsPanel.removeAll();
 		// updateUI();
 		repaint();
+	}
+
+	public void removeNotifications() {
+		notificationsPanel.removeAll();
 	}
 
 	public void updateLabels() {
@@ -271,10 +280,6 @@ public class CalendarWindow extends ChronosWindow {
 	}
 
 	private class CheckBoxListener implements ActionListener {
-
-		public void itemStateChanged(ItemEvent e) {
-
-		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -322,13 +327,19 @@ public class CalendarWindow extends ChronosWindow {
 		notifications++;
 	}
 
+	/**
+	 * bare tull
+	 */
 	public void internalRepaint() {
 		repaint();
-
 	}
 
 	public void removePersonCheckBoxes() {
 		othersCalPanel.removeAll();
 		repaint();
+	}
+
+	public synchronized void alarm(CalEvent calEvent) {
+		JOptionPane.showMessageDialog(null, "Less than 15 minutes until " + calEvent.getTitle() + " starts", Singleton.APP_NAME + " - Reminder", JOptionPane.WARNING_MESSAGE);
 	}
 }

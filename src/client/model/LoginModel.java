@@ -17,7 +17,10 @@ public class LoginModel extends ChronosModel {
 	}
 
 	public void login(String username, String password) {
-		fireNetworkEvent(new AuthEvent(EventType.LOGIN, new Person(username), password));
+		AuthEvent authEvent = new AuthEvent(EventType.LOGIN, new Person(username), password);
+		if (getController().getAuthEvent() != null)
+			authEvent = getController().getAuthEvent();
+		fireNetworkEvent(authEvent);
 	}
 
 	public void setDenied() {

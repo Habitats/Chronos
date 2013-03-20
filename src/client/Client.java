@@ -42,17 +42,22 @@ public class Client implements Runnable {
 			in = new ObjectInputStream(socket.getInputStream());
 
 			// sends auth event to server on connect
-			// clientController.sendAuthEvent();
+			if (!Singleton.getInstance().loginEnabled())
+				clientController.sendAuthEvent();
 
 			NetworkEvent event;
 			Singleton.log("Initiating streams...");
 			while ((event = (NetworkEvent) in.readObject()) != null) {
-				// Singleton.log("Client received: " + event.toString());
-				getClientController().evaluateNetworkEvent(event);
-				out.reset();
+				synchronized (event) {
+					// Singleton.log("Client received: " + event.toString());
+					getClientController().evaluateNetworkEvent(event);
+					out.reset();
+				}
 			}
+
 		} catch (IOException | ClassNotFoundException e) {
 			Singleton.log("Lost connection!");
+			e.printStackTrace();
 			kill();
 		}
 	}
@@ -90,7 +95,7 @@ public class Client implements Runnable {
 		return out;
 	}
 
-	public void sendNetworkEvent(NetworkEvent event) {
+	public synchronized void sendNetworkEvent(NetworkEvent event) {
 		try {
 			// Singleton.log("Client sending: " + event);
 			out.writeObject(event);

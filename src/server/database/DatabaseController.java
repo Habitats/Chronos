@@ -34,7 +34,9 @@ public class DatabaseController implements DatabaseControllerInterface {
 
 	@Override
 	public QueryEvent getUsers(QueryEvent event) {
-		return event.setResults(dbQueries.getUsers());
+		if (event.getArgument() == null)
+			return event.setResults(dbQueries.getUsers());
+		return event.setResults(dbQueries.searchUsers(event.getArgument()));
 	}
 
 	@Override

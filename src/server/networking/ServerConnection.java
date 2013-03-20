@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 
 import chronos.Singleton;
@@ -40,29 +41,29 @@ public class ServerConnection implements Runnable {
 
 		try {
 			while ((event = (NetworkEvent) in.readObject()) != null) {
-				Singleton.log("Server received: " + event);
-				List<ClientConnection> clientConnections = server.getClientConnections();
-				synchronized (clientConnections) {
-					for (ClientConnection clientConnection : clientConnections) {
-						if (clientConnection.getClientSocket() == clientSocket && clientConnection.getPerson() == null) {
+				synchronized (event) {
+					Singleton.log("Server received: " + event);
+					for (ClientConnection clientConnection : server.getClientConnections()) {
+						if (clientConnection.getClientSocket() == clientSocket && event.getSender() != null) {
 							clientConnection.setPerson(event.getSender());
 							this.clientConnection = clientConnection;
-
-							break;
+							// break;
 						}
 					}
+					// forward event to serverController that handles it
+					server.getServerController().evaluateNetworkEvent(event);
+					out.reset();
 				}
-				// forward event to serverController that handles it
-				server.getServerController().evaluateNetworkEvent(event);
-				out.reset();
 			}
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
+			Singleton.log("Client dropped! Cleaning up...");
 			e.printStackTrace();
 		}
 		out.close();
 		in.close();
 		clientSocket.close();
 		server.getServerController().evaluateNetworkEvent(new AuthEvent(EventType.LOG_OUT, clientConnection.getPerson(), null));
+		server.getClientConnections().remove(clientConnection);
 	}
 
 	@Override

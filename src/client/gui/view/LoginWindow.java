@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import chronos.Singleton;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
@@ -44,16 +46,17 @@ public class LoginWindow extends ChronosWindow {
 		statusLabel = new JLabel(" ");
 		statusLabel.setForeground(Color.red);
 
-		add(new Label("Username:"), new GBC(0, 0, Align.FULL_WIDTH).setAnchor(GridBagConstraints.SOUTH));
-		add(usernameField, new GBC(0, 1, Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
-		add(new Label("Password:"), new GBC(0, 2, Align.FULL_WIDTH).setAnchor(GridBagConstraints.SOUTH));
-		add(passwordField, new GBC(0, 3, Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH));
-		add(statusLabel, new GBC(0, 4, Align.FULL_WIDTH).setSpan(2, 1));
-		add(loginButton, new GBC(0, 5, Align.LEFT_BOTTOM).setWeight(0.5, 0));
-		add(cancelButton, new GBC(1, 5, Align.RIGHT_BOTTOM).setWeight(0.5, 0));
+		add(new JLabel("Username:"), new GBC(0, 0, Align.FULL_WIDTH).setAnchor(GridBagConstraints.SOUTH).setInsets(5, 40, 5, 40));
+		add(usernameField, new GBC(0, 1, Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH).setInsets(0, 40, 0, 40));
+		add(new JLabel("Password:"), new GBC(0, 2, Align.FULL_WIDTH).setAnchor(GridBagConstraints.SOUTH).setInsets(5, 40, 0, 40));
+		add(passwordField, new GBC(0, 3, Align.FULL_WIDTH).setSpan(2, 1).setAnchor(GridBagConstraints.NORTH).setInsets(0, 40, 0, 40));
+		add(statusLabel, new GBC(0, 4, Align.FULL_WIDTH).setSpan(2, 1).setInsets(0, 40, 0, 40));
+		add(loginButton, new GBC(0, 5, Align.LEFT_BOTTOM).setWeight(0.5, 0).setInsets(0, 40, 5, 5));
+		add(cancelButton, new GBC(1, 5, Align.RIGHT_BOTTOM).setWeight(0.5, 0).setInsets(0, 5, 5, 40));
 
 		usernameField.addKeyListener(new LoginListener());
 		passwordField.addKeyListener(new LoginListener());
+
 	}
 
 	private class LoginListener extends KeyAdapter {

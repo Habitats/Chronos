@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import chronos.Person;
 import chronos.Singleton;
+import events.QueryEvent.QueryType;
 
 /**
  * Event that holds a single array of elements (list of users, list of rooms,
@@ -13,12 +14,13 @@ import chronos.Singleton;
 public class QueryEvent extends NetworkEvent {
 
 	public enum QueryType {
-		ROOMS, PERSONS, CALEVENTS, CALEVENT_NEW, PERSONS_SEARCH;
+		ROOMS, PERSONS, CALEVENTS, PARTICIPANTS;
 	}
 
 	private QueryType queryType;
 	private Person otherPerson;
 	private CalEvent calEvent;
+	private String argument;
 
 	public QueryEvent(QueryType queryType) {
 		this(queryType, Singleton.getInstance().getSelf());
@@ -28,6 +30,12 @@ public class QueryEvent extends NetworkEvent {
 		super(EventType.QUERY);
 		setQueryType(queryType);
 		this.otherPerson = person;
+	}
+
+	public QueryEvent(QueryType queryType, String argument) {
+		super(EventType.QUERY);
+		setQueryType(queryType);
+		this.argument = argument;
 	}
 
 	public Person getPerson() {
@@ -63,6 +71,10 @@ public class QueryEvent extends NetworkEvent {
 
 	public CalEvent getCalEvent() {
 		return calEvent;
+	}
+
+	public String getArgument() {
+		return argument;
 	}
 
 	@Override

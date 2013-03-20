@@ -82,6 +82,10 @@ public class ServerController implements Runnable {
 			event = dbController.getUsers(event);
 			echoNetworkEventToSender(event);
 			break;
+		case PARTICIPANTS:
+			event = dbController.getUsers(event);
+			echoNetworkEventToSender(event);
+			break;
 		case ROOMS:
 			event = dbController.getAvailableRooms(event);
 			echoNetworkEventToSender(event);
@@ -99,7 +103,7 @@ public class ServerController implements Runnable {
 	private void sendUpdateToAllParticipants(HashMap<String, Person> participants) {
 		for (String username : participants.keySet()) {
 			Person person = participants.get(username);
-			QueryEvent event = new QueryEvent(QueryType.CALEVENTS);
+			QueryEvent event = new QueryEvent(QueryType.CALEVENTS, person);
 			event = dbController.getCalEvents(person, event);
 			sendSingleNetworkEvent(event, person);
 		}
@@ -118,7 +122,7 @@ public class ServerController implements Runnable {
 	private void sendSingleNetworkEvent(NetworkEvent event, Person person) {
 		try {
 			for (ClientConnection clientConnection : server.getClientConnections()) {
-				if (clientConnection.getPerson().getUsername().toLowerCase().equals(person.getUsername().toLowerCase())) {
+				if (clientConnection.getPerson() != null && clientConnection.getPerson().getUsername().toLowerCase().equals(person.getUsername().toLowerCase())) {
 					clientConnection.getOut().writeObject(event);
 				}
 			}
