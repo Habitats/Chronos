@@ -2,6 +2,7 @@ package client.gui.view.eventConfig;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,6 +60,8 @@ abstract public class EventWindow extends ChronosWindow {
 	private JLabel startDateLbl;
 	private JLabel startTimeLbl;
 	private JLabel creatorField;
+	private int eventConfigWidth;
+	private int eventConfigHeight;
 
 	public EventWindow(ChronosModel model, MainFrame frame, ViewType type) {
 		super(model, frame);
@@ -66,8 +69,8 @@ abstract public class EventWindow extends ChronosWindow {
 		setVisible(false);
 		this.type = type;
 
-		int eventConfigWidth = 500;
-		int eventConfigHeight = 300;
+		eventConfigWidth = 500;
+		eventConfigHeight = 300;
 
 		setBounds((frame.getFrameWidth() - eventConfigWidth) / 2, (frame.getFrameHeight() - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
 		((EventConfigModel) model).getEventViews().put(type, this);
@@ -268,5 +271,11 @@ abstract public class EventWindow extends ChronosWindow {
 
 	public ViewType getViewType() {
 		return type;
+	}
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		setBounds((getFrame().getFrameWidth() - eventConfigWidth) / 2, (getFrame().getFrameHeight() - eventConfigHeight) / 2, eventConfigWidth, eventConfigHeight);
+		revalidate();
 	}
 }

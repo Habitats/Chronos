@@ -3,6 +3,7 @@ package client.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.Label;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -137,7 +138,6 @@ public class MainFrame extends JFrame {
 		frame.pack();
 		frame.setLocationRelativeTo(getRootPane());
 		frame.setVisible(true);
-		frame.setResizable(false);
 		frame.setExtendedState(Frame.NORMAL);
 	}
 
@@ -153,6 +153,8 @@ public class MainFrame extends JFrame {
 		JLayeredPane layeredPane = buildLayeredPane();
 		layeredPane.setBorder(BorderFactory.createLineBorder(null, 0));
 		getContentPane().add(layeredPane);
+		
+		setMinimumSize(new Dimension(1207, 315));
 
 		buildFrame(this);
 	}
@@ -194,5 +196,23 @@ public class MainFrame extends JFrame {
 
 	public ChronosWindow getNotificationWindow() {
 		return invitationWindow;
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		frameHeight = getHeight();
+		frameWidth = getWidth();
+		System.out.println(getWidth() + " " + getHeight());
+		calendarWindow.setBounds(0, 0, frameWidth, frameHeight);
+
+		int roomBookingWidth = frameWidth / 4;
+		int roomBookingHeight = frameHeight / 4;
+		roomBookingWindow.setBounds((frameWidth - roomBookingWidth) / 2, (frameHeight - roomBookingHeight) / 2, roomBookingWidth, roomBookingHeight);
+
+		int addParticipantWidth = frameWidth / 6;
+		int addParticipantHeight = 300;
+		addParticipantWindow.setBounds((frameWidth + eventWindowAdmin.getWidth()) / 2, (frameHeight - addParticipantHeight) / 2, addParticipantWidth, addParticipantHeight);
+		revalidate();
 	}
 }

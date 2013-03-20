@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -48,6 +49,8 @@ public class CalendarWindow extends ChronosWindow {
 	private int eventsPanelWidth = 140;
 	private JTabbedPane tabbedPane;
 	private int notifications;
+	private JPanel weekPane;
+	private JScrollPane weekScrollPane;
 
 	public CalendarWindow(ChronosModel model, MainFrame frame) {
 		super(model, frame);
@@ -57,17 +60,18 @@ public class CalendarWindow extends ChronosWindow {
 		this.setLayout(gbl);
 
 		int i = 0;
+		int sideBorder = 15;
 
 		setBorder(BorderFactory.createEmptyBorder());
 		newEventButton = new JButton("New event");
 		newEventButton.setPreferredSize(new Dimension(140, 25));
 		newEventButton.setMinimumSize(new Dimension(140, 25));
-		add(newEventButton, new GBC(i, 0));
+		add(newEventButton, new GBC(i, 0).setInsets(5, sideBorder, 5, 5));
 		newEventButton.addActionListener(new NewEventListener());
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(BorderFactory.createEmptyBorder());
-		add(tabbedPane, new GBC(i, 3).setWeight(0, 0.5));
+		add(tabbedPane, new GBC(i, 3).setWeight(0, 0.5).setInsets(5, sideBorder, 5, 5));
 
 		eventsPanel = new BoxPanel();
 		eventsPane = new JScrollPane(eventsPanel);
@@ -94,33 +98,24 @@ public class CalendarWindow extends ChronosWindow {
 		othersCalPane.setMinimumSize(new Dimension(eventsPanelWidth, 250));
 		othersCalPane.setMaximumSize(new Dimension(eventsPanelWidth, 250));
 		othersCalPane.setBorder(border);
-		add(othersCalPane, new GBC(i, 4).setWeight(0, 0.5));
+		add(othersCalPane, new GBC(i, 4).setWeight(0, 0.5).setInsets(5, sideBorder, 35, 5));
 
 		i++;
 		i++;
 		i++;
 
-		mondayPanel = new DayPanel();
-		add(mondayPanel, new GBC(i, 3, Align.NOT_RIGHT).setSpan(1, 2));
-
-		mondayLbl = new CalLabel("Monday");
-		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
+		mondayLbl = new CalLabel("Monday", this);
+		add(mondayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER).setWeight(0.5, 0).setInsets(5, 5, 5, 0));
 
 		i++;
 
-		tuesdayPanel = new DayPanel();
-		add(tuesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
-
-		tuesdayLbl = new CalLabel("Tuesday");
-		add(tuesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
+		tuesdayLbl = new CalLabel("Tuesday", this);
+		add(tuesdayLbl, new GBC(i, 2, Align.TOP_AND_BOTTOM).setAnchor(GridBagConstraints.CENTER).setWeight(0.5, 0));
 
 		i++;
 
-		wednesdayPanel = new DayPanel();
-		add(wednesdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
-
-		wednesdayLbl = new CalLabel("Wednesday");
-		add(wednesdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
+		wednesdayLbl = new CalLabel("Wednesday", this);
+		add(wednesdayLbl, new GBC(i, 2, Align.TOP_AND_BOTTOM).setAnchor(GridBagConstraints.CENTER).setWeight(0.5, 0));
 
 		prevButton = new ChangeWeekButton("<");
 		prevButton.addActionListener(new PrevButtonListener());
@@ -128,22 +123,16 @@ public class CalendarWindow extends ChronosWindow {
 
 		i++;
 
-		thursdayPanel = new DayPanel();
-		add(thursdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
-
-		thursdayLbl = new CalLabel("Thursday");
-		add(thursdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
+		thursdayLbl = new CalLabel("Thursday", this);
+		add(thursdayLbl, new GBC(i, 2, Align.TOP_AND_BOTTOM).setAnchor(GridBagConstraints.CENTER).setWeight(0.5, 0));
 
 		weekNumberLbl = new CalLabel("Week " + this.model.getCurrentDisplayedWeek());
 		add(weekNumberLbl, new GBC(i, 0).setAnchor(GridBagConstraints.CENTER));
 
 		i++;
 
-		fridayPanel = new DayPanel();
-		add(fridayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
-
-		fridayLbl = new CalLabel("Friday");
-		add(fridayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
+		fridayLbl = new CalLabel("Friday", this);
+		add(fridayLbl, new GBC(i, 2, Align.TOP_AND_BOTTOM).setAnchor(GridBagConstraints.CENTER).setWeight(0.5, 0));
 
 		nextButton = new ChangeWeekButton(">");
 		nextButton.addActionListener(new NextButtonListener());
@@ -151,25 +140,49 @@ public class CalendarWindow extends ChronosWindow {
 
 		i++;
 
-		saturdayPanel = new DayPanel();
-		add(saturdayPanel, new GBC(i, 3, Align.TOP_AND_BOTTOM).setSpan(1, 2));
-
-		saturdayLbl = new CalLabel("Saturday");
-		add(saturdayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
+		saturdayLbl = new CalLabel("Saturday", this);
+		add(saturdayLbl, new GBC(i, 2, Align.TOP_AND_BOTTOM).setAnchor(GridBagConstraints.CENTER).setWeight(0.5, 0));
 
 		dateLbl = new CalLabel(this.model.getCurrentDisplayedDateIntervall());
 		dateLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(dateLbl, new GBC(i, 0).setSpan(2, 1).setAnchor(GridBagConstraints.WEST));
+		add(dateLbl, new GBC(i, 0).setSpan(2, 1).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 5, sideBorder));
 
 		i++;
 
-		sundayPanel = new DayPanel();
-		add(sundayPanel, new GBC(i, 3, Align.NOT_LEFT).setSpan(1, 2));
-
 		sundayLbl = new CalLabel("Sunday");
-		add(sundayLbl, new GBC(i, 2).setAnchor(GridBagConstraints.CENTER));
+		add(sundayLbl, new GBC(i, 2, Align.NOT_LEFT).setAnchor(GridBagConstraints.CENTER).setWeight(0.5, 0).setInsets(5, 0, 5, sideBorder));
+
+		weekPane = new JPanel();
+		mondayPanel = new DayPanel(this);
+		tuesdayPanel = new DayPanel(this);
+		wednesdayPanel = new DayPanel(this);
+		thursdayPanel = new DayPanel(this);
+		fridayPanel = new DayPanel(this);
+		saturdayPanel = new DayPanel(this);
+		sundayPanel = new DayPanel(this);
+
+		weekPane.setLayout(new GridBagLayout());
+		weekPane.setBorder(BorderFactory.createEmptyBorder());
+		weekPane.add(mondayPanel, new GBC(0, 0, Align.TOP_AND_BOTTOM).setSpan(1, 2).setWeight(0.5, 1));
+		weekPane.add(tuesdayPanel, new GBC(1, 0, Align.TOP_AND_BOTTOM).setSpan(1, 2).setWeight(0.5, 1));
+		weekPane.add(wednesdayPanel, new GBC(2, 0, Align.TOP_AND_BOTTOM).setSpan(1, 2).setWeight(0.5, 1));
+		weekPane.add(thursdayPanel, new GBC(3, 0, Align.TOP_AND_BOTTOM).setSpan(1, 2).setWeight(0.5, 1));
+		weekPane.add(fridayPanel, new GBC(4, 0, Align.TOP_AND_BOTTOM).setSpan(1, 2).setWeight(0.5, 1));
+		weekPane.add(saturdayPanel, new GBC(5, 0, Align.TOP_AND_BOTTOM).setSpan(1, 2).setWeight(0.5, 1));
+		weekPane.add(sundayPanel, new GBC(6, 0, Align.TOP_AND_BOTTOM).setSpan(1, 2).setWeight(0.5, 1));
+		weekScrollPane = new JScrollPane(weekPane);
+		weekScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		add(weekScrollPane, new GBC(3, 3).setWeight(1, 1).setSpan(7, 10).setInsets(5,0, 30, sideBorder));
 
 		updateLabels();
+	}
+
+	public JPanel getWeekPane() {
+		return weekPane;
+	}
+
+	public JScrollPane getWeekScrollPane() {
+		return weekScrollPane;
 	}
 
 	@Override

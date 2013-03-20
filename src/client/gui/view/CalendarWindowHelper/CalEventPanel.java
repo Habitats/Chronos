@@ -2,6 +2,8 @@ package client.gui.view.calendarWindowHelper;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,17 +28,19 @@ public class CalEventPanel extends JPanel {
 	private Color color;
 	private Color hoverColor;
 	private final CalendarModel model;
+	private final CalEvent event;
 
 	public CalEventPanel(CalEvent event, CalendarWindow view, Color personColor, CalendarModel model) {
 		super();
+		this.event = event;
 		this.model = model;
 		setLayout(new GridBagLayout());
 		color = personColor;
 		setBackground(color);
 		hoverColor = personColor.darker();
-		setPreferredSize(new Dimension(130, 60));
-		setMinimumSize(new Dimension(130, 60));
-		setMaximumSize(new Dimension(130, 60));
+		setPreferredSize(new Dimension(130, 60 + (event.getDuration() * 20)));
+		setMinimumSize((new Dimension(0, 60 + (event.getDuration() * 20))));
+		setMaximumSize((new Dimension(1000, 60 + (event.getDuration() * 20))));
 		addMouseListener(new CalPanelMouseAdapter());
 		setBorder(BorderFactory.createLineBorder(Color.white, 2));
 
@@ -47,10 +51,23 @@ public class CalEventPanel extends JPanel {
 		JLabel creator = new JLabel("- " + event.getCreator().toString());
 		JLabel startDate = new JLabel(DateManagement.getFormattedFull(event.getStart()));
 		add(creator, new GBC(0, 1).setInsets(0, 20, 5, 10));
-		add(startDate, new GBC(0, 2).setInsets(3, 10, 5, 5).setWeight(1, 0));
+		add(startDate, new GBC(0, 2).setInsets(3, 10, 5, 5));
+		add(new JLabel(), new GBC(0, 3).setWeight(1, 1));
 
 		this.calEvent = event;
 		this.view = view;
+		// setMaximumSize(new Dimension((view.getWeekPane().getWidth() / 7) -
+		// 10, 60 + (event.getDuration() * 10)));
+		// setPreferredSize(new Dimension((view.getWeekPane().getWidth() / 7) -
+		// 10, 60 + (event.getDuration() * 10)));
+		// setMinimumSize(new Dimension((view.getWeekPane().getWidth() / 7) -
+		// 10, 60 + (event.getDuration() * 10)));
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paint(g);
 	}
 
 	private class CalPanelMouseAdapter extends MouseAdapter {
