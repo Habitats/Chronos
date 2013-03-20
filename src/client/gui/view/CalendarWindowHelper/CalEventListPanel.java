@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import client.gui.view.CalendarWindow;
+import client.model.CalendarModel;
 import client.model.EventConfigModel.ViewType;
 
 import chronos.DateManagement;
@@ -20,9 +21,11 @@ public class CalEventListPanel extends JLabel {
 
 	private CalEvent calEvent;
 	private CalendarWindow view;
+	private final CalendarModel model;
 
-	public CalEventListPanel(CalEvent calEvent, CalendarWindow view, int width) {
+	public CalEventListPanel(CalEvent calEvent, CalendarWindow view, int width,CalendarModel model) {
 		super();
+		this.model = model;
 		String text = DateManagement.getFormattedSimple(calEvent.getStart()) + " " + calEvent.getTitle();
 		setText(text);
 		setHorizontalAlignment(SwingConstants.LEFT);
@@ -45,8 +48,10 @@ public class CalEventListPanel extends JLabel {
 		public void mouseClicked(MouseEvent e) {
 			super.mouseClicked(e);
 			view.getFrame().getEventModel().setCalEvent(calEvent);
-			if (calEvent.getCreator().getUsername().toLowerCase().equals(Singleton.getInstance().getSelf().getUsername()))
+			if (calEvent.getCreator().getUsername().toLowerCase().equals(Singleton.getInstance().getSelf().getUsername().toLowerCase()))
 				view.getFrame().getEventModel().setView(ViewType.UPDATE);
+			else if (calEvent.getParticipants().get(Singleton.getInstance().getSelf().getUsername()) != null && model.getSelectedPersonsEvents().get(Singleton.getInstance().getSelf().getUsername()).contains(calEvent))
+				view.getFrame().getEventModel().setView(ViewType.PARTICIPANT);
 			else
 				view.getFrame().getEventModel().setView(ViewType.OTHER);
 		}

@@ -12,8 +12,8 @@ import client.model.CalendarModel.Weekday;
  */
 public class DateManagement {
 
-	private static String getFormattedFull(Date start) {
-		return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(start);
+	public static String getFormattedFull(Date start) {
+		return new SimpleDateFormat("dd.MM.yyyy - HH:mm").format(start);
 	}
 
 	public static String getFormattedDate(Date start) {
@@ -23,13 +23,19 @@ public class DateManagement {
 	public static String getFormattedSimple(Date start) {
 		return new SimpleDateFormat("dd.MM").format(start);
 	}
-	
+
 	public synchronized static boolean isLessThanFifteenMinFromNow(Date date) {
 		long now = new Date().getTime();
 		long input = date.getTime();
-		if( (input-now) < 1000*60*15 && input>=now)
-			return true;
-		return false;
+		long derp = (now - input) / 1000;
+		// System.out.println(getFormattedFull(new Date(derp * 1000)));
+		return ((input - now) / 1000) < 60 * 15 && input >= now;
+	}
+
+	public static long getClockInSeconds(Date time) {
+		long hours = Integer.parseInt(new SimpleDateFormat("kk").format(time));
+		long minutes = Integer.parseInt(new SimpleDateFormat("mm").format(time));
+		return (hours * 3600 + minutes * 60) * 1000;
 	}
 
 	public static String getFormattedDateIntervall(Date start) {
@@ -70,7 +76,7 @@ public class DateManagement {
 	}
 
 	public static String getTimeOfDay(Date date) {
-		return new SimpleDateFormat("kk:mm").format(date);
+		return new SimpleDateFormat("HH:mm").format(date);
 	}
 
 	/**
@@ -147,5 +153,16 @@ public class DateManagement {
 		Singleton.log("Monady in week: " + getMondayOfWeek(new Date()));
 		Singleton.log("Weekday: " + getWeekday(new Date()));
 		Singleton.log("Formatted clock: " + getTimeOfDay(new Date()));
+		Singleton.log("Strip date for time: " + getFormattedFull(stripClock(new Date())));
+	}
+
+	public static Date stripClock(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
 	}
 }

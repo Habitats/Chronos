@@ -3,6 +3,7 @@ package client.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Label;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -150,10 +151,10 @@ public class MainFrame extends JFrame {
 	public void buildGui() {
 		if (loginFrame != null) {
 			loginFrame.dispose();
-			JLabel currentUser = new JLabel(Singleton.getInstance().getSelf().toString());
-			calendarWindow.add(currentUser, new GBC(0, 100).setSpan(10, 1));
 			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.CALEVENTS, Singleton.getInstance().getSelf()));
 			calendarModel.fireNetworkEvent(new QueryEvent(QueryType.PERSONS));
+			Label currentUser = new Label("Username: " + Singleton.getInstance().getSelf().getUsername() + " - Name: " + Singleton.getInstance().getSelf().getName());
+			calendarWindow.add(currentUser, new GBC(3, 0).setSpan(2, 1));
 		}
 		JLayeredPane layeredPane = buildLayeredPane();
 		getContentPane().add(layeredPane);
@@ -162,9 +163,9 @@ public class MainFrame extends JFrame {
 	}
 
 	public void loginPrompt() {
-		loginFrame = new JFrame();
-		int frameWidth = 300;
-		int frameHeight = 200;
+		loginFrame = new JFrame("Chronos login");
+		int frameWidth = 600;
+		int frameHeight = 300;
 
 		loginFrame.setSize(frameWidth, frameHeight);
 

@@ -29,7 +29,7 @@ public class RoomBookingModel extends ChronosModel {
 			System.out.println(room.toString());
 			rooms.add(view.addRoom(room));
 		}
-		view.getFrame().pack();
+		view.getFrame().revalidate();
 	}
 
 	public RoomBookingModel(ClientController controller) {

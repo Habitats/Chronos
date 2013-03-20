@@ -36,6 +36,7 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 		cancelButton = new JButton("Cancel");
 
 		// userList.setMinimumSize(new Dimension(80, 100));
+		userSearchField.addActionListener(new SearchAction());
 		searchButton.addActionListener(new SearchAction());
 		applyButton.addActionListener(new ApplyAction());
 		cancelButton.addActionListener(new CancelAction());
@@ -54,7 +55,7 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 	private class SearchAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.getUsers();
+			model.getUsers(userSearchField.getText());
 		}
 	}
 
@@ -77,7 +78,7 @@ public class ParticipantsWindow extends ChronosWindow implements ActionListener 
 	@Override
 	public void setVisible(boolean aFlag) {
 		super.setVisible(aFlag);
-		if (aFlag){
+		if (aFlag) {
 			model.getUsers();
 		}
 	}

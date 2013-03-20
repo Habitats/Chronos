@@ -72,8 +72,10 @@ public class ClientController implements Runnable, ClientControllerInterface {
 			models.get(ChronosType.CALENDAR).receiveNetworkEvent(event);
 			break;
 		case PERSONS:
-			models.get(ChronosType.USER_LIST).receiveNetworkEvent(event);
 			models.get(ChronosType.CALENDAR).receiveNetworkEvent(event);
+			break;
+		case PARTICIPANTS:
+			models.get(ChronosType.USER_LIST).receiveNetworkEvent(event);
 			break;
 		case ROOMS:
 			models.get(ChronosType.ROOM_BOOK).receiveNetworkEvent(event);

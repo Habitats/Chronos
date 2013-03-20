@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -18,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import chronos.DateManagement;
 import chronos.Person;
+import chronos.Singleton;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
@@ -82,7 +84,6 @@ public class CalendarWindow extends ChronosWindow {
 		tabbedPane.setMinimumSize(new Dimension(eventsPanelWidth + 30, eventsPanelHeight));
 		tabbedPane.setPreferredSize(new Dimension(eventsPanelWidth + 30, eventsPanelHeight));
 
-		notificationsPanel.add(new NotificationPanel(new CalEvent("Jostein", new Date(), 10, new Person("Jossi"), "hehehhehe"), this, eventsPanelWidth));
 		Border border = BorderFactory.createLineBorder(Color.white, 3);
 		othersCalPanel = new BoxPanel();
 
@@ -184,17 +185,14 @@ public class CalendarWindow extends ChronosWindow {
 		othersCalPanel.add(box);
 		repaint();
 	}
-	
+
 	/**
 	 * Adds one event
-	 * @param event
-	 * @param weekday
-	 * @param personColor
 	 */
 
 	public void addEvent(CalEvent event, Weekday weekday, Color personColor) {
-		CalEventPanel panel = new CalEventPanel(event, this, personColor);
-		eventsPanel.add(new CalEventListPanel(event, this, eventsPanelWidth));
+		CalEventPanel panel = new CalEventPanel(event, this, personColor, model);
+		eventsPanel.add(new CalEventListPanel(event, this, eventsPanelWidth, model));
 		switch (weekday) {
 		case MONDAY:
 			mondayPanel.add(panel);
@@ -221,10 +219,10 @@ public class CalendarWindow extends ChronosWindow {
 			break;
 		}
 
-		getFrame().pack();
+		getFrame().revalidate();
 		repaint();
 	}
-	
+
 	public void removeEvents() {
 		mondayPanel.removeAll();
 		tuesdayPanel.removeAll();
@@ -328,6 +326,7 @@ public class CalendarWindow extends ChronosWindow {
 		notificationsPanel.add(new NotificationPanel(calEvent, this, eventsPanelWidth));
 		notifications++;
 	}
+
 	/**
 	 * bare tull
 	 */
@@ -341,7 +340,6 @@ public class CalendarWindow extends ChronosWindow {
 	}
 
 	public synchronized void alarm(CalEvent calEvent) {
-		JOptionPane.showMessageDialog(null, "Less than 15 minutes until " + calEvent.getTitle() + "starts" , "Reminder", JOptionPane.WARNING_MESSAGE);
-		
+		JOptionPane.showMessageDialog(null, "Less than 15 minutes until " + calEvent.getTitle() + " starts", Singleton.APP_NAME + " - Reminder", JOptionPane.WARNING_MESSAGE);
 	}
 }

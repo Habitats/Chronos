@@ -186,11 +186,10 @@ public class DatabaseQueries {
 			logg = logg.substring(0, logg.length() - 1);
 			Singleton.log("Search for " + streng + " gave " + results + " matches:" + logg);
 			return users;
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 			Singleton.log("error occurred while searching user machings for " + streng);
 		}
-		return null;
+		return users;
 	}
 
 	/**
@@ -296,7 +295,7 @@ public class DatabaseQueries {
 				try {
 					ps.setString(1, p.getUsername());
 					ps.setString(2, "" + evt.getTimestamp());
-					if (p.isAlarm()) {
+					if (p.getAlert()) {
 						ps.setInt(3, 1);						
 					}else{
 						ps.setInt(3, 0);

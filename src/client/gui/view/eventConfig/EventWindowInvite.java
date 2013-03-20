@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.xml.stream.events.StartDocument;
+
 import chronos.Singleton;
 import chronos.Person.Status;
 import client.gui.GBC;
@@ -31,7 +33,7 @@ public class EventWindowInvite extends EventWindow {
 		applyButton.setVisible(false);
 		eventNameField.setEnabled(false);
 		eventDescriptionArea.setEnabled(false);
-		dateField.setEnabled(false);
+		startDate.setEnabled(false);
 		duration.setEnabled(false);
 		startTime.setEnabled(false);
 

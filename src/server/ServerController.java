@@ -82,6 +82,10 @@ public class ServerController implements Runnable {
 			event = dbController.getUsers(event);
 			echoNetworkEventToSender(event);
 			break;
+		case PARTICIPANTS:
+			event = dbController.getUsers(event);
+			echoNetworkEventToSender(event);
+			break;
 		case ROOMS:
 			event = dbController.getAvailableRooms(event);
 			echoNetworkEventToSender(event);

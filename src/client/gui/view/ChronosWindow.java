@@ -4,6 +4,7 @@ import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import chronos.Singleton;
 import client.gui.MainFrame;
 import client.model.ChronosModel;
 
@@ -16,6 +17,7 @@ abstract public class ChronosWindow extends JPanel {
 	public ChronosWindow(ChronosModel model, MainFrame frame) {
 		this.frame = frame;
 		setBorder(BorderFactory.createLineBorder(Color.black));
+		setFont(Singleton.FONT_BOLD);
 	}
 
 	public MainFrame getFrame() {

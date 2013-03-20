@@ -3,6 +3,7 @@ package client.gui.view.eventConfig;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,6 +24,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JTextPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
@@ -32,6 +34,7 @@ import javax.swing.text.JTextComponent;
 
 import chronos.Person;
 import chronos.Room;
+import chronos.Singleton;
 import client.gui.GBC;
 import client.gui.GBC.Align;
 import client.gui.MainFrame;
@@ -54,9 +57,9 @@ abstract public class EventWindow extends ChronosWindow {
 	protected JButton deleteButton;
 	protected JButton applyButton;
 	protected JComboBox<Integer> duration;
-	protected JTextArea eventDescriptionArea;
-	protected JTextField dateField;
+	protected JTextPane eventDescriptionArea;
 	protected JSpinner startTime;
+	protected JSpinner startDate;
 
 	private JButton cancelButton;
 	private JTextField roomNumberField;
@@ -90,15 +93,18 @@ abstract public class EventWindow extends ChronosWindow {
 		view = this;
 
 		startTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(startTime, "HH:mm:ss");
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(startTime, "HH:mm");
 		startTime.setEditor(timeEditor);
+
+		startDate = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(startDate, "dd:MM:yyyy");
+		startDate.setEditor(dateEditor);
 
 		setLayout(new GridBagLayout());
 		eventNameField = new JTextField();
-		dateField = new JTextField();
 		duration = new JComboBox(durationArray);
 		creatorField = new JLabel();
-		eventDescriptionArea = new JTextArea();
+		eventDescriptionArea = new JTextPane();
 
 		participantList = new JList<Person>();
 		participantList.setEnabled(true);
@@ -115,8 +121,6 @@ abstract public class EventWindow extends ChronosWindow {
 		Border border = BorderFactory.createEmptyBorder(0, 3, 0, 3);
 		eventNameField.setBorder(border);
 
-		dateField.setColumns(8);
-		dateField.setBorder(border);
 		roomNumberField.setColumns(5);
 
 		eventDescriptionArea.setPreferredSize(new Dimension(100, 100));
@@ -130,7 +134,6 @@ abstract public class EventWindow extends ChronosWindow {
 
 		nameLbl = new JLabel("Name");
 		descriptionLbl = new JLabel("Description");
-		creator = new JLabel("Creator");
 		participantsLbl = new JLabel("Participants");
 		durationLbl = new JLabel("Duration (hours)");
 		startDateLbl = new JLabel("Date");
@@ -143,23 +146,23 @@ abstract public class EventWindow extends ChronosWindow {
 		add(durationLbl, new GBC(5, 0, Align.NOT_BOTTOM));
 
 		add(eventNameField, new GBC(0, 1, Align.NOT_BOTTOM).setSpan(2, 1));
-		add(dateField, new GBC(2, 1, Align.NOT_BOTTOM).setSpan(2, 1));
+		add(startDate, new GBC(2, 1, Align.NOT_BOTTOM).setSpan(2, 1));
 		add(startTime, new GBC(4, 1, Align.NOT_BOTTOM));
 		add(duration, new GBC(5, 1, Align.NOT_BOTTOM));
 
 		add(descriptionLbl, new GBC(0, 2, Align.NOT_BOTTOM));
 		add(participantsLbl, new GBC(2, 2, Align.NOT_BOTTOM));
-		add(new Label("Enable alert 15 min before"), new GBC(4, 2, Align.NOT_BOTTOM).setSpan(2, 1));
+		add(new JLabel("Enable alert 15 min before"), new GBC(4, 2, Align.NOT_BOTTOM).setSpan(2, 1));
 
 		add(eventDescriptionArea, new GBC(0, 3).setSpan(2, 6).setWeight(1, 1));
 		add(participantList, new GBC(2, 3).setSpan(2, 6).setWeight(1, 1));
 
-		add(new Label("Alert:"), new GBC(4, 3));
+		add(new JLabel("Alert:"), new GBC(4, 3));
 		add(alert, new GBC(5, 3));
-		add(new Label("Room no."), new GBC(4, 4));
+		add(new JLabel("Location:"), new GBC(4, 4));
 		add(roomNumberField, new GBC(5, 4));
 
-		add(creator, new GBC(4, 5));
+		add(new JLabel("Creator:"), new GBC(4, 5));
 		add(creatorField, new GBC(5, 5));
 
 		add(applyButton, new GBC(4, 9).setWeight(0.5, 0));
@@ -195,19 +198,28 @@ abstract public class EventWindow extends ChronosWindow {
 
 		@Override
 		public Component getListCellRendererComponent(JList<? extends Person> list, Person person, int index, boolean isSelected, boolean cellHasFocus) {
+			setFont(Singleton.FONT_BOLD);
 			setText(person.toString());
 			switch (person.getStatus()) {
 			case ACCEPTED:
-				setForeground(Color.green);
-				// setIcon(new ImageI)
+				setForeground(Singleton.GREEN);
 				break;
 			case DECLINED:
-				setForeground(Color.red);
+				setForeground(Singleton.RED);
 				break;
 			case WAITING:
-				setForeground(Color.blue);
+				setForeground(Singleton.BLUE);
 			}
 			return this;
+		}
+	}
+
+	@Override
+	public void setVisible(boolean aFlag) {
+		super.setVisible(aFlag);
+		if (!aFlag && (getFrame().getAddParticipantWindow() != null && getFrame().getRoomBookingWindow() != null)) {
+			getFrame().getAddParticipantWindow().setVisible(false);
+			getFrame().getRoomBookingWindow().setVisible(false);
 		}
 	}
 
@@ -247,18 +259,19 @@ abstract public class EventWindow extends ChronosWindow {
 		return eventNameField;
 	}
 
-	public JTextField getStartDateField() {
-		return dateField;
-	}
 	public JSpinner getStartTime() {
 		return startTime;
+	}
+
+	public JSpinner getStartDate() {
+		return startDate;
 	}
 
 	public JTextField getRoomNumberField() {
 		return roomNumberField;
 	}
 
-	public JTextArea getEventDescriptionArea() {
+	public JTextPane getEventDescriptionArea() {
 		return eventDescriptionArea;
 	}
 
@@ -273,7 +286,6 @@ abstract public class EventWindow extends ChronosWindow {
 	public JComboBox getDuration() {
 		return duration;
 	}
-
 
 	public JLabel getCreatorField() {
 		return creatorField;

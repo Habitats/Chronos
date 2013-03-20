@@ -28,10 +28,6 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	private final long timestampPrimaryKey;
 	private Room room;
 
-	private boolean alert;
-
-	private int startTime;
-
 	public CalEvent(String title, Date startDate, int duration, Person creator, String description) {
 		this(title, startDate, duration, creator, description, 0);
 	}
@@ -51,11 +47,11 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	}
 
 	public CalEvent update(String title, Date start, int duration, String description) {
+		setState(CalEventType.UPDATE);
 		this.title = title;
 		this.startDate = start;
 		this.duration = duration;
 		this.description = description;
-		setState(CalEventType.UPDATE);
 		return this;
 	}
 
@@ -136,10 +132,6 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		this.startDate = start;
 	}
 
-	public void setStartTime(int startTime) {
-		this.startTime = startTime;
-	}
-
 	/**
 	 * used as primary key in the db, HATERS GONNA' HATE
 	 */
@@ -150,14 +142,6 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	public CalEvent setParticipants(HashMap<String, Person> participants) {
 		this.participants = participants;
 		return this;
-	}
-
-	public void setAlert(boolean alert) {
-		this.alert = alert;
-	}
-
-	public boolean getAlert() {
-		return alert;
 	}
 
 	@Override

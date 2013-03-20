@@ -33,11 +33,13 @@ public class ParticipantsModel extends ChronosModel {
 		view.getUsersPanel().removeAll();
 		HashMap<String, Person> participants = view.getFrame().getEventModel().getParticipants();
 		users.clear();
-		// adds all users to a list, and checks those who are already participating
+		// adds all users to a list, and checks those who are already
+		// participating
 		for (Person person : (ArrayList<Person>) event.getResults()) {
 			users.put(person, view.addUser(person).select(participants.get(person.getUsername()) != null));
 		}
-		view.getFrame().pack();
+		view.getFrame().revalidate();
+		view.getFrame().repaint();
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class ParticipantsModel extends ChronosModel {
 	}
 
 	public void getUsers() {
-		fireNetworkEvent(new QueryEvent(QueryType.PERSONS));
+		fireNetworkEvent(new QueryEvent(QueryType.PARTICIPANTS));
 	}
 
 	public HashMap<String, Person> getSelectedUsers() {
@@ -56,5 +58,9 @@ public class ParticipantsModel extends ChronosModel {
 				selectedUsers.put(user.getUsername(), user.setStatus(Status.WAITING));
 		selectedUsers.put(Singleton.getInstance().getSelf().getUsername(), Singleton.getInstance().getSelf().setStatus(Status.ACCEPTED));
 		return selectedUsers;
+	}
+
+	public void getUsers(String argument) {
+		fireNetworkEvent(new QueryEvent(QueryType.PARTICIPANTS, argument));
 	}
 }
