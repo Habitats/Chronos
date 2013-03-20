@@ -232,6 +232,7 @@ public class CalendarWindow extends ChronosWindow {
 		}
 
 		getFrame().revalidate();
+		weekScrollPane.revalidate();
 		repaint();
 	}
 

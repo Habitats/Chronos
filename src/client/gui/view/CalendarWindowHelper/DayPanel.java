@@ -18,8 +18,6 @@ public class DayPanel extends JPanel {
 	public DayPanel(JPanel calendarWindow) {
 		super();
 		this.calendarWindow = (CalendarWindow) calendarWindow;
-		 this.setPreferredSize(new Dimension(140, 500));
-//		setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(Color.white);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
