@@ -33,6 +33,7 @@ abstract public class ChronosModel {
 	public ChronosType getType() {
 		return chronosType;
 	}
+
 	public ClientController getController() {
 		return controller;
 	}

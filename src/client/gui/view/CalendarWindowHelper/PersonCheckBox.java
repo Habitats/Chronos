@@ -1,8 +1,6 @@
 package client.gui.view.calendarWindowHelper;
 
 import java.awt.Color;
-import java.awt.Graphics;
-
 import javax.swing.JCheckBox;
 
 import chronos.Person;

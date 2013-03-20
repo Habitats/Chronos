@@ -5,7 +5,6 @@ import java.util.Collections;
 
 import chronos.Person;
 import chronos.Singleton;
-import events.QueryEvent.QueryType;
 
 /**
  * Event that holds a single array of elements (list of users, list of rooms,

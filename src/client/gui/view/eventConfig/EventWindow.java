@@ -1,16 +1,10 @@
 package client.gui.view.eventConfig;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -19,21 +13,14 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JScrollBar;
 import javax.swing.JSpinner;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SpinnerDateModel;
-import javax.swing.SpinnerModel;
 import javax.swing.border.Border;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.JTextComponent;
-
 import chronos.Person;
-import chronos.Room;
 import chronos.Singleton;
 import client.gui.GBC;
 import client.gui.GBC.Align;

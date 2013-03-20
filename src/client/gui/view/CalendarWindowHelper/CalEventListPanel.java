@@ -23,7 +23,7 @@ public class CalEventListPanel extends JLabel {
 	private CalendarWindow view;
 	private final CalendarModel model;
 
-	public CalEventListPanel(CalEvent calEvent, CalendarWindow view, int width,CalendarModel model) {
+	public CalEventListPanel(CalEvent calEvent, CalendarWindow view, int width, CalendarModel model) {
 		super();
 		this.model = model;
 		String text = DateManagement.getFormattedSimple(calEvent.getStart()) + " " + calEvent.getTitle();

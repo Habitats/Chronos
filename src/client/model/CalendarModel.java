@@ -323,7 +323,6 @@ public class CalendarModel extends ChronosModel {
 		public void run() {
 			while (true) {
 				try {
-					Singleton.log("Checking alarms...");
 					ArrayList<CalEvent> calEvents = getSelectedPersonsEvents().get(Singleton.getInstance().getSelf().getUsername());
 					for (CalEvent calEvent : calEvents) {
 						if (calEvent.getParticipants().get(Singleton.getInstance().getSelf().getUsername()).getAlert() && DateManagement.isLessThanFifteenMinFromNow(calEvent.getStart())) {

@@ -1,22 +1,16 @@
 package client.model;
 
-import java.awt.Component;
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 
-import chronos.Person;
 import chronos.Room;
-import chronos.Singleton;
 import client.ClientController;
 import client.gui.view.ChronosWindow;
 import client.gui.view.RoomBookingWindow;
-import client.gui.view.calendarWindowHelper.RoomCheckBox;
 import events.CalEvent;
 import events.NetworkEvent;
 import events.QueryEvent;

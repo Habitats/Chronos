@@ -26,13 +26,13 @@ public class Chronos {
 				startClient();
 
 		Singleton.getInstance().enableLog();
-		 Singleton.getInstance().enableLogin();
+		Singleton.getInstance().enableLogin();
 		Singleton.getInstance().enableNetwork();
 
 		if (Singleton.getInstance().networkEnabled())
 			startServer();
 		startClient();
-//		stressTestNetwork();
+		// stressTestNetwork();
 
 	}
 

@@ -8,7 +8,7 @@ public class CalLabel extends JLabel {
 	public CalLabel(String text) {
 
 		super(text);
-		
+
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 
 	}

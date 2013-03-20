@@ -6,12 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.management.modelmbean.ModelMBean;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import client.gui.GBC;
-import client.gui.GBC.Align;
 import client.gui.view.CalendarWindow;
 import client.model.CalendarModel;
 import client.model.EventConfigModel.ViewType;

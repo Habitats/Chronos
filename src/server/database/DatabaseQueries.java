@@ -259,16 +259,18 @@ public class DatabaseQueries {
 			addParticipants(evt);
 		}
 	}
+
 	/**
 	 * insures unique primary key upon addEvent()
+	 * 
 	 * @param timestamp
 	 * @param i
 	 * @return
 	 */
 	private long makePrimaryUnique(long timestamp, int i) {
 		ResultSet rs;
-		
-		String query = "SELECT title FROM chronos.events WHERE event_ID = "+ (timestamp + i);
+
+		String query = "SELECT title FROM chronos.events WHERE event_ID = " + (timestamp + i);
 		try {
 			rs = db.makeSingleQuery(query);
 			rs.beforeFirst();
@@ -278,7 +280,7 @@ public class DatabaseQueries {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return (long)timestamp+i;
+		return timestamp + i;
 	}
 
 	/**
@@ -296,8 +298,8 @@ public class DatabaseQueries {
 					ps.setString(1, p.getUsername());
 					ps.setString(2, "" + evt.getTimestamp());
 					if (p.getAlert()) {
-						ps.setInt(3, 1);						
-					}else{
+						ps.setInt(3, 1);
+					} else {
 						ps.setInt(3, 0);
 					}
 					ps.setString(4, "" + p.getStatus().ordinal());
@@ -322,30 +324,32 @@ public class DatabaseQueries {
 	private void updateParticipants(CalEvent evt) {
 		deleteAllParticipansByEventId(evt.getTimestamp());
 		addParticipants(evt);
-//		String insertQuery = "UPDATE Participants SET alarm=?, status=? WHERE username=? AND event_ID=?;";
-//		PreparedStatement ps;
-//		String eventID = "" + evt.getTimestamp();
-//		try {
-//			ps = db.makeBatchUpdate(insertQuery);
-//			for (Person p : evt.getParticipants().values()) {
-//				try {
-//					ps.setString(1, null);
-//					ps.setString(2, "" + p.getStatus().ordinal());
-//					ps.setString(3, p.getUsername());
-//					ps.setString(4, eventID);
-//					ps.addBatch();
-//					Singleton.log("successfully updated participant \"" + p.getUsername() + "\" to " + p.getStatus()); // TODO
-//																														// alarm?
-//				} catch (SQLException e) {
-//					Singleton.log("error updating " + p.getUsername());
-//					e.printStackTrace();
-//				}
-//			}
-//			ps.executeBatch();
-//			ps.close();
-//		} catch (SQLException e1) {
-//			e1.printStackTrace();
-//		}
+		// String insertQuery =
+		// "UPDATE Participants SET alarm=?, status=? WHERE username=? AND event_ID=?;";
+		// PreparedStatement ps;
+		// String eventID = "" + evt.getTimestamp();
+		// try {
+		// ps = db.makeBatchUpdate(insertQuery);
+		// for (Person p : evt.getParticipants().values()) {
+		// try {
+		// ps.setString(1, null);
+		// ps.setString(2, "" + p.getStatus().ordinal());
+		// ps.setString(3, p.getUsername());
+		// ps.setString(4, eventID);
+		// ps.addBatch();
+		// Singleton.log("successfully updated participant \"" + p.getUsername()
+		// + "\" to " + p.getStatus()); // TODO
+		// // alarm?
+		// } catch (SQLException e) {
+		// Singleton.log("error updating " + p.getUsername());
+		// e.printStackTrace();
+		// }
+		// }
+		// ps.executeBatch();
+		// ps.close();
+		// } catch (SQLException e1) {
+		// e1.printStackTrace();
+		// }
 	}
 
 	public void deleteAllParticipansByEventId(long eventId) {
@@ -357,6 +361,7 @@ public class DatabaseQueries {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Returns an ArrayList of all events the person is a participant of.
 	 * 
@@ -367,8 +372,7 @@ public class DatabaseQueries {
 		ArrayList<Comparable> al = new ArrayList<Comparable>();
 		ResultSet rs;
 		String param;
-		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration,"
-		+ "events.description, person.username, person.name, events.room " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
+		String query = "SELECT events.event_ID, events.title, events.startTime, events.duration," + "events.description, person.username, person.name, events.room " + "FROM Events, Participants, Person " + "WHERE Events.event_ID = participants.event_ID AND participants.username = "
 				+ processString(per.getUsername()) + " AND person.username = events.owner ORDER BY events.startTime ASC;";
 		try {
 			rs = db.makeSingleQuery(query);

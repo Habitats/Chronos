@@ -28,7 +28,6 @@ public class DateManagement {
 		long now = new Date().getTime();
 		long input = date.getTime();
 		long derp = (now - input) / 1000;
-		// System.out.println(getFormattedFull(new Date(derp * 1000)));
 		return ((input - now) / 1000) < 60 * 15 && input >= now;
 	}
 

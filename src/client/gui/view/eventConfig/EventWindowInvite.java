@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JButton;
-import javax.xml.stream.events.StartDocument;
-
 import chronos.Singleton;
 import chronos.Person.Status;
 import client.gui.GBC;
