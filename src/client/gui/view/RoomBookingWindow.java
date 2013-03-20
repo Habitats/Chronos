@@ -68,7 +68,9 @@ public class RoomBookingWindow extends ChronosWindow {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (roomList.getModel().getSize() != 0) {
-				roomList.setSelectedIndex(0);
+
+				roomList.setSelectedValue(model.getBestRoom(), true);
+
 				getFrame().getEventModel().setRoom(roomList.getSelectedValue());
 				getFrame().getEventModel().updateRoom();
 				getFrame().getRoomBookingWindow().setVisible(false);

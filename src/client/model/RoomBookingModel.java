@@ -52,12 +52,11 @@ public class RoomBookingModel extends ChronosModel {
 	public void receiveNetworkEvent(NetworkEvent event) {
 		addRooms((QueryEvent) event);
 	}
-
+	
 	@Override
 	public void setView(ChronosWindow view) {
 		this.view = (RoomBookingWindow) view;
 	}
-
 	
 	public String getRoomName() {
 		return roomName;
@@ -67,4 +66,24 @@ public class RoomBookingModel extends ChronosModel {
 		this.roomName = roomName;
 	}
 
+	public Room getBestRoom() {
+		int participants;
+		try {
+			participants = view.getFrame().getEventModel().getParticipants().size()+1;
+		} catch (NullPointerException e) {
+			participants = 1;
+		}
+		
+		//Ghetto, finner bare beste rommet som er stort nok. TODO
+		Room best = rooms.get(0);
+		double bestDiv = rooms.get(0).getCapacity()/participants;
+		for(Room r : rooms){
+			if(r.getCapacity() >= participants) {
+				double  div = r.getCapacity()/participants;
+				if(div < bestDiv)
+					best = r;
+			}
+		}
+		return best;
+	}
 }
