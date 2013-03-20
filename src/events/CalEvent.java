@@ -7,6 +7,7 @@ import client.model.EventConfigModel.ViewType;
 
 import chronos.Person;
 import chronos.Room;
+import chronos.Singleton;
 
 /**
  * Calendar event used for all calendar related thing (update, delete, add etc).
@@ -27,6 +28,10 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	private String description;
 	private final long timestampPrimaryKey;
 	private Room room;
+
+	public CalEvent(Date startDate, int duration) {
+		this(null, startDate, duration, Singleton.getInstance().getSelf(), null);
+	}
 
 	public CalEvent(String title, Date startDate, int duration, Person creator, String description) {
 		this(title, startDate, duration, creator, description, 0);

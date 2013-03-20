@@ -27,10 +27,10 @@ public class RoomBookingModel extends ChronosModel {
 	}
 
 	private void addRooms(QueryEvent event) {
-		for(int i=0; i<view.getRoomPanel().getModel().getSize();) {
-			((DefaultListModel<Room>)view.getRoomPanel().getModel()).remove(0);
+		for (int i = 0; i < view.getRoomPanel().getModel().getSize();) {
+			((DefaultListModel<Room>) view.getRoomPanel().getModel()).remove(0);
 		}
-		
+
 		for (Room room : (ArrayList<Room>) event.getResults()) {
 			System.out.println(room.toString());
 			rooms.add(view.addRoom(room));
@@ -45,24 +45,19 @@ public class RoomBookingModel extends ChronosModel {
 	}
 
 	public void getRooms() {
-		try {
-			fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", view.getFrame().getEventModel().getStartDate(), view.getFrame().getEventModel().getDuration(), new Person("penis"), "")));
-		}catch (Exception e) { //Unødvendig? fikk bare Nullpointer første gang jeg prøvde... Så la det inn for sikkerhets skyld.
-			fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent("", new Date(), 3600000, new Person("ghetto"), "")));
-			e.printStackTrace();
-		}		
+		fireNetworkEvent(new QueryEvent(QueryType.ROOMS).addCalEvent(new CalEvent(view.getFrame().getEventModel().getStartDate(), view.getFrame().getEventModel().getDuration())));
 	}
 
 	@Override
 	public void receiveNetworkEvent(NetworkEvent event) {
 		addRooms((QueryEvent) event);
 	}
-	
+
 	@Override
 	public void setView(ChronosWindow view) {
 		this.view = (RoomBookingWindow) view;
 	}
-	
+
 	public String getRoomName() {
 		return roomName;
 	}
@@ -74,18 +69,18 @@ public class RoomBookingModel extends ChronosModel {
 	public Room getBestRoom() {
 		int participants;
 		try {
-			participants = view.getFrame().getEventModel().getParticipants().size()+1;
+			participants = view.getFrame().getEventModel().getParticipants().size() + 1;
 		} catch (NullPointerException e) {
 			participants = 1;
 		}
-		
-		//Ghetto, finner bare beste rommet som er stort nok. TODO
+
+		// Ghetto, finner bare beste rommet som er stort nok. TODO
 		Room best = rooms.get(0);
-		double bestDiv = rooms.get(0).getCapacity()/participants;
-		for(Room r : rooms){
-			if(r.getCapacity() >= participants) {
-				double  div = r.getCapacity()/participants;
-				if(div < bestDiv)
+		double bestDiv = rooms.get(0).getCapacity() / participants;
+		for (Room r : rooms) {
+			if (r.getCapacity() >= participants) {
+				double div = r.getCapacity() / participants;
+				if (div < bestDiv)
 					best = r;
 			}
 		}
