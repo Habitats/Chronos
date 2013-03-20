@@ -1,4 +1,5 @@
+- alert blir ikke satt når du oppretter en event, kunn når oppdaterer den.
 - participants kan endre dato duration på events.
 - ingen linebreak på description
 - events blir skjøvet ut av skjærmen hvis det blir for mange
--bugga kant på gui mainfraim
+- bugga kant på gui mainfraim
