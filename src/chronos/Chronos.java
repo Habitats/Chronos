@@ -55,22 +55,6 @@ public class Chronos {
 		startClient(new AuthEvent(EventType.LOGIN, new Person("pat"), "derp"));
 		startClient(new AuthEvent(EventType.LOGIN, new Person("boytoy"), "derp"));
 		startClient(new AuthEvent(EventType.LOGIN, new Person("root"), ""));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("halfling"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("kyra"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("pat"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("boytoy"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("root"), ""));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("halfling"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("kyra"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("pat"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("boytoy"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("root"), ""));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("halfling"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("kyra"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("pat"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("boytoy"), "derp"));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("root"), ""));
-		startClient(new AuthEvent(EventType.LOGIN, new Person("halfling"), "derp"));
 
 	}
 
