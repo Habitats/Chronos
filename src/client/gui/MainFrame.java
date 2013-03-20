@@ -6,6 +6,7 @@ import java.awt.Frame;
 import java.awt.Label;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -157,6 +158,7 @@ public class MainFrame extends JFrame {
 			calendarWindow.add(currentUser, new GBC(3, 0).setSpan(2, 1));
 		}
 		JLayeredPane layeredPane = buildLayeredPane();
+		layeredPane.setBorder(BorderFactory.createLineBorder(null, 0));
 		getContentPane().add(layeredPane);
 
 		buildFrame(this);
