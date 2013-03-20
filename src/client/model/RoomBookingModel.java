@@ -1,7 +1,10 @@
 package client.model;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.swing.DefaultListModel;
 
 import chronos.Person;
 import chronos.Room;
@@ -24,7 +27,9 @@ public class RoomBookingModel extends ChronosModel {
 	}
 
 	private void addRooms(QueryEvent event) {
-		view.getRoomPanel().removeAll();
+		for(int i=0; i<view.getRoomPanel().getModel().getSize();) {
+			((DefaultListModel<Room>)view.getRoomPanel().getModel()).remove(0);
+		}
 		
 		for (Room room : (ArrayList<Room>) event.getResults()) {
 			System.out.println(room.toString());
