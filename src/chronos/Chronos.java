@@ -19,20 +19,20 @@ public class Chronos {
 	}
 
 	private void run(String[] args) {
-		if (args.length == 1)
+		if (args.length == 1) {
 			if (args[0].equals("-s"))
 				startServer();
-			else {
+		} else {
 
-				Singleton.getInstance().enableLog();
-				Singleton.getInstance().enableLogin();
-				Singleton.getInstance().enableNetwork();
+			Singleton.getInstance().enableLog();
+			Singleton.getInstance().enableLogin();
+			Singleton.getInstance().enableNetwork();
 
-				if (Singleton.getInstance().networkEnabled())
-					// startServer();
-					startClient();
-				// stressTestNetwork();
-			}
+			if (Singleton.getInstance().networkEnabled())
+				 startServer();
+				startClient();
+			// stressTestNetwork();
+		}
 
 	}
 
