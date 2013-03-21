@@ -508,10 +508,11 @@ public class DatabaseQueries {
 
 	public ArrayList<Comparable> getAvailableRooms(CalEvent event) {
 		ArrayList<Comparable> roomList = new ArrayList<Comparable>();
-		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " + "ON Events.room=Rooms.name AND (startTime+duration<" + event.getStart().getTime() + " " + "OR startTime > " + (event.getStart().getTime() + event.getDuration()) + ");";
+		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " + "ON Events.room=Rooms.name AND (startTime+(duration*3600000)<" + event.getStart().getTime() + " " + "OR startTime > " + (event.getStart().getTime() + (event.getDuration()*3600000)) + ");";
 		ResultSet rs;
 		try {
 			rs = db.makeSingleQuery(query);
+			System.out.println(rs);
 			rs.beforeFirst();
 			String logg = "";
 			while (rs.next()) {
