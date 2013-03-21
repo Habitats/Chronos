@@ -508,19 +508,22 @@ public class DatabaseQueries {
 
 	public ArrayList<Comparable> getAvailableRooms(CalEvent event) {
 		ArrayList<Comparable> roomList = new ArrayList<Comparable>();
-		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " + "ON Events.room=Rooms.name AND (startTime+(duration*3600000)<" + event.getStart().getTime() + " " + "OR startTime > " + (event.getStart().getTime() + (event.getDuration()*3600000)) + ");";
+		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms";
+//		String query = "SELECT Rooms.name, Rooms.description, Rooms.capacity FROM Rooms LEFT JOIN Events " + "ON Events.room=Rooms.name AND (startTime+(duration*3600000)<" + event.getStart().getTime() + " " + "OR startTime > " + (event.getStart().getTime() + (event.getDuration()*3600000)) + ");";
+
 		ResultSet rs;
 		try {
 			rs = db.makeSingleQuery(query);
-			System.out.println(rs);
 			rs.beforeFirst();
 			String logg = "";
 			while (rs.next()) {
 				String name = rs.getString(1);
 				String desc = rs.getString(2);
 				int cap = rs.getInt(3);
-				roomList.add(new Room(name, cap, desc));
-				logg += " " + name;
+				if(isAvailable(name, event)) {
+					roomList.add(new Room(name, cap, desc));
+					logg += " " + name;
+				}
 			}
 			Singleton.log("Successfully retrieved all available rooms: " + logg);
 		} catch (SQLException e) {
@@ -529,14 +532,41 @@ public class DatabaseQueries {
 		}
 		return roomList;
 	}
-
+	
+	private boolean isAvailable(String name, CalEvent evt) {
+		
+		String query = "SELECT startTime, duration FROM Events WHERE room="+processString(name);
+		ResultSet rs;
+		try {
+			rs = db.makeSingleQuery(query);
+			rs.beforeFirst();
+			while (rs.next()) {
+				long start = rs.getLong(1);
+				long slutt = start+(rs.getInt(2)*3600000);
+				
+				long EStart = evt.getStart().getTime();
+				long ESlutt = EStart+(evt.getDuration()*3600000);
+				
+				if(start > EStart &&  start < ESlutt)
+					return false;
+				if(slutt >EStart && slutt < ESlutt)
+					return false;
+				if(start < EStart && slutt > ESlutt)
+					return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
 	/**
 	 * Makes the string SQL compatible.
 	 * 
 	 * @param str
 	 * @return String
 	 */
-	private String processString(String str) {
+ 	private String processString(String str) {
 		str = "'" + str + "'";
 		return str;
 	}
