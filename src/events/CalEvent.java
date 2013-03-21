@@ -30,10 +30,10 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 	private Room room;
 
 	public CalEvent(Date startDate, int duration) {
-		this(null, startDate, duration, Singleton.getInstance().getSelf(), null);
+		this(null, startDate, duration, Singleton.getInstance().getSelf(), null, null);
 	}
 
-	public CalEvent(String title, Date startDate, int duration, Person creator, String description) {
+	public CalEvent(String title, Date startDate, int duration, Person creator, String description, Room room) {
 		this(title, startDate, duration, creator, description, 0);
 	}
 
@@ -51,12 +51,13 @@ public class CalEvent extends NetworkEvent implements Comparable<CalEvent> {
 		addParticipant(creator);
 	}
 
-	public CalEvent update(String title, Date start, int duration, String description) {
+	public CalEvent update(String title, Date start, int duration, String description, Room room) {
 		setState(CalEventType.UPDATE);
 		this.title = title;
 		this.startDate = start;
 		this.duration = duration;
 		this.description = description;
+		this.room = room;
 		return this;
 	}
 

@@ -73,6 +73,7 @@ public class EventConfigModel extends ChronosModel {
 		setStartDate(event.getStart());
 		setParticipants(event.getParticipants());
 		setCreator(event.getCreator());
+		setRoom(event.getRoom());
 	}
 
 	private void updateViews() {
@@ -126,9 +127,9 @@ public class EventConfigModel extends ChronosModel {
 		startDate = new Date(date.getTime() + clock);
 
 		if (view.getViewType() == ViewType.UPDATE || view.getViewType() == ViewType.PARTICIPANT) {
-			event.update(title, startDate, duration, description).setParticipants(getParticipants());
+			event.update(title, startDate, duration, description, room).setParticipants(getParticipants());
 		} else
-			event = new CalEvent(title, startDate, duration, creator, description).addParticipants(getParticipants());
+			event = new CalEvent(title, startDate, duration, creator, description, room).addParticipants(getParticipants());
 		event.getParticipants().get(Singleton.getInstance().getSelf().getUsername()).setAlert(view.getAlert().isSelected());
 		if (validateInput(view)) {
 			fireNetworkEvent(event);
