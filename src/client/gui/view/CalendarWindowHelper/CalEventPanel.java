@@ -38,9 +38,6 @@ public class CalEventPanel extends JPanel {
 		color = personColor;
 		setBackground(color);
 		hoverColor = personColor.darker();
-		setPreferredSize(new Dimension(130, 60 + (event.getDuration() * 20)));
-		setMinimumSize((new Dimension(0, 60 + (event.getDuration() * 20))));
-		setMaximumSize((new Dimension(1000, 60 + (event.getDuration() * 20))));
 		addMouseListener(new CalPanelMouseAdapter());
 		setBorder(BorderFactory.createLineBorder(Color.white, 2));
 
@@ -56,12 +53,18 @@ public class CalEventPanel extends JPanel {
 
 		this.calEvent = event;
 		this.view = view;
-		// setMaximumSize(new Dimension((view.getWeekPane().getWidth() / 7) -
-		// 10, 60 + (event.getDuration() * 10)));
-		// setPreferredSize(new Dimension((view.getWeekPane().getWidth() / 7) -
-		// 10, 60 + (event.getDuration() * 10)));
-		// setMinimumSize(new Dimension((view.getWeekPane().getWidth() / 7) -
-		// 10, 60 + (event.getDuration() * 10)));
+		tilesLayout();
+	}
+
+	private void gridLayout() {
+		setPreferredSize(new Dimension(110, 60));
+
+	}
+
+	private void tilesLayout() {
+		setPreferredSize(new Dimension(130, 60 + (event.getDuration() * 20)));
+		setMinimumSize((new Dimension(130, 60 + (event.getDuration() * 20))));
+		setMaximumSize((new Dimension(1000, 60 + (event.getDuration() * 20))));
 	}
 
 	@Override

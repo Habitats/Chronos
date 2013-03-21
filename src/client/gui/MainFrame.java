@@ -153,7 +153,7 @@ public class MainFrame extends JFrame {
 		JLayeredPane layeredPane = buildLayeredPane();
 		layeredPane.setBorder(BorderFactory.createLineBorder(null, 0));
 		getContentPane().add(layeredPane);
-		
+
 		setMinimumSize(new Dimension(1207, 315));
 
 		buildFrame(this);
@@ -203,7 +203,6 @@ public class MainFrame extends JFrame {
 		super.paint(g);
 		frameHeight = getHeight();
 		frameWidth = getWidth();
-		System.out.println(getWidth() + " " + getHeight());
 		calendarWindow.setBounds(0, 0, frameWidth, frameHeight);
 
 		int roomBookingWidth = frameWidth / 4;

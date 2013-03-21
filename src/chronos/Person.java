@@ -63,8 +63,9 @@ public class Person implements Serializable, Comparable<Person> {
 		}
 	}
 
-	public void setAlert(boolean alert) {
+	public Person setAlert(boolean alert) {
 		this.alert = alert;
+		return this;
 	}
 
 	public boolean getAlert() {
