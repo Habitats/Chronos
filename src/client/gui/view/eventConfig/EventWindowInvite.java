@@ -40,7 +40,7 @@ public class EventWindowInvite extends EventWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.getCalEvent().getParticipants().put(Singleton.getInstance().getSelf().getUsername(), Singleton.getInstance().getSelf().setStatus(Status.ACCEPTED));
+			model.getCalEvent().getParticipants().put(Singleton.getInstance().getSelf().getUsername(), Singleton.getInstance().getSelf().setStatus(Status.ACCEPTED).setAlert(getAlert().isSelected()));
 			model.fireNetworkEvent(model.getCalEvent().setState(CalEventType.UPDATE));
 			setVisible(false);
 		}

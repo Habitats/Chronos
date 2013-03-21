@@ -29,6 +29,9 @@ public class DateManagement {
 		long input = date.getTime();
 		return ((input - now) / 1000) < 60 * 15 && input >= now;
 	}
+	public static int getStartHour(Date date){
+		return Integer.parseInt(new SimpleDateFormat("HH").format(date));
+	}
 
 	public static long getClockInSeconds(Date time) {
 		long hours = Integer.parseInt(new SimpleDateFormat("kk").format(time));

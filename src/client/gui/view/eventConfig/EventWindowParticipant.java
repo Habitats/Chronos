@@ -21,9 +21,9 @@ public class EventWindowParticipant extends EventWindow {
 	public EventWindowParticipant(ChronosModel model, MainFrame frame) {
 		super(model, frame, ViewType.PARTICIPANT);
 		getAlert().setEnabled(true);
-		getStartDate().setEnabled(true);
-		getStartTime().setEnabled(true);
-		getDuration().setEnabled(true);
+//		getStartDate().setEnabled(true);
+//		getStartTime().setEnabled(true);
+//		getDuration().setEnabled(true);
 		getEventNameField().setEnabled(false);
 		getEventDescriptionArea().setEnabled(false);
 		applyButton.setText("Update");

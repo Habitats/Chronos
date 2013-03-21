@@ -98,6 +98,7 @@ public class CalendarWindow extends ChronosWindow {
 		othersCalPane.setMinimumSize(new Dimension(eventsPanelWidth, 250));
 		othersCalPane.setMaximumSize(new Dimension(eventsPanelWidth, 250));
 		othersCalPane.setBorder(border);
+		othersCalPane.getVerticalScrollBar().setUnitIncrement(20);
 		add(othersCalPane, new GBC(i, 4).setWeight(0, 0.5).setInsets(5, sideBorder, 35, 5));
 
 		i++;
@@ -172,7 +173,8 @@ public class CalendarWindow extends ChronosWindow {
 		weekPane.add(sundayPanel, new GBC(6, 0, Align.TOP_AND_BOTTOM).setSpan(1, 2).setWeight(0.5, 1));
 		weekScrollPane = new JScrollPane(weekPane);
 		weekScrollPane.setBorder(BorderFactory.createEmptyBorder());
-		add(weekScrollPane, new GBC(3, 3).setWeight(1, 1).setSpan(7, 10).setInsets(5,0, 30, sideBorder));
+		weekScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+		add(weekScrollPane, new GBC(3, 3).setWeight(1, 1).setSpan(7, 10).setInsets(5, 0, 30, sideBorder));
 
 		updateLabels();
 	}
@@ -204,31 +206,45 @@ public class CalendarWindow extends ChronosWindow {
 
 	public void addEvent(CalEvent event, Weekday weekday, Color personColor) {
 		CalEventPanel panel = new CalEventPanel(event, this, personColor, model);
+		DayPanel current;
 		eventsPanel.add(new CalEventListPanel(event, this, eventsPanelWidth, model));
+		GBC c = new GBC(1, DateManagement.getStartHour(event.getStart())).setSpan(0, event.getDuration()).setWeight(0.1, 0.1).setInsets(0, 0, 0, 0);
 		switch (weekday) {
 		case MONDAY:
-			mondayPanel.add(panel);
+			mondayPanel.add(panel, c);
+			current = mondayPanel;
 			break;
 		case TUESDAY:
-			tuesdayPanel.add(panel);
+			tuesdayPanel.add(panel, c);
+			current = tuesdayPanel;
 			break;
 		case WEDNESDAY:
-			wednesdayPanel.add(panel);
+			wednesdayPanel.add(panel, c);
+			current = wednesdayPanel;
 			break;
 		case THURSDAY:
-			thursdayPanel.add(panel);
+			thursdayPanel.add(panel, c);
+			current = thursdayPanel;
 			break;
 		case FRIDAY:
-			fridayPanel.add(panel);
+			fridayPanel.add(panel, c);
+			current = fridayPanel;
 			break;
 		case SATURDAY:
-			saturdayPanel.add(panel);
+			saturdayPanel.add(panel, c);
+			current = saturdayPanel;
 			break;
 		case SUNDAY:
-			sundayPanel.add(panel);
+			sundayPanel.add(panel, c);
+			current = sundayPanel;
 			break;
 		default:
+			current = null;
 			break;
+		}
+		if (current != null) {
+			current.defineGrid();
+			current.revalidate();
 		}
 
 		getFrame().revalidate();
